@@ -72,23 +72,39 @@ const bientot = (num, gm) => `<div class="carte bientot" aria-disabled="true"><d
     });
     const gm = ms.find(m => m.type === 'gamemap');
     h += `<div class="domaine"><h3>Bilan de l’année</h3><div class="grille">${gm ? carte(gm, prog) : bientot('', true)}</div></div></section>`;
-    h += `<section class="apropos" id="bilan"><h2>Mon bilan, à rendre à mon professeur</h2>
-      <p>Ta progression est enregistrée dans ce navigateur, sur cet appareil : aucun compte, aucune donnée envoyée. Pour que ton professeur la voie, télécharge ton bilan et dépose-le là où il te l’indique (ENT, casier numérique, messagerie).</p>
+    h += `<section class="apropos" id="bilan"><h2>Mon bilan : ma sauvegarde et mon rapport</h2>
+      <p>Ta progression s’enregistre toute seule dans ce navigateur, sur cet appareil : tu peux t’arrêter au milieu d’un livre et reprendre plus tard, il rouvre là où tu en étais. Tu n’as pas besoin de tout finir pour rendre ton travail.</p>
+      <ol class="methode">
+        <li><strong>À la fin de chaque séance</strong>, télécharge ton bilan et range-le (ENT, clé USB, messagerie). C’est ta sauvegarde.</li>
+        <li><strong>Sur un autre ordinateur</strong> (au CDI, à la maison), clique sur « Reprendre avec mon bilan » et choisis ce fichier : tu retrouves ta progression.</li>
+        <li><strong>Quand ton professeur le demande</strong>, dépose ton dernier bilan là où il te l’indique. Il voit ce que tu as fait, même si tu n’as pas fini.</li>
+      </ol>
+      <p class="petit">Ne modifie pas le fichier : il porte un sceau, et un bilan retouché est refusé ici et signalé à ton professeur.</p>
       <div class="ident"><label>Prénom <input id="prenom" autocomplete="given-name" maxlength="40"></label>
       <label>Nom <input id="nom" autocomplete="family-name" maxlength="40"></label>
       <label>Classe <input id="classe" placeholder="ex. 4eB" maxlength="12"></label></div>
       <p class="actions"><button class="btn" id="telecharger">Télécharger mon bilan</button>
+      <label class="lien-btn">Reprendre avec mon bilan<input type="file" id="reprendre" accept=".json,application/json" hidden></label>
       <button class="lien-btn" id="raz">Effacer ma progression sur cet appareil</button></p>
       <p class="petit" id="msg-bilan" role="status"></p></section>
       <p class="pied"><a href="enseignant.html">Espace enseignant : tableau de classe</a></p>`;
     contenu.innerHTML = h;
     const ident = EMI.identite();
     ['prenom', 'nom', 'classe'].forEach(k => { const el = document.getElementById(k); el.value = ident[k] || ''; el.oninput = () => EMI.garderIdentite(k, el.value.trim()); });
-    document.getElementById('telecharger').onclick = () => {
+    document.getElementById('reprendre').onchange = async (e) => {
+      const f = e.target.files[0]; if (!f) return;
+      const r = await EMI.chargerBilan(await f.text());
+      const msg = document.getElementById('msg-bilan');
+      if (!r.ok) { msg.textContent = r.raison; return; }
+      sessionStorage.setItem('emi-msg', r.n ? `Progression retrouvée : ${r.n} module${r.n > 1 ? 's' : ''} mis à jour.` : 'Ce bilan n’apporte rien de plus récent que ce qui est déjà sur cet appareil.');
+      location.reload();
+    };
+    try { const m = sessionStorage.getItem('emi-msg'); if (m) { document.getElementById('msg-bilan').textContent = m; sessionStorage.removeItem('emi-msg'); } } catch (e) {}
+    document.getElementById('telecharger').onclick = async () => {
       const id = EMI.identite();
       const msg = document.getElementById('msg-bilan');
       if (!id.prenom || !id.nom || !id.classe) { msg.textContent = 'Écris ton prénom, ton nom et ta classe avant de télécharger ton bilan.'; return; }
-      const nb = EMI.telechargerBilan(mods);
+      const nb = await EMI.telechargerBilan(mods);
       msg.textContent = `Bilan téléchargé (${nb} module${nb > 1 ? 's' : ''} commencé${nb > 1 ? 's' : ''}). Dépose le fichier là où ton professeur te l’a demandé.`;
     };
     document.getElementById('raz').onclick = () => { if (confirm('Effacer toute ta progression sur cet appareil ?')) { EMI.effacer(); location.reload(); } };

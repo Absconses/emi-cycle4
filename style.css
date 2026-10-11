@@ -79,3 +79,9 @@ table.classe th.eleve { background: #f6f3ee; }
 .c-encours { background: #fdf0e1; color: var(--encours); }
 .c-vide { color: #b7b0a5; }
 .legende { font-size: .85rem; color: var(--doux); }
+
+.methode { color: var(--doux); font-size: .95rem; padding-left: 1.3em; margin: 8px 0; }
+.methode li { margin: 4px 0; }
+label.lien-btn { display: inline-block; }
+.sceau-ok { color: var(--ok); }
+.sceau-ko { color: #b42318; font-weight: 650; }

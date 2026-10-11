@@ -14,12 +14,19 @@ la progression ne suit pas l'élève d'un appareil à l'autre.
 
 SUIVI PAR L'ENSEIGNANT (sans serveur)
 1. En bas de l'accueil, « Mon bilan » : l'élève écrit prénom, nom, classe et clique « Télécharger mon bilan »
-   (fichier bilan-EMI-<classe>-<nom>-<prénom>.json).
-2. Il dépose ce fichier là où le professeur le demande (ENT, casier numérique, messagerie).
-3. Le professeur ouvre enseignant.html (lien « Espace enseignant » en bas de l'accueil), y glisse tous les
-   bilans d'un coup : tableau par classe et par niveau (terminé + score, part du livre faite), export CSV
-   pour un tableur. Les fichiers sont lus dans le navigateur du professeur, rien n'est envoyé.
-Limite : un bilan est produit par l'élève ; ce n'est pas une note certifiée.
+   (fichier bilan-EMI-<classe>-<nom>-<prénom>.json). Il peut le faire à tout moment, sans avoir tout fini.
+2. Le bilan sert aussi de SAUVEGARDE : sur un autre poste, « Reprendre avec mon bilan » restaure la
+   progression et l'endroit où l'élève s'était arrêté dans chaque livre (on garde la version la plus récente).
+3. L'élève dépose son dernier bilan là où le professeur le demande (ENT, casier numérique, messagerie).
+4. Le professeur ouvre enseignant.html (« Espace enseignant », en bas de l'accueil), y glisse tous les bilans :
+   tableau par classe et par niveau (terminé + score, part du livre faite + score), export CSV.
+SCORE : total des points obtenus sur toutes les questions notées du module (une question pas faite compte 0) ;
+pour un module terminé, c'est le taux de bonnes réponses. On garde le meilleur score.
+SCEAU : chaque bilan porte une empreinte SHA-256 (contenu + identité + clé du site). Un fichier retouché à la
+main ou renommé pour un autre élève est refusé à la reprise et signalé « ⚠ modifié » au professeur.
+Limite : la clé est dans le code du site ; un élève qui fouille le code ou manipule son navigateur peut tricher.
+C'est un indice de confiance, pas une note certifiée. Les bilans « emi-bilan-1 » (avant le 11/10 au soir)
+sont lus mais « non scellés ».
 Pour un suivi automatique (sans fichiers à rendre), il faudrait une plateforme avec comptes élèves,
 par exemple un Moodle (MoodleCloud ou hébergé par l'établissement), qui lit les .h5p nativement.
 
