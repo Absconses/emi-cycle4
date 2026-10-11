@@ -1,0 +1,110 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Tableau de classe</title>
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<header class="entete"><div class="int">
+  <p class="surtitre">EMI cycle 4 · Espace enseignant</p>
+  <h1>Tableau de classe</h1>
+  <p>Dépose ici les bilans que tes élèves ont téléchargés : le tableau de leur progression s’affiche aussitôt. Les fichiers sont lus dans ton navigateur ; rien n’est envoyé ni conservé en ligne.</p>
+</div></header>
+<main class="contenu">
+  <p><a href="index.html">← Retour aux modules</a></p>
+  <label class="depot" id="depot">
+    <strong>Glisse les fichiers « bilan-EMI-… .json » ici</strong><br>ou clique pour les choisir (tu peux en sélectionner plusieurs à la fois)
+    <input type="file" id="fichiers" accept=".json,application/json" multiple hidden>
+  </label>
+  <p class="petit" id="info" role="status"></p>
+  <div id="vue" hidden>
+    <div class="filtres">
+      <label>Classe <select id="f-classe"></select></label>
+      <label>Niveau <select id="f-niveau"><option>5e</option><option>4e</option><option>3e</option></select></label>
+      <button class="btn" id="csv">Exporter en CSV (tableur)</button>
+      <button class="lien-btn" id="vider">Vider le tableau</button>
+    </div>
+    <p class="legende"><span class="c-ok">&nbsp;✓ 85&nbsp;%&nbsp;</span> terminé, avec le meilleur score · <span class="c-encours">&nbsp;40&nbsp;%&nbsp;</span> part du livre faite · <span class="c-vide">—</span> pas commencé. Le score compte toutes les questions notées du module.</p>
+    <div class="tableau-zone"><table class="classe" id="table"></table></div>
+    <p class="legende">Un bilan est un fichier produit par l’élève : il indique ce que son navigateur a enregistré, ce n’est pas une note certifiée.</p>
+  </div>
+</main>
+<script>
+(async function () {
+  const mods = await (await fetch('modules.json')).json();
+  const bilans = new Map(); // clé : classe|nom|prénom -> bilan le plus récent
+  const pct = x => Math.round(x * 100) + ' %';
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const info = document.getElementById('info');
+  async function lireFichiers(fl) {
+    let ok = 0, ko = [];
+    for (const f of fl) {
+      try {
+        const b = JSON.parse(await f.text());
+        if (b.format !== 'emi-bilan-1' || !b.modules) throw new Error('format');
+        const cle = [b.classe, b.nom, b.prenom].map(x => String(x || '').trim().toLowerCase()).join('|');
+        const ancien = bilans.get(cle);
+        if (!ancien || ancien.date < b.date) bilans.set(cle, b);
+        ok++;
+      } catch (e) { ko.push(f.name); }
+    }
+    info.textContent = `${ok} bilan${ok > 1 ? 's' : ''} lu${ok > 1 ? 's' : ''}` + (ko.length ? ` · ignoré${ko.length > 1 ? 's' : ''} (ce ne sont pas des bilans EMI) : ${ko.join(', ')}` : '') + ` · ${bilans.size} élève${bilans.size > 1 ? 's' : ''} au total.`;
+    remplirClasses(); afficher();
+  }
+  const depot = document.getElementById('depot'), input = document.getElementById('fichiers');
+  input.onchange = () => lireFichiers(input.files);
+  depot.ondragover = e => { e.preventDefault(); depot.classList.add('survol'); };
+  depot.ondragleave = () => depot.classList.remove('survol');
+  depot.ondrop = e => { e.preventDefault(); depot.classList.remove('survol'); lireFichiers(e.dataTransfer.files); };
+  const fClasse = document.getElementById('f-classe'), fNiveau = document.getElementById('f-niveau');
+  function remplirClasses() {
+    const cl = [...new Set([...bilans.values()].map(b => b.classe))].sort();
+    const avant = fClasse.value;
+    fClasse.innerHTML = '<option value="">Toutes</option>' + cl.map(c => `<option>${esc(c)}</option>`).join('');
+    if (cl.includes(avant)) fClasse.value = avant;
+    else if (cl.length) { const n = String(cl[0]).match(/[345]/); if (n) fNiveau.value = n[0] + 'e'; }
+  }
+  fClasse.onchange = () => { const n = String(fClasse.value).match(/[345]/); if (n) fNiveau.value = n[0] + 'e'; afficher(); };
+  fNiveau.onchange = afficher;
+  function lignes() {
+    const ms = mods.filter(m => m.niveau === fNiveau.value);
+    const el = [...bilans.values()].filter(b => !fClasse.value || b.classe === fClasse.value)
+      .sort((a, b) => (a.classe + a.nom + a.prenom).localeCompare(b.classe + b.nom + b.prenom, 'fr'));
+    return { ms, el };
+  }
+  function cellule(x) {
+    if (!x) return { cl: 'c-vide', t: '—', csv: '' };
+    if (x.termine) return { cl: 'c-ok', t: '✓ ' + pct(x.score), csv: 'terminé ' + pct(x.score) };
+    return { cl: 'c-encours', t: x.avance ? pct(x.avance) : 'ouvert', csv: (x.avance ? pct(x.avance) + ' fait' : 'ouvert') + (x.score ? ', score ' + pct(x.score) : '') };
+  }
+  function afficher() {
+    document.getElementById('vue').hidden = !bilans.size;
+    const { ms, el } = lignes();
+    let h = '<thead><tr><th class="eleve">Élève</th><th>Classe</th><th>Terminés</th>' + ms.map(m => `<th class="mod" title="${esc(m.titre)}">${m.num || 'Game Map'} · ${esc(m.titre)}</th>`).join('') + '<th>Bilan du</th></tr></thead><tbody>';
+    el.forEach(b => {
+      const faits = ms.filter(m => b.modules[m.id] && b.modules[m.id].termine).length;
+      h += `<tr><td class="eleve">${esc(b.nom)} ${esc(b.prenom)}</td><td>${esc(b.classe)}</td><td>${faits}/${ms.length}</td>` +
+        ms.map(m => { const c = cellule(b.modules[m.id]); return `<td class="${c.cl}">${c.t}</td>`; }).join('') +
+        `<td>${new Date(b.date).toLocaleDateString('fr-FR')}</td></tr>`;
+    });
+    if (!el.length) h += `<tr><td colspan="${ms.length + 4}">Aucun élève pour ce filtre.</td></tr>`;
+    document.getElementById('table').innerHTML = h + '</tbody>';
+  }
+  document.getElementById('csv').onclick = () => {
+    const { ms, el } = lignes();
+    const q = v => '"' + String(v == null ? '' : v).replace(/"/g, '""') + '"';
+    const rows = [['Nom', 'Prénom', 'Classe', 'Terminés', ...ms.map(m => (m.num || 'Game Map') + ' ' + m.titre), 'Bilan du'].map(q).join(';')];
+    el.forEach(b => rows.push([b.nom, b.prenom, b.classe, ms.filter(m => b.modules[m.id] && b.modules[m.id].termine).length + '/' + ms.length,
+      ...ms.map(m => cellule(b.modules[m.id]).csv), new Date(b.date).toLocaleDateString('fr-FR')].map(q).join(';')));
+    const a = document.createElement('a');
+    a.href = URL.createObjectURL(new Blob(['﻿' + rows.join('\r\n')], { type: 'text/csv;charset=utf-8' }));
+    a.download = 'suivi-EMI-' + (fClasse.value || 'toutes-classes') + '-' + fNiveau.value + '.csv';
+    document.body.appendChild(a); a.click(); a.remove();
+  };
+  document.getElementById('vider').onclick = () => { bilans.clear(); info.textContent = ''; afficher(); };
+})();
+</script>
+</body>
+</html>

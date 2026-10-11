@@ -1,0 +1,2917 @@
+{
+ "showTitleScreen": true,
+ "titleScreen": {
+  "titleScreenIntroduction": "<p style=\"text-align:center\"><strong>Le rallye du Tilleul · 4e</strong></p>\n<p style=\"text-align:center\">Neuf étapes, une par livre de l’année, puis un défi. Environ 20 minutes.</p>\n<p style=\"text-align:center;font-size:.8em;color:#666\">Photo : collégiens en atelier, collège de Baozhong (Taïwan) — 褒忠國中 雲端網, Wikimedia Commons, CC BY 2.0.</p>",
+  "titleScreenMedium": {
+   "params": {
+    "decorative": false,
+    "contentName": "Image",
+    "alt": "Des collégiens travaillent en groupe, assis par terre autour de feuilles",
+    "title": "Des collégiens travaillent en groupe",
+    "file": {
+     "path": "images/groupe.jpg",
+     "mime": "image/jpeg",
+     "width": 960,
+     "height": 639,
+     "copyright": {
+      "license": "CC BY",
+      "version": "2.0",
+      "author": "褒忠國中 雲端網",
+      "title": "Group counsel class in Baozhong Junior High School 20121026",
+      "source": "https://commons.wikimedia.org/wiki/File:Group_counsel_class_in_Baozhong_Junior_High_School_20121026.jpg"
+     }
+    }
+   },
+   "library": "H5P.Image 1.1",
+   "subContentId": "b844f925-606e-47b4-b57b-f6fead05efc4",
+   "metadata": {
+    "contentType": "Image",
+    "license": "U",
+    "title": "Collégiens en atelier",
+    "authors": [],
+    "changes": [],
+    "extraTitle": "Collégiens en atelier"
+   }
+  }
+ },
+ "gamemapSteps": {
+  "backgroundImageSettings": {
+   "backgroundColor": "rgb(255, 255, 255)",
+   "backgroundImage": {
+    "path": "images/fond.jpg",
+    "mime": "image/jpeg",
+    "copyright": {
+     "license": "U"
+    },
+    "width": 1600,
+    "height": 900
+   }
+  },
+  "gamemap": {
+   "elements": [
+    {
+     "id": "360afa1b-5997-48b7-8b57-9074bff5cc41",
+     "label": "Départ",
+     "content": {
+      "params": {},
+      "dom": {}
+     },
+     "telemetry": {
+      "x": "4.7",
+      "y": "78.8",
+      "width": "3.6",
+      "height": "6.4"
+     },
+     "neighbors": [
+      "1"
+     ],
+     "canBeStartStage": true,
+     "time": {},
+     "accessRestrictions": {
+      "allOrAnyRestrictionSet": "all",
+      "restrictionSetList": [
+       {
+        "allOrAnyRestriction": "any",
+        "restrictionList": [
+         {
+          "restrictionType": "totalScore",
+          "totalScoreGroup": {
+           "totalScoreOperator": "greaterThan"
+          },
+          "stageScoreGroup": {
+           "stageScoreOperator": "before",
+           "stageScoreId": null
+          },
+          "stageProgressGroup": {
+           "stageProgressOperator": "is",
+           "stageProgressValue": "open",
+           "stageProgressId": null
+          },
+          "timeGroup": {
+           "timeOperator": "before"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     "contentsList": [
+      {
+       "contentType": {
+        "params": {
+         "text": "<p style=\"background-color:#264653;color:#fff;padding:6px 12px;border-radius:6px;margin:0 0 .6em\"><strong>4e · LE RALLYE DU TILLEUL</strong></p>\n<p>Inès et Yanis ont préparé ce rallye pour les nouveaux de la rédaction du <em>Tilleul</em>. Il reprend tes neuf livres d’EMI de l’année, un par étape.</p>\n<ul style=\"line-height:1.7\"><li>Suis la route, de l’entrée du collège jusqu’à la rédaction.</li>\n<li>À chaque étape, un exercice court de rappel. Termine-le pour ouvrir l’étape suivante.</li>\n<li>Une erreur ? Lis l’explication : c’est là que tu révises. Tu peux recommencer une étape autant de fois que tu veux.</li>\n<li>Avant l’arrivée, un défi&nbsp;: les mots croisés de l’année.</li></ul>\n<p>Ferme cette fenêtre, puis clique sur l’étape <strong>4.1</strong>. Bonne route&nbsp;!</p>"
+        },
+        "library": "H5P.AdvancedText 1.1",
+        "subContentId": "915f2c38-6b59-4689-97c3-2ea9a78076d7",
+        "metadata": {
+         "contentType": "Text",
+         "license": "U",
+         "title": "Départ",
+         "authors": [],
+         "changes": [],
+         "extraTitle": "Départ"
+        }
+       }
+      }
+     ],
+     "specialStageExtraLives": 1,
+     "specialStageExtraTime": 1,
+     "specialStageLinkTarget": "_blank",
+     "alwaysVisible": false,
+     "overrideSymbol": false
+    },
+    {
+     "id": "b12a8a38-a336-4d11-b321-cdb4a247b6d5",
+     "label": "4.1 · Mes usages",
+     "content": {
+      "params": {},
+      "dom": {}
+     },
+     "telemetry": {
+      "x": "12.2",
+      "y": "50.8",
+      "width": "3.6",
+      "height": "6.4"
+     },
+     "neighbors": [
+      "0",
+      "2"
+     ],
+     "canBeStartStage": false,
+     "time": {},
+     "accessRestrictions": {
+      "allOrAnyRestrictionSet": "all",
+      "restrictionSetList": [
+       {
+        "allOrAnyRestriction": "any",
+        "restrictionList": [
+         {
+          "restrictionType": "totalScore",
+          "totalScoreGroup": {
+           "totalScoreOperator": "greaterThan"
+          },
+          "stageScoreGroup": {
+           "stageScoreOperator": "before",
+           "stageScoreId": null
+          },
+          "stageProgressGroup": {
+           "stageProgressOperator": "is",
+           "stageProgressValue": "open",
+           "stageProgressId": null
+          },
+          "timeGroup": {
+           "timeOperator": "before"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     "contentsList": [
+      {
+       "contentType": {
+        "params": {
+         "introPage": {
+          "showIntroPage": false,
+          "startButtonText": "Commencer",
+          "title": "4.1 · Mes usages",
+          "introduction": ""
+         },
+         "progressType": "dots",
+         "passPercentage": 50,
+         "questions": [
+          {
+           "params": {
+            "question": "<p><strong>Vrai ou faux ?</strong></p><p>Plus je reçois d'alertes, mieux je suis informé.</p>",
+            "correct": "false",
+            "l10n": {
+             "trueText": "Vrai",
+             "falseText": "Faux",
+             "checkAnswer": "Vérifier",
+             "submitAnswer": "Envoyer",
+             "showSolutionButton": "Voir la solution",
+             "tryAgain": "Recommencer",
+             "score": "Tu as @score point(s) sur @total",
+             "wrongAnswerMessage": "Mauvaise réponse",
+             "correctAnswerMessage": "Bonne réponse",
+             "scoreBarLabel": "Tu as :num point(s) sur :total",
+             "a11yCheck": "Vérifier les réponses.",
+             "a11yShowSolution": "Afficher la solution.",
+             "a11yRetry": "Recommencer la tâche."
+            },
+            "behaviour": {
+             "enableRetry": true,
+             "enableSolutionsButton": true,
+             "enableCheckButton": true,
+             "confirmCheckDialog": false,
+             "confirmRetryDialog": false,
+             "autoCheck": false,
+             "feedbackOnCorrect": "Exact, c’est faux : recevoir plus d’informations ne rend pas mieux informé. Il faut savoir trier.",
+             "feedbackOnWrong": "Non : recevoir plus d’informations ne rend pas mieux informé. Comme Bob, on finit noyé ; il faut savoir trier."
+            },
+            "media": {
+             "disableImageZooming": false
+            },
+            "confirmCheck": {
+             "header": "Terminer ?",
+             "body": "Veux-tu vraiment terminer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Terminer"
+            },
+            "confirmRetry": {
+             "header": "Recommencer ?",
+             "body": "Veux-tu vraiment recommencer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Recommencer"
+            }
+           },
+           "library": "H5P.TrueFalse 1.8",
+           "subContentId": "fe215957-cf52-4eb9-a5fb-6b4a551d081d",
+           "metadata": {
+            "contentType": "True/False Question",
+            "license": "U",
+            "title": "Les alertes",
+            "authors": [],
+            "changes": [],
+            "extraTitle": "Les alertes"
+           }
+          },
+          {
+           "params": {
+            "question": "<p><strong>Vrai ou faux ?</strong></p><p>Une appli gratuite gagne de l'argent en revendant mon attention aux annonceurs.</p>",
+            "correct": "true",
+            "l10n": {
+             "trueText": "Vrai",
+             "falseText": "Faux",
+             "checkAnswer": "Vérifier",
+             "submitAnswer": "Envoyer",
+             "showSolutionButton": "Voir la solution",
+             "tryAgain": "Recommencer",
+             "score": "Tu as @score point(s) sur @total",
+             "wrongAnswerMessage": "Mauvaise réponse",
+             "correctAnswerMessage": "Bonne réponse",
+             "scoreBarLabel": "Tu as :num point(s) sur :total",
+             "a11yCheck": "Vérifier les réponses.",
+             "a11yShowSolution": "Afficher la solution.",
+             "a11yRetry": "Recommencer la tâche."
+            },
+            "behaviour": {
+             "enableRetry": true,
+             "enableSolutionsButton": true,
+             "enableCheckButton": true,
+             "confirmCheckDialog": false,
+             "confirmRetryDialog": false,
+             "autoCheck": false,
+             "feedbackOnCorrect": "Oui : si c’est gratuit, c’est mon attention qui est vendue. Plus je reste, plus l’appli gagne.",
+             "feedbackOnWrong": "Si, c’est vrai : une appli gratuite vit de la publicité. Plus je reste longtemps, plus elle gagne d’argent."
+            },
+            "media": {
+             "disableImageZooming": false
+            },
+            "confirmCheck": {
+             "header": "Terminer ?",
+             "body": "Veux-tu vraiment terminer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Terminer"
+            },
+            "confirmRetry": {
+             "header": "Recommencer ?",
+             "body": "Veux-tu vraiment recommencer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Recommencer"
+            }
+           },
+           "library": "H5P.TrueFalse 1.8",
+           "subContentId": "40da5fa0-311c-4162-8be0-dcbcf77565d1",
+           "metadata": {
+            "contentType": "True/False Question",
+            "license": "U",
+            "title": "L’appli gratuite",
+            "authors": [],
+            "changes": [],
+            "extraTitle": "L’appli gratuite"
+           }
+          },
+          {
+           "params": {
+            "question": "<p><strong>Vrai ou faux ?</strong></p><p>Le défilement sans fin et les notifications sont conçus pour me retenir sur l'appli.</p>",
+            "correct": "true",
+            "l10n": {
+             "trueText": "Vrai",
+             "falseText": "Faux",
+             "checkAnswer": "Vérifier",
+             "submitAnswer": "Envoyer",
+             "showSolutionButton": "Voir la solution",
+             "tryAgain": "Recommencer",
+             "score": "Tu as @score point(s) sur @total",
+             "wrongAnswerMessage": "Mauvaise réponse",
+             "correctAnswerMessage": "Bonne réponse",
+             "scoreBarLabel": "Tu as :num point(s) sur :total",
+             "a11yCheck": "Vérifier les réponses.",
+             "a11yShowSolution": "Afficher la solution.",
+             "a11yRetry": "Recommencer la tâche."
+            },
+            "behaviour": {
+             "enableRetry": true,
+             "enableSolutionsButton": true,
+             "enableCheckButton": true,
+             "confirmCheckDialog": false,
+             "confirmRetryDialog": false,
+             "autoCheck": false,
+             "feedbackOnCorrect": "Oui : ce sont des pièges à attention, comme ceux de Swipo. Si je reste longtemps, ce n’est pas seulement par manque de volonté.",
+             "feedbackOnWrong": "Si, c’est vrai : ce sont des pièges à attention, pensés exprès pour que je reste, comme ceux de Swipo."
+            },
+            "media": {
+             "disableImageZooming": false
+            },
+            "confirmCheck": {
+             "header": "Terminer ?",
+             "body": "Veux-tu vraiment terminer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Terminer"
+            },
+            "confirmRetry": {
+             "header": "Recommencer ?",
+             "body": "Veux-tu vraiment recommencer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Recommencer"
+            }
+           },
+           "library": "H5P.TrueFalse 1.8",
+           "subContentId": "2beb9094-abc2-4211-bc66-7afd2ebada66",
+           "metadata": {
+            "contentType": "True/False Question",
+            "license": "U",
+            "title": "Les pièges",
+            "authors": [],
+            "changes": [],
+            "extraTitle": "Les pièges"
+           }
+          },
+          {
+           "params": {
+            "question": "<p><strong>Vrai ou faux ?</strong></p><p>Une info qui me fait très peur doit être partagée tout de suite.</p>",
+            "correct": "false",
+            "l10n": {
+             "trueText": "Vrai",
+             "falseText": "Faux",
+             "checkAnswer": "Vérifier",
+             "submitAnswer": "Envoyer",
+             "showSolutionButton": "Voir la solution",
+             "tryAgain": "Recommencer",
+             "score": "Tu as @score point(s) sur @total",
+             "wrongAnswerMessage": "Mauvaise réponse",
+             "correctAnswerMessage": "Bonne réponse",
+             "scoreBarLabel": "Tu as :num point(s) sur :total",
+             "a11yCheck": "Vérifier les réponses.",
+             "a11yShowSolution": "Afficher la solution.",
+             "a11yRetry": "Recommencer la tâche."
+            },
+            "behaviour": {
+             "enableRetry": true,
+             "enableSolutionsButton": true,
+             "enableCheckButton": true,
+             "confirmCheckDialog": false,
+             "confirmRetryDialog": false,
+             "autoCheck": false,
+             "feedbackOnCorrect": "Exact, c’est faux : je repère mon émotion, je fais une pause, puis je cherche les faits avant de partager.",
+             "feedbackOnWrong": "Non : une émotion forte est le moment de faire une pause. Je repère mon émotion, puis je cherche les faits."
+            },
+            "media": {
+             "disableImageZooming": false
+            },
+            "confirmCheck": {
+             "header": "Terminer ?",
+             "body": "Veux-tu vraiment terminer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Terminer"
+            },
+            "confirmRetry": {
+             "header": "Recommencer ?",
+             "body": "Veux-tu vraiment recommencer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Recommencer"
+            }
+           },
+           "library": "H5P.TrueFalse 1.8",
+           "subContentId": "bf51d28f-0e47-4e15-9452-bad9aec6e85d",
+           "metadata": {
+            "contentType": "True/False Question",
+            "license": "U",
+            "title": "L’émotion",
+            "authors": [],
+            "changes": [],
+            "extraTitle": "L’émotion"
+           }
+          }
+         ],
+         "disableBackwardsNavigation": false,
+         "randomQuestions": false,
+         "endGame": {
+          "showResultPage": true,
+          "showSolutionButton": true,
+          "showRetryButton": true,
+          "noResultMessage": "Terminé",
+          "message": "Ton résultat :",
+          "scoreBarLabel": "Tu as @finals point(s) sur @totals",
+          "overallFeedback": [
+           {
+            "from": 0,
+            "to": 49,
+            "feedback": "Pas encore : relis les explications des questions ratées, puis recommence."
+           },
+           {
+            "from": 50,
+            "to": 99,
+            "feedback": "Bien ! Regarde les questions que tu as manquées : c’est là que tu apprends."
+           },
+           {
+            "from": 100,
+            "to": 100,
+            "feedback": "Sans faute : tu t’en souviens très bien !"
+           }
+          ],
+          "solutionButtonText": "Voir la solution",
+          "retryButtonText": "Recommencer",
+          "finishButtonText": "Terminer",
+          "submitButtonText": "Envoyer",
+          "showAnimations": false,
+          "skippable": false,
+          "skipButtonText": "Passer la vidéo"
+         },
+         "override": {
+          "checkButton": true
+         },
+         "texts": {
+          "prevButton": "Précédente",
+          "nextButton": "Suivante",
+          "finishButton": "Terminer",
+          "submitButton": "Envoyer",
+          "textualProgress": "Question @current sur @total",
+          "jumpToQuestion": "Question %d sur %total",
+          "questionLabel": "Question",
+          "readSpeakerProgress": "Question @current sur @total",
+          "unansweredText": "Pas encore répondu",
+          "answeredText": "Répondu",
+          "currentQuestionText": "Question en cours",
+          "navigationLabel": "Questions",
+          "questionSetInstruction": "Choisis la question à afficher"
+         }
+        },
+        "library": "H5P.QuestionSet 1.20",
+        "subContentId": "54a5fc99-4c4a-4281-b508-011072c077a4",
+        "metadata": {
+         "contentType": "Question Set",
+         "license": "U",
+         "title": "4.1 · Mes usages",
+         "authors": [],
+         "changes": [],
+         "extraTitle": "4.1 · Mes usages"
+        }
+       }
+      }
+     ],
+     "specialStageExtraLives": 1,
+     "specialStageExtraTime": 1,
+     "specialStageLinkTarget": "_blank",
+     "alwaysVisible": false,
+     "overrideSymbol": false
+    },
+    {
+     "id": "768b7a6a-c292-45a3-ae80-f6c9962adaaa",
+     "label": "4.2 · Qui paie l’info ?",
+     "content": {
+      "params": {},
+      "dom": {}
+     },
+     "telemetry": {
+      "x": "20.2",
+      "y": "21.8",
+      "width": "3.6",
+      "height": "6.4"
+     },
+     "neighbors": [
+      "1",
+      "3"
+     ],
+     "canBeStartStage": false,
+     "time": {},
+     "accessRestrictions": {
+      "allOrAnyRestrictionSet": "all",
+      "restrictionSetList": [
+       {
+        "allOrAnyRestriction": "any",
+        "restrictionList": [
+         {
+          "restrictionType": "totalScore",
+          "totalScoreGroup": {
+           "totalScoreOperator": "greaterThan"
+          },
+          "stageScoreGroup": {
+           "stageScoreOperator": "before",
+           "stageScoreId": null
+          },
+          "stageProgressGroup": {
+           "stageProgressOperator": "is",
+           "stageProgressValue": "open",
+           "stageProgressId": null
+          },
+          "timeGroup": {
+           "timeOperator": "before"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     "contentsList": [
+      {
+       "contentType": {
+        "params": {
+         "taskDescription": "<p><strong>Glisse chaque mot à sa place.</strong> Deux étiquettes sont en trop.</p>",
+         "textField": "Le journal vendu au kiosque est payé par ses *lecteurs\\+Oui, quand j'achète le journal ou que je m'abonne, je le finance.\\-Qui achète le journal au kiosque ?*.\nUne radio gratuite vit souvent de la *publicité\\+Oui, ce sont les annonceurs qui paient.\\-Si la radio est gratuite pour moi, qui la paie ?*.\nRadio France est financée par de l'*argent public\\+Oui, c'est de l'argent de l'État, donc de tous.\\-Radio France est un média de service public.*.\nUn milliardaire qui possède un média en est le *propriétaire\\+Oui, et il peut peser sur ses choix, d'où le risque pour l'indépendance.\\-Il possède le média.*.\nQuand des médias aux points de vue différents existent, on parle de *pluralisme\\+Oui, il permet le débat en démocratie.\\-Pense au mot « pluriel ».*.\nL'*ARCOM\\+Oui, c'est une autorité indépendante.\\-C'est une autorité indépendante, vue au chapitre 4.* régule la télé, la radio et les plateformes.",
+         "overallFeedback": [
+          {
+           "from": 0,
+           "to": 100,
+           "feedback": "Tu as @score sur @total."
+          }
+         ],
+         "checkAnswer": "Vérifier",
+         "submitAnswer": "Envoyer",
+         "tryAgain": "Recommencer",
+         "showSolution": "Voir la solution",
+         "dropZoneIndex": "Zone @index.",
+         "empty": "La zone @index est vide.",
+         "contains": "La zone @index contient @draggable.",
+         "ariaDraggableIndex": "@index sur @count étiquettes.",
+         "tipLabel": "Indice",
+         "correctText": "Juste !",
+         "incorrectText": "Incorrect !",
+         "resetDropTitle": "Retirer le mot",
+         "resetDropDescription": "Veux-tu retirer ce mot de la zone ?",
+         "grabbed": "Étiquette saisie.",
+         "cancelledDragging": "Déplacement annulé.",
+         "correctAnswer": "Bonne réponse :",
+         "feedbackHeader": "Correction",
+         "behaviour": {
+          "enableRetry": true,
+          "enableSolutionsButton": true,
+          "enableCheckButton": true,
+          "instantFeedback": false
+         },
+         "scoreBarLabel": "Tu as :num sur :total points",
+         "a11yCheck": "Vérifier les réponses.",
+         "a11yShowSolution": "Afficher la solution.",
+         "a11yRetry": "Recommencer la tâche.",
+         "distractors": "*censure* *algorithme*"
+        },
+        "library": "H5P.DragText 1.10",
+        "subContentId": "e53eca22-d89b-415e-9489-3efdf48b9bb5",
+        "metadata": {
+         "contentType": "Drag the Words",
+         "license": "U",
+         "title": "4.2 · Qui paie l’information ?",
+         "authors": [],
+         "changes": [],
+         "extraTitle": "4.2 · Qui paie l’information ?"
+        }
+       }
+      }
+     ],
+     "specialStageExtraLives": 1,
+     "specialStageExtraTime": 1,
+     "specialStageLinkTarget": "_blank",
+     "alwaysVisible": false,
+     "overrideSymbol": false
+    },
+    {
+     "id": "d5b7f7a0-0700-42ee-9250-e4d3a54412e7",
+     "label": "4.3 · La ligne éditoriale",
+     "content": {
+      "params": {},
+      "dom": {}
+     },
+     "telemetry": {
+      "x": "29.2",
+      "y": "50.8",
+      "width": "3.6",
+      "height": "6.4"
+     },
+     "neighbors": [
+      "2",
+      "4"
+     ],
+     "canBeStartStage": false,
+     "time": {},
+     "accessRestrictions": {
+      "allOrAnyRestrictionSet": "all",
+      "restrictionSetList": [
+       {
+        "allOrAnyRestriction": "any",
+        "restrictionList": [
+         {
+          "restrictionType": "totalScore",
+          "totalScoreGroup": {
+           "totalScoreOperator": "greaterThan"
+          },
+          "stageScoreGroup": {
+           "stageScoreOperator": "before",
+           "stageScoreId": null
+          },
+          "stageProgressGroup": {
+           "stageProgressOperator": "is",
+           "stageProgressValue": "open",
+           "stageProgressId": null
+          },
+          "timeGroup": {
+           "timeOperator": "before"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     "contentsList": [
+      {
+       "contentType": {
+        "params": {
+         "introPage": {
+          "showIntroPage": false,
+          "startButtonText": "Commencer",
+          "title": "4.3 · La ligne éditoriale",
+          "introduction": ""
+         },
+         "progressType": "dots",
+         "passPercentage": 50,
+         "questions": [
+          {
+           "params": {
+            "question": "<p>Sur la une d’un journal, quel élément présente l’information jugée la <strong>plus importante</strong>&nbsp;?</p>",
+            "answers": [
+             {
+              "text": "<div>La manchette, en haut et en gros</div>",
+              "correct": true,
+              "tipsAndFeedback": {
+               "tip": "",
+               "chosenFeedback": "<div>Oui : sa place et sa taille montrent que la rédaction la juge la plus importante.</div>",
+               "notChosenFeedback": ""
+              }
+             },
+             {
+              "text": "<div>L’oreille, dans un coin du haut</div>",
+              "correct": false,
+              "tipsAndFeedback": {
+               "tip": "",
+               "chosenFeedback": "<div>Non : l’oreille est un petit encadré à côté du titre du journal. L’info principale, c’est la manchette.</div>",
+               "notChosenFeedback": ""
+              }
+             },
+             {
+              "text": "<div>Les appels, en bas de page</div>",
+              "correct": false,
+              "tipsAndFeedback": {
+               "tip": "",
+               "chosenFeedback": "<div>Non : les appels renvoient vers d’autres articles. L’info principale, c’est la manchette.</div>",
+               "notChosenFeedback": ""
+              }
+             },
+             {
+              "text": "<div>La date du jour</div>",
+              "correct": false,
+              "tipsAndFeedback": {
+               "tip": "",
+               "chosenFeedback": "<div>Non : la date situe le numéro. L’info principale, c’est la manchette, en haut et en gros.</div>",
+               "notChosenFeedback": ""
+              }
+             }
+            ],
+            "behaviour": {
+             "enableRetry": true,
+             "enableSolutionsButton": true,
+             "enableCheckButton": true,
+             "type": "single",
+             "singlePoint": false,
+             "randomAnswers": true,
+             "showSolutionsRequiresInput": true,
+             "confirmCheckDialog": false,
+             "confirmRetryDialog": false,
+             "autoCheck": false,
+             "passPercentage": 100,
+             "showScorePoints": true
+            },
+            "UI": {
+             "checkAnswerButton": "Vérifier",
+             "submitAnswerButton": "Envoyer",
+             "showSolutionButton": "Voir la solution",
+             "tryAgainButton": "Recommencer",
+             "tipsLabel": "Indice",
+             "scoreBarLabel": "Tu as :num point(s) sur :total",
+             "tipAvailable": "Indice disponible",
+             "feedbackAvailable": "Explication disponible",
+             "readFeedback": "Lire l'explication",
+             "wrongAnswer": "Mauvaise réponse",
+             "correctAnswer": "Bonne réponse",
+             "shouldCheck": "Il fallait la cocher",
+             "shouldNotCheck": "Il ne fallait pas la cocher",
+             "noInput": "Réponds avant de voir la solution",
+             "a11yCheck": "Vérifier les réponses.",
+             "a11yShowSolution": "Afficher la solution.",
+             "a11yRetry": "Recommencer la tâche."
+            },
+            "media": {
+             "disableImageZooming": false
+            },
+            "overallFeedback": [
+             {
+              "from": 0,
+              "to": 100,
+              "feedback": ""
+             }
+            ],
+            "confirmCheck": {
+             "header": "Terminer ?",
+             "body": "Veux-tu vraiment terminer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Terminer"
+            },
+            "confirmRetry": {
+             "header": "Recommencer ?",
+             "body": "Veux-tu vraiment recommencer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Recommencer"
+            }
+           },
+           "library": "H5P.MultiChoice 1.16",
+           "subContentId": "96742558-f21e-4808-a6dc-3d3d331f14bf",
+           "metadata": {
+            "contentType": "Multiple Choice",
+            "license": "U",
+            "title": "La manchette",
+            "authors": [],
+            "changes": [],
+            "extraTitle": "La manchette"
+           }
+          },
+          {
+           "params": {
+            "question": "<p>Le même jour, le <em>Courrier du Val</em> et <em>Planète Ados</em> n’ont pas la même une. Pourquoi&nbsp;?</p>",
+            "answers": [
+             {
+              "text": "<div>Chacun choisit ses sujets et ses angles selon son public : c’est sa ligne éditoriale</div>",
+              "correct": true,
+              "tipsAndFeedback": {
+               "tip": "",
+               "chosenFeedback": "<div>Oui : deux hiérarchies différentes ne veulent pas dire que l’un des deux ment.</div>",
+               "notChosenFeedback": ""
+              }
+             },
+             {
+              "text": "<div>L’un des deux journaux ment</div>",
+              "correct": false,
+              "tipsAndFeedback": {
+               "tip": "",
+               "chosenFeedback": "<div>Non : ils peuvent dire vrai tous les deux. Ils ne s’adressent pas au même public : c’est leur ligne éditoriale.</div>",
+               "notChosenFeedback": ""
+              }
+             },
+             {
+              "text": "<div>C’est le hasard</div>",
+              "correct": false,
+              "tipsAndFeedback": {
+               "tip": "",
+               "chosenFeedback": "<div>Non : une une est choisie avec soin, selon l’importance, l’intérêt pour le public, l’originalité et ce qui fait vendre.</div>",
+               "notChosenFeedback": ""
+              }
+             },
+             {
+              "text": "<div>L’un des deux a reçu les informations en retard</div>",
+              "correct": false,
+              "tipsAndFeedback": {
+               "tip": "",
+               "chosenFeedback": "<div>Non : un média ne publie pas les informations dans l’ordre où il les reçoit. Il les classe selon sa ligne éditoriale.</div>",
+               "notChosenFeedback": ""
+              }
+             }
+            ],
+            "behaviour": {
+             "enableRetry": true,
+             "enableSolutionsButton": true,
+             "enableCheckButton": true,
+             "type": "single",
+             "singlePoint": false,
+             "randomAnswers": true,
+             "showSolutionsRequiresInput": true,
+             "confirmCheckDialog": false,
+             "confirmRetryDialog": false,
+             "autoCheck": false,
+             "passPercentage": 100,
+             "showScorePoints": true
+            },
+            "UI": {
+             "checkAnswerButton": "Vérifier",
+             "submitAnswerButton": "Envoyer",
+             "showSolutionButton": "Voir la solution",
+             "tryAgainButton": "Recommencer",
+             "tipsLabel": "Indice",
+             "scoreBarLabel": "Tu as :num point(s) sur :total",
+             "tipAvailable": "Indice disponible",
+             "feedbackAvailable": "Explication disponible",
+             "readFeedback": "Lire l'explication",
+             "wrongAnswer": "Mauvaise réponse",
+             "correctAnswer": "Bonne réponse",
+             "shouldCheck": "Il fallait la cocher",
+             "shouldNotCheck": "Il ne fallait pas la cocher",
+             "noInput": "Réponds avant de voir la solution",
+             "a11yCheck": "Vérifier les réponses.",
+             "a11yShowSolution": "Afficher la solution.",
+             "a11yRetry": "Recommencer la tâche."
+            },
+            "media": {
+             "disableImageZooming": false
+            },
+            "overallFeedback": [
+             {
+              "from": 0,
+              "to": 100,
+              "feedback": ""
+             }
+            ],
+            "confirmCheck": {
+             "header": "Terminer ?",
+             "body": "Veux-tu vraiment terminer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Terminer"
+            },
+            "confirmRetry": {
+             "header": "Recommencer ?",
+             "body": "Veux-tu vraiment recommencer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Recommencer"
+            }
+           },
+           "library": "H5P.MultiChoice 1.16",
+           "subContentId": "81a91303-a100-410f-9308-8ac49d574b32",
+           "metadata": {
+            "contentType": "Multiple Choice",
+            "license": "U",
+            "title": "Deux unes",
+            "authors": [],
+            "changes": [],
+            "extraTitle": "Deux unes"
+           }
+          },
+          {
+           "params": {
+            "question": "<p>Lequel de ces genres journalistiques <strong>donne un avis</strong>&nbsp;?</p>",
+            "answers": [
+             {
+              "text": "<div>L’éditorial</div>",
+              "correct": true,
+              "tipsAndFeedback": {
+               "tip": "",
+               "chosenFeedback": "<div>Oui : l’éditorial donne l’avis de la rédaction ; c’est un genre d’opinion, comme la tribune.</div>",
+               "notChosenFeedback": ""
+              }
+             },
+             {
+              "text": "<div>Le reportage</div>",
+              "correct": false,
+              "tipsAndFeedback": {
+               "tip": "",
+               "chosenFeedback": "<div>Non : le reportage raconte ce que le journaliste a vu sur le terrain, sans donner son avis.</div>",
+               "notChosenFeedback": ""
+              }
+             },
+             {
+              "text": "<div>La brève</div>",
+              "correct": false,
+              "tipsAndFeedback": {
+               "tip": "",
+               "chosenFeedback": "<div>Non : la brève donne un fait en quelques lignes, sans avis.</div>",
+               "notChosenFeedback": ""
+              }
+             },
+             {
+              "text": "<div>Le compte rendu</div>",
+              "correct": false,
+              "tipsAndFeedback": {
+               "tip": "",
+               "chosenFeedback": "<div>Non : le compte rendu raconte ce qui s’est passé, sans avis. Seuls les genres d’opinion en donnent un.</div>",
+               "notChosenFeedback": ""
+              }
+             }
+            ],
+            "behaviour": {
+             "enableRetry": true,
+             "enableSolutionsButton": true,
+             "enableCheckButton": true,
+             "type": "single",
+             "singlePoint": false,
+             "randomAnswers": true,
+             "showSolutionsRequiresInput": true,
+             "confirmCheckDialog": false,
+             "confirmRetryDialog": false,
+             "autoCheck": false,
+             "passPercentage": 100,
+             "showScorePoints": true
+            },
+            "UI": {
+             "checkAnswerButton": "Vérifier",
+             "submitAnswerButton": "Envoyer",
+             "showSolutionButton": "Voir la solution",
+             "tryAgainButton": "Recommencer",
+             "tipsLabel": "Indice",
+             "scoreBarLabel": "Tu as :num point(s) sur :total",
+             "tipAvailable": "Indice disponible",
+             "feedbackAvailable": "Explication disponible",
+             "readFeedback": "Lire l'explication",
+             "wrongAnswer": "Mauvaise réponse",
+             "correctAnswer": "Bonne réponse",
+             "shouldCheck": "Il fallait la cocher",
+             "shouldNotCheck": "Il ne fallait pas la cocher",
+             "noInput": "Réponds avant de voir la solution",
+             "a11yCheck": "Vérifier les réponses.",
+             "a11yShowSolution": "Afficher la solution.",
+             "a11yRetry": "Recommencer la tâche."
+            },
+            "media": {
+             "disableImageZooming": false
+            },
+            "overallFeedback": [
+             {
+              "from": 0,
+              "to": 100,
+              "feedback": ""
+             }
+            ],
+            "confirmCheck": {
+             "header": "Terminer ?",
+             "body": "Veux-tu vraiment terminer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Terminer"
+            },
+            "confirmRetry": {
+             "header": "Recommencer ?",
+             "body": "Veux-tu vraiment recommencer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Recommencer"
+            }
+           },
+           "library": "H5P.MultiChoice 1.16",
+           "subContentId": "1221c15e-2760-4986-9db1-53cdbb84ac6a",
+           "metadata": {
+            "contentType": "Multiple Choice",
+            "license": "U",
+            "title": "Les genres",
+            "authors": [],
+            "changes": [],
+            "extraTitle": "Les genres"
+           }
+          }
+         ],
+         "disableBackwardsNavigation": false,
+         "randomQuestions": false,
+         "endGame": {
+          "showResultPage": true,
+          "showSolutionButton": true,
+          "showRetryButton": true,
+          "noResultMessage": "Terminé",
+          "message": "Ton résultat :",
+          "scoreBarLabel": "Tu as @finals point(s) sur @totals",
+          "overallFeedback": [
+           {
+            "from": 0,
+            "to": 49,
+            "feedback": "Pas encore : relis les explications des questions ratées, puis recommence."
+           },
+           {
+            "from": 50,
+            "to": 99,
+            "feedback": "Bien ! Regarde les questions que tu as manquées : c’est là que tu apprends."
+           },
+           {
+            "from": 100,
+            "to": 100,
+            "feedback": "Sans faute : tu t’en souviens très bien !"
+           }
+          ],
+          "solutionButtonText": "Voir la solution",
+          "retryButtonText": "Recommencer",
+          "finishButtonText": "Terminer",
+          "submitButtonText": "Envoyer",
+          "showAnimations": false,
+          "skippable": false,
+          "skipButtonText": "Passer la vidéo"
+         },
+         "override": {
+          "checkButton": true
+         },
+         "texts": {
+          "prevButton": "Précédente",
+          "nextButton": "Suivante",
+          "finishButton": "Terminer",
+          "submitButton": "Envoyer",
+          "textualProgress": "Question @current sur @total",
+          "jumpToQuestion": "Question %d sur %total",
+          "questionLabel": "Question",
+          "readSpeakerProgress": "Question @current sur @total",
+          "unansweredText": "Pas encore répondu",
+          "answeredText": "Répondu",
+          "currentQuestionText": "Question en cours",
+          "navigationLabel": "Questions",
+          "questionSetInstruction": "Choisis la question à afficher"
+         }
+        },
+        "library": "H5P.QuestionSet 1.20",
+        "subContentId": "4d1ae0fc-134d-40f9-b80d-bd51f1cd88b9",
+        "metadata": {
+         "contentType": "Question Set",
+         "license": "U",
+         "title": "4.3 · La ligne éditoriale",
+         "authors": [],
+         "changes": [],
+         "extraTitle": "4.3 · La ligne éditoriale"
+        }
+       }
+      }
+     ],
+     "specialStageExtraLives": 1,
+     "specialStageExtraTime": 1,
+     "specialStageLinkTarget": "_blank",
+     "alwaysVisible": false,
+     "overrideSymbol": false
+    },
+    {
+     "id": "40e5fabf-6ad2-4ebf-ab47-ff110871128f",
+     "label": "4.4 · Les bons outils",
+     "content": {
+      "params": {},
+      "dom": {}
+     },
+     "telemetry": {
+      "x": "39.2",
+      "y": "74.8",
+      "width": "3.6",
+      "height": "6.4"
+     },
+     "neighbors": [
+      "3",
+      "5"
+     ],
+     "canBeStartStage": false,
+     "time": {},
+     "accessRestrictions": {
+      "allOrAnyRestrictionSet": "all",
+      "restrictionSetList": [
+       {
+        "allOrAnyRestriction": "any",
+        "restrictionList": [
+         {
+          "restrictionType": "totalScore",
+          "totalScoreGroup": {
+           "totalScoreOperator": "greaterThan"
+          },
+          "stageScoreGroup": {
+           "stageScoreOperator": "before",
+           "stageScoreId": null
+          },
+          "stageProgressGroup": {
+           "stageProgressOperator": "is",
+           "stageProgressValue": "open",
+           "stageProgressId": null
+          },
+          "timeGroup": {
+           "timeOperator": "before"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     "contentsList": [
+      {
+       "contentType": {
+        "params": {
+         "text": "<p><strong>Yanis prépare son dossier sur le sommeil des ados.</strong> Complète ses notes de méthode.</p>",
+         "questions": [
+          "<p>Pour chercher l’expression exacte « sommeil des adolescents », je la mets entre *guillemets*.</p>",
+          "<p>Pour écarter les pages qui parlent de matelas, j’écris le signe *moins/-* juste devant le mot matelas.</p>",
+          "<p>Pour chercher seulement sur un site précis, j’utilise l’opérateur *site*.</p>",
+          "<p>Pour trouver des images que j’ai le droit de réutiliser, j’utilise le filtre *droits d’usage/droits d'usage/droits*.</p>",
+          "<p>Une IA générative produit un texte, mais ce texte n’est pas une *source*&nbsp;: je vérifie chaque information.</p>"
+         ],
+         "overallFeedback": [
+          {
+           "from": 0,
+           "to": 59,
+           "feedback": "Tu as @score sur @total. Regarde les bonnes réponses : ce sont les outils des cartes du chapitre 3."
+          },
+          {
+           "from": 60,
+           "to": 99,
+           "feedback": "Tu as @score sur @total. Presque ! Regarde la bonne réponse de chaque trou raté."
+          },
+          {
+           "from": 100,
+           "to": 100,
+           "feedback": "Tu as @score sur @total : tu maîtrises les outils du chercheur."
+          }
+         ],
+         "showSolutions": "Voir la solution",
+         "tryAgain": "Recommencer",
+         "checkAnswer": "Vérifier",
+         "submitAnswer": "Envoyer",
+         "notFilledOut": "Remplis d'abord tous les trous.",
+         "answerIsCorrect": "« :ans » est juste",
+         "answerIsWrong": "« :ans » est faux",
+         "answeredCorrectly": "Réponse juste",
+         "answeredIncorrectly": "Réponse fausse",
+         "solutionLabel": "Bonne réponse :",
+         "inputLabel": "Trou @num sur @total",
+         "inputHasTipLabel": "Indice disponible",
+         "tipLabel": "Indice",
+         "behaviour": {
+          "enableRetry": true,
+          "enableSolutionsButton": true,
+          "enableCheckButton": true,
+          "autoCheck": false,
+          "caseSensitive": false,
+          "showSolutionsRequiresInput": true,
+          "separateLines": false,
+          "confirmCheckDialog": false,
+          "confirmRetryDialog": false,
+          "acceptSpellingErrors": true
+         },
+         "scoreBarLabel": "Tu as :num point(s) sur :total",
+         "a11yCheck": "Vérifier les réponses.",
+         "a11yShowSolution": "Afficher la solution.",
+         "a11yRetry": "Recommencer la tâche.",
+         "a11yCheckingModeHeader": "Mode correction",
+         "confirmCheck": {
+          "header": "Terminer ?",
+          "body": "Veux-tu vraiment terminer ?",
+          "cancelLabel": "Annuler",
+          "confirmLabel": "Terminer"
+         },
+         "confirmRetry": {
+          "header": "Recommencer ?",
+          "body": "Veux-tu vraiment recommencer ?",
+          "cancelLabel": "Annuler",
+          "confirmLabel": "Recommencer"
+         }
+        },
+        "library": "H5P.Blanks 1.14",
+        "subContentId": "91501608-5193-4349-a42d-1aeb576c9341",
+        "metadata": {
+         "contentType": "Fill in the Blanks",
+         "license": "U",
+         "title": "4.4 · Chercher avec les bons outils",
+         "authors": [],
+         "changes": [],
+         "extraTitle": "4.4 · Chercher avec les bons outils"
+        }
+       }
+      }
+     ],
+     "specialStageExtraLives": 1,
+     "specialStageExtraTime": 1,
+     "specialStageLinkTarget": "_blank",
+     "alwaysVisible": false,
+     "overrideSymbol": false
+    },
+    {
+     "id": "ac397733-aff5-4ad4-b5b9-e9b076ae1ba0",
+     "label": "4.5 · Organiser sa recherche",
+     "content": {
+      "params": {},
+      "dom": {}
+     },
+     "telemetry": {
+      "x": "47.2",
+      "y": "44.8",
+      "width": "3.6",
+      "height": "6.4"
+     },
+     "neighbors": [
+      "4",
+      "6"
+     ],
+     "canBeStartStage": false,
+     "time": {},
+     "accessRestrictions": {
+      "allOrAnyRestrictionSet": "all",
+      "restrictionSetList": [
+       {
+        "allOrAnyRestriction": "any",
+        "restrictionList": [
+         {
+          "restrictionType": "totalScore",
+          "totalScoreGroup": {
+           "totalScoreOperator": "greaterThan"
+          },
+          "stageScoreGroup": {
+           "stageScoreOperator": "before",
+           "stageScoreId": null
+          },
+          "stageProgressGroup": {
+           "stageProgressOperator": "is",
+           "stageProgressValue": "open",
+           "stageProgressId": null
+          },
+          "timeGroup": {
+           "timeOperator": "before"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     "contentsList": [
+      {
+       "contentType": {
+        "params": {
+         "introPage": {
+          "showIntroPage": false,
+          "startButtonText": "Commencer",
+          "title": "4.5 · Organiser sa recherche",
+          "introduction": ""
+         },
+         "progressType": "dots",
+         "passPercentage": 50,
+         "questions": [
+          {
+           "params": {
+            "question": "<p>Inès doit faire un exposé sur le gaspillage à la cantine. Que fait-elle <strong>en premier</strong>&nbsp;?</p>",
+            "answers": [
+             {
+              "text": "<div>Elle regarde le temps dont elle dispose et ce qu’on attend d’elle</div>",
+              "correct": true,
+              "tipsAndFeedback": {
+               "tip": "",
+               "chosenFeedback": "<div>Oui : le temps et la consigne décident de la façon de chercher.</div>",
+               "notChosenFeedback": ""
+              }
+             },
+             {
+              "text": "<div>Elle tape le sujet dans un moteur et garde le premier résultat</div>",
+              "correct": false,
+              "tipsAndFeedback": {
+               "tip": "",
+               "chosenFeedback": "<div>Non : sans savoir ce qu’on attend d’elle, elle risque le hors-sujet. Elle regarde d’abord le temps et la consigne.</div>",
+               "notChosenFeedback": ""
+              }
+             },
+             {
+              "text": "<div>Elle demande à une IA d’écrire l’exposé</div>",
+              "correct": false,
+              "tipsAndFeedback": {
+               "tip": "",
+               "chosenFeedback": "<div>Non : l’IA peut aider à trouver des questions, mais pas faire le travail. D’abord, le temps et la consigne.</div>",
+               "notChosenFeedback": ""
+              }
+             }
+            ],
+            "behaviour": {
+             "enableRetry": true,
+             "enableSolutionsButton": true,
+             "enableCheckButton": true,
+             "type": "single",
+             "singlePoint": false,
+             "randomAnswers": true,
+             "showSolutionsRequiresInput": true,
+             "confirmCheckDialog": false,
+             "confirmRetryDialog": false,
+             "autoCheck": false,
+             "passPercentage": 100,
+             "showScorePoints": true
+            },
+            "UI": {
+             "checkAnswerButton": "Vérifier",
+             "submitAnswerButton": "Envoyer",
+             "showSolutionButton": "Voir la solution",
+             "tryAgainButton": "Recommencer",
+             "tipsLabel": "Indice",
+             "scoreBarLabel": "Tu as :num point(s) sur :total",
+             "tipAvailable": "Indice disponible",
+             "feedbackAvailable": "Explication disponible",
+             "readFeedback": "Lire l'explication",
+             "wrongAnswer": "Mauvaise réponse",
+             "correctAnswer": "Bonne réponse",
+             "shouldCheck": "Il fallait la cocher",
+             "shouldNotCheck": "Il ne fallait pas la cocher",
+             "noInput": "Réponds avant de voir la solution",
+             "a11yCheck": "Vérifier les réponses.",
+             "a11yShowSolution": "Afficher la solution.",
+             "a11yRetry": "Recommencer la tâche."
+            },
+            "media": {
+             "disableImageZooming": false
+            },
+            "overallFeedback": [
+             {
+              "from": 0,
+              "to": 100,
+              "feedback": ""
+             }
+            ],
+            "confirmCheck": {
+             "header": "Terminer ?",
+             "body": "Veux-tu vraiment terminer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Terminer"
+            },
+            "confirmRetry": {
+             "header": "Recommencer ?",
+             "body": "Veux-tu vraiment recommencer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Recommencer"
+            }
+           },
+           "library": "H5P.MultiChoice 1.16",
+           "subContentId": "b8df635a-ef6d-430a-81fb-56c9987882d3",
+           "metadata": {
+            "contentType": "Multiple Choice",
+            "license": "U",
+            "title": "Par où commencer",
+            "authors": [],
+            "changes": [],
+            "extraTitle": "Par où commencer"
+           }
+          },
+          {
+           "params": {
+            "question": "<p>Pour savoir combien de pain est jeté chaque jour à la cantine du Tilleul, le meilleur moyen est de…</p>",
+            "answers": [
+             {
+              "text": "<div>enquêter soi-même, en pesant le pain jeté</div>",
+              "correct": true,
+              "tipsAndFeedback": {
+               "tip": "",
+               "chosenFeedback": "<div>Oui : cette information n’existe nulle part ailleurs. Une pesée faite au collège est une vraie information.</div>",
+               "notChosenFeedback": ""
+              }
+             },
+             {
+              "text": "<div>chercher sur un moteur de recherche</div>",
+              "correct": false,
+              "tipsAndFeedback": {
+               "tip": "",
+               "chosenFeedback": "<div>Non : aucun site ne connaît les chiffres de ta cantine. Il faut enquêter soi-même.</div>",
+               "notChosenFeedback": ""
+              }
+             },
+             {
+              "text": "<div>lire un livre sur le gaspillage</div>",
+              "correct": false,
+              "tipsAndFeedback": {
+               "tip": "",
+               "chosenFeedback": "<div>Non : un livre donne des chiffres généraux, pas ceux du Tilleul. Il faut enquêter soi-même.</div>",
+               "notChosenFeedback": ""
+              }
+             }
+            ],
+            "behaviour": {
+             "enableRetry": true,
+             "enableSolutionsButton": true,
+             "enableCheckButton": true,
+             "type": "single",
+             "singlePoint": false,
+             "randomAnswers": true,
+             "showSolutionsRequiresInput": true,
+             "confirmCheckDialog": false,
+             "confirmRetryDialog": false,
+             "autoCheck": false,
+             "passPercentage": 100,
+             "showScorePoints": true
+            },
+            "UI": {
+             "checkAnswerButton": "Vérifier",
+             "submitAnswerButton": "Envoyer",
+             "showSolutionButton": "Voir la solution",
+             "tryAgainButton": "Recommencer",
+             "tipsLabel": "Indice",
+             "scoreBarLabel": "Tu as :num point(s) sur :total",
+             "tipAvailable": "Indice disponible",
+             "feedbackAvailable": "Explication disponible",
+             "readFeedback": "Lire l'explication",
+             "wrongAnswer": "Mauvaise réponse",
+             "correctAnswer": "Bonne réponse",
+             "shouldCheck": "Il fallait la cocher",
+             "shouldNotCheck": "Il ne fallait pas la cocher",
+             "noInput": "Réponds avant de voir la solution",
+             "a11yCheck": "Vérifier les réponses.",
+             "a11yShowSolution": "Afficher la solution.",
+             "a11yRetry": "Recommencer la tâche."
+            },
+            "media": {
+             "disableImageZooming": false
+            },
+            "overallFeedback": [
+             {
+              "from": 0,
+              "to": 100,
+              "feedback": ""
+             }
+            ],
+            "confirmCheck": {
+             "header": "Terminer ?",
+             "body": "Veux-tu vraiment terminer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Terminer"
+            },
+            "confirmRetry": {
+             "header": "Recommencer ?",
+             "body": "Veux-tu vraiment recommencer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Recommencer"
+            }
+           },
+           "library": "H5P.MultiChoice 1.16",
+           "subContentId": "21d2d86b-fcc9-4216-907f-d30194ff288a",
+           "metadata": {
+            "contentType": "Multiple Choice",
+            "license": "U",
+            "title": "Où trouver la réponse",
+            "authors": [],
+            "changes": [],
+            "extraTitle": "Où trouver la réponse"
+           }
+          },
+          {
+           "params": {
+            "question": "<p>Vrai ou faux&nbsp;? Si une IA me propose sept questions sur mon sujet, je dois toutes les traiter.</p>",
+            "correct": "false",
+            "l10n": {
+             "trueText": "Vrai",
+             "falseText": "Faux",
+             "checkAnswer": "Vérifier",
+             "submitAnswer": "Envoyer",
+             "showSolutionButton": "Voir la solution",
+             "tryAgain": "Recommencer",
+             "score": "Tu as @score point(s) sur @total",
+             "wrongAnswerMessage": "Mauvaise réponse",
+             "correctAnswerMessage": "Bonne réponse",
+             "scoreBarLabel": "Tu as :num point(s) sur :total",
+             "a11yCheck": "Vérifier les réponses.",
+             "a11yShowSolution": "Afficher la solution.",
+             "a11yRetry": "Recommencer la tâche."
+            },
+            "behaviour": {
+             "enableRetry": true,
+             "enableSolutionsButton": true,
+             "enableCheckButton": true,
+             "confirmCheckDialog": false,
+             "confirmRetryDialog": false,
+             "autoCheck": false,
+             "feedbackOnCorrect": "Exact, c’est faux : c’est moi qui trie, grâce à l’angle de mon sujet. J’écarte le hors-sujet.",
+             "feedbackOnWrong": "Non : c’est moi qui trie. L’angle de mon sujet me permet d’écarter les questions hors sujet."
+            },
+            "media": {
+             "disableImageZooming": false
+            },
+            "confirmCheck": {
+             "header": "Terminer ?",
+             "body": "Veux-tu vraiment terminer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Terminer"
+            },
+            "confirmRetry": {
+             "header": "Recommencer ?",
+             "body": "Veux-tu vraiment recommencer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Recommencer"
+            }
+           },
+           "library": "H5P.TrueFalse 1.8",
+           "subContentId": "c7afffca-88e2-4423-bc33-69b9d35cd3bc",
+           "metadata": {
+            "contentType": "True/False Question",
+            "license": "U",
+            "title": "L’IA et les questions",
+            "authors": [],
+            "changes": [],
+            "extraTitle": "L’IA et les questions"
+           }
+          },
+          {
+           "params": {
+            "question": "<p>Vrai ou faux&nbsp;? Le QQOQCCP (qui, quoi, où, quand, comment, combien, pourquoi) aide à faire le tour d’un sujet.</p>",
+            "correct": "true",
+            "l10n": {
+             "trueText": "Vrai",
+             "falseText": "Faux",
+             "checkAnswer": "Vérifier",
+             "submitAnswer": "Envoyer",
+             "showSolutionButton": "Voir la solution",
+             "tryAgain": "Recommencer",
+             "score": "Tu as @score point(s) sur @total",
+             "wrongAnswerMessage": "Mauvaise réponse",
+             "correctAnswerMessage": "Bonne réponse",
+             "scoreBarLabel": "Tu as :num point(s) sur :total",
+             "a11yCheck": "Vérifier les réponses.",
+             "a11yShowSolution": "Afficher la solution.",
+             "a11yRetry": "Recommencer la tâche."
+            },
+            "behaviour": {
+             "enableRetry": true,
+             "enableSolutionsButton": true,
+             "enableCheckButton": true,
+             "confirmCheckDialog": false,
+             "confirmRetryDialog": false,
+             "autoCheck": false,
+             "feedbackOnCorrect": "Oui : ces sept questions aident à ne rien oublier. Ensuite, l’angle permet de choisir.",
+             "feedbackOnWrong": "Si, c’est vrai : ces sept questions aident à faire le tour du sujet. Ensuite, l’angle permet de choisir."
+            },
+            "media": {
+             "disableImageZooming": false
+            },
+            "confirmCheck": {
+             "header": "Terminer ?",
+             "body": "Veux-tu vraiment terminer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Terminer"
+            },
+            "confirmRetry": {
+             "header": "Recommencer ?",
+             "body": "Veux-tu vraiment recommencer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Recommencer"
+            }
+           },
+           "library": "H5P.TrueFalse 1.8",
+           "subContentId": "080e53ea-b753-441f-a995-0f0657bc4e44",
+           "metadata": {
+            "contentType": "True/False Question",
+            "license": "U",
+            "title": "Le QQOQCCP",
+            "authors": [],
+            "changes": [],
+            "extraTitle": "Le QQOQCCP"
+           }
+          }
+         ],
+         "disableBackwardsNavigation": false,
+         "randomQuestions": false,
+         "endGame": {
+          "showResultPage": true,
+          "showSolutionButton": true,
+          "showRetryButton": true,
+          "noResultMessage": "Terminé",
+          "message": "Ton résultat :",
+          "scoreBarLabel": "Tu as @finals point(s) sur @totals",
+          "overallFeedback": [
+           {
+            "from": 0,
+            "to": 49,
+            "feedback": "Pas encore : relis les explications des questions ratées, puis recommence."
+           },
+           {
+            "from": 50,
+            "to": 99,
+            "feedback": "Bien ! Regarde les questions que tu as manquées : c’est là que tu apprends."
+           },
+           {
+            "from": 100,
+            "to": 100,
+            "feedback": "Sans faute : tu t’en souviens très bien !"
+           }
+          ],
+          "solutionButtonText": "Voir la solution",
+          "retryButtonText": "Recommencer",
+          "finishButtonText": "Terminer",
+          "submitButtonText": "Envoyer",
+          "showAnimations": false,
+          "skippable": false,
+          "skipButtonText": "Passer la vidéo"
+         },
+         "override": {
+          "checkButton": true
+         },
+         "texts": {
+          "prevButton": "Précédente",
+          "nextButton": "Suivante",
+          "finishButton": "Terminer",
+          "submitButton": "Envoyer",
+          "textualProgress": "Question @current sur @total",
+          "jumpToQuestion": "Question %d sur %total",
+          "questionLabel": "Question",
+          "readSpeakerProgress": "Question @current sur @total",
+          "unansweredText": "Pas encore répondu",
+          "answeredText": "Répondu",
+          "currentQuestionText": "Question en cours",
+          "navigationLabel": "Questions",
+          "questionSetInstruction": "Choisis la question à afficher"
+         }
+        },
+        "library": "H5P.QuestionSet 1.20",
+        "subContentId": "4ba56422-ec37-4638-bffe-2ded0518bb92",
+        "metadata": {
+         "contentType": "Question Set",
+         "license": "U",
+         "title": "4.5 · Organiser sa recherche",
+         "authors": [],
+         "changes": [],
+         "extraTitle": "4.5 · Organiser sa recherche"
+        }
+       }
+      }
+     ],
+     "specialStageExtraLives": 1,
+     "specialStageExtraTime": 1,
+     "specialStageLinkTarget": "_blank",
+     "alwaysVisible": false,
+     "overrideSymbol": false
+    },
+    {
+     "id": "89764094-0934-44b9-a7c6-bfbf1c6a4d4d",
+     "label": "4.6 · Info ou intox ?",
+     "content": {
+      "params": {},
+      "dom": {}
+     },
+     "telemetry": {
+      "x": "55.2",
+      "y": "17.8",
+      "width": "3.6",
+      "height": "6.4"
+     },
+     "neighbors": [
+      "5",
+      "7"
+     ],
+     "canBeStartStage": false,
+     "time": {},
+     "accessRestrictions": {
+      "allOrAnyRestrictionSet": "all",
+      "restrictionSetList": [
+       {
+        "allOrAnyRestriction": "any",
+        "restrictionList": [
+         {
+          "restrictionType": "totalScore",
+          "totalScoreGroup": {
+           "totalScoreOperator": "greaterThan"
+          },
+          "stageScoreGroup": {
+           "stageScoreOperator": "before",
+           "stageScoreId": null
+          },
+          "stageProgressGroup": {
+           "stageProgressOperator": "is",
+           "stageProgressValue": "open",
+           "stageProgressId": null
+          },
+          "timeGroup": {
+           "timeOperator": "before"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     "contentsList": [
+      {
+       "contentType": {
+        "params": {
+         "choices": [
+          {
+           "question": "<p>Un site invente une phrase d’un ministre pour attirer des clics et gagner de l’argent avec la publicité.</p>",
+           "answers": [
+            "<p>Désinformation</p>",
+            "<p>Mésinformation</p>",
+            "<p>Malinformation</p>"
+           ]
+          },
+          {
+           "question": "<p>Mamie transfère, inquiète, une vieille alerte qui n’existe plus, persuadée de rendre service.</p>",
+           "answers": [
+            "<p>Mésinformation</p>",
+            "<p>Désinformation</p>",
+            "<p>Malinformation</p>"
+           ]
+          },
+          {
+           "question": "<p>Un élève publie dans le groupe de classe le vrai bulletin de notes d’un camarade, pour se moquer de lui.</p>",
+           "answers": [
+            "<p>Malinformation</p>",
+            "<p>Désinformation</p>",
+            "<p>Mésinformation</p>"
+           ]
+          },
+          {
+           "question": "<p>Yanis recopie de bonne foi un chiffre qu’il a mal lu dans un article.</p>",
+           "answers": [
+            "<p>Mésinformation</p>",
+            "<p>Désinformation</p>",
+            "<p>Malinformation</p>"
+           ]
+          },
+          {
+           "question": "<p>Un compte fabrique la fausse photo d’une inondation pour faire peur avant une élection.</p>",
+           "answers": [
+            "<p>Désinformation</p>",
+            "<p>Mésinformation</p>",
+            "<p>Malinformation</p>"
+           ]
+          }
+         ],
+         "overallFeedback": [
+          {
+           "from": 0,
+           "to": 70,
+           "feedback": "Rappel : désinformation = faux et exprès ; mésinformation = faux mais de bonne foi ; malinformation = vrai mais utilisé pour nuire. Recommence !"
+          },
+          {
+           "from": 71,
+           "to": 99,
+           "feedback": "Presque ! Rappel : désinformation = faux et exprès ; mésinformation = faux de bonne foi ; malinformation = vrai pour nuire."
+          },
+          {
+           "from": 100,
+           "to": 100,
+           "feedback": "Sans faute : tu repères à la fois la vérité du message et l’intention de celui qui le diffuse."
+          }
+         ],
+         "behaviour": {
+          "autoContinue": true,
+          "timeoutCorrect": 1500,
+          "timeoutWrong": 3000,
+          "soundEffectsEnabled": false,
+          "enableRetry": true,
+          "enableSolutionsButton": true,
+          "passPercentage": 60
+         },
+         "l10n": {
+          "nextButtonLabel": "Cas suivant",
+          "showSolutionButtonLabel": "Voir les réponses",
+          "retryButtonLabel": "Recommencer",
+          "solutionViewTitle": "Les bonnes réponses",
+          "correctText": "Juste !",
+          "incorrectText": "Pas tout à fait…",
+          "shouldSelect": "Il fallait choisir cette réponse",
+          "shouldNotSelect": "Il ne fallait pas choisir cette réponse",
+          "muteButtonLabel": "Couper le son",
+          "closeButtonLabel": "Fermer",
+          "slideOfTotal": "Cas :num sur :total",
+          "scoreBarLabel": "Tu as :num point(s) sur :total",
+          "solutionListQuestionNumber": "Cas :num",
+          "a11yShowSolution": "Afficher les bonnes réponses.",
+          "a11yRetry": "Recommencer l’activité depuis le début."
+         }
+        },
+        "library": "H5P.SingleChoiceSet 1.11",
+        "subContentId": "7bce5c0f-77fb-458b-8076-ccadd8293d8e",
+        "metadata": {
+         "contentType": "Single Choice Set",
+         "license": "U",
+         "title": "4.6 · Information ou désinformation ?",
+         "authors": [],
+         "changes": [],
+         "extraTitle": "4.6 · Information ou désinformation ?"
+        }
+       }
+      }
+     ],
+     "specialStageExtraLives": 1,
+     "specialStageExtraTime": 1,
+     "specialStageLinkTarget": "_blank",
+     "alwaysVisible": false,
+     "overrideSymbol": false
+    },
+    {
+     "id": "690533b2-8c79-490c-aa63-e1d3cd4ea8e9",
+     "label": "4.7 · Un contenu original",
+     "content": {
+      "params": {},
+      "dom": {}
+     },
+     "telemetry": {
+      "x": "66.2",
+      "y": "36.8",
+      "width": "3.6",
+      "height": "6.4"
+     },
+     "neighbors": [
+      "6",
+      "8"
+     ],
+     "canBeStartStage": false,
+     "time": {},
+     "accessRestrictions": {
+      "allOrAnyRestrictionSet": "all",
+      "restrictionSetList": [
+       {
+        "allOrAnyRestriction": "any",
+        "restrictionList": [
+         {
+          "restrictionType": "totalScore",
+          "totalScoreGroup": {
+           "totalScoreOperator": "greaterThan"
+          },
+          "stageScoreGroup": {
+           "stageScoreOperator": "before",
+           "stageScoreId": null
+          },
+          "stageProgressGroup": {
+           "stageProgressOperator": "is",
+           "stageProgressValue": "open",
+           "stageProgressId": null
+          },
+          "timeGroup": {
+           "timeOperator": "before"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     "contentsList": [
+      {
+       "contentType": {
+        "params": {
+         "taskDescription": "<p><strong>Inès relit ses règles d’autrice.</strong> Glisse chaque mot à sa place. Une étiquette est en trop.</p>",
+         "textField": "Un contenu original croise plusieurs *sources\\+Oui, une seule source, c'est un seul point de vue.\\-Où trouve-t-on les informations ?*, reformulées avec mes propres mots.\nCopier le texte d'un autre en cachant son auteur, c'est du *plagiat\\+Oui, et changer quelques mots ne suffit pas à le rendre original.\\-C'est l'inverse d'un travail honnête.*.\nPour citer une source, je dis *qui\\+Oui, qui parle, où et quand.\\-Qui parle, où et quand ?* parle, où et quand.\nUne citation exacte se recopie mot pour mot, entre *guillemets\\+Oui, et on ne change aucun mot.\\-Quel signe encadre une citation ?*.\nUn éditorial part de faits sourcés, argumente, propose, et il est toujours *signé\\+Oui, son auteur en répond, ce que ne peut pas faire une IA.\\-Qui en répond ?*.",
+         "overallFeedback": [
+          {
+           "from": 0,
+           "to": 100,
+           "feedback": "Tu as @score sur @total."
+          }
+         ],
+         "checkAnswer": "Vérifier",
+         "submitAnswer": "Envoyer",
+         "tryAgain": "Recommencer",
+         "showSolution": "Voir la solution",
+         "dropZoneIndex": "Zone @index.",
+         "empty": "La zone @index est vide.",
+         "contains": "La zone @index contient @draggable.",
+         "ariaDraggableIndex": "@index sur @count étiquettes.",
+         "tipLabel": "Indice",
+         "correctText": "Juste !",
+         "incorrectText": "Incorrect !",
+         "resetDropTitle": "Retirer le mot",
+         "resetDropDescription": "Veux-tu retirer ce mot de la zone ?",
+         "grabbed": "Étiquette saisie.",
+         "cancelledDragging": "Déplacement annulé.",
+         "correctAnswer": "Bonne réponse :",
+         "feedbackHeader": "Correction",
+         "behaviour": {
+          "enableRetry": true,
+          "enableSolutionsButton": true,
+          "enableCheckButton": true,
+          "instantFeedback": false
+         },
+         "scoreBarLabel": "Tu as :num sur :total points",
+         "a11yCheck": "Vérifier les réponses.",
+         "a11yShowSolution": "Afficher la solution.",
+         "a11yRetry": "Recommencer la tâche.",
+         "distractors": "*copié*"
+        },
+        "library": "H5P.DragText 1.10",
+        "subContentId": "9ad32213-ed67-4308-a948-f3de94ea88c9",
+        "metadata": {
+         "contentType": "Drag the Words",
+         "license": "U",
+         "title": "4.7 · Créer un contenu original",
+         "authors": [],
+         "changes": [],
+         "extraTitle": "4.7 · Créer un contenu original"
+        }
+       }
+      }
+     ],
+     "specialStageExtraLives": 1,
+     "specialStageExtraTime": 1,
+     "specialStageLinkTarget": "_blank",
+     "alwaysVisible": false,
+     "overrideSymbol": false
+    },
+    {
+     "id": "e0b66943-0f2c-48a0-8169-acc45c25d4b9",
+     "label": "4.8 · Publier dans les règles",
+     "content": {
+      "params": {},
+      "dom": {}
+     },
+     "telemetry": {
+      "x": "70.2",
+      "y": "74.8",
+      "width": "3.6",
+      "height": "6.4"
+     },
+     "neighbors": [
+      "7",
+      "9"
+     ],
+     "canBeStartStage": false,
+     "time": {},
+     "accessRestrictions": {
+      "allOrAnyRestrictionSet": "all",
+      "restrictionSetList": [
+       {
+        "allOrAnyRestriction": "any",
+        "restrictionList": [
+         {
+          "restrictionType": "totalScore",
+          "totalScoreGroup": {
+           "totalScoreOperator": "greaterThan"
+          },
+          "stageScoreGroup": {
+           "stageScoreOperator": "before",
+           "stageScoreId": null
+          },
+          "stageProgressGroup": {
+           "stageProgressOperator": "is",
+           "stageProgressValue": "open",
+           "stageProgressId": null
+          },
+          "timeGroup": {
+           "timeOperator": "before"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     "contentsList": [
+      {
+       "contentType": {
+        "params": {
+         "introPage": {
+          "showIntroPage": false,
+          "startButtonText": "Commencer",
+          "title": "4.8 · Publier dans les règles",
+          "introduction": ""
+         },
+         "progressType": "dots",
+         "passPercentage": 50,
+         "questions": [
+          {
+           "params": {
+            "question": "<p>Vrai ou faux&nbsp;? Une image trouvée en ligne est libre de droits.</p>",
+            "correct": "false",
+            "l10n": {
+             "trueText": "Vrai",
+             "falseText": "Faux",
+             "checkAnswer": "Vérifier",
+             "submitAnswer": "Envoyer",
+             "showSolutionButton": "Voir la solution",
+             "tryAgain": "Recommencer",
+             "score": "Tu as @score point(s) sur @total",
+             "wrongAnswerMessage": "Mauvaise réponse",
+             "correctAnswerMessage": "Bonne réponse",
+             "scoreBarLabel": "Tu as :num point(s) sur :total",
+             "a11yCheck": "Vérifier les réponses.",
+             "a11yShowSolution": "Afficher la solution.",
+             "a11yRetry": "Recommencer la tâche."
+            },
+            "behaviour": {
+             "enableRetry": true,
+             "enableSolutionsButton": true,
+             "enableCheckButton": true,
+             "confirmCheckDialog": false,
+             "confirmRetryDialog": false,
+             "autoCheck": false,
+             "feedbackOnCorrect": "Exact, c’est faux : une œuvre est protégée dès sa création. Je cherche une licence libre ou je demande l’accord de l’auteur.",
+             "feedbackOnWrong": "Non : une œuvre est protégée dès sa création, même en ligne. Il faut une licence libre ou l’accord de l’auteur."
+            },
+            "media": {
+             "disableImageZooming": false
+            },
+            "confirmCheck": {
+             "header": "Terminer ?",
+             "body": "Veux-tu vraiment terminer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Terminer"
+            },
+            "confirmRetry": {
+             "header": "Recommencer ?",
+             "body": "Veux-tu vraiment recommencer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Recommencer"
+            }
+           },
+           "library": "H5P.TrueFalse 1.8",
+           "subContentId": "00e8abff-cdb1-4812-85e4-dcf3b2d19b59",
+           "metadata": {
+            "contentType": "True/False Question",
+            "license": "U",
+            "title": "Image en ligne",
+            "authors": [],
+            "changes": [],
+            "extraTitle": "Image en ligne"
+           }
+          },
+          {
+           "params": {
+            "question": "<p>Vrai ou faux&nbsp;? Sans le symbole ©, une œuvre n’est pas protégée.</p>",
+            "correct": "false",
+            "l10n": {
+             "trueText": "Vrai",
+             "falseText": "Faux",
+             "checkAnswer": "Vérifier",
+             "submitAnswer": "Envoyer",
+             "showSolutionButton": "Voir la solution",
+             "tryAgain": "Recommencer",
+             "score": "Tu as @score point(s) sur @total",
+             "wrongAnswerMessage": "Mauvaise réponse",
+             "correctAnswerMessage": "Bonne réponse",
+             "scoreBarLabel": "Tu as :num point(s) sur :total",
+             "a11yCheck": "Vérifier les réponses.",
+             "a11yShowSolution": "Afficher la solution.",
+             "a11yRetry": "Recommencer la tâche."
+            },
+            "behaviour": {
+             "enableRetry": true,
+             "enableSolutionsButton": true,
+             "enableCheckButton": true,
+             "confirmCheckDialog": false,
+             "confirmRetryDialog": false,
+             "autoCheck": false,
+             "feedbackOnCorrect": "Exact, c’est faux : la protection est automatique, avec ou sans ©.",
+             "feedbackOnWrong": "Non : la protection est automatique dès la création, avec ou sans le symbole ©."
+            },
+            "media": {
+             "disableImageZooming": false
+            },
+            "confirmCheck": {
+             "header": "Terminer ?",
+             "body": "Veux-tu vraiment terminer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Terminer"
+            },
+            "confirmRetry": {
+             "header": "Recommencer ?",
+             "body": "Veux-tu vraiment recommencer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Recommencer"
+            }
+           },
+           "library": "H5P.TrueFalse 1.8",
+           "subContentId": "eab1ddfd-59d6-431d-b5e2-6b2e35157cee",
+           "metadata": {
+            "contentType": "True/False Question",
+            "license": "U",
+            "title": "Le symbole ©",
+            "authors": [],
+            "changes": [],
+            "extraTitle": "Le symbole ©"
+           }
+          },
+          {
+           "params": {
+            "question": "<p>Vrai ou faux&nbsp;? Une photo sous licence CC BY peut être réutilisée si je crédite son auteur.</p>",
+            "correct": "true",
+            "l10n": {
+             "trueText": "Vrai",
+             "falseText": "Faux",
+             "checkAnswer": "Vérifier",
+             "submitAnswer": "Envoyer",
+             "showSolutionButton": "Voir la solution",
+             "tryAgain": "Recommencer",
+             "score": "Tu as @score point(s) sur @total",
+             "wrongAnswerMessage": "Mauvaise réponse",
+             "correctAnswerMessage": "Bonne réponse",
+             "scoreBarLabel": "Tu as :num point(s) sur :total",
+             "a11yCheck": "Vérifier les réponses.",
+             "a11yShowSolution": "Afficher la solution.",
+             "a11yRetry": "Recommencer la tâche."
+            },
+            "behaviour": {
+             "enableRetry": true,
+             "enableSolutionsButton": true,
+             "enableCheckButton": true,
+             "confirmCheckDialog": false,
+             "confirmRetryDialog": false,
+             "autoCheck": false,
+             "feedbackOnCorrect": "Oui : BY veut dire « attribution » : je cite l’auteur et la licence.",
+             "feedbackOnWrong": "Si, c’est vrai : BY veut dire « attribution ». Je peux la réutiliser en citant l’auteur et la licence."
+            },
+            "media": {
+             "disableImageZooming": false
+            },
+            "confirmCheck": {
+             "header": "Terminer ?",
+             "body": "Veux-tu vraiment terminer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Terminer"
+            },
+            "confirmRetry": {
+             "header": "Recommencer ?",
+             "body": "Veux-tu vraiment recommencer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Recommencer"
+            }
+           },
+           "library": "H5P.TrueFalse 1.8",
+           "subContentId": "f8796ed8-7a14-459c-b372-baa82b3144a2",
+           "metadata": {
+            "contentType": "True/False Question",
+            "license": "U",
+            "title": "Licence CC BY",
+            "authors": [],
+            "changes": [],
+            "extraTitle": "Licence CC BY"
+           }
+          },
+          {
+           "params": {
+            "question": "<p>Vrai ou faux&nbsp;? Je peux publier sur le blog du collège la photo d’un camarade sans lui demander.</p>",
+            "correct": "false",
+            "l10n": {
+             "trueText": "Vrai",
+             "falseText": "Faux",
+             "checkAnswer": "Vérifier",
+             "submitAnswer": "Envoyer",
+             "showSolutionButton": "Voir la solution",
+             "tryAgain": "Recommencer",
+             "score": "Tu as @score point(s) sur @total",
+             "wrongAnswerMessage": "Mauvaise réponse",
+             "correctAnswerMessage": "Bonne réponse",
+             "scoreBarLabel": "Tu as :num point(s) sur :total",
+             "a11yCheck": "Vérifier les réponses.",
+             "a11yShowSolution": "Afficher la solution.",
+             "a11yRetry": "Recommencer la tâche."
+            },
+            "behaviour": {
+             "enableRetry": true,
+             "enableSolutionsButton": true,
+             "enableCheckButton": true,
+             "confirmCheckDialog": false,
+             "confirmRetryDialog": false,
+             "autoCheck": false,
+             "feedbackOnCorrect": "Exact, c’est faux : c’est le droit à l’image. Il faut son accord (et celui de ses parents s’il est mineur).",
+             "feedbackOnWrong": "Non : chacun a un droit à l’image. Il faut l’accord de la personne (et de ses parents si elle est mineure)."
+            },
+            "media": {
+             "disableImageZooming": false
+            },
+            "confirmCheck": {
+             "header": "Terminer ?",
+             "body": "Veux-tu vraiment terminer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Terminer"
+            },
+            "confirmRetry": {
+             "header": "Recommencer ?",
+             "body": "Veux-tu vraiment recommencer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Recommencer"
+            }
+           },
+           "library": "H5P.TrueFalse 1.8",
+           "subContentId": "e8c99300-05b1-473c-9fed-882805309c8c",
+           "metadata": {
+            "contentType": "True/False Question",
+            "license": "U",
+            "title": "Droit à l’image",
+            "authors": [],
+            "changes": [],
+            "extraTitle": "Droit à l’image"
+           }
+          },
+          {
+           "params": {
+            "question": "<p>Vrai ou faux&nbsp;? Critiquer le nouveau menu de la cantine dans le blog du collège, c’est permis.</p>",
+            "correct": "true",
+            "l10n": {
+             "trueText": "Vrai",
+             "falseText": "Faux",
+             "checkAnswer": "Vérifier",
+             "submitAnswer": "Envoyer",
+             "showSolutionButton": "Voir la solution",
+             "tryAgain": "Recommencer",
+             "score": "Tu as @score point(s) sur @total",
+             "wrongAnswerMessage": "Mauvaise réponse",
+             "correctAnswerMessage": "Bonne réponse",
+             "scoreBarLabel": "Tu as :num point(s) sur :total",
+             "a11yCheck": "Vérifier les réponses.",
+             "a11yShowSolution": "Afficher la solution.",
+             "a11yRetry": "Recommencer la tâche."
+            },
+            "behaviour": {
+             "enableRetry": true,
+             "enableSolutionsButton": true,
+             "enableCheckButton": true,
+             "confirmCheckDialog": false,
+             "confirmRetryDialog": false,
+             "autoCheck": false,
+             "feedbackOnCorrect": "Oui : c’est la liberté d’expression. Je critique une situation, sans injurier ni diffamer personne.",
+             "feedbackOnWrong": "Si, c’est permis : c’est la liberté d’expression, tant que je n’injurie ni ne diffame personne."
+            },
+            "media": {
+             "disableImageZooming": false
+            },
+            "confirmCheck": {
+             "header": "Terminer ?",
+             "body": "Veux-tu vraiment terminer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Terminer"
+            },
+            "confirmRetry": {
+             "header": "Recommencer ?",
+             "body": "Veux-tu vraiment recommencer ?",
+             "cancelLabel": "Annuler",
+             "confirmLabel": "Recommencer"
+            }
+           },
+           "library": "H5P.TrueFalse 1.8",
+           "subContentId": "5738e9ef-8558-42f4-b485-ab0c716474e1",
+           "metadata": {
+            "contentType": "True/False Question",
+            "license": "U",
+            "title": "Critiquer",
+            "authors": [],
+            "changes": [],
+            "extraTitle": "Critiquer"
+           }
+          }
+         ],
+         "disableBackwardsNavigation": false,
+         "randomQuestions": false,
+         "endGame": {
+          "showResultPage": true,
+          "showSolutionButton": true,
+          "showRetryButton": true,
+          "noResultMessage": "Terminé",
+          "message": "Ton résultat :",
+          "scoreBarLabel": "Tu as @finals point(s) sur @totals",
+          "overallFeedback": [
+           {
+            "from": 0,
+            "to": 49,
+            "feedback": "Pas encore : relis les explications des questions ratées, puis recommence."
+           },
+           {
+            "from": 50,
+            "to": 99,
+            "feedback": "Bien ! Regarde les questions que tu as manquées : c’est là que tu apprends."
+           },
+           {
+            "from": 100,
+            "to": 100,
+            "feedback": "Sans faute : tu t’en souviens très bien !"
+           }
+          ],
+          "solutionButtonText": "Voir la solution",
+          "retryButtonText": "Recommencer",
+          "finishButtonText": "Terminer",
+          "submitButtonText": "Envoyer",
+          "showAnimations": false,
+          "skippable": false,
+          "skipButtonText": "Passer la vidéo"
+         },
+         "override": {
+          "checkButton": true
+         },
+         "texts": {
+          "prevButton": "Précédente",
+          "nextButton": "Suivante",
+          "finishButton": "Terminer",
+          "submitButton": "Envoyer",
+          "textualProgress": "Question @current sur @total",
+          "jumpToQuestion": "Question %d sur %total",
+          "questionLabel": "Question",
+          "readSpeakerProgress": "Question @current sur @total",
+          "unansweredText": "Pas encore répondu",
+          "answeredText": "Répondu",
+          "currentQuestionText": "Question en cours",
+          "navigationLabel": "Questions",
+          "questionSetInstruction": "Choisis la question à afficher"
+         }
+        },
+        "library": "H5P.QuestionSet 1.20",
+        "subContentId": "2db12d61-6389-4f54-b026-32f36a65298c",
+        "metadata": {
+         "contentType": "Question Set",
+         "license": "U",
+         "title": "4.8 · Publier dans les règles",
+         "authors": [],
+         "changes": [],
+         "extraTitle": "4.8 · Publier dans les règles"
+        }
+       }
+      }
+     ],
+     "specialStageExtraLives": 1,
+     "specialStageExtraTime": 1,
+     "specialStageLinkTarget": "_blank",
+     "alwaysVisible": false,
+     "overrideSymbol": false
+    },
+    {
+     "id": "20f400df-4914-489b-adb7-8ed1296a0c34",
+     "label": "4.9 · Face aux rumeurs",
+     "content": {
+      "params": {},
+      "dom": {}
+     },
+     "telemetry": {
+      "x": "80.2",
+      "y": "52.8",
+      "width": "3.6",
+      "height": "6.4"
+     },
+     "neighbors": [
+      "8",
+      "10"
+     ],
+     "canBeStartStage": false,
+     "time": {},
+     "accessRestrictions": {
+      "allOrAnyRestrictionSet": "all",
+      "restrictionSetList": [
+       {
+        "allOrAnyRestriction": "any",
+        "restrictionList": [
+         {
+          "restrictionType": "totalScore",
+          "totalScoreGroup": {
+           "totalScoreOperator": "greaterThan"
+          },
+          "stageScoreGroup": {
+           "stageScoreOperator": "before",
+           "stageScoreId": null
+          },
+          "stageProgressGroup": {
+           "stageProgressOperator": "is",
+           "stageProgressValue": "open",
+           "stageProgressId": null
+          },
+          "timeGroup": {
+           "timeOperator": "before"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     "contentsList": [
+      {
+       "contentType": {
+        "params": {
+         "taskDescription": "<p><strong>Une rumeur vise Lina.</strong> Clique sur les <strong>cinq</strong> mots qui décrivent une <strong>bonne réaction</strong> de Yanis.</p>",
+         "textField": "<p>Face à la rumeur, Yanis peut la *vérifier*, la partager à ses amis, *soutenir* Lina, se moquer d'elle, *prévenir* un adulte, *signaler* la story, en rajouter, ou appeler le *3018*.</p>",
+         "overallFeedback": [
+          {
+           "from": 0,
+           "to": 59,
+           "feedback": "Tu as trouvé @score mot(s) sur @total. Face à une rumeur : je vérifie, je ne partage pas, je soutiens la personne visée, je signale et je préviens un adulte (ou le 3018)."
+          },
+          {
+           "from": 60,
+           "to": 99,
+           "feedback": "Tu as trouvé @score mot(s) sur @total. Presque ! Regarde la solution : partager, se moquer ou en rajouter fait grossir la rumeur."
+          },
+          {
+           "from": 100,
+           "to": 100,
+           "feedback": "Tu as trouvé @score mot(s) sur @total : tu sais stopper une rumeur, et le 3018 est le numéro contre le harcèlement."
+          }
+         ],
+         "behaviour": {
+          "enableRetry": true,
+          "enableSolutionsButton": true,
+          "enableCheckButton": true,
+          "showScorePoints": true
+         },
+         "checkAnswerButton": "Vérifier",
+         "submitAnswerButton": "Envoyer",
+         "tryAgainButton": "Recommencer",
+         "showSolutionButton": "Voir la solution",
+         "correctAnswer": "Juste !",
+         "incorrectAnswer": "Faux !",
+         "missedAnswer": "Mot oublié !",
+         "displaySolutionDescription": "La solution est maintenant affichée.",
+         "scoreBarLabel": "Tu as :num point(s) sur :total",
+         "a11yFullTextLabel": "Texte complet",
+         "a11yClickableTextLabel": "Texte où tu peux cliquer sur les mots",
+         "a11ySolutionModeHeader": "Mode solution",
+         "a11yCheckingHeader": "Mode correction",
+         "a11yCheck": "Vérifier les réponses.",
+         "a11yShowSolution": "Afficher la solution.",
+         "a11yRetry": "Recommencer la tâche."
+        },
+        "library": "H5P.MarkTheWords 1.11",
+        "subContentId": "8d839be0-2991-4158-8318-609d5c3f3c06",
+        "metadata": {
+         "contentType": "Mark the Words",
+         "license": "U",
+         "title": "4.9 · Face aux rumeurs",
+         "authors": [],
+         "changes": [],
+         "extraTitle": "4.9 · Face aux rumeurs"
+        }
+       }
+      }
+     ],
+     "specialStageExtraLives": 1,
+     "specialStageExtraTime": 1,
+     "specialStageLinkTarget": "_blank",
+     "alwaysVisible": false,
+     "overrideSymbol": false
+    },
+    {
+     "id": "5731a0f3-17e9-4f48-8e03-7624fec5777d",
+     "label": "Défi · Les mots de l’année",
+     "content": {
+      "params": {},
+      "dom": {}
+     },
+     "telemetry": {
+      "x": "83.2",
+      "y": "17.8",
+      "width": "3.6",
+      "height": "6.4"
+     },
+     "neighbors": [
+      "9",
+      "11"
+     ],
+     "canBeStartStage": false,
+     "time": {},
+     "accessRestrictions": {
+      "allOrAnyRestrictionSet": "all",
+      "restrictionSetList": [
+       {
+        "allOrAnyRestriction": "any",
+        "restrictionList": [
+         {
+          "restrictionType": "totalScore",
+          "totalScoreGroup": {
+           "totalScoreOperator": "greaterThan"
+          },
+          "stageScoreGroup": {
+           "stageScoreOperator": "before",
+           "stageScoreId": null
+          },
+          "stageProgressGroup": {
+           "stageProgressOperator": "is",
+           "stageProgressValue": "open",
+           "stageProgressId": null
+          },
+          "timeGroup": {
+           "timeOperator": "before"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     "contentsList": [
+      {
+       "contentType": {
+        "params": {
+         "words": [
+          {
+           "clue": "Des médias aux points de vue différents, nécessaires au débat (4.2)",
+           "answer": "PLURALISME",
+           "fixWord": false,
+           "orientation": "across"
+          },
+          {
+           "clue": "Le gros titre en haut de la une (4.3)",
+           "answer": "MANCHETTE",
+           "fixWord": false,
+           "orientation": "across"
+          },
+          {
+           "clue": "On les met autour d’une expression exacte, ou d’une citation (4.4, 4.7)",
+           "answer": "GUILLEMETS",
+           "fixWord": false,
+           "orientation": "across"
+          },
+          {
+           "clue": "Ce que les applis gratuites revendent aux annonceurs (4.1)",
+           "answer": "ATTENTION",
+           "fixWord": false,
+           "orientation": "across"
+          },
+          {
+           "clue": "Une information fausse, mais partagée de bonne foi (4.6)",
+           "answer": "MESINFORMATION",
+           "fixWord": false,
+           "orientation": "across"
+          },
+          {
+           "clue": "Copier le travail d’un autre en cachant son auteur (4.7)",
+           "answer": "PLAGIAT",
+           "fixWord": false,
+           "orientation": "across"
+          },
+          {
+           "clue": "Creative Commons en propose six pour partager une œuvre (4.8)",
+           "answer": "LICENCE",
+           "fixWord": false,
+           "orientation": "across"
+          },
+          {
+           "clue": "Elle part souvent d’un détail vrai, puis elle grossit (4.9)",
+           "answer": "RUMEUR",
+           "fixWord": false,
+           "orientation": "across"
+          }
+         ],
+         "overallFeedback": [
+          {
+           "from": 0,
+           "to": 59,
+           "feedback": "Tu as @score sur @total. Clique sur « Voir la solution », puis rouvre le livre du mot qui te manquait."
+          },
+          {
+           "from": 60,
+           "to": 99,
+           "feedback": "Tu as @score sur @total. Presque ! Le numéro du livre t’aide à retrouver le mot manquant."
+          },
+          {
+           "from": 100,
+           "to": 100,
+           "feedback": "Grille complète : tu connais les mots de ton année d’EMI !"
+          }
+         ],
+         "theme": {
+          "backgroundColor": "#264653",
+          "gridColor": "#000000",
+          "cellBackgroundColor": "#ffffff",
+          "cellColor": "#000000",
+          "clueIdColor": "#606060",
+          "cellBackgroundColorHighlight": "#2a9d8f",
+          "cellColorHighlight": "#ffffff",
+          "clueIdColorHighlight": "#e0e0e0"
+         },
+         "behaviour": {
+          "enableInstantFeedback": false,
+          "scoreWords": true,
+          "applyPenalties": false,
+          "enableRetry": true,
+          "enableSolutionsButton": true,
+          "keepCorrectAnswers": false
+         },
+         "l10n": {
+          "across": "Horizontal",
+          "down": "Vertical",
+          "checkAnswer": "Vérifier",
+          "submitAnswer": "Envoyer",
+          "tryAgain": "Recommencer",
+          "showSolution": "Voir la solution",
+          "couldNotGenerateCrossword": "Impossible de créer la grille.",
+          "couldNotGenerateCrosswordTooFewWords": "Impossible de créer la grille : il faut au moins deux mots.",
+          "probematicWords": "Certains mots n’ont pas pu être placés : @words",
+          "extraClue": "Indice",
+          "closeWindow": "Fermer"
+         },
+         "a11y": {
+          "crosswordGrid": "Grille de mots croisés. Utilise les flèches pour te déplacer et le clavier pour écrire. Tu peux aussi utiliser Tab pour remplir les mots dans des champs.",
+          "column": "Colonne",
+          "row": "Ligne",
+          "across": "Horizontal",
+          "down": "Vertical",
+          "empty": "Vide",
+          "resultFor": "Résultat pour : @clue",
+          "correct": "Juste",
+          "wrong": "Faux",
+          "point": "point",
+          "solutionFor": "Pour « @clue », la solution est : @solution",
+          "extraClueFor": "Ouvrir l’indice pour « @clue »",
+          "letterSevenOfNine": "Lettre @position sur @length",
+          "lettersWord": "Mot de @length lettres",
+          "check": "Vérifier les lettres.",
+          "showSolution": "Afficher la solution.",
+          "retry": "Recommencer depuis le début.",
+          "yourResult": "Tu as @score point(s) sur @total"
+         },
+         "taskDescription": "<p><strong>Les mots de l’année.</strong> Complète la grille : écris les mots en majuscules, sans accent. Le numéro du livre est entre parenthèses.</p>",
+         "solutionWord": ""
+        },
+        "library": "H5P.Crossword 0.5",
+        "subContentId": "87dbd0b9-bee4-4733-88ff-3a0e787096d8",
+        "metadata": {
+         "contentType": "Crossword",
+         "license": "U",
+         "title": "Défi · Les mots de l’année",
+         "authors": [],
+         "changes": [],
+         "extraTitle": "Défi · Les mots de l’année"
+        }
+       }
+      }
+     ],
+     "specialStageExtraLives": 1,
+     "specialStageExtraTime": 1,
+     "specialStageLinkTarget": "_blank",
+     "alwaysVisible": false,
+     "overrideSymbol": false
+    },
+    {
+     "id": "29b04e41-5f5c-4105-bc78-d76d013cdf70",
+     "label": "Arrivée · La rédaction",
+     "content": {
+      "params": {},
+      "dom": {}
+     },
+     "telemetry": {
+      "x": "92.2",
+      "y": "46.8",
+      "width": "3.6",
+      "height": "6.4"
+     },
+     "neighbors": [
+      "10"
+     ],
+     "canBeStartStage": false,
+     "time": {},
+     "accessRestrictions": {
+      "allOrAnyRestrictionSet": "all",
+      "restrictionSetList": [
+       {
+        "allOrAnyRestriction": "any",
+        "restrictionList": [
+         {
+          "restrictionType": "totalScore",
+          "totalScoreGroup": {
+           "totalScoreOperator": "greaterThan"
+          },
+          "stageScoreGroup": {
+           "stageScoreOperator": "before",
+           "stageScoreId": null
+          },
+          "stageProgressGroup": {
+           "stageProgressOperator": "is",
+           "stageProgressValue": "open",
+           "stageProgressId": null
+          },
+          "timeGroup": {
+           "timeOperator": "before"
+          }
+         }
+        ]
+       }
+      ]
+     },
+     "contentsList": [
+      {}
+     ],
+     "specialStageExtraLives": 1,
+     "specialStageExtraTime": 1,
+     "specialStageLinkTarget": "_blank",
+     "alwaysVisible": false,
+     "overrideSymbol": false,
+     "specialStageType": "finish"
+    }
+   ],
+   "paths": [
+    {
+     "customVisuals": {
+      "colorPath": "rgba(38, 70, 83, 0.8)",
+      "pathWidth": "0.2",
+      "pathStyle": "dotted"
+     },
+     "from": 0,
+     "to": 1,
+     "visualsType": "global"
+    },
+    {
+     "customVisuals": {
+      "colorPath": "rgba(38, 70, 83, 0.8)",
+      "pathWidth": "0.2",
+      "pathStyle": "dotted"
+     },
+     "from": 1,
+     "to": 2,
+     "visualsType": "global"
+    },
+    {
+     "customVisuals": {
+      "colorPath": "rgba(38, 70, 83, 0.8)",
+      "pathWidth": "0.2",
+      "pathStyle": "dotted"
+     },
+     "from": 2,
+     "to": 3,
+     "visualsType": "global"
+    },
+    {
+     "customVisuals": {
+      "colorPath": "rgba(38, 70, 83, 0.8)",
+      "pathWidth": "0.2",
+      "pathStyle": "dotted"
+     },
+     "from": 3,
+     "to": 4,
+     "visualsType": "global"
+    },
+    {
+     "customVisuals": {
+      "colorPath": "rgba(38, 70, 83, 0.8)",
+      "pathWidth": "0.2",
+      "pathStyle": "dotted"
+     },
+     "from": 4,
+     "to": 5,
+     "visualsType": "global"
+    },
+    {
+     "customVisuals": {
+      "colorPath": "rgba(38, 70, 83, 0.8)",
+      "pathWidth": "0.2",
+      "pathStyle": "dotted"
+     },
+     "from": 5,
+     "to": 6,
+     "visualsType": "global"
+    },
+    {
+     "customVisuals": {
+      "colorPath": "rgba(38, 70, 83, 0.8)",
+      "pathWidth": "0.2",
+      "pathStyle": "dotted"
+     },
+     "from": 6,
+     "to": 7,
+     "visualsType": "global"
+    },
+    {
+     "customVisuals": {
+      "colorPath": "rgba(38, 70, 83, 0.8)",
+      "pathWidth": "0.2",
+      "pathStyle": "dotted"
+     },
+     "from": 7,
+     "to": 8,
+     "visualsType": "global"
+    },
+    {
+     "customVisuals": {
+      "colorPath": "rgba(38, 70, 83, 0.8)",
+      "pathWidth": "0.2",
+      "pathStyle": "dotted"
+     },
+     "from": 8,
+     "to": 9,
+     "visualsType": "global"
+    },
+    {
+     "customVisuals": {
+      "colorPath": "rgba(38, 70, 83, 0.8)",
+      "pathWidth": "0.2",
+      "pathStyle": "dotted"
+     },
+     "from": 9,
+     "to": 10,
+     "visualsType": "global"
+    },
+    {
+     "customVisuals": {
+      "colorPath": "rgba(38, 70, 83, 0.8)",
+      "pathWidth": "0.2",
+      "pathStyle": "dotted"
+     },
+     "from": 10,
+     "to": 11,
+     "visualsType": "global"
+    }
+   ]
+  }
+ },
+ "endScreen": {
+  "noSuccess": {
+   "endScreenTextNoSuccess": "<p style=\"text-align:center\">Te voilà à la rédaction&nbsp;! Certaines étapes peuvent encore être améliorées&nbsp;: recommence le rallye pour les réussir.</p>"
+  },
+  "success": {
+   "endScreenTextSuccess": "<p style=\"text-align:center\"><strong>Bravo, tu as bouclé le rallye du Tilleul&nbsp;!</strong> Inès et Yanis t’attendent à la rédaction&nbsp;: en route pour la 3e.</p>"
+  },
+  "overallFeedback": [
+   {
+    "from": 0,
+    "to": 49,
+    "feedback": "Rouvre les livres des étapes ratées, puis refais le rallye."
+   },
+   {
+    "from": 50,
+    "to": 79,
+    "feedback": "Bonne route ! Repasse par les étapes où tu as hésité."
+   },
+   {
+    "from": 80,
+    "to": 100,
+    "feedback": "Excellent : tu maîtrises ton année d’EMI !"
+   }
+  ]
+ },
+ "visual": {
+  "stages": {
+   "colorStage": "rgba(233, 196, 106, 0.95)",
+   "colorStageLocked": "rgba(120, 120, 120, 0.85)",
+   "colorStageCleared": "rgba(42, 157, 143, 0.95)",
+   "showScoreStars": "onHover"
+  },
+  "paths": {
+   "displayPaths": false,
+   "style": {
+    "colorPath": "rgba(38, 70, 83, 0.8)",
+    "colorPathCleared": "rgba(42, 157, 143, 0.95)",
+    "pathWidth": "0.2",
+    "pathStyle": "dotted"
+   }
+  },
+  "misc": {
+   "useAnimation": true
+  }
+ },
+ "audio": {
+  "backgroundMusic": {
+   "muteDuringExercise": true
+  },
+  "ambient": {}
+ },
+ "behaviour": {
+  "enableRetry": true,
+  "enableSolutionsButton": true,
+  "map": {
+   "showLabels": true,
+   "roaming": "complete",
+   "fog": "all"
+  }
+ },
+ "l10n": {
+  "start": "Commencer",
+  "continue": "Continuer",
+  "restart": "Recommencer",
+  "showSolutions": "Voir les solutions",
+  "completedMap": "Tu as terminé la carte !",
+  "fullScoreButnoLivesLeft": "Tu as le score maximum, mais tu as perdu toutes tes vies !",
+  "fullScoreButTimeout": "Tu as le score maximum, mais le temps est écoulé !",
+  "confirmFinishHeader": "Terminer le rallye ?",
+  "confirmFinishDialog": "Si tu termines maintenant, tu ne pourras plus explorer la carte.",
+  "confirmFinishDialogSubmission": "Ton score sera envoyé.",
+  "confirmFinishDialogQuestion": "Veux-tu vraiment terminer le rallye ?",
+  "confirmAccessDeniedHeader": "Étape fermée",
+  "confirmAccessDeniedDialog": "Termine d’abord l’étape précédente pour ouvrir celle-ci.",
+  "yes": "Oui",
+  "no": "Non",
+  "confirmGameOverHeader": "Partie terminée !",
+  "confirmGameOverDialog": "Tu as perdu toutes tes vies. Recommence !",
+  "confirmGameOverDialogTimeout": "Le temps est écoulé. Recommence !",
+  "confirmTimeoutHeader": "Temps écoulé !",
+  "confirmTimeoutDialog": "Le temps est écoulé.",
+  "confirmTimeoutDialogLostLife": "Le temps est écoulé et tu as perdu une vie.",
+  "confirmScoreIncompleteHeader": "Score incomplet",
+  "confirmIncompleteScoreDialogLostLife": "Tu n’as pas le score maximum et tu as perdu une vie.",
+  "confirmFullScoreHeader": "Score maximum !",
+  "confirmFullScoreDialog": "Tu as assez de points pour un score complet, mais tu peux continuer à explorer la carte. Ton score sera envoyé quand tu termineras.",
+  "confirmFullScoreDialogLoseLivesAmendmend": "Attention, tu peux encore perdre des vies !",
+  "ok": "OK",
+  "noStages": "Aucune étape n’a été définie.",
+  "settings": "Réglages",
+  "volumeMusic": "Volume de la musique",
+  "volumeSFX": "Volume des effets sonores",
+  "restrictionsAllOfLong": "Cette étape ne sera ouverte que si :",
+  "restrictionsAnyOfLong": "Cette étape ne sera ouverte que si l’une de ces conditions est remplie :",
+  "restrictionsAllOf": "Toutes ces conditions :",
+  "restrictionsAnyOf": "L’une de ces conditions :",
+  "restrictionTotalScoreLessThan": "Ton score total est inférieur à @value.",
+  "restrictionTotalScoreEqualTo": "Ton score total est égal à @value.",
+  "restrictionTotalScoreNotEqualTo": "Ton score total est différent de @value.",
+  "restrictionTotalScoreGreaterThan": "Ton score total est supérieur à @value.",
+  "restrictionStageScoreLessThan": "Ton score à l’étape @label est inférieur à @value.",
+  "restrictionStageScoreEqualTo": "Ton score à l’étape @label est égal à @value.",
+  "restrictionStageScoreNotEqualTo": "Ton score à l’étape @label est différent de @value.",
+  "restrictionStageScoreGreaterThan": "Ton score à l’étape @label est supérieur à @value.",
+  "restrictionStageProgressIs": "L’étape @label est @value.",
+  "restrictionStageProgressIsNot": "L’étape @label n’est pas @value.",
+  "restrictionTimeBefore": "Il est avant @value.",
+  "restrictionTimeOn": "Nous sommes le @value.",
+  "restrictionTimeNotOn": "Nous ne sommes pas le @value.",
+  "restrictionTimeAfter": "Il est après @value.",
+  "unstarted": "pas commencée",
+  "opened": "commencée",
+  "completed": "terminée",
+  "cleared": "réussie",
+  "missingContent": "Cette étape n’a pas de contenu !"
+ },
+ "a11y": {
+  "buttonFinish": "Terminer le rallye",
+  "buttonAudioActive": "Couper le son",
+  "buttonAudioInactive": "Remettre le son",
+  "close": "Fermer",
+  "yourResult": "Tu as @score point(s) sur @total",
+  "mapWasOpened": "La carte est ouverte.",
+  "mapSolutionsWasOpened": "La carte est ouverte avec les solutions.",
+  "startScreenWasOpened": "L’écran d’accueil est ouvert.",
+  "endScreenWasOpened": "L’écran de fin est ouvert.",
+  "exerciseLabel": ". Exercice de l’étape @stagelabel",
+  "stageButtonLabel": "Étape : @stagelabel",
+  "adjacentStageLabel": "Étape voisine de @stagelabelOrigin : @stagelabelNeighbor",
+  "locked": "fermée",
+  "cleared": "réussie",
+  "applicationInstructions": "Utilise la barre d’espace ou la touche Entrée pour ouvrir l’étape. Utilise les flèches pour choisir une étape voisine.",
+  "applicationDescription": "Carte du rallye",
+  "movedToStage": "Tu es à l’étape @stagelabel",
+  "stageUnlocked": "L’étape @stagelabel est ouverte.",
+  "toolbarFallbackLabel": "Le rallye du Tilleul",
+  "enterFullscreen": "Plein écran",
+  "exitFullscreen": "Quitter le plein écran"
+ },
+ "headline": "Le rallye du Tilleul · 4e"
+}

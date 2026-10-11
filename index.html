@@ -1,0 +1,100 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>EMI cycle 4</title>
+<link rel="stylesheet" href="style.css">
+<script src="progression.js"></script>
+</head>
+<body>
+<header class="entete"><div class="int">
+  <p class="surtitre">Collège · Éducation aux médias et à l’information</p>
+  <h1>EMI cycle 4 : s’informer, comprendre, agir</h1>
+  <p>Des livres interactifs à faire en autonomie, un par champ du programme, et une Game Map pour faire le bilan de chaque année. Choisis ton niveau, puis ouvre un module.</p>
+  <div class="chiffres" id="chiffres"></div>
+</div></header>
+<nav class="onglets" role="tablist" aria-label="Niveaux" id="onglets"></nav>
+<main class="contenu" id="contenu"></main>
+<script>
+const NIVEAUX = [
+  { n: '5e', c: 'var(--c5)', accroche: 'En 5e, tu apprends à identifier : qui parle, avec quels outils, et comment chercher avec méthode.' },
+  { n: '4e', c: 'var(--c4)', accroche: 'En 4e, tu apprends à analyser : qui finance l’information, comment la vérifier, comment publier dans les règles.' },
+  { n: '3e', c: 'var(--c3)', accroche: 'En 3e, tu apprends à comprendre et à agir : algorithmes, IA, sources, débat et identité numérique.' },
+];
+const DOMAINES = ['Se situer dans les médias', 'S’informer', 'Partager et produire'];
+const BIENTOT = { '5e': [['5.1', 0], ['5.2', 0], ['5.3', 0]] };
+const pct = (x) => Math.round(x * 100) + ' %';
+function statut(p) {
+  if (!p) return '<span class="statut">À faire</span>';
+  if (p.termine) return '<span class="statut ok">Terminé' + (p.meilleur ? ' · ' + pct(p.meilleur) : '') + '</span>';
+  return '<span class="statut encours">' + (p.avance ? pct(p.avance) + ' lu' : 'Commencé') + '</span>';
+}
+function carte(m, prog) {
+  const gm = m.type === 'gamemap';
+  return `<a class="carte${gm ? ' gm' : ''}" href="module.html?m=${encodeURIComponent(m.id)}">
+    <div class="haut"><span class="pastille">${gm ? 'Bilan' : m.num}</span>${statut(prog[m.id])}</div>
+    <div class="t">${m.titre}</div>
+    <div class="type">${gm ? '🗺️ Game Map · environ 25 min' : '📖 Livre interactif · 45 à 50 min'}</div></a>`;
+}
+const bientot = (num, gm) => `<div class="carte bientot" aria-disabled="true"><div class="haut"><span class="pastille">${gm ? 'Bilan' : num}</span><span class="statut">En préparation</span></div>
+  <div class="t">${gm ? 'Game Map de fin d’année' : 'Livre ' + num}</div><div class="type">Bientôt disponible</div></div>`;
+(async function () {
+  const mods = await (await fetch('modules.json')).json();
+  const prog = EMI.lire();
+  const livres = mods.filter(m => m.type === 'livre').length, gms = mods.length - livres;
+  document.getElementById('chiffres').innerHTML = `<span><b>${livres}</b> livres interactifs</span><span><b>${gms}</b> Game Maps</span><span><b>3</b> niveaux</span><span>Programme EMI du cycle 4</span>`;
+  const onglets = document.getElementById('onglets'), contenu = document.getElementById('contenu');
+  let choix; try { choix = localStorage.getItem('emi-niveau'); } catch (e) {}
+  NIVEAUX.forEach(N => {
+    const ms = mods.filter(m => m.niveau === N.n);
+    const faits = ms.filter(m => prog[m.id] && prog[m.id].termine).length;
+    const b = document.createElement('button');
+    b.className = 'onglet'; b.setAttribute('role', 'tab'); b.style.setProperty('--niv', N.c);
+    b.innerHTML = `${N.n} <small>${faits}/${ms.length}</small>`;
+    b.onclick = () => montrer(N.n);
+    b.dataset.n = N.n; onglets.appendChild(b);
+  });
+  function montrer(n) {
+    try { localStorage.setItem('emi-niveau', n); } catch (e) {}
+    const N = NIVEAUX.find(x => x.n === n);
+    onglets.querySelectorAll('.onglet').forEach(b => b.setAttribute('aria-selected', b.dataset.n === n));
+    const ms = mods.filter(m => m.niveau === n);
+    const faits = ms.filter(m => prog[m.id] && prog[m.id].termine).length;
+    let h = `<section class="niveau" style="--niv:${N.c}" role="tabpanel"><h2>Niveau ${n}</h2><p class="accroche">${N.accroche}</p>
+      <div class="barre-prog" aria-hidden="true"><span style="width:${ms.length ? 100 * faits / ms.length : 0}%"></span></div>
+      <p class="legende-prog">${faits} module${faits > 1 ? 's' : ''} terminé${faits > 1 ? 's' : ''} sur ${ms.length}</p>`;
+    DOMAINES.forEach((d, i) => {
+      const liste = ms.filter(m => m.type === 'livre' && m.domaine.replace("'", '’') === d);
+      const absents = (BIENTOT[n] || []).filter(([num]) => ((+num[2] - 1) / 3 | 0) === i);
+      if (!liste.length && !absents.length) return;
+      h += `<div class="domaine"><h3>${d}</h3><div class="grille">${absents.map(([num]) => bientot(num)).join('')}${liste.map(m => carte(m, prog)).join('')}</div></div>`;
+    });
+    const gm = ms.find(m => m.type === 'gamemap');
+    h += `<div class="domaine"><h3>Bilan de l’année</h3><div class="grille">${gm ? carte(gm, prog) : bientot('', true)}</div></div></section>`;
+    h += `<section class="apropos" id="bilan"><h2>Mon bilan, à rendre à mon professeur</h2>
+      <p>Ta progression est enregistrée dans ce navigateur, sur cet appareil : aucun compte, aucune donnée envoyée. Pour que ton professeur la voie, télécharge ton bilan et dépose-le là où il te l’indique (ENT, casier numérique, messagerie).</p>
+      <div class="ident"><label>Prénom <input id="prenom" autocomplete="given-name" maxlength="40"></label>
+      <label>Nom <input id="nom" autocomplete="family-name" maxlength="40"></label>
+      <label>Classe <input id="classe" placeholder="ex. 4eB" maxlength="12"></label></div>
+      <p class="actions"><button class="btn" id="telecharger">Télécharger mon bilan</button>
+      <button class="lien-btn" id="raz">Effacer ma progression sur cet appareil</button></p>
+      <p class="petit" id="msg-bilan" role="status"></p></section>
+      <p class="pied"><a href="enseignant.html">Espace enseignant : tableau de classe</a></p>`;
+    contenu.innerHTML = h;
+    const ident = EMI.identite();
+    ['prenom', 'nom', 'classe'].forEach(k => { const el = document.getElementById(k); el.value = ident[k] || ''; el.oninput = () => EMI.garderIdentite(k, el.value.trim()); });
+    document.getElementById('telecharger').onclick = () => {
+      const id = EMI.identite();
+      const msg = document.getElementById('msg-bilan');
+      if (!id.prenom || !id.nom || !id.classe) { msg.textContent = 'Écris ton prénom, ton nom et ta classe avant de télécharger ton bilan.'; return; }
+      const nb = EMI.telechargerBilan(mods);
+      msg.textContent = `Bilan téléchargé (${nb} module${nb > 1 ? 's' : ''} commencé${nb > 1 ? 's' : ''}). Dépose le fichier là où ton professeur te l’a demandé.`;
+    };
+    document.getElementById('raz').onclick = () => { if (confirm('Effacer toute ta progression sur cet appareil ?')) { EMI.effacer(); location.reload(); } };
+  }
+  montrer(NIVEAUX.some(x => x.n === choix) ? choix : '5e');
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,37 @@
+SITE VITRINE « EMI cycle 4 » (version du 11 octobre 2026)
+
+Ce dossier est un site web complet, sans serveur ni base de données :
+- index.html : l'accueil, les modules classés par niveau (5e, 4e, 3e) et par domaine ;
+- module.html?m=<module> : le lecteur d'un module ;
+- modules/ : les 26 modules (24 livres interactifs + 2 Game Maps), extraits des .h5p ;
+- libraries/ : les bibliothèques H5P partagées ; player/ : le lecteur h5p-standalone 3.8.0.
+
+PROGRESSION
+Chaque élève voit, sur l'accueil et dans le module : « À faire », « 40 % lu », « Terminé · score 85 % ».
+Un livre est terminé quand tous ses chapitres sont faits. Le module reprend là où l'élève s'était arrêté.
+Tout est enregistré dans le navigateur de l'élève (localStorage) : aucun compte, aucune donnée envoyée ;
+la progression ne suit pas l'élève d'un appareil à l'autre.
+
+SUIVI PAR L'ENSEIGNANT (sans serveur)
+1. En bas de l'accueil, « Mon bilan » : l'élève écrit prénom, nom, classe et clique « Télécharger mon bilan »
+   (fichier bilan-EMI-<classe>-<nom>-<prénom>.json).
+2. Il dépose ce fichier là où le professeur le demande (ENT, casier numérique, messagerie).
+3. Le professeur ouvre enseignant.html (lien « Espace enseignant » en bas de l'accueil), y glisse tous les
+   bilans d'un coup : tableau par classe et par niveau (terminé + score, part du livre faite), export CSV
+   pour un tableur. Les fichiers sont lus dans le navigateur du professeur, rien n'est envoyé.
+Limite : un bilan est produit par l'élève ; ce n'est pas une note certifiée.
+Pour un suivi automatique (sans fichiers à rendre), il faudrait une plateforme avec comptes élèves,
+par exemple un Moodle (MoodleCloud ou hébergé par l'établissement), qui lit les .h5p nativement.
+
+METTRE EN LIGNE
+Le site doit être servi par un serveur web (il ne marche pas en double-cliquant sur index.html).
+N'importe quel hébergement de pages statiques convient : espace web du collège, GitHub Pages, Netlify…
+Il suffit d'y déposer le contenu de ce dossier.
+Pour l'essayer sur un ordinateur : ouvrir un terminal dans ce dossier, taper
+  python -m http.server 8000
+puis ouvrir http://localhost:8000 dans le navigateur.
+
+METTRE À JOUR (quand un livre est ajouté ou modifié)
+python3 ../site-sources/build-site.py <dossier plateforme-emi> <dist de h5p-standalone> <sortie>
+puis copier les pages de site-sources/pages/ dans la sortie. Le n° de chaque livre est dans build-site.py (NUM).
+Les livres 5.1, 5.2, 5.3 et la Game Map 5e apparaissent « En préparation » (BIENTOT dans index.html).
