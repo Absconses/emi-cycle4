@@ -2,19 +2,23 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1a2e">
 <title>Tableau de classe</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <link rel="stylesheet" href="style.css">
 <script src="progression.js"></script>
 </head>
 <body>
-<header class="entete"><div class="int">
-  <p class="surtitre">EMI cycle 4 · Espace enseignant</p>
-  <h1>Tableau de classe</h1>
-  <p>Dépose ici les bilans que tes élèves ont téléchargés : le tableau de leur progression s’affiche aussitôt. Les fichiers sont lus dans ton navigateur ; rien n’est envoyé ni conservé en ligne.</p>
+<header class="entete ens"><div class="int entree">
+  <p class="surtitre" style="--i:0"><span class="direct">Espace enseignant</span><span>EMI cycle 4</span></p>
+  <h1 style="--i:1">Tableau de <span class="surligne">classe</span></h1>
+  <p class="chapo" style="--i:2">Dépose ici les bilans que tes élèves ont téléchargés : le tableau de leur progression s’affiche aussitôt. Les fichiers sont lus dans ton navigateur ; rien n’est envoyé ni conservé en ligne.</p>
 </div></header>
 <main class="contenu">
-  <p><a href="index.html">← Retour aux modules</a></p>
+  <a class="retour-accueil" href="index.html">← Retour aux modules</a>
   <label class="depot" id="depot">
     <strong>Glisse les fichiers « bilan-EMI-… .json » ici</strong><br>ou clique pour les choisir (tu peux en sélectionner plusieurs à la fois)
     <input type="file" id="fichiers" accept=".json,application/json" multiple hidden>

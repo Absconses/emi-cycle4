@@ -2,8 +2,12 @@
 <html lang="fr">
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1a2e">
 <title>Module EMI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <link rel="stylesheet" href="style.css">
 <script src="player/main.bundle.js"></script>
 <script src="progression.js"></script>
@@ -25,6 +29,7 @@
   const m = mods.find(x => x.id === id);
   if (!m) { document.getElementById('titre').textContent = 'Module introuvable'; return; }
   document.title = m.titre + ' · EMI ' + m.niveau;
+  document.body.style.setProperty('--niv', 'var(--c' + m.niveau[0] + ')');
   document.getElementById('titre').textContent = m.titre;
   document.getElementById('num').textContent = m.num || 'Game Map';
   const statut = document.getElementById('statut');
