@@ -7,7 +7,7 @@
 <title>Module EMI</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap">
 <link rel="stylesheet" href="style.css">
 <script src="../player/main.bundle.js"></script>
 <script src="progression.js"></script>
@@ -34,7 +34,7 @@
   document.getElementById('num').textContent = m.num || 'Game Map';
   const statut = document.getElementById('statut');
   const montre = (p) => {
-    const sc = p.meilleur ? ' · score ' + Math.round(p.meilleur * 100) + ' %' : '';
+    const sc = p.meilleur ? ', score ' + Math.round(p.meilleur * 100) + ' %' : '';
     statut.textContent = p.termine ? 'Terminé' + sc
       : (p.avance ? Math.round(p.avance * 100) + ' % du livre' : 'Commencé') + sc;
     statut.className = 'statut ' + (p.termine ? 'ok' : 'encours');

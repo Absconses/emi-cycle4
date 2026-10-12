@@ -7,15 +7,14 @@
 <title>Tableau de classe</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap">
 <link rel="stylesheet" href="style.css">
 <script src="progression.js"></script>
 </head>
 <body>
-<header class="entete ens"><div class="int entree">
-  <p class="surtitre" style="--i:0"><span class="direct">Espace enseignant</span><span>EMI cycle 4</span></p>
-  <h1 style="--i:1">Tableau de <span class="surligne">classe</span></h1>
-  <p class="chapo" style="--i:2">Dépose ici les bilans que tes élèves ont téléchargés : le tableau de leur progression s’affiche aussitôt. Les fichiers sont lus dans ton navigateur ; rien n’est envoyé ni conservé en ligne.</p>
+<header class="entete ens"><div class="int">
+    <h1>Tableau de classe</h1>
+  <p class="chapo">Dépose ici les bilans que tes élèves ont téléchargés : le tableau de leur progression s’affiche aussitôt. Les fichiers sont lus dans ton navigateur ; rien n’est envoyé ni conservé en ligne.</p>
 </div></header>
 <main class="contenu">
   <a class="retour-accueil" href="index.html">← Retour aux modules</a>
@@ -31,7 +30,7 @@
       <button class="btn" id="csv">Exporter en CSV (tableur)</button>
       <button class="lien-btn" id="vider">Vider le tableau</button>
     </div>
-    <p class="legende"><span class="c-ok">&nbsp;✓ 85&nbsp;%&nbsp;</span> terminé, avec le meilleur score · <span class="c-encours">&nbsp;40&nbsp;%&nbsp;</span> part du livre faite · <span class="c-vide">—</span> pas commencé.<br>Le <strong>score</strong> est le total des points obtenus sur toutes les questions notées du module (QCM, glisser-déposer, écrits notés par mots-clés, badge) : une question pas encore faite compte 0. Pour un module terminé, c’est donc son taux de bonnes réponses ; pour un module en cours, il monte au fil des réponses. On garde le meilleur score obtenu.</p>
+    <p class="legende"><span class="c-ok">&nbsp;✓ 85&nbsp;%&nbsp;</span> terminé, avec le meilleur score ; <span class="c-encours">&nbsp;40&nbsp;%&nbsp;</span> part du livre faite ; <span class="c-vide">—</span> pas commencé.<br>Le <strong>score</strong> est le total des points obtenus sur toutes les questions notées du module (QCM, glisser-déposer, écrits notés par mots-clés, badge) : une question pas encore faite compte 0. Pour un module terminé, c’est donc son taux de bonnes réponses ; pour un module en cours, il monte au fil des réponses. On garde le meilleur score obtenu.</p>
     <div class="tableau-zone"><table class="classe" id="table"></table></div>
     <p class="legende"><strong>Sceau.</strong> « ✓ intact » : le fichier n’a pas été retouché depuis que le site l’a produit, et il appartient bien à l’élève nommé (changer le nom casse le sceau). « ⚠ modifié » : quelqu’un a changé le fichier à la main. Le sceau arrête la retouche ordinaire, pas un élève qui fouillerait le code du site ou manipulerait son navigateur : c’est un indice de confiance, pas une note certifiée.</p>
   </div>
