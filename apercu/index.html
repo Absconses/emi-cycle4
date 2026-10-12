@@ -1,0 +1,237 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>EMI cycle 4</title>
+<meta name="description" content="Des livres interactifs et des Game Maps pour l’éducation aux médias et à l’information, de la 5e à la 3e.">
+<meta name="theme-color" content="#0f1a2e">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+<script src="progression.js"></script>
+</head>
+<body>
+<header class="entete"><canvas id="reseau" aria-hidden="true"></canvas><div class="int entree">
+  <p class="surtitre" style="--i:0"><span class="direct">En direct du CDI</span><span>Collège · Éducation aux médias et à l’information</span></p>
+  <h1 style="--i:1">S’informer, <span class="surligne">vérifier</span>, comprendre, agir.</h1>
+  <p class="chapo" style="--i:2">Des livres interactifs à faire en autonomie, un par champ du programme, et une Game Map pour faire le bilan de chaque année. Choisis ton niveau, puis ouvre un module.</p>
+  <ul class="chiffres" id="chiffres" style="--i:3"></ul>
+</div></header>
+<div class="fil" aria-hidden="true"><span class="etiquette">Au sommaire</span><div class="piste"><div class="defile" id="defile"></div></div></div>
+<div class="onglets-zone">
+  <nav class="onglets" role="tablist" aria-label="Niveaux" id="onglets"><span class="glisseur" id="glisseur"></span></nav>
+  <a class="lien-ens" href="enseignant.html">Espace enseignant : tableau de classe →</a>
+</div>
+<main class="contenu" id="contenu"></main>
+<script>
+const NIVEAUX = [
+  { n: '5e', c: 'var(--c5)', accroche: 'En 5e, tu apprends à identifier : qui parle, avec quels outils, et comment chercher avec méthode.' },
+  { n: '4e', c: 'var(--c4)', accroche: 'En 4e, tu apprends à analyser : qui finance l’information, comment la vérifier, comment publier dans les règles.' },
+  { n: '3e', c: 'var(--c3)', accroche: 'En 3e, tu apprends à comprendre et à agir : algorithmes, IA, sources, débat et identité numérique.' },
+];
+const DOMAINES = ['Se situer dans les médias', 'S’informer', 'Partager et produire'];
+const BIENTOT = { '5e': [['5.1', 0], ['5.2', 0], ['5.3', 0]] };
+const CALME = matchMedia('(prefers-reduced-motion: reduce)').matches;
+const pct = (x) => Math.round(x * 100) + ' %';
+const ICONE = {
+  livre: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5C5.5 4 8.5 4 12 6c3.5-2 6.5-2 9-.5V19c-2.5-1.5-5.5-1.5-9 .5-3.5-2-6.5-2-9-.5z"/><path d="M12 6v13.5"/></svg>',
+  carte: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5z"/><path d="M9 4v13M15 6.5v13"/></svg>',
+};
+function statut(p) {
+  if (!p) return '<span class="statut">À faire</span>';
+  if (p.termine) return '<span class="statut ok">Terminé' + (p.meilleur ? ' · ' + pct(p.meilleur) : '') + '</span>';
+  return '<span class="statut encours">' + (p.avance ? pct(p.avance) + ' lu' : 'Commencé') + '</span>';
+}
+const ROUTE = `<svg class="route" viewBox="0 0 300 200" preserveAspectRatio="xMaxYMid meet" aria-hidden="true">
+  <path d="M40 160 C 90 160, 80 100, 130 100 S 170 40, 215 55 S 250 130, 270 150"/>
+  <circle cx="40" cy="160" r="7"/><circle cx="130" cy="100" r="7"/><circle cx="215" cy="55" r="7"/><circle class="arrivee" cx="270" cy="150" r="10"/></svg>`;
+function carte(m, prog, i) {
+  const gm = m.type === 'gamemap', p = prog[m.id];
+  const av = p ? (p.termine ? 1 : p.avance || 0) : 0;
+  return `<a class="carte${gm ? ' gm' : ''}" style="--i:${i}" href="module.html?m=${encodeURIComponent(m.id)}">
+    ${gm ? ROUTE : ''}
+    <div class="haut">${gm ? '<span class="pastille">Bilan de l’année</span>' : `<span class="num">${m.num}</span>`}${statut(p)}</div>
+    <div class="t">${m.titre}</div>
+    <div class="type">${gm ? ICONE.carte + 'Game Map · environ 25 min' : ICONE.livre + 'Livre interactif · 45 à 50 min'}</div>
+    <span class="fleche" aria-hidden="true">→</span>
+    ${av ? `<span class="jauge" aria-hidden="true"><span style="width:${Math.round(av * 100)}%"></span></span>` : ''}</a>`;
+}
+const bientot = (num, gm, i) => `<div class="carte bientot" style="--i:${i}" aria-disabled="true"><div class="haut">${gm ? '<span class="pastille">Bilan de l’année</span>' : `<span class="num">${num}</span>`}<span class="statut">En préparation</span></div>
+  <div class="t">${gm ? 'Game Map de fin d’année' : 'Livre ' + num}</div><div class="type">Bientôt disponible</div></div>`;
+
+// chiffres qui défilent jusqu'à leur valeur
+function compter(el, fin) {
+  if (CALME) { el.textContent = fin; return; }
+  const t0 = performance.now(), d = 1100;
+  const pas = (t) => { const k = Math.min(1, (t - t0) / d); el.textContent = Math.round(fin * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(pas); };
+  requestAnimationFrame(pas);
+}
+
+// inclinaison et halo des cartes sous la souris
+function animerCartes(zone) {
+  if (CALME || !matchMedia('(hover: hover)').matches) return;
+  zone.addEventListener('pointermove', (e) => {
+    const c = e.target.closest('a.carte'); if (!c) return;
+    const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    c.style.setProperty('--mx', x * 100 + '%'); c.style.setProperty('--my', y * 100 + '%');
+    c.style.setProperty('--ry', ((x - .5) * 6).toFixed(2) + 'deg'); c.style.setProperty('--rx', ((.5 - y) * 6).toFixed(2) + 'deg');
+  });
+  zone.addEventListener('pointerout', (e) => {
+    const c = e.target.closest('a.carte'); if (!c || c.contains(e.relatedTarget)) return;
+    c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg');
+  });
+}
+
+// réseau de sources : des points reliés, certains « vérifiés » s'allument en jaune
+function reseau(cv) {
+  const ctx = cv.getContext('2d'); if (!ctx) return;
+  let L, H, pts = [], souris = null, actif = true, visible = true;
+  const dpr = Math.min(devicePixelRatio || 1, 2);
+  function taille() {
+    const r = cv.getBoundingClientRect(); L = r.width; H = r.height;
+    cv.width = L * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    const n = Math.round(Math.min(70, Math.max(24, L * H / 9000)));
+    pts = Array.from({ length: n }, () => ({ x: Math.random() * L, y: Math.random() * H, vx: (Math.random() - .5) * .25, vy: (Math.random() - .5) * .25, v: Math.random() < .12, ph: Math.random() * 6.28 }));
+  }
+  function dessin(t) {
+    ctx.clearRect(0, 0, L, H);
+    const D = 130;
+    for (let i = 0; i < pts.length; i++) {
+      const a = pts[i];
+      if (!CALME) { a.x += a.vx; a.y += a.vy; if (a.x < 0 || a.x > L) a.vx *= -1; if (a.y < 0 || a.y > H) a.vy *= -1; }
+      for (let j = i + 1; j < pts.length; j++) {
+        const b = pts[j], dx = a.x - b.x, dy = a.y - b.y, d = Math.hypot(dx, dy);
+        if (d < D) { ctx.strokeStyle = `rgba(169,182,204,${(1 - d / D) * .22})`; ctx.lineWidth = 1; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(b.x, b.y); ctx.stroke(); }
+      }
+      if (souris) {
+        const d = Math.hypot(a.x - souris.x, a.y - souris.y);
+        if (d < 170) { ctx.strokeStyle = `rgba(255,216,74,${(1 - d / 170) * .55})`; ctx.beginPath(); ctx.moveTo(a.x, a.y); ctx.lineTo(souris.x, souris.y); ctx.stroke(); }
+      }
+    }
+    for (const a of pts) {
+      if (a.v) {
+        const pulse = CALME ? 0 : (Math.sin(t / 700 + a.ph) + 1) / 2;
+        ctx.fillStyle = `rgba(255,216,74,${.12 + pulse * .18})`; ctx.beginPath(); ctx.arc(a.x, a.y, 7 + pulse * 6, 0, 6.29); ctx.fill();
+        ctx.fillStyle = '#ffd84a'; ctx.beginPath(); ctx.arc(a.x, a.y, 2.6, 0, 6.29); ctx.fill();
+      } else { ctx.fillStyle = 'rgba(169,182,204,.55)'; ctx.beginPath(); ctx.arc(a.x, a.y, 1.7, 0, 6.29); ctx.fill(); }
+    }
+    if (!CALME && actif && visible) requestAnimationFrame(dessin);
+  }
+  const relancer = () => { if (!CALME && actif && visible) requestAnimationFrame(dessin); };
+  taille(); requestAnimationFrame(dessin);
+  let to; addEventListener('resize', () => { clearTimeout(to); to = setTimeout(() => { taille(); if (CALME) requestAnimationFrame(dessin); }, 150); });
+  const h = cv.parentElement;
+  h.addEventListener('pointermove', (e) => { const r = cv.getBoundingClientRect(); souris = { x: e.clientX - r.left, y: e.clientY - r.top }; });
+  h.addEventListener('pointerleave', () => { souris = null; });
+  new IntersectionObserver(([e]) => { const av = visible; visible = e.isIntersecting; if (visible && !av) relancer(); }).observe(cv);
+  document.addEventListener('visibilitychange', () => { const av = actif; actif = !document.hidden; if (actif && !av) relancer(); });
+}
+
+(async function () {
+  reseau(document.getElementById('reseau'));
+  const mods = await (await fetch('modules.json')).json();
+  const prog = EMI.lire();
+  const livres = mods.filter(m => m.type === 'livre').length, gms = mods.length - livres;
+  const ch = document.getElementById('chiffres');
+  ch.innerHTML = `<li><b data-v="${livres}">0</b><span>livres interactifs</span></li><li><b data-v="${gms}">0</b><span>Game Maps</span></li><li><b data-v="3">0</b><span>niveaux, de la 5e à la 3e</span></li><li><b data-v="3">0</b><span>domaines du programme</span></li>`;
+  ch.querySelectorAll('b').forEach((b, i) => setTimeout(() => compter(b, +b.dataset.v), CALME ? 0 : 450 + i * 120));
+  // fil du sommaire : chaque titre, deux fois pour boucler sans couture
+  const titres = mods.filter(m => m.type === 'livre').map(m => `<span data-n="${m.num}">${m.titre}</span>`).join('');
+  document.getElementById('defile').innerHTML = titres + titres;
+
+  const onglets = document.getElementById('onglets'), contenu = document.getElementById('contenu'), glisseur = document.getElementById('glisseur');
+  animerCartes(contenu);
+  let choix; try { choix = localStorage.getItem('emi-niveau'); } catch (e) {}
+  NIVEAUX.forEach(N => {
+    const ms = mods.filter(m => m.niveau === N.n);
+    const faits = ms.filter(m => prog[m.id] && prog[m.id].termine).length;
+    const b = document.createElement('button');
+    b.className = 'onglet'; b.setAttribute('role', 'tab'); b.style.setProperty('--niv', N.c);
+    b.innerHTML = `${N.n} <small>${faits}/${ms.length}</small>`;
+    b.onclick = () => changer(N.n);
+    b.dataset.n = N.n; onglets.appendChild(b);
+  });
+  const placerGlisseur = () => {
+    const b = onglets.querySelector('[aria-selected="true"]'); if (!b) return;
+    glisseur.style.width = b.offsetWidth + 'px'; glisseur.style.transform = `translateX(${b.offsetLeft}px)`; glisseur.style.background = b.style.getPropertyValue('--niv');
+  };
+  addEventListener('resize', placerGlisseur);
+  document.fonts && document.fonts.ready.then(placerGlisseur);
+  function changer(n) {
+    if (!CALME && document.startViewTransition) document.startViewTransition(() => montrer(n)); else montrer(n);
+  }
+  function montrer(n) {
+    try { localStorage.setItem('emi-niveau', n); } catch (e) {}
+    const N = NIVEAUX.find(x => x.n === n);
+    onglets.querySelectorAll('.onglet').forEach(b => b.setAttribute('aria-selected', b.dataset.n === n));
+    placerGlisseur();
+    const ms = mods.filter(m => m.niveau === n);
+    const faits = ms.filter(m => prog[m.id] && prog[m.id].termine).length;
+    const R = 40, C = 2 * Math.PI * R, part = ms.length ? faits / ms.length : 0;
+    let k = 0;
+    let h = `<section class="niveau" style="--niv:${N.c}" role="tabpanel" aria-label="Niveau ${n}">
+      <div class="tete-niveau"><span class="grand-niv" aria-hidden="true">${n}</span>
+        <div><h2>Niveau ${n}</h2><p class="accroche">${N.accroche}</p></div>
+        <div class="anneau" role="img" aria-label="${faits} module${faits > 1 ? 's' : ''} terminé${faits > 1 ? 's' : ''} sur ${ms.length}">
+          <svg viewBox="0 0 96 96"><circle class="fond" cx="48" cy="48" r="${R}"/><circle class="val" cx="48" cy="48" r="${R}" stroke-dasharray="${C}" stroke-dashoffset="${C}" data-fin="${C * (1 - part)}"/></svg>
+          <span class="txt">${faits}/${ms.length}<small>terminés</small></span></div>
+      </div>`;
+    DOMAINES.forEach((d, i) => {
+      const liste = ms.filter(m => m.type === 'livre' && m.domaine.replace("'", '’') === d);
+      const absents = (BIENTOT[n] || []).filter(([num]) => ((+num[2] - 1) / 3 | 0) === i);
+      if (!liste.length && !absents.length) return;
+      h += `<div class="domaine"><h3>${d}</h3><div class="grille">${absents.map(([num]) => bientot(num, false, k++)).join('')}${liste.map(m => carte(m, prog, k++)).join('')}</div></div>`;
+    });
+    const gm = ms.find(m => m.type === 'gamemap');
+    h += `<div class="domaine"><h3>Bilan de l’année</h3><div class="grille">${gm ? carte(gm, prog, k++) : bientot('', true, k++)}</div></div></section>`;
+    h += `<section class="apropos" id="bilan"><h2>Mon bilan : ma sauvegarde et mon rapport</h2>
+      <p>Ta progression s’enregistre toute seule dans ce navigateur, sur cet appareil : tu peux t’arrêter au milieu d’un livre et reprendre plus tard, il rouvre là où tu en étais. Tu n’as pas besoin de tout finir pour rendre ton travail.</p>
+      <ol class="methode">
+        <li><strong>À la fin de chaque séance</strong> télécharge ton bilan et range-le (ENT, clé USB, messagerie). C’est ta sauvegarde.</li>
+        <li><strong>Sur un autre ordinateur</strong> (au CDI, à la maison), clique sur « Reprendre avec mon bilan » et choisis ce fichier : tu retrouves ta progression.</li>
+        <li><strong>Quand ton professeur le demande</strong> dépose ton dernier bilan là où il te l’indique. Il voit ce que tu as fait, même si tu n’as pas fini.</li>
+      </ol>
+      <p class="petit">Ne modifie pas le fichier : il porte un sceau, et un bilan retouché est refusé ici et signalé à ton professeur.</p>
+      <div class="ident"><label for="prenom">Prénom <input id="prenom" autocomplete="given-name" maxlength="40"></label>
+      <label for="nom">Nom <input id="nom" autocomplete="family-name" maxlength="40"></label>
+      <label for="classe">Classe <input id="classe" placeholder="ex. 4eB" maxlength="12"></label></div>
+      <div class="actions"><button class="btn" id="telecharger">Télécharger mon bilan</button>
+      <label class="lien-btn">Reprendre avec mon bilan<input type="file" id="reprendre" accept=".json,application/json" hidden></label>
+      <button class="lien-btn discret" id="raz">Effacer ma progression sur cet appareil</button></div>
+      <p class="petit" id="msg-bilan" role="status"></p></section>
+      <p class="pied">EMI cycle 4 · programme d’éducation aux médias et à l’information · aucune donnée ne quitte cet appareil sans toi</p>`;
+    contenu.innerHTML = h;
+    const anneau = contenu.querySelector('.anneau .val');
+    requestAnimationFrame(() => requestAnimationFrame(() => { anneau.style.strokeDashoffset = anneau.dataset.fin; }));
+    const ident = EMI.identite();
+    ['prenom', 'nom', 'classe'].forEach(k => { const el = document.getElementById(k); el.value = ident[k] || ''; el.oninput = () => EMI.garderIdentite(k, el.value.trim()); });
+    document.getElementById('reprendre').onchange = async (e) => {
+      const f = e.target.files[0]; if (!f) return;
+      const r = await EMI.chargerBilan(await f.text());
+      const msg = document.getElementById('msg-bilan');
+      if (!r.ok) { msg.textContent = r.raison; return; }
+      sessionStorage.setItem('emi-msg', r.n ? `Progression retrouvée : ${r.n} module${r.n > 1 ? 's' : ''} mis à jour.` : 'Ce bilan n’apporte rien de plus récent que ce qui est déjà sur cet appareil.');
+      location.reload();
+    };
+    try { const m = sessionStorage.getItem('emi-msg'); if (m) { document.getElementById('msg-bilan').textContent = m; sessionStorage.removeItem('emi-msg'); } } catch (e) {}
+    document.getElementById('telecharger').onclick = async () => {
+      const id = EMI.identite();
+      const msg = document.getElementById('msg-bilan');
+      if (!id.prenom || !id.nom || !id.classe) { msg.textContent = 'Écris ton prénom, ton nom et ta classe avant de télécharger ton bilan.'; return; }
+      const nb = await EMI.telechargerBilan(mods);
+      msg.textContent = `Bilan téléchargé (${nb} module${nb > 1 ? 's' : ''} commencé${nb > 1 ? 's' : ''}). Dépose le fichier là où ton professeur te l’a demandé.`;
+    };
+    const raz = document.getElementById('raz');
+    raz.onclick = () => {
+      if (raz.dataset.armer) { EMI.effacer(); location.reload(); return; }
+      raz.dataset.armer = '1'; raz.textContent = 'Clique encore pour tout effacer sur cet appareil';
+      setTimeout(() => { delete raz.dataset.armer; raz.textContent = 'Effacer ma progression sur cet appareil'; }, 5000);
+    };
+  }
+  montrer(NIVEAUX.some(x => x.n === choix) ? choix : '5e');
+})();
+</script>
+</body>
+</html>

@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#0f1a2e">
+<title>Module EMI</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="style.css">
+<script src="../player/main.bundle.js"></script>
+<script src="progression.js"></script>
+</head>
+<body class="page-module">
+<header class="barre">
+  <a class="retour" href="index.html">← Tous les modules</a>
+  <div class="barre-titre"><span id="num" class="pastille"></span><h1 id="titre">Chargement…</h1></div>
+  <span id="statut" class="statut"></span>
+</header>
+<main class="lecteur">
+  <div id="h5p"></div>
+  <p class="note">Ta progression est enregistrée automatiquement dans ce navigateur : tu peux t’arrêter et reprendre plus tard, sur le même appareil.</p>
+</main>
+<script>
+(async function () {
+  const id = new URLSearchParams(location.search).get('m');
+  const mods = await (await fetch('modules.json')).json();
+  const m = mods.find(x => x.id === id);
+  if (!m) { document.getElementById('titre').textContent = 'Module introuvable'; return; }
+  document.title = m.titre + ' · EMI ' + m.niveau;
+  document.body.style.setProperty('--niv', 'var(--c' + m.niveau[0] + ')');
+  document.getElementById('titre').textContent = m.titre;
+  document.getElementById('num').textContent = m.num || 'Game Map';
+  const statut = document.getElementById('statut');
+  const montre = (p) => {
+    const sc = p.meilleur ? ' · score ' + Math.round(p.meilleur * 100) + ' %' : '';
+    statut.textContent = p.termine ? 'Terminé' + sc
+      : (p.avance ? Math.round(p.avance * 100) + ' % du livre' : 'Commencé') + sc;
+    statut.className = 'statut ' + (p.termine ? 'ok' : 'encours');
+  };
+  montre(EMI.maj(id, p => Object.assign(p, { commence: p.commence || Date.now(), vu: Date.now() })));
+  const precedent = EMI.etat(id);
+  const options = {
+    h5pJsonPath: '../modules/' + id, librariesPath: '../libraries',
+    frameJs: '../player/frame.bundle.js', frameCss: '../player/styles/h5p.css',
+    frame: false, fullScreen: true, id: id,
+    saveFreq: 3600,
+  };
+  if (precedent) options.contentUserData = [{ state: precedent }];
+  await new H5PStandalone.H5P(document.getElementById('h5p'), options);
+  // le contenu tourne dans une iframe : son H5P n'est pas celui de la page
+  const instance = () => {
+    const fr = document.querySelector('#h5p iframe');
+    const h = fr && fr.contentWindow && fr.contentWindow.H5P ? fr.contentWindow.H5P : window.H5P;
+    return (h.instances || [])[0];
+  };
+  // relevé : score actuel, chapitres terminés (livre), état pour la reprise
+  const releve = (fini) => {
+    const i = instance();
+    if (!i) return;
+    try { const st = i.getCurrentState && i.getCurrentState(); if (st) EMI.garderEtat(id, JSON.stringify(st)); } catch (e) {}
+    montre(EMI.maj(id, p => {
+      p.vu = Date.now();
+      try {
+        const max = i.getMaxScore && i.getMaxScore();
+        if (max) { const sc = i.getScore() / max; p.score = sc; p.meilleur = Math.max(p.meilleur || 0, sc); }
+      } catch (e) {}
+      if (Array.isArray(i.chapters)) {
+        const ch = i.chapters.filter(c => !c.isSummary);
+        const lus = ch.filter(c => c.completed).length;
+        p.avance = ch.length ? lus / ch.length : 0;
+        if (ch.length && lus === ch.length) p.termine = p.termine || Date.now();
+      }
+      if (fini) p.termine = p.termine || Date.now();
+      return p;
+    }));
+  };
+  setInterval(() => releve(false), 8000);
+  addEventListener('pagehide', () => releve(false));
+  document.addEventListener('visibilitychange', () => { if (document.hidden) releve(false); });
+  H5P.externalDispatcher.on('xAPI', (ev) => {
+    const st = ev.data.statement;
+    const verbe = (st.verb && st.verb.id || '').split('/').pop();
+    // le module entier (pas un chapitre ni une question) annonce qu'il est fini
+    const racine = st.object && !String(st.object.id).includes('subContentId');
+    setTimeout(() => releve(racine && verbe === 'completed'), 300);
+  });
+})();
+</script>
+</body>
+</html>

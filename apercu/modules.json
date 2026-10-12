@@ -1,0 +1,210 @@
+[
+ {
+  "id": "3e-ce-qui-filtre-mon-information",
+  "niveau": "3e",
+  "num": "3.1",
+  "titre": "Ce qui filtre mon information",
+  "type": "livre",
+  "domaine": "Se situer dans les médias"
+ },
+ {
+  "id": "3e-qui-fait-l-information",
+  "niveau": "3e",
+  "num": "3.2",
+  "titre": "Qui fait l’information ?",
+  "type": "livre",
+  "domaine": "Se situer dans les médias"
+ },
+ {
+  "id": "3e-un-fait-trois-medias",
+  "niveau": "3e",
+  "num": "3.3",
+  "titre": "Un fait, trois médias",
+  "type": "livre",
+  "domaine": "Se situer dans les médias"
+ },
+ {
+  "id": "3e-moteur-ou-ia-generative",
+  "niveau": "3e",
+  "num": "3.4",
+  "titre": "Moteur ou IA générative ?",
+  "type": "livre",
+  "domaine": "S'informer"
+ },
+ {
+  "id": "3e-une-recherche-pour-produire",
+  "niveau": "3e",
+  "num": "3.5",
+  "titre": "Une recherche pour produire",
+  "type": "livre",
+  "domaine": "S'informer"
+ },
+ {
+  "id": "3e-l-image-comme-source",
+  "niveau": "3e",
+  "num": "3.6",
+  "titre": "L’image comme source",
+  "type": "livre",
+  "domaine": "S'informer"
+ },
+ {
+  "id": "3e-debattre-avec-des-sources",
+  "niveau": "3e",
+  "num": "3.7",
+  "titre": "Débattre avec des sources",
+  "type": "livre",
+  "domaine": "Partager et produire"
+ },
+ {
+  "id": "3e-produire-avec-l-ia",
+  "niveau": "3e",
+  "num": "3.8",
+  "titre": "Produire avec l'IA, en responsable",
+  "type": "livre",
+  "domaine": "Partager et produire"
+ },
+ {
+  "id": "3e-mon-identite-numerique",
+  "niveau": "3e",
+  "num": "3.9",
+  "titre": "Mon identité numérique",
+  "type": "livre",
+  "domaine": "Partager et produire"
+ },
+ {
+  "id": "3e-game-map-grand-bilan-du-tilleul",
+  "niveau": "3e",
+  "num": null,
+  "titre": "Le grand bilan du Tilleul · 3e",
+  "type": "gamemap",
+  "domaine": null
+ },
+ {
+  "id": "4e-prendre-du-recul-sur-mes-usages",
+  "niveau": "4e",
+  "num": "4.1",
+  "titre": "Prendre du recul sur mes usages",
+  "type": "livre",
+  "domaine": "Se situer dans les médias"
+ },
+ {
+  "id": "4e-qui-paie-l-information",
+  "niveau": "4e",
+  "num": "4.2",
+  "titre": "Qui paie l'information ?",
+  "type": "livre",
+  "domaine": "Se situer dans les médias"
+ },
+ {
+  "id": "4e-la-ligne-editoriale",
+  "niveau": "4e",
+  "num": "4.3",
+  "titre": "La ligne éditoriale",
+  "type": "livre",
+  "domaine": "Se situer dans les médias"
+ },
+ {
+  "id": "4e-chercher-avec-les-bons-outils",
+  "niveau": "4e",
+  "num": "4.4",
+  "titre": "Chercher avec les bons outils",
+  "type": "livre",
+  "domaine": "S'informer"
+ },
+ {
+  "id": "4e-organiser-sa-recherche",
+  "niveau": "4e",
+  "num": "4.5",
+  "titre": "Organiser sa recherche",
+  "type": "livre",
+  "domaine": "S'informer"
+ },
+ {
+  "id": "4e-information-ou-desinformation",
+  "niveau": "4e",
+  "num": "4.6",
+  "titre": "Information ou désinformation ?",
+  "type": "livre",
+  "domaine": "S'informer"
+ },
+ {
+  "id": "4e-creer-un-contenu-original",
+  "niveau": "4e",
+  "num": "4.7",
+  "titre": "Créer un contenu original",
+  "type": "livre",
+  "domaine": "Partager et produire"
+ },
+ {
+  "id": "4e-publier-dans-les-regles",
+  "niveau": "4e",
+  "num": "4.8",
+  "titre": "Publier dans les règles",
+  "type": "livre",
+  "domaine": "Partager et produire"
+ },
+ {
+  "id": "4e-face-aux-rumeurs",
+  "niveau": "4e",
+  "num": "4.9",
+  "titre": "Face aux rumeurs",
+  "type": "livre",
+  "domaine": "Partager et produire"
+ },
+ {
+  "id": "4e-game-map-rallye-du-tilleul",
+  "niveau": "4e",
+  "num": null,
+  "titre": "Le rallye du Tilleul · 4e",
+  "type": "gamemap",
+  "domaine": null
+ },
+ {
+  "id": "5e-les-outils-pour-s-informer",
+  "niveau": "5e",
+  "num": "5.4",
+  "titre": "Les outils pour s'informer",
+  "type": "livre",
+  "domaine": "S'informer"
+ },
+ {
+  "id": "5e-chercher-avec-methode",
+  "niveau": "5e",
+  "num": "5.5",
+  "titre": "Chercher avec méthode",
+  "type": "livre",
+  "domaine": "S'informer"
+ },
+ {
+  "id": "5e-qui-parle-evaluer-une-source",
+  "niveau": "5e",
+  "num": "5.6",
+  "titre": "Qui parle ? Évaluer une source",
+  "type": "livre",
+  "domaine": "S'informer"
+ },
+ {
+  "id": "5e-mettre-en-valeur-une-information",
+  "niveau": "5e",
+  "num": "5.7",
+  "titre": "Mettre en valeur une information",
+  "type": "livre",
+  "domaine": "Partager et produire"
+ },
+ {
+  "id": "5e-publier-de-facon-ethique",
+  "niveau": "5e",
+  "num": "5.8",
+  "titre": "Publier de façon éthique",
+  "type": "livre",
+  "domaine": "Partager et produire"
+ },
+ {
+  "id": "5e-mes-traces-mes-reactions",
+  "niveau": "5e",
+  "num": "5.9",
+  "titre": "Mes traces, mes réactions",
+  "type": "livre",
+  "domaine": "Partager et produire"
+ }
+]
