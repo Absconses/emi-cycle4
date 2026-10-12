@@ -8,19 +8,21 @@
 <meta name="theme-color" content="#0f1a2e">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@500;600&display=swap">
 <link rel="stylesheet" href="style.css">
 <script src="progression.js"></script>
 </head>
 <body>
-<header class="entete"><canvas id="reseau" aria-hidden="true"></canvas><div class="int">
-  <h1>Apprendre à s’informer, de la 5e à la 3e</h1>
-  <p class="chapo" id="chapo">Éducation aux médias et à l’information : des livres interactifs à faire en autonomie, un par champ du programme, et une Game Map par année pour faire le bilan. Choisis ton niveau, puis ouvre un module.</p>
-  <p class="legende-reseau" aria-hidden="true"><span><i class="v"></i>la loupe montre ce qui est vérifié</span><span><i class="q"></i>et ce qui reste à vérifier</span></p>
+<header class="entete"><canvas id="reseau" aria-hidden="true"></canvas><div class="int entree">
+  <p class="surtitre" style="--i:0"><span class="direct">En direct du CDI</span><span>Collège · Éducation aux médias et à l’information</span></p>
+  <h1 style="--i:1">S’informer, <span class="surligne">vérifier</span>, comprendre, agir.</h1>
+  <p class="chapo" style="--i:2">Des livres interactifs à faire en autonomie, un par champ du programme, et une Game Map pour faire le bilan de chaque année. Choisis ton niveau, puis ouvre un module.</p>
+  <ul class="chiffres" id="chiffres" style="--i:3"></ul>
+  <p class="legende-reseau" style="--i:4" aria-hidden="true"><span><i class="v"></i>la loupe montre ce qui est vérifié</span><span><i class="q"></i>et ce qui reste à vérifier</span></p>
 </div></header>
 <div class="onglets-zone">
   <nav class="onglets" role="tablist" aria-label="Niveaux" id="onglets"><span class="glisseur" id="glisseur"></span></nav>
-  <a class="lien-ens" href="enseignant.html">Espace enseignant : tableau de classe</a>
+  <a class="lien-ens" href="enseignant.html">Espace enseignant : tableau de classe →</a>
 </div>
 <main class="contenu" id="contenu"></main>
 <script>
@@ -29,34 +31,57 @@ const NIVEAUX = [
   { n: '4e', c: 'var(--c4)', accroche: 'En 4e, tu apprends à analyser : qui finance l’information, comment la vérifier, comment publier dans les règles.' },
   { n: '3e', c: 'var(--c3)', accroche: 'En 3e, tu apprends à comprendre et à agir : algorithmes, IA, sources, débat et identité numérique.' },
 ];
-const DOMAINES = [
-  ['Se situer dans les médias', 'Qui produit l’information, qui la finance, et quelle place elle prend dans ta vie.'],
-  ['S’informer', 'Chercher, trier et vérifier ce que tu trouves.'],
-  ['Partager et produire', 'Publier, créer et réagir en ligne sans te mettre en danger.'],
-];
-const BIENTOT = { '5e': ['5.1', '5.2', '5.3'] };
+const DOMAINES = ['Se situer dans les médias', 'S’informer', 'Partager et produire'];
+const BIENTOT = { '5e': [['5.1', 0], ['5.2', 0], ['5.3', 0]] };
 const CALME = matchMedia('(prefers-reduced-motion: reduce)').matches;
 const pct = (x) => Math.round(x * 100) + ' %';
+const ICONE = {
+  livre: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5C5.5 4 8.5 4 12 6c3.5-2 6.5-2 9-.5V19c-2.5-1.5-5.5-1.5-9 .5-3.5-2-6.5-2-9-.5z"/><path d="M12 6v13.5"/></svg>',
+  carte: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5z"/><path d="M9 4v13M15 6.5v13"/></svg>',
+};
 function statut(p) {
   if (!p) return '<span class="statut">À faire</span>';
-  if (p.termine) return '<span class="statut ok">Terminé' + (p.meilleur ? ', ' + pct(p.meilleur) : '') + '</span>';
+  if (p.termine) return '<span class="statut ok">Terminé' + (p.meilleur ? ' · ' + pct(p.meilleur) : '') + '</span>';
   return '<span class="statut encours">' + (p.avance ? pct(p.avance) + ' lu' : 'Commencé') + '</span>';
 }
-function entree(m, prog) {
-  const p = prog[m.id], av = p ? (p.termine ? 1 : p.avance || 0) : 0;
-  return `<li><a class="entree" href="module.html?m=${encodeURIComponent(m.id)}">
-    <span class="num">${m.num}</span><span class="t">${m.titre}</span>
-    <span class="etat">${statut(p)}<span>Livre interactif, 45 min</span></span>
-    ${av ? `<span class="jauge" aria-hidden="true"><span style="width:${Math.round(av * 100)}%"></span></span>` : ''}</a></li>`;
+const ROUTE = `<svg class="route" viewBox="0 0 300 200" preserveAspectRatio="xMaxYMid meet" aria-hidden="true">
+  <path d="M40 160 C 90 160, 80 100, 130 100 S 170 40, 215 55 S 250 130, 270 150"/>
+  <circle cx="40" cy="160" r="7"/><circle cx="130" cy="100" r="7"/><circle cx="215" cy="55" r="7"/><circle class="arrivee" cx="270" cy="150" r="10"/></svg>`;
+function carte(m, prog, i) {
+  const gm = m.type === 'gamemap', p = prog[m.id];
+  const av = p ? (p.termine ? 1 : p.avance || 0) : 0;
+  return `<a class="carte${gm ? ' gm' : ''}" style="--i:${i}" href="module.html?m=${encodeURIComponent(m.id)}">
+    ${gm ? ROUTE : ''}
+    <div class="haut">${gm ? '<span class="pastille">Bilan de l’année</span>' : `<span class="num">${m.num}</span>`}${statut(p)}</div>
+    <div class="t">${m.titre}</div>
+    <div class="type">${gm ? ICONE.carte + 'Game Map · environ 25 min' : ICONE.livre + 'Livre interactif · 45 à 50 min'}</div>
+    <span class="fleche" aria-hidden="true">→</span>
+    ${av ? `<span class="jauge" aria-hidden="true"><span style="width:${Math.round(av * 100)}%"></span></span>` : ''}</a>`;
 }
-const bientot = (num) => `<li><div class="entree bientot" aria-disabled="true"><span class="num">${num}</span><span class="t">Livre en préparation</span><span class="etat">Bientôt disponible</span></div></li>`;
-const ROUTE = `<svg class="route" viewBox="0 0 300 120" aria-hidden="true">
-  <path d="M18 92 C 60 92, 60 40, 104 40 S 150 96, 190 84 S 240 20, 282 30"/>
-  <circle cx="18" cy="92" r="7"/><circle cx="104" cy="40" r="7"/><circle cx="190" cy="84" r="7"/><circle class="arrivee" cx="282" cy="30" r="10"/></svg>`;
-function gamemap(m, prog) {
-  if (!m) return `<div class="gm" aria-disabled="true"><div><p class="quand">Bilan de l’année</p><p class="t">Game Map en préparation</p><p class="etat">Bientôt disponible</p></div>${ROUTE}</div>`;
-  return `<a class="gm" href="module.html?m=${encodeURIComponent(m.id)}"><div><p class="quand">Bilan de l’année, à faire quand tu as fini les livres</p>
-    <p class="t">${m.titre}</p><p class="etat">${statut(prog[m.id])}<span>Game Map, environ 25 min</span></p></div>${ROUTE}</a>`;
+const bientot = (num, gm, i) => `<div class="carte bientot" style="--i:${i}" aria-disabled="true"><div class="haut">${gm ? '<span class="pastille">Bilan de l’année</span>' : `<span class="num">${num}</span>`}<span class="statut">En préparation</span></div>
+  <div class="t">${gm ? 'Game Map de fin d’année' : 'Livre ' + num}</div><div class="type">Bientôt disponible</div></div>`;
+
+// chiffres qui défilent jusqu'à leur valeur
+function compter(el, fin) {
+  if (CALME) { el.textContent = fin; return; }
+  const t0 = performance.now(), d = 1100;
+  const pas = (t) => { const k = Math.min(1, (t - t0) / d); el.textContent = Math.round(fin * (1 - Math.pow(1 - k, 3))); if (k < 1) requestAnimationFrame(pas); };
+  requestAnimationFrame(pas);
+}
+
+// inclinaison et halo des cartes sous la souris
+function animerCartes(zone) {
+  if (CALME || !matchMedia('(hover: hover)').matches) return;
+  zone.addEventListener('pointermove', (e) => {
+    const c = e.target.closest('a.carte'); if (!c) return;
+    const r = c.getBoundingClientRect(), x = (e.clientX - r.left) / r.width, y = (e.clientY - r.top) / r.height;
+    c.style.setProperty('--mx', x * 100 + '%'); c.style.setProperty('--my', y * 100 + '%');
+    c.style.setProperty('--ry', ((x - .5) * 6).toFixed(2) + 'deg'); c.style.setProperty('--rx', ((.5 - y) * 6).toFixed(2) + 'deg');
+  });
+  zone.addEventListener('pointerout', (e) => {
+    const c = e.target.closest('a.carte'); if (!c || c.contains(e.relatedTarget)) return;
+    c.style.setProperty('--rx', '0deg'); c.style.setProperty('--ry', '0deg');
+  });
 }
 
 // Le fil de l'info : des titres, des posts et des notifications défilent en fond, flous et pâles ;
@@ -116,7 +141,7 @@ function filInfo(cv, titres) {
   function chemin(t) {
     const s = t / 1000;
     if (L < 600) return { x: L * (.5 + .3 * Math.sin(s / 4.1)), y: 92 + 22 * Math.sin(s / 2.9) };
-    return { x: L * (.74 + .16 * Math.sin(s / 5.3)), y: H * (.5 + .3 * Math.sin(s / 3.7)) };
+    return { x: L * (.79 + .11 * Math.sin(s / 5.3)), y: H * (.5 + .3 * Math.sin(s / 3.7)) };
   }
   function lignesA(t, cle, ech) {
     for (const l of lignes) {
@@ -160,7 +185,13 @@ function filInfo(cv, titres) {
   const mods = await (await fetch('modules.json')).json();
   filInfo(document.getElementById('reseau'), mods.map(m => m.titre));
   const prog = EMI.lire();
+  const livres = mods.filter(m => m.type === 'livre').length, gms = mods.length - livres;
+  const ch = document.getElementById('chiffres');
+  ch.innerHTML = `<li><b data-v="${livres}">0</b><span>livres interactifs</span></li><li><b data-v="${gms}">0</b><span>Game Maps</span></li><li><b data-v="3">0</b><span>niveaux, de la 5e à la 3e</span></li><li><b data-v="3">0</b><span>domaines du programme</span></li>`;
+  ch.querySelectorAll('b').forEach((b, i) => setTimeout(() => compter(b, +b.dataset.v), CALME ? 0 : 450 + i * 120));
+
   const onglets = document.getElementById('onglets'), contenu = document.getElementById('contenu'), glisseur = document.getElementById('glisseur');
+  animerCartes(contenu);
   let choix; try { choix = localStorage.getItem('emi-niveau'); } catch (e) {}
   NIVEAUX.forEach(N => {
     const ms = mods.filter(m => m.niveau === N.n);
@@ -168,7 +199,7 @@ function filInfo(cv, titres) {
     const b = document.createElement('button');
     b.className = 'onglet'; b.setAttribute('role', 'tab'); b.style.setProperty('--niv', N.c);
     b.innerHTML = `${N.n} <small>${faits}/${ms.length}</small>`;
-    b.onclick = () => montrer(N.n, true);
+    b.onclick = () => changer(N.n);
     b.dataset.n = N.n; onglets.appendChild(b);
   });
   const placerGlisseur = () => {
@@ -177,42 +208,52 @@ function filInfo(cv, titres) {
   };
   addEventListener('resize', placerGlisseur);
   document.fonts && document.fonts.ready.then(placerGlisseur);
-  function montrer(n, clic) {
+  function changer(n) {
+    if (!CALME && document.startViewTransition) document.startViewTransition(() => montrer(n)); else montrer(n);
+  }
+  function montrer(n) {
     try { localStorage.setItem('emi-niveau', n); } catch (e) {}
     const N = NIVEAUX.find(x => x.n === n);
     onglets.querySelectorAll('.onglet').forEach(b => b.setAttribute('aria-selected', b.dataset.n === n));
     placerGlisseur();
     const ms = mods.filter(m => m.niveau === n);
     const faits = ms.filter(m => prog[m.id] && prog[m.id].termine).length;
-    let h = `<section class="niveau${clic ? ' arrive' : ''}" style="--niv:${N.c}" role="tabpanel" aria-label="Niveau ${n}">
-      <div class="tete-niveau"><div><h2>${n}</h2><p class="accroche">${N.accroche}</p></div>
-        <div class="avancee"><p><b>${faits}</b> module${faits > 1 ? 's' : ''} terminé${faits > 1 ? 's' : ''} sur <b>${ms.length}</b></p>
-        <div class="barre-niv" aria-hidden="true"><span style="width:${ms.length ? 100 * faits / ms.length : 0}%"></span></div></div>
-      </div><div class="domaines">`;
-    DOMAINES.forEach(([d, quoi], i) => {
+    const R = 40, C = 2 * Math.PI * R, part = ms.length ? faits / ms.length : 0;
+    let k = 0;
+    let h = `<section class="niveau" style="--niv:${N.c}" role="tabpanel" aria-label="Niveau ${n}">
+      <div class="tete-niveau"><span class="grand-niv" aria-hidden="true">${n}</span>
+        <div><h2>Niveau ${n}</h2><p class="accroche">${N.accroche}</p></div>
+        <div class="anneau" role="img" aria-label="${faits} module${faits > 1 ? 's' : ''} terminé${faits > 1 ? 's' : ''} sur ${ms.length}">
+          <svg viewBox="0 0 96 96"><circle class="fond" cx="48" cy="48" r="${R}"/><circle class="val" cx="48" cy="48" r="${R}" stroke-dasharray="${C}" stroke-dashoffset="${C}" data-fin="${C * (1 - part)}"/></svg>
+          <span class="txt">${faits}/${ms.length}<small>terminés</small></span></div>
+      </div>`;
+    DOMAINES.forEach((d, i) => {
       const liste = ms.filter(m => m.type === 'livre' && m.domaine.replace("'", '’') === d);
-      const absents = (BIENTOT[n] || []).filter(num => ((+num[2] - 1) / 3 | 0) === i);
-      h += `<div class="domaine"><h3>${d}</h3><p class="quoi">${quoi}</p><ol>${absents.map(bientot).join('')}${liste.map(m => entree(m, prog)).join('')}</ol></div>`;
+      const absents = (BIENTOT[n] || []).filter(([num]) => ((+num[2] - 1) / 3 | 0) === i);
+      if (!liste.length && !absents.length) return;
+      h += `<div class="domaine"><h3>${d}</h3><div class="grille">${absents.map(([num]) => bientot(num, false, k++)).join('')}${liste.map(m => carte(m, prog, k++)).join('')}</div></div>`;
     });
-    h += `</div>${gamemap(ms.find(m => m.type === 'gamemap'), prog)}</section>`;
-    h += `<section class="apropos" id="bilan"><div class="explication"><h2>Ton bilan : ta sauvegarde et ton rapport</h2>
-      <p>Ta progression s’enregistre toute seule dans ce navigateur : tu peux t’arrêter au milieu d’un livre, il rouvrira là où tu en étais. Tu n’as pas besoin de tout finir pour rendre ton travail.</p>
+    const gm = ms.find(m => m.type === 'gamemap');
+    h += `<div class="domaine"><h3>Bilan de l’année</h3><div class="grille">${gm ? carte(gm, prog, k++) : bientot('', true, k++)}</div></div></section>`;
+    h += `<section class="apropos" id="bilan"><h2>Mon bilan : ma sauvegarde et mon rapport</h2>
+      <p>Ta progression s’enregistre toute seule dans ce navigateur, sur cet appareil : tu peux t’arrêter au milieu d’un livre et reprendre plus tard, il rouvre là où tu en étais. Tu n’as pas besoin de tout finir pour rendre ton travail.</p>
       <ol class="methode">
-        <li><strong>À la fin de chaque séance</strong>télécharge ton bilan et range-le (ENT, clé USB, messagerie). C’est ta sauvegarde.</li>
-        <li><strong>Sur un autre ordinateur</strong>(au CDI, à la maison), clique sur « Reprendre avec mon bilan » et choisis ce fichier : tu retrouves ta progression.</li>
-        <li><strong>Quand ton professeur le demande</strong>dépose ton dernier bilan là où il te l’indique. Il voit ce que tu as fait, même si tu n’as pas fini.</li>
-      </ol></div>
-      <div class="formulaire">
+        <li><strong>À la fin de chaque séance</strong> télécharge ton bilan et range-le (ENT, clé USB, messagerie). C’est ta sauvegarde.</li>
+        <li><strong>Sur un autre ordinateur</strong> (au CDI, à la maison), clique sur « Reprendre avec mon bilan » et choisis ce fichier : tu retrouves ta progression.</li>
+        <li><strong>Quand ton professeur le demande</strong> dépose ton dernier bilan là où il te l’indique. Il voit ce que tu as fait, même si tu n’as pas fini.</li>
+      </ol>
+      <p class="petit">Ne modifie pas le fichier : il porte un sceau, et un bilan retouché est refusé ici et signalé à ton professeur.</p>
       <div class="ident"><label for="prenom">Prénom <input id="prenom" autocomplete="given-name" maxlength="40"></label>
       <label for="nom">Nom <input id="nom" autocomplete="family-name" maxlength="40"></label>
       <label for="classe">Classe <input id="classe" placeholder="ex. 4eB" maxlength="12"></label></div>
       <div class="actions"><button class="btn" id="telecharger">Télécharger mon bilan</button>
-      <label class="lien-btn">Reprendre avec mon bilan<input type="file" id="reprendre" accept=".json,application/json" hidden></label></div>
-      <p class="petit">Ne modifie pas le fichier : il porte un sceau, et un bilan retouché est refusé ici et signalé à ton professeur.</p>
-      <p class="petit" id="msg-bilan" role="status"></p>
-      <button class="lien-btn discret" id="raz">Effacer ma progression sur cet appareil</button></div></section>
-      <p class="pied">Rien ne quitte cet appareil sans toi : ta progression reste dans ce navigateur, et ton bilan ne part que si tu l’envoies.</p>`;
+      <label class="lien-btn">Reprendre avec mon bilan<input type="file" id="reprendre" accept=".json,application/json" hidden></label>
+      <button class="lien-btn discret" id="raz">Effacer ma progression sur cet appareil</button></div>
+      <p class="petit" id="msg-bilan" role="status"></p></section>
+      <p class="pied">EMI cycle 4 · programme d’éducation aux médias et à l’information · aucune donnée ne quitte cet appareil sans toi</p>`;
     contenu.innerHTML = h;
+    const anneau = contenu.querySelector('.anneau .val');
+    requestAnimationFrame(() => requestAnimationFrame(() => { anneau.style.strokeDashoffset = anneau.dataset.fin; }));
     const ident = EMI.identite();
     ['prenom', 'nom', 'classe'].forEach(k => { const el = document.getElementById(k); el.value = ident[k] || ''; el.oninput = () => EMI.garderIdentite(k, el.value.trim()); });
     document.getElementById('reprendre').onchange = async (e) => {
@@ -238,7 +279,7 @@ function filInfo(cv, titres) {
       setTimeout(() => { delete raz.dataset.armer; raz.textContent = 'Effacer ma progression sur cet appareil'; }, 5000);
     };
   }
-  montrer(NIVEAUX.some(x => x.n === choix) ? choix : '5e', false);
+  montrer(NIVEAUX.some(x => x.n === choix) ? choix : '5e');
 })();
 </script>
 </body>
