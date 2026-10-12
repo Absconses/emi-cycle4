@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000177">
+<title>Module · Club Jeune Reporter</title>
+<link rel="icon" href="img/sigle-dupanloup.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bree+Serif&family=Federo&family=IBM+Plex+Mono:wght@600;700&display=swap">
+<link rel="stylesheet" href="style.css">
+<script src="player/main.bundle.js"></script>
+<script src="progression.js"></script>
+</head>
+<body class="page-module">
+<header class="barre">
+  <a href="index.html">← La une</a>
+  <div class="barre-titre"><span id="num" class="pastille"></span><h1 id="titre">Chargement…</h1></div>
+  <span id="statut" class="etat afaire"></span>
+</header>
+<main class="lecteur">
+  <div id="h5p"></div>
+  <p class="note">Ta progression s’enregistre toute seule sur cet ordinateur : tu peux t’arrêter et reprendre plus tard.</p>
+</main>
+<nav class="suite" id="suite" aria-label="Modules voisins"></nav>
+<div class="felicitations" id="bravo" hidden role="dialog" aria-modal="true" aria-labelledby="bravo-titre">
+  <div class="boite">
+    <span class="tampon grand vert coup" id="bravo-tampon">Badge<br>obtenu</span>
+    <h2 id="bravo-titre">Bravo, reporter !</h2>
+    <p id="bravo-texte">Tu as gagné un nouveau tampon sur ta carte de presse.</p>
+    <div class="actions" style="justify-content:center"><a class="btn" id="bravo-suite" href="index.html" style="text-decoration:none">Voir ma carte de presse</a><button class="lien-btn" id="bravo-fermer">Rester ici</button></div>
+  </div>
+</div>
+<script>
+(async function () {
+  const id = new URLSearchParams(location.search).get('m');
+  const mods = await (await fetch('modules.json')).json();
+  const m = mods.find(x => x.id === id && x.pret);
+  if (!m) { document.getElementById('titre').textContent = 'Module introuvable'; return; }
+  const parent = m.type === 'atelier' ? mods.find(x => x.id === m.parent) : null;
+  document.title = (m.type === 'atelier' ? 'Atelier · ' : 'Module ' + m.num + ' · ') + m.titre + ' · Club Jeune Reporter';
+  document.getElementById('titre').textContent = m.titre;
+  document.getElementById('num').textContent = m.type === 'atelier' ? 'Atelier ' + m.num : m.num;
+
+  // modules voisins (les livres parus, dans l'ordre)
+  const livres = mods.filter(x => x.type === 'livre' && x.pret);
+  const k = livres.findIndex(x => x.id === (parent || m).id);
+  const av = parent || livres[k - 1], ap = parent ? null : livres[k + 1];
+  const lien = (x, cls, sur) => `<a class="${cls}" href="module.html?m=${encodeURIComponent(x.id)}"><small>${sur}</small>${x.type === 'atelier' ? '' : x.num + ' · '}${x.titre}</a>`;
+  document.getElementById('suite').innerHTML =
+    (av ? lien(av, 'avant', parent ? '← Retour au module' : '← Module précédent') : '') +
+    (ap ? lien(ap, 'apres', 'Module suivant →') : '');
+
+  const statut = document.getElementById('statut');
+  const montre = (p) => {
+    const sc = p.meilleur ? ' · ' + Math.round(p.meilleur * 100) + ' %' : '';
+    statut.textContent = p.termine ? '✓ Badge' + sc : (p.avance ? Math.round(p.avance * 100) + ' % lu' : 'Commencé') + sc;
+    statut.className = 'etat ' + (p.termine ? 'ok' : 'encours');
+  };
+  const avant = CLUB.maj(id, p => Object.assign(p, { commence: p.commence || Date.now(), vu: Date.now() }));
+  const dejaFini = !!avant.termine;
+  montre(avant);
+
+  const precedent = CLUB.etat(id);
+  const options = {
+    h5pJsonPath: './modules/' + id, librariesPath: './libraries',
+    frameJs: './player/frame.bundle.js', frameCss: './player/styles/h5p.css',
+    frame: false, fullScreen: true, id: id, saveFreq: 3600,
+  };
+  if (precedent) options.contentUserData = [{ state: precedent }];
+  await new H5PStandalone.H5P(document.getElementById('h5p'), options);
+
+  // le contenu tourne dans une iframe : son H5P n'est pas celui de la page
+  const instance = () => {
+    const fr = document.querySelector('#h5p iframe');
+    const h = fr && fr.contentWindow && fr.contentWindow.H5P ? fr.contentWindow.H5P : window.H5P;
+    return (h.instances || [])[0];
+  };
+  let felicite = dejaFini;
+  const bravo = document.getElementById('bravo');
+  function feliciter() {
+    if (felicite) return; felicite = true;
+    if (m.type === 'atelier') {
+      document.getElementById('bravo-tampon').innerHTML = 'Atelier<br>terminé';
+      document.getElementById('bravo-texte').textContent = 'Ton atelier est terminé. Retourne au module pour la suite.';
+      document.getElementById('bravo-suite').textContent = 'Retour au module';
+      document.getElementById('bravo-suite').href = 'module.html?m=' + encodeURIComponent(parent.id);
+    } else {
+      document.getElementById('bravo-texte').textContent = `Tu as terminé le module ${m.num}. Son tampon est maintenant sur ta carte de presse.`;
+    }
+    const t = document.getElementById('bravo-tampon'); t.classList.remove('coup'); void t.offsetWidth; t.classList.add('coup');
+    bravo.hidden = false; document.getElementById('bravo-suite').focus();
+  }
+  const fermer = () => { bravo.hidden = true; };
+  document.getElementById('bravo-fermer').onclick = fermer;
+  bravo.addEventListener('click', e => { if (e.target === bravo) fermer(); });
+  addEventListener('keydown', e => { if (e.key === 'Escape') fermer(); });
+
+  // relevé : score, chapitres terminés (livre), état pour la reprise
+  const releve = (fini) => {
+    const i = instance();
+    if (!i) return;
+    try { const st = i.getCurrentState && i.getCurrentState(); if (st) CLUB.garderEtat(id, JSON.stringify(st)); } catch (e) {}
+    const p = CLUB.maj(id, p => {
+      p.vu = Date.now();
+      try {
+        const max = i.getMaxScore && i.getMaxScore();
+        if (max) { const sc = i.getScore() / max; p.score = sc; p.meilleur = Math.max(p.meilleur || 0, sc); }
+      } catch (e) {}
+      if (Array.isArray(i.chapters)) {
+        const ch = i.chapters.filter(c => !c.isSummary);
+        const lus = ch.filter(c => c.completed).length;
+        p.avance = ch.length ? lus / ch.length : 0;
+        if (ch.length && lus === ch.length) p.termine = p.termine || Date.now();
+      }
+      if (fini) p.termine = p.termine || Date.now();
+      return p;
+    });
+    montre(p);
+    if (p.termine) feliciter();
+  };
+  setInterval(() => releve(false), 8000);
+  addEventListener('pagehide', () => releve(false));
+  document.addEventListener('visibilitychange', () => { if (document.hidden) releve(false); });
+  H5P.externalDispatcher.on('xAPI', (ev) => {
+    const st = ev.data.statement;
+    const verbe = (st.verb && st.verb.id || '').split('/').pop();
+    // le module entier (pas un chapitre ni une question) annonce qu'il est fini
+    const racine = st.object && !String(st.object.id).includes('subContentId');
+    setTimeout(() => releve(racine && verbe === 'completed'), 300);
+  });
+})();
+</script>
+</body>
+</html>

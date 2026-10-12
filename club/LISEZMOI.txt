@@ -1,0 +1,19 @@
+SITE DU CLUB JEUNE REPORTER (collège Dupanloup), version du 12 octobre 2026
+
+Un site web complet, sans serveur ni base de données :
+- index.html : la une, les 9 modules classés en 3 cahiers (les bases, sur le terrain, son-vidéo-émission),
+  la carte de presse de l'élève (un tampon par module terminé) et « Mon bilan » ;
+- module.html?m=<module> : le lecteur d'un module ; enseignant.html : le tableau du club ;
+- modules/ : les modules parus (extraits des .h5p), libraries/ : les bibliothèques H5P, player/ : h5p-standalone 3.8.0.
+Les modules pas encore parus apparaissent « En préparation ».
+
+PROGRESSION ET BILAN : comme le site EMI. Tout reste dans le navigateur de l'élève ; « Télécharger mon bilan »
+produit bilan-Club-Reporter-<classe>-<nom>-<prénom>.json (sceau SHA-256), qui sert de sauvegarde
+(« Reprendre avec mon bilan ») et de rapport : le professeur glisse les bilans dans enseignant.html (export CSV).
+
+ESSAYER SUR UN ORDINATEUR : dans ce dossier, `python -m http.server 8000` puis http://localhost:8000
+(le site ne marche pas en double-cliquant sur index.html).
+
+AJOUTER UN MODULE (M7, M8, M9) : déposer Club-Reporter-M7-Le-podcast.h5p (le nom attendu est dans
+build-club-site.py, liste MODULES) avec les autres .h5p, puis relancer
+python3 build-club-site.py <dossier des .h5p> <jeune-reporter/img> <jeune-reporter/images.json> <player h5p-standalone> pages <sortie>

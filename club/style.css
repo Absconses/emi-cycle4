@@ -1,0 +1,277 @@
+/* Club Jeune Reporter · collège Dupanloup (Boulogne)
+ * Direction : la une d'un journal, aux couleurs de la Gazette de Dupanloup
+ * (crème, or, abricot) et du sigle du collège (bleu marine, tampon rond). */
+:root {
+  --papier: #fcecd0;
+  --papier-2: #f6dfb6;
+  --encre: #161b45;
+  --encre-2: #3e4266;
+  --gris: #6e6a7c;
+  --filet: #1b2470;
+  --marine: #000177;
+  --rouge: #b44a12;
+  --or: #e9b85a;
+  --abricot: #f2a477;
+  --bleu: #1d3f8f;
+  --vert: #1f6b45;
+  --ombre: 0 1px 0 rgba(0, 1, 119, .08), 0 12px 30px -14px rgba(0, 1, 119, .35);
+  --titre: "Bree Serif", "Georgia", serif;
+  --gothique: "Federo", "Bree Serif", serif;
+  --texte: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } }
+body {
+  margin: 0; color: var(--encre); font: 17px/1.55 var(--texte);
+  background-color: var(--papier);
+  /* grain du papier journal */
+  background-image:
+    url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='220' height='220'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='3' stitchTiles='stitch'/%3E%3CfeColorMatrix values='0 0 0 0 .1 0 0 0 0 .08 0 0 0 0 .05 0 0 0 .07 0'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E"),
+    radial-gradient(120% 80% at 50% 0%, #faf6ec 0%, var(--papier) 55%, var(--papier-2) 100%);
+  overflow-x: hidden;
+}
+a { color: inherit; }
+:focus-visible { outline: 3px solid var(--rouge); outline-offset: 3px; border-radius: 2px; }
+.int { max-width: 1180px; margin: 0 auto; padding: 0 16px; }
+@media (min-width: 720px) { .int { padding: 0 28px; } }
+
+/* ---------- Dernière minute (bandeau défilant) ---------- */
+.flash { background: var(--marine); color: var(--papier); display: flex; align-items: stretch; font: 600 13px/1 var(--mono); letter-spacing: .04em; overflow: hidden; position: relative; z-index: 2; }
+.flash .etiquette { background: var(--abricot); color: var(--marine); padding: 10px 14px; text-transform: uppercase; white-space: nowrap; display: flex; align-items: center; gap: 8px; flex: none; }
+.flash .etiquette::before { content: ""; width: 8px; height: 8px; border-radius: 50%; background: var(--marine); animation: clignote 1.4s infinite; }
+@keyframes clignote { 50% { opacity: .2; } }
+.flash .piste { flex: 1; overflow: hidden; mask-image: linear-gradient(90deg, transparent, #000 4%, #000 96%, transparent); }
+.flash .defile { display: inline-flex; gap: 0; white-space: nowrap; padding: 10px 0; animation: defile 60s linear infinite; }
+.flash .defile span { padding: 0 22px; position: relative; }
+  .flash .defile span::after { content: "◆"; position: absolute; right: -5px; color: var(--or); font-size: 9px; top: 2px; }
+.flash:hover .defile { animation-play-state: paused; }
+@keyframes defile { to { transform: translateX(-50%); } }
+@media (prefers-reduced-motion: reduce) { .flash .defile { animation: none; } .flash .etiquette::before { animation: none; } }
+
+/* ---------- Manchette ---------- */
+.manchette { padding-top: 18px; }
+.manchette .infos { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; font: 600 12px/1.3 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--encre-2); border-bottom: 1px solid var(--filet); padding-bottom: 10px; }
+.manchette .infos span:nth-child(2) { text-align: center; }
+.titre-journal { text-align: center; margin: 14px 0 6px; line-height: .9; font-weight: 400; }
+.titre-journal .le { display: block; font: 400 clamp(18px, 3vw, 26px)/1 var(--titre); color: var(--rouge); letter-spacing: .02em; margin-bottom: 6px; }
+.titre-journal .nom { color: var(--marine); border-bottom: 6px solid var(--or); padding-bottom: 4px; line-height: 1; font-family: var(--gothique); font-size: clamp(38px, 10vw, 132px); letter-spacing: .01em; display: inline-block; }
+.titre-journal .nom span { display: inline-block; }
+.encrage .titre-journal .nom span { animation: frappe .5s cubic-bezier(.2, .9, .3, 1.3) both; animation-delay: calc(var(--k) * 45ms + 150ms); }
+@keyframes frappe { from { opacity: 0; transform: translateY(-14px) scale(1.25); filter: blur(3px); } to { opacity: 1; transform: none; filter: none; } }
+.devise { text-align: center; font: 400 clamp(16px, 2.2vw, 20px)/1.35 var(--titre); color: var(--encre-2); margin: 4px auto 14px; max-width: 46ch; }
+.filets { border-top: 3px solid var(--or); border-bottom: 1px solid var(--filet); height: 7px; }
+.rubriques { display: flex; justify-content: center; flex-wrap: wrap; gap: 4px 22px; padding: 10px 0; font: 700 13px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .1em; border-bottom: 1px solid var(--filet); }
+.rubriques a { text-decoration: none; padding: 4px 0; border-bottom: 2px solid transparent; }
+.rubriques a:hover { border-color: var(--rouge); color: var(--rouge); }
+
+/* ---------- À la une ---------- */
+.une { display: grid; gap: 28px; padding: 28px 0 8px; }
+@media (min-width: 900px) { .une { grid-template-columns: 1.35fr 1fr; gap: 36px; } .une .edito { border-left: 1px solid var(--filet); padding-left: 32px; } }
+.photo-une { margin: 0; position: relative; }
+.photo-une .cadre { position: relative; overflow: hidden; border: 1px solid var(--filet); background: #222; aspect-ratio: 4 / 3; }
+.photo-une img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) contrast(1.15) sepia(.12); transform: scale(1.04); transition: transform 8s ease-out; }
+.encrage .photo-une img { transform: scale(1); }
+/* trame d'impression par-dessus la photo */
+.trame::after { content: ""; position: absolute; inset: 0; pointer-events: none; background-image: radial-gradient(rgba(0, 1, 119, .32) 30%, transparent 32%); background-size: 4px 4px; mix-blend-mode: multiply; opacity: .55; }
+.photo-une .tampon-une { position: absolute; right: 18px; bottom: 20px; z-index: 1; }
+figcaption, .credit { font: 12px/1.4 var(--texte); color: var(--gris); margin-top: 6px; }
+figcaption a, .credit a { color: inherit; }
+.surtitre { font: 700 12.5px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .12em; color: var(--rouge); margin: 0 0 8px; display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
+.surtitre .pt { width: 5px; height: 5px; background: var(--encre); border-radius: 50%; }
+.edito h2 { color: var(--marine); font: 400 clamp(32px, 4.6vw, 52px)/1.02 var(--titre); margin: 0 0 14px; letter-spacing: -.01em; }
+.edito h2 em { color: var(--marine); font-style: normal; background: linear-gradient(transparent 62%, var(--or) 62%, var(--or) 88%, transparent 88%); }
+.edito .chapo { font: 700 19px/1.45 var(--texte); margin: 0 0 14px; }
+.edito p { margin: 0 0 12px; }
+.lettrine::first-letter { float: left; font: 400 66px/.82 var(--gothique); padding: 6px 8px 0 0; color: var(--marine); }
+.signature { font: italic 15px/1.3 var(--titre); color: var(--encre-2); text-align: right; }
+.cta { display: inline-flex; align-items: center; gap: 12px; background: var(--marine); color: #fff; text-decoration: none; font: 700 17px/1.2 var(--texte); padding: 14px 20px; border-radius: 2px; margin: 6px 0 10px; box-shadow: 4px 4px 0 var(--or); transition: transform .15s, box-shadow .15s; }
+.cta:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--or); }
+.cta:active { transform: translate(2px, 2px); box-shadow: 1px 1px 0 var(--or); }
+.cta small { display: block; font: 600 12px/1.2 var(--mono); opacity: .75; text-transform: uppercase; letter-spacing: .08em; }
+.cta .fl { font-size: 22px; transition: transform .2s; }
+.cta:hover .fl { transform: translateX(4px); }
+
+/* ---------- Tampons ---------- */
+.tampon { display: inline-grid; place-items: center; text-align: center; border: 3px solid currentColor; color: var(--marine); border-radius: 6px; padding: 6px 12px; font: 800 14px/1.05 var(--mono); text-transform: uppercase; letter-spacing: .08em; transform: rotate(-8deg); background: rgba(244, 239, 227, .85); mix-blend-mode: multiply;
+  -webkit-mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='f'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.2 1.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E");
+  mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='f'%3E%3CfeTurbulence baseFrequency='.9' numOctaves='2'/%3E%3CfeColorMatrix values='0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 0 -2.2 1.6'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23f)'/%3E%3C/svg%3E"); }
+.tampon.bleu { color: var(--bleu); }
+.tampon.vert { color: var(--vert); }
+.tampon.grand { font-size: 20px; padding: 8px 16px; border-width: 4px; }
+.coup { animation: coup .45s cubic-bezier(.3, 1.6, .5, 1) both; animation-delay: var(--d, 0s); }
+@keyframes coup { from { opacity: 0; transform: rotate(var(--r, -8deg)) scale(2.4); } 60% { opacity: 1; } to { opacity: 1; transform: rotate(var(--r, -8deg)) scale(1); } }
+@media (prefers-reduced-motion: reduce) { .coup, .encrage .titre-journal .nom span { animation: none; } .photo-une img { transition: none; } }
+
+/* ---------- Carte de presse ---------- */
+.carte-presse { margin-top: 18px; background: linear-gradient(135deg, #fffdf7, #f1ead8); border: 1px solid var(--filet); border-radius: 12px; padding: 16px 16px 14px; box-shadow: var(--ombre); position: relative; overflow: hidden; }
+.carte-presse::before { content: "PRESSE"; position: absolute; right: -6px; bottom: -10px; font: 400 54px/1 var(--titre); color: rgba(0, 1, 119, .06); letter-spacing: .05em; }
+.carte-presse .haut { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; border-bottom: 3px solid var(--or); padding-bottom: 8px; margin-bottom: 10px; }
+.carte-presse .haut b { font: 400 18px/1.1 var(--titre); }
+.carte-presse .haut span { font: 600 11px/1 var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--gris); }
+.carte-presse .qui { font: 700 16px/1.3 var(--texte); margin: 0 0 10px; }
+.carte-presse .qui small { display: block; font: 400 13px/1.3 var(--texte); color: var(--gris); }
+.cases { display: grid; grid-template-columns: repeat(9, 1fr); gap: 6px; }
+@media (max-width: 420px) { .cases { grid-template-columns: repeat(5, 1fr); } }
+.case { aspect-ratio: 1; border: 1.5px dashed rgba(0, 1, 119, .35); border-radius: 50%; display: grid; place-items: center; font: 700 13px/1 var(--mono); color: var(--gris); position: relative; text-decoration: none; }
+.case.faite { border: none; }
+.case.faite .t { position: absolute; inset: -4px; border-radius: 50%; display: grid; place-items: center; transform: rotate(var(--r, -12deg)); background: url(img/sigle-dupanloup.png) center / 100% no-repeat; opacity: .88; mix-blend-mode: multiply; font-size: 0; color: transparent; }
+.case.encours { border-style: solid; border-color: var(--encre); color: var(--encre); }
+.case.avenir { opacity: .45; }
+.carte-presse .bas { font: 13px/1.35 var(--texte); color: var(--encre-2); margin: 10px 0 0; }
+
+/* ---------- Cahiers et articles ---------- */
+.cahier { padding: 26px 0 10px; scroll-margin-top: 10px; }
+.cahier-tete { display: flex; align-items: flex-end; gap: 16px; border-bottom: 3px solid var(--or); padding-bottom: 8px; margin-bottom: 4px; flex-wrap: wrap; }
+.cahier-tete .lettre { font: 400 64px/.8 var(--gothique); color: var(--marine); }
+.cahier-tete h2 { color: var(--marine); font: 400 clamp(26px, 3.6vw, 38px)/1 var(--titre); margin: 0; }
+.cahier-tete p { margin: 0 0 2px auto; font: 600 12.5px/1.3 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--encre-2); }
+.colonnes { display: grid; gap: 0; }
+@media (min-width: 720px) { .colonnes { grid-template-columns: repeat(3, 1fr); } }
+.article { position: relative; padding: 20px 0 22px; border-bottom: 1px solid rgba(27, 36, 112, .35); display: flex; flex-direction: column; }
+@media (min-width: 720px) { .article { padding: 20px 22px 24px; border-bottom: none; } .article + .article { border-left: 1px solid rgba(27, 36, 112, .35); } .article:first-child { padding-left: 0; } .article:last-child { padding-right: 0; } }
+.revele { opacity: 0; transform: translateY(18px); transition: opacity .6s ease, transform .6s cubic-bezier(.2, .8, .2, 1); transition-delay: var(--d, 0s); }
+.revele.vu { opacity: 1; transform: none; }
+@media (prefers-reduced-motion: reduce) { .revele { opacity: 1; transform: none; transition: none; } }
+.article .vignette { display: block; position: relative; overflow: hidden; aspect-ratio: 3 / 2; border: 1px solid var(--filet); background: #2a251c; margin-bottom: 12px; }
+.article .vignette img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) contrast(1.1) sepia(.1); transition: filter .5s ease, transform .6s cubic-bezier(.2, .8, .2, 1); }
+.article.pret:hover .vignette img, .article.pret:focus-within .vignette img { filter: none; transform: scale(1.05); }
+.article.pret:hover .vignette.trame::after, .article.pret:focus-within .vignette.trame::after { opacity: 0; transition: opacity .5s; }
+.article .vignette .num { position: absolute; left: 0; top: 0; background: var(--marine); color: #fff; font: 400 28px/1 var(--titre); padding: 8px 12px 9px; z-index: 1; }
+.article .vignette .tampon { position: absolute; right: 12px; bottom: 12px; z-index: 1; }
+.article .meta { font: 600 12px/1.3 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--gris); margin: 0 0 6px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.article h3 { font: 400 clamp(24px, 2.6vw, 30px)/1.08 var(--titre); margin: 0 0 8px; }
+.article h3 a { text-decoration: none; background: linear-gradient(var(--or), var(--or)) 0 100% / 0 4px no-repeat; transition: background-size .35s; }
+.article.pret:hover h3 a, .article h3 a:focus-visible { background-size: 100% 4px; }
+.article h3 a::after { content: ""; position: absolute; inset: 0; z-index: 0; }
+.article .chapo { margin: 0 0 10px; color: var(--encre-2); }
+.article blockquote { margin: 0 0 12px; padding: 0 0 0 12px; border-left: 4px solid var(--or); font: italic 16px/1.4 var(--titre); }
+.article blockquote b { display: block; font: 700 11px/1.2 var(--mono); font-style: normal; text-transform: uppercase; letter-spacing: .1em; color: var(--rouge); margin-bottom: 3px; }
+.article .pied-art { margin-top: auto; display: flex; flex-direction: column; gap: 8px; }
+.article .ateliers { position: relative; z-index: 1; display: flex; flex-direction: column; gap: 6px; }
+.atelier { display: flex; align-items: center; gap: 10px; text-decoration: none; border: 1px solid var(--filet); background: rgba(255, 253, 247, .7); padding: 8px 10px; font-size: 15px; transition: background .2s, transform .2s; }
+.atelier:hover { background: #fffdf7; transform: translateX(3px); }
+.atelier .pic { font: 800 11px/1 var(--mono); background: var(--marine); color: #fff; padding: 5px 6px; text-transform: uppercase; letter-spacing: .06em; }
+.atelier small { display: block; color: var(--gris); font-size: 12.5px; }
+.atelier .etat { margin-left: auto; }
+.article .credit { position: relative; z-index: 1; }
+.article.bientot .vignette img { filter: grayscale(1) contrast(.8) brightness(1.15) blur(1px); opacity: .55; }
+.article.bientot h3, .article.bientot .chapo { color: var(--gris); }
+/* état de lecture */
+.etat { font: 700 12px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; padding: 5px 8px; border: 1.5px solid currentColor; border-radius: 3px; white-space: nowrap; }
+.etat.afaire { color: var(--encre-2); }
+.etat.encours { color: var(--bleu); background: rgba(29, 63, 143, .07); }
+.etat.ok { color: var(--vert); background: rgba(31, 107, 69, .08); }
+.jauge { height: 4px; background: rgba(0, 1, 119, .12); position: relative; }
+.jauge span { position: absolute; inset: 0 auto 0 0; background: var(--bleu); }
+
+/* ---------- Mon bilan (« le courrier ») ---------- */
+.bilan { margin: 30px 0 10px; border: 2px solid var(--filet); background: rgba(255, 253, 247, .6); padding: 20px 16px; position: relative; }
+@media (min-width: 720px) { .bilan { padding: 26px 30px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px 36px; } .bilan > h2, .bilan > .surtitre { grid-column: 1 / -1; } }
+.bilan h2 { font: 400 clamp(26px, 3.4vw, 34px)/1.05 var(--titre); margin: 0 0 8px; }
+.bilan ol { margin: 0; padding-left: 22px; }
+.bilan li { margin-bottom: 8px; }
+.ident { display: grid; gap: 10px; margin-bottom: 12px; }
+@media (min-width: 480px) { .ident { grid-template-columns: 1fr 1fr 110px; } }
+.ident label { font: 700 12px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .08em; display: flex; flex-direction: column; gap: 4px; }
+.ident input { font: 17px/1.3 var(--texte); padding: 9px 10px; border: 1.5px solid var(--filet); background: #fffdf7; border-radius: 2px; min-width: 0; }
+.actions { display: flex; flex-wrap: wrap; gap: 10px; align-items: center; }
+.btn { font: 700 16px/1.2 var(--texte); background: var(--marine); color: #fff; border: none; padding: 12px 16px; border-radius: 2px; cursor: pointer; box-shadow: 3px 3px 0 var(--or); }
+.btn:hover { box-shadow: 5px 5px 0 var(--or); transform: translate(-1px, -1px); }
+.lien-btn { font: 600 15px/1.2 var(--texte); background: none; border: 1.5px solid var(--filet); color: var(--encre); padding: 10px 14px; border-radius: 2px; cursor: pointer; }
+.lien-btn:hover { background: #fffdf7; }
+.lien-btn.discret { border-color: transparent; text-decoration: underline; color: var(--gris); padding: 10px 4px; }
+.petit { font-size: 14px; color: var(--encre-2); }
+#msg-bilan:not(:empty) { font-weight: 700; color: var(--encre); background: #fffdf7; border-left: 4px solid var(--rouge); padding: 8px 12px; }
+
+/* ---------- Pied de page ---------- */
+.ours { border-top: 3px solid var(--filet); margin-top: 30px; padding: 16px 0 34px; font-size: 13.5px; color: var(--encre-2); display: grid; gap: 14px; }
+@media (min-width: 720px) { .ours { grid-template-columns: 1fr 2fr; } }
+.ours h4 { font: 700 12px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .1em; margin: 0 0 6px; color: var(--encre); }
+.ours ul { margin: 0; padding: 0; list-style: none; columns: 2 220px; column-gap: 24px; }
+.ours li { margin-bottom: 4px; break-inside: avoid; }
+.ours a.ens { font-weight: 700; color: var(--rouge); }
+
+/* ---------- Page module ---------- */
+.page-module { background-attachment: scroll; }
+.barre { position: sticky; top: 0; z-index: 10; background: var(--marine); color: #fff; display: flex; align-items: center; gap: 14px; padding: 10px 16px; flex-wrap: wrap; box-shadow: 0 3px 0 var(--or); }
+.barre a { color: var(--papier); text-decoration: none; font: 700 14px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+.barre a:hover { color: var(--or); }
+.barre-titre { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 200px; }
+.barre-titre .pastille { background: var(--or); color: var(--marine); font: 400 18px/1 var(--titre); padding: 6px 9px; }
+.barre h1 { font: 400 clamp(19px, 2.4vw, 25px)/1.1 var(--titre); margin: 0; }
+.barre .etat { border-color: currentColor; }
+.barre .etat.afaire { color: var(--papier); }
+.barre .etat.encours { color: #b9cbf5; background: none; }
+.barre .etat.ok { color: #9fe0bb; background: none; }
+.lecteur { max-width: 1100px; margin: 18px auto 0; padding: 0 12px; }
+#h5p { background: #fff; border: 1px solid var(--filet); box-shadow: var(--ombre); min-height: 300px; }
+.lecteur .note { font-size: 14px; color: var(--encre-2); text-align: center; margin: 12px 0; }
+.suite { display: flex; justify-content: space-between; gap: 12px; flex-wrap: wrap; max-width: 1100px; margin: 8px auto 40px; padding: 0 12px; }
+.suite a { text-decoration: none; border: 1.5px solid var(--filet); padding: 10px 14px; background: rgba(255, 253, 247, .7); font-weight: 700; }
+.suite a small { display: block; font: 600 11px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--gris); }
+.suite a:hover { background: #fffdf7; }
+.suite .apres { margin-left: auto; text-align: right; }
+.felicitations { position: fixed; inset: 0; display: grid; place-items: center; background: rgba(0, 1, 119, .55); z-index: 50; padding: 16px; }
+.felicitations[hidden] { display: none; }
+.felicitations .boite { background: var(--papier); border: 2px solid var(--filet); padding: 26px 24px; text-align: center; max-width: 420px; box-shadow: 8px 8px 0 var(--or); }
+.felicitations h2 { font: 400 30px/1.05 var(--titre); margin: 18px 0 8px; }
+.felicitations p { margin: 0 0 16px; }
+
+/* ---------- Espace enseignant ---------- */
+.ens-tete { padding: 26px 0 8px; }
+.ens-tete h1 { font: 400 clamp(34px, 5vw, 56px)/1 var(--titre); margin: 6px 0 10px; }
+.ens-tete .chapo { max-width: 70ch; font-weight: 700; }
+.depot { display: block; border: 2px dashed var(--filet); background: rgba(255, 253, 247, .6); padding: 26px 16px; text-align: center; cursor: pointer; margin: 14px 0; }
+.depot.survol { background: #fffdf7; border-color: var(--rouge); }
+.filtres { display: flex; flex-wrap: wrap; gap: 12px; align-items: end; margin: 10px 0; }
+.filtres label { display: flex; flex-direction: column; font: 700 12px/1.2 var(--mono); text-transform: uppercase; gap: 4px; }
+.filtres select { font: 16px var(--texte); padding: 8px; border: 1.5px solid var(--filet); background: #fffdf7; }
+.legende { font-size: 14px; color: var(--encre-2); }
+.tableau-zone { overflow-x: auto; border: 1px solid var(--filet); background: #fffdf7; }
+table.classe { border-collapse: collapse; width: 100%; font-size: 14px; }
+table.classe th, table.classe td { border: 1px solid rgba(27, 36, 112, .25); padding: 7px 8px; text-align: center; vertical-align: middle; }
+table.classe th { background: var(--marine); color: #fff; font: 700 12px/1.25 var(--texte); }
+table.classe th.mod { min-width: 110px; }
+table.classe .eleve { text-align: left; white-space: nowrap; font-weight: 700; }
+.c-ok { background: rgba(31, 107, 69, .14); color: var(--vert); font-weight: 700; }
+.c-encours { background: rgba(29, 63, 143, .09); color: var(--bleu); }
+.c-vide { color: var(--gris); }
+.sceau-ok { color: var(--vert); font-weight: 700; }
+.sceau-ko { color: var(--rouge); font-weight: 700; }
+.retour-accueil { display: inline-block; margin-top: 14px; font: 700 13px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .06em; text-decoration: none; }
+
+/* ---------- Aux couleurs du collège ---------- */
+.tete-journal { display: grid; grid-template-columns: auto 1fr; align-items: center; gap: 10px 18px; margin: 14px 0 6px; }
+.tete-journal .sigle { width: clamp(64px, 12vw, 128px); height: auto; display: block; }
+.tete-journal .titre-journal { margin: 0; text-align: left; }
+.tete-journal .vertical { display: none; }
+@media (min-width: 900px) {
+  .tete-journal { grid-template-columns: auto 1fr auto; }
+  .tete-journal .vertical { display: block; writing-mode: vertical-rl; transform: rotate(180deg); font: 400 17px/1 var(--titre); color: var(--encre); letter-spacing: .02em; }
+}
+.encrage .tete-journal .sigle { animation: sceau .7s cubic-bezier(.3, 1.5, .5, 1) both .1s; }
+@keyframes sceau { from { opacity: 0; transform: rotate(-40deg) scale(1.6); } to { opacity: 1; transform: none; } }
+.titre-journal .le { color: var(--rouge); }
+.devise { text-align: left; margin-left: 0; }
+@media (max-width: 899px) { .tete-journal + .devise { text-align: center; margin: 4px auto 14px; } }
+/* le triptyque du collège, comme sur la une de la Gazette */
+.triptyque { position: relative; display: grid; grid-template-columns: repeat(3, 1fr); gap: 4%; align-items: start; padding: 0 2% 6%; }
+.photo-une .triptyque img { filter: none; transform: none; height: auto; }
+.triptyque img { width: 100%; aspect-ratio: 270 / 720; object-fit: cover; display: block; box-shadow: var(--ombre); border-radius: 2px;
+  clip-path: polygon(0 1%, 18% 0, 47% .8%, 74% 0, 100% .6%, 99.4% 22%, 100% 54%, 99.3% 80%, 100% 99.2%, 70% 100%, 38% 99.3%, 9% 100%, 0 99.4%, .7% 70%, 0 40%); }
+.triptyque img:nth-child(2) { margin-top: 13%; }
+.encrage .triptyque img { animation: monte .8s cubic-bezier(.2, .8, .2, 1) both; }
+.encrage .triptyque img:nth-child(2) { animation-delay: .15s; } .encrage .triptyque img:nth-child(3) { animation-delay: .3s; }
+@keyframes monte { from { opacity: 0; transform: translateY(26px); } }
+.triptyque .tampon-une { position: absolute; right: 4%; bottom: 3%; z-index: 1; }
+@media (prefers-reduced-motion: reduce) { .encrage .triptyque img, .encrage .tete-journal .sigle { animation: none; } }
+/* l'étoile « Nouveau » de la Gazette */
+.nouveau { position: absolute; z-index: 2; right: 4px; top: -16px; width: 96px; height: 96px; display: grid; place-items: center; background: var(--abricot); color: #fff; font: 400 17px/1 var(--titre); text-shadow: 0 1px 0 rgba(0, 0, 0, .15);
+  clip-path: polygon(50% 0, 59% 16%, 75% 6%, 76% 24%, 94% 22%, 86% 39%, 100% 50%, 86% 61%, 94% 78%, 76% 76%, 75% 94%, 59% 84%, 50% 100%, 41% 84%, 25% 94%, 24% 76%, 6% 78%, 14% 61%, 0 50%, 14% 39%, 6% 22%, 24% 24%, 25% 6%, 41% 16%); transform: rotate(-12deg); }
+.article { overflow: visible; }
+.article .vignette { overflow: hidden; }
+.article .cadre-vignette { position: relative; }
+.titre-journal .nom .mot { white-space: nowrap; }
