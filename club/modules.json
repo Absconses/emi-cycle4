@@ -141,16 +141,17 @@
   "num": 8,
   "partie": "C",
   "titre": "Le reportage vidéo",
-  "chapo": "Le repérage, le plan de tournage, le cadrage et les sons d’ambiance.",
-  "ethique": "Je respecte le droit à l'image de chacun.",
+  "chapo": "Les cinq plans, tenir son téléphone, le plan de tournage, les rushes et le montage dans Canva.",
+  "ethique": "Je ne filme personne sans autorisation, ni dans la difficulté, et je ne gêne pas la course.",
   "duree": 45,
   "image": "img/camera.jpg",
   "credit": "דולב, CC BY-SA 4.0, Wikimedia Commons",
   "page": "https://commons.wikimedia.org/wiki/File:Israeli_Educational_Television_-_Studio_camera.jpg",
-  "id": "m8",
+  "id": "m8-le-reportage-video",
   "type": "livre",
-  "pret": false,
-  "ateliers": []
+  "pret": true,
+  "ateliers": [],
+  "chapitres": 10
  },
  {
   "num": 9,
