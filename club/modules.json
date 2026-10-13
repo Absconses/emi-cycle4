@@ -157,15 +157,16 @@
   "num": 9,
   "partie": "C",
   "titre": "Monter une émission",
-  "chapo": "Dérusher, écrire le conducteur, trouver le rythme, se répartir les rôles à l'antenne.",
-  "ethique": "Un montage ne fait pas dire ce qui n'a pas été dit.",
+  "chapo": "Le conducteur, les rôles, le plateau, assembler dans Canva, vérifier avant de publier. Et le badge final.",
+  "ethique": "Je vérifie tout avant de publier, et un montage ne fait pas dire ce qui n'a pas été dit.",
   "duree": 45,
   "image": "img/redaction.jpg",
   "credit": "Mephisto 97.6, CC BY-SA 3.0, Wikimedia Commons",
   "page": "https://commons.wikimedia.org/wiki/File:Newsroom.jpg",
-  "id": "m9",
+  "id": "m9-monter-une-emission",
   "type": "livre",
-  "pret": false,
-  "ateliers": []
+  "pret": true,
+  "ateliers": [],
+  "chapitres": 10
  }
 ]

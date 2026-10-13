@@ -160,7 +160,8 @@
         if (!m.pret) return `<span class="case avenir" title="Module ${m.num} : en préparation">${m.num}</span>`;
         return `<a class="case${x ? ' encours' : ''}" href="module.html?m=${encodeURIComponent(m.id)}" title="Module ${m.num} : ${esc(m.titre)}">${m.num}</a>`;
       }).join('')}</div>
-      <p class="bas">${faits ? `<strong>${faits} tampon${faits > 1 ? 's' : ''} sur ${livres.length}.</strong> ` : ''}${faits === livres.length ? 'Ta carte est complète : tu es reporter du club !' : 'Termine un module pour gagner son tampon.'}</p>`;
+      <p class="bas">${faits ? `<strong>${faits} tampon${faits > 1 ? 's' : ''} sur ${livres.length}.</strong> ` : ''}${faits === livres.length ? 'Ta carte est complète : tu es membre de la rédaction !' : 'Termine un module pour gagner son tampon.'}</p>
+      ${faits === livres.length ? '<span class="tampon vert badge-final" style="--r:-10deg">Membre de<br>la rédaction</span>' : ''}`;
   }
   cartePresse();
 

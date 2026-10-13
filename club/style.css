@@ -342,3 +342,4 @@ table.classe .eleve { text-align: left; white-space: nowrap; font-weight: 700; }
   .horizontal .article blockquote, .horizontal .article .credit { display: none; }
   .horizontal .panneau.fin { flex-basis: 80vw; margin-left: 18px; }
 }
+.carte-presse .badge-final { position: absolute; right: 12px; top: 64px; z-index: 1; }
