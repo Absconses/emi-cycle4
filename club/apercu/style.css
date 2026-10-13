@@ -325,3 +325,20 @@ table.classe .eleve { text-align: left; white-space: nowrap; font-weight: 700; }
 /* la une : les trois panneaux du collège flottent un peu */
 .triptyque img { will-change: transform; }
 .titre-journal .nom::after { content: ""; position: absolute; left: 0; right: 0; bottom: -2px; height: 6px; background: var(--or); transform: scaleX(var(--souligne, 1)); transform-origin: left; }
+
+.bouton-anim { font: 700 12px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--marine); background: rgba(233, 184, 90, .25); border: 1.5px solid var(--or); border-radius: 20px; padding: 5px 12px; cursor: pointer; }
+.bouton-anim:hover { background: var(--or); }
+/* la piste horizontale sur téléphone */
+@media (max-width: 899px) {
+  .horizontal .parcours { padding-top: 14px; }
+  .horizontal .parcours-tete .consigne { display: none; }
+  .horizontal .parcours-tete h2 { font-size: 30px; }
+  .horizontal .route .etape { width: 28px; height: 28px; font-size: 12px; }
+  .horizontal .piste { padding: 0 12vw 0 16px; }
+  .horizontal .panneau { flex-basis: 66vw; margin-right: 18px; padding: 20px; box-shadow: 6px 6px 0 var(--or); }
+  .horizontal .panneau .lettre { font-size: 110px; }
+  .horizontal .panneau h3 { font-size: 28px; }
+  .horizontal .piste > .article { flex-basis: 84vw; padding: 0 16px; }
+  .horizontal .article blockquote, .horizontal .article .credit { display: none; }
+  .horizontal .panneau.fin { flex-basis: 80vw; margin-left: 18px; }
+}

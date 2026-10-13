@@ -3,17 +3,27 @@
  * - le parcours : sur grand écran, la piste des 9 modules défile à l'horizontale quand on descend,
  *   la route du reporter se remplit et marque le module en cours ;
  * - la carte de presse : les tampons gagnés s'abattent quand elle apparaît.
- * Mouvement réduit demandé, petit écran ou GSAP absent : la page reste lisible, sans piste horizontale. */
+ * Appareil réglé sur « animations réduites » : rien ne bouge, sauf si l'élève les réactive avec le bouton
+ * « Animations » (son choix est gardé dans ce navigateur). Sans GSAP, la page reste lisible telle quelle. */
 (function () {
   function lancer() {
     if (!window.gsap || !window.ScrollTrigger) return;
     gsap.registerPlugin(ScrollTrigger);
+    let choix = null; try { choix = localStorage.getItem('club-animations'); } catch (e) {}
+    const bouton = document.getElementById('bouton-anim');
     const mm = gsap.matchMedia();
     mm.add({
-      grand: '(min-width: 900px) and (min-height: 640px)',
-      calme: '(prefers-reduced-motion: reduce)',
+      grand: '(min-height: 560px)',
+      reduit: '(prefers-reduced-motion: reduce)',
     }, (ctx) => {
-      const { grand, calme } = ctx.conditions;
+      const { grand, reduit } = ctx.conditions;
+      const calme = choix === 'non' || (reduit && choix !== 'oui');
+      if (bouton) {
+        bouton.hidden = false;
+        bouton.setAttribute('aria-pressed', String(!calme));
+        bouton.textContent = calme ? '✦ Activer les animations' : '✦ Couper les animations';
+        bouton.onclick = () => { try { localStorage.setItem('club-animations', calme ? 'oui' : 'non'); } catch (e) {} location.reload(); };
+      }
       if (calme) return;
       ouverture();
       parallaxeUne();
