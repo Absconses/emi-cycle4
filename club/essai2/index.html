@@ -1,0 +1,258 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Le Jeune Reporter · Club presse Dupanloup</title>
+<meta name="description" content="Le parcours du Club Jeune Reporter du collège Dupanloup : neuf modules interactifs pour devenir reporter, en autonomie au CDI.">
+<meta name="theme-color" content="#000177">
+<link rel="icon" href="img/sigle-dupanloup.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bree+Serif&family=Federo&family=IBM+Plex+Mono:wght@600;700&display=swap">
+<link rel="stylesheet" href="style.css">
+<script src="progression.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="https://cdn.jsdelivr.net/npm/lenis@1.1.13/dist/lenis.min.js" defer></script>
+<script type="importmap">{ "imports": { "three": "https://unpkg.com/three@0.170.0/build/three.module.js", "three/addons/": "https://unpkg.com/three@0.170.0/examples/jsm/" } }</script>
+<script type="module" src="immersif3d.js"></script>
+</head>
+<body>
+<section class="rotative" id="rotative" aria-label="Ouverture : la une sort de la rotative" hidden>
+  <div class="rot-scene">
+    <div class="rot-lumiere" aria-hidden="true"></div>
+    <h2 class="rot-titre"><span>Ce matin,</span> <span>c’est toi</span> <span class="or">le reporter.</span></h2>
+    <div class="rouleau r1" aria-hidden="true"></div>
+    <div class="feuille-zone" aria-hidden="true">
+      <div class="feuille">
+        <div class="f-tete"><img src="img/sigle-dupanloup.png" alt=""><div><small>Le Club</small><b>Jeune Reporter</b></div></div>
+        <div class="f-filet"></div>
+        <div class="f-corps">
+          <div class="f-photos"><img src="img/college-1.jpg" alt=""><img src="img/college-2.jpg" alt=""><img src="img/college-3.jpg" alt=""></div>
+          <div class="f-texte"><b>Ta carte de presse se gagne module après module</b><i></i><i></i><i></i><i></i><i></i><i></i></div>
+        </div>
+      </div>
+    </div>
+    <div class="rouleau r2" aria-hidden="true"></div>
+    <p class="rot-tirage" aria-hidden="true"><b id="tirage">0</b> exemplaires tirés ce matin</p>
+    <a class="rot-passer" href="#debut">Passer l’ouverture</a>
+  </div>
+</section>
+<div id="debut"></div>
+<div class="flash" aria-label="Dernière minute"><span class="etiquette">Dernière minute</span><div class="piste"><div class="defile" id="defile"></div></div></div>
+
+<header class="manchette int">
+  <div class="infos"><span>Collège Dupanloup · Boulogne</span><span id="date-edition">Édition du jour</span><span id="numero">Numéro spécial</span></div>
+  <div class="tete-journal">
+    <img class="sigle" src="img/sigle-dupanloup.png" alt="Sigle du collège Dupanloup, Boulogne" width="400" height="400">
+    <h1 class="titre-journal"><span class="le">Le Club</span><span class="nom" id="nom-journal" aria-label="Jeune Reporter">Jeune Reporter</span></h1>
+    <span class="vertical" aria-hidden="true">Club presse · Dupanloup</span>
+  </div>
+  <p class="devise">Neuf modules pour apprendre le métier, du premier article à l’émission de radio.</p>
+  <div class="filets" aria-hidden="true"></div>
+  <nav class="rubriques" aria-label="Rubriques"><a href="#cahier-A" data-panneau>Les bases</a><a href="#cahier-B" data-panneau>Sur le terrain</a><a href="#cahier-C" data-panneau>Son, vidéo, émission</a><a href="#bilan">Mon bilan</a><button type="button" class="bouton-anim" id="bouton-anim" hidden></button></nav>
+</header>
+
+<main class="int">
+  <section class="une" aria-labelledby="titre-une">
+    <figure class="photo-une">
+      <div class="triptyque"><img src="img/college-1.jpg" alt="La façade du collège Dupanloup, avec ses fenêtres sculptées." width="269" height="720"><img src="img/college-2.jpg" alt="L’angle du bâtiment principal et son perron." width="269" height="720"><img src="img/college-3.jpg" alt="La terrasse fleurie et l’aile moderne du collège." width="270" height="720"><span class="tampon grand tampon-une" style="transform:rotate(-9deg)" aria-hidden="true">Bienvenue<br>à la rédaction</span></div>
+      <figcaption>Le collège Dupanloup, à Boulogne. Photos parues à la une de La Gazette de Dupanloup, n° 1, mai 2026.</figcaption>
+    </figure>
+    <div class="edito">
+      <p class="surtitre">Édito <span class="pt"></span> À lire avant de commencer</p>
+      <h2 id="titre-une">Ta carte de presse se gagne <em>module après module</em></h2>
+      <p class="chapo">Bienvenue au Club Jeune Reporter ! Ici, tu apprends le métier de journaliste à ton rythme, seul au CDI.</p>
+      <p class="lettrine">Chaque module dure environ 45 minutes. Lis, observe, réponds : chaque réponse est expliquée, alors prends le temps de lire les explications. Fais les modules dans l’ordre, du 1 au 9. À la fin de chacun, tu gagnes un badge et un tampon sur ta carte de presse.</p>
+      <a class="cta" id="cta" href="#cahier-A"><span><small id="cta-sur">Pour commencer</small><span id="cta-titre">Ouvre le module 1</span></span><span class="fl" aria-hidden="true">→</span></a>
+      <div class="carte-presse" id="carte-presse" aria-label="Ma carte de presse"></div>
+    </div>
+  </section>
+  <div id="cahiers"></div>
+
+  <section class="bilan" id="bilan" aria-labelledby="titre-bilan">
+    <p class="surtitre">Mon bilan <span class="pt"></span> Ma sauvegarde et mon rapport</p>
+    <div>
+      <h2 id="titre-bilan">Garde une trace de ton travail</h2>
+      <p>Ta progression s’enregistre toute seule dans ce navigateur, sur cet ordinateur. Tu peux t’arrêter au milieu d’un module : il rouvrira là où tu en étais.</p>
+      <ol>
+        <li><strong>À la fin de chaque séance</strong>, télécharge ton bilan et range-le (ENT, clé USB). C’est ta sauvegarde.</li>
+        <li><strong>Sur un autre ordinateur</strong>, clique sur « Reprendre avec mon bilan » et choisis ce fichier : tu retrouves ta progression.</li>
+        <li><strong>Quand ton professeur le demande</strong>, dépose ton dernier bilan là où il te l’indique.</li>
+      </ol>
+    </div>
+    <div>
+      <div class="ident">
+        <label for="prenom">Prénom <input id="prenom" autocomplete="given-name" maxlength="40"></label>
+        <label for="nom">Nom <input id="nom" autocomplete="family-name" maxlength="40"></label>
+        <label for="classe">Classe <input id="classe" placeholder="ex. 6eB" maxlength="12"></label>
+      </div>
+      <div class="actions">
+        <button class="btn" id="telecharger">Télécharger mon bilan</button>
+        <label class="lien-btn">Reprendre avec mon bilan<input type="file" id="reprendre" accept=".json,application/json" hidden></label>
+        <button class="lien-btn discret" id="raz">Effacer ma progression sur cet ordinateur</button>
+      </div>
+      <p class="petit">Ne modifie pas le fichier : il porte un sceau. Un bilan retouché est refusé ici et signalé à ton professeur.</p>
+      <p class="petit" id="msg-bilan" role="status"></p>
+    </div>
+  </section>
+
+  <footer class="ours">
+    <div>
+      <h4>L’ours du journal</h4>
+      <p>Club Jeune Reporter, collège Dupanloup, Boulogne. Parcours de formation du club presse, à faire en autonomie au CDI.</p>
+      <p>Aucune donnée ne quitte cet ordinateur sans toi : pas de compte, pas d’envoi.</p>
+      <p><a class="ens" href="enseignant.html">Espace enseignant : tableau du club →</a></p>
+    </div>
+    <div>
+      <h4>Crédits photos</h4>
+      <ul id="credits"></ul>
+    </div>
+  </footer>
+</main>
+
+<script>
+(async function () {
+  const CALME = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const pct = x => Math.round(x * 100) + ' %';
+  const CAHIERS = [
+    { p: 'A', t: 'Les bases', s: 'Modules 1 à 3 · l’info, l’article, la rédaction' },
+    { p: 'B', t: 'Sur le terrain', s: 'Modules 4 à 6 · l’événement, l’interview, la photo' },
+    { p: 'C', t: 'Son, vidéo, émission', s: 'Modules 7 à 9 · le podcast, le reportage, l’émission' },
+  ];
+  const mods = await (await fetch('modules.json')).json();
+  const livres = mods.filter(m => m.type === 'livre');
+  const parus = livres.filter(m => m.pret);
+  const prog = CLUB.lire();
+  const p = id => prog[id];
+
+  // la manchette : la date du jour et le nombre de modules parus
+  document.getElementById('date-edition').textContent = 'Édition du ' + new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  document.getElementById('numero').textContent = parus.length + ' modules parus sur ' + livres.length;
+  const nomJ = document.getElementById('nom-journal');
+  let k = 0;
+  nomJ.innerHTML = nomJ.textContent.split(' ').map(mot => `<span class="mot">${[...mot].map(c => `<span style="--k:${k++}" aria-hidden="true">${c}</span>`).join('')}</span>`).join(' ');
+
+  // dernière minute
+  const dernier = parus[parus.length - 1], prochain = livres.find(m => !m.pret);
+  const flash = [
+    dernier && `Vient de paraître : le module ${dernier.num}, ${dernier.titre}`,
+    prochain && `En préparation : le module ${prochain.num}, ${prochain.titre}`,
+    ...livres.map(m => `Réflexe du reporter n° ${m.num} : ${m.ethique}`),
+    'Un bon reporter vérifie toujours ses sources',
+  ].filter(Boolean);
+  const defile = document.getElementById('defile');
+  defile.innerHTML = [...flash, ...flash].map(t => `<span>${esc(t)}</span>`).join('');
+  defile.style.animationDuration = Math.max(40, flash.join('').length / 9) + 's';
+
+  function etat(m) {
+    const x = p(m.id);
+    if (!m.pret) return '';
+    if (!x) return '<span class="etat afaire">À lire</span>';
+    if (x.termine) return '<span class="etat ok">✓ Badge' + (x.meilleur ? ' · ' + pct(x.meilleur) : '') + '</span>';
+    return '<span class="etat encours">' + (x.avance ? pct(x.avance) + ' lu' : 'Commencé') + '</span>';
+  }
+
+  // l'appel à l'action : le premier module pas terminé
+  const suivant = parus.find(m => !(p(m.id) && p(m.id).termine));
+  const cta = document.getElementById('cta');
+  if (suivant) {
+    cta.href = 'module.html?m=' + encodeURIComponent(suivant.id);
+    const commence = p(suivant.id);
+    document.getElementById('cta-sur').textContent = commence ? 'Reprendre là où tu en étais' : (suivant.num === 1 ? 'Pour commencer' : 'Ton prochain module');
+    document.getElementById('cta-titre').textContent = `Module ${suivant.num} : ${suivant.titre}`;
+  } else {
+    document.getElementById('cta-sur').textContent = 'Bravo !';
+    document.getElementById('cta-titre').textContent = 'Tous les modules parus sont faits';
+    cta.href = '#bilan';
+  }
+
+  // la carte de presse : un tampon par module terminé
+  function cartePresse() {
+    const id = CLUB.identite();
+    const faits = livres.filter(m => m.pret && p(m.id) && p(m.id).termine).length;
+    const nom = [id.prenom, id.nom].filter(Boolean).join(' ');
+    document.getElementById('carte-presse').innerHTML = `
+      <div class="haut"><b>Carte de presse</b><span>Club Jeune Reporter · Dupanloup</span></div>
+      <p class="qui">${nom ? esc(nom) : 'Ton nom ici'}<small>${nom ? (id.classe ? 'Classe de ' + esc(id.classe) + ' · ' : '') + 'reporter du club' : 'Écris ton nom dans « Mon bilan », en bas de la page.'}</small></p>
+      <div class="cases">${livres.map((m, i) => {
+        const x = p(m.id), r = ((m.num * 37) % 24) - 12;
+        if (x && x.termine) return `<a class="case faite" href="module.html?m=${encodeURIComponent(m.id)}" title="Module ${m.num} : badge obtenu"><span class="t" style="--r:${r}deg">M${m.num}</span></a>`;
+        if (!m.pret) return `<span class="case avenir" title="Module ${m.num} : en préparation">${m.num}</span>`;
+        return `<a class="case${x ? ' encours' : ''}" href="module.html?m=${encodeURIComponent(m.id)}" title="Module ${m.num} : ${esc(m.titre)}">${m.num}</a>`;
+      }).join('')}</div>
+      <p class="bas">${faits ? `<strong>${faits} tampon${faits > 1 ? 's' : ''} sur ${livres.length}.</strong> ` : ''}${faits === livres.length ? 'Ta carte est complète : tu es reporter du club !' : 'Termine un module pour gagner son tampon.'}</p>`;
+  }
+  cartePresse();
+
+  // les cahiers et leurs articles
+  // le parcours : une seule piste ; sur grand écran, elle défile à l'horizontale (animations.js)
+  const faitsTotal = livres.filter(m => m.pret && p(m.id) && p(m.id).termine).length;
+  const html = `<section class="parcours" id="parcours" aria-labelledby="titre-parcours">
+    <div class="parcours-tete int">
+      <h2 id="titre-parcours">Le parcours du reporter</h2>
+      <p class="consigne">Neuf modules, dans l’ordre, de ta première info à ta première émission.</p>
+      <ol class="route" aria-label="Les neuf modules">${livres.map(m => `<li class="etape${p(m.id) && p(m.id).termine ? ' faite' : ''}${m.pret ? '' : ' avenir'}" data-num="${m.num}"><span>${m.num}</span></li>`).join('')}<li class="barre-route" aria-hidden="true"><i></i></li></ol>
+    </div>
+    <div class="piste-zone"><div class="piste" id="piste">${CAHIERS.map(C => {
+      const ms = livres.filter(m => m.partie === C.p);
+      return `<div class="panneau" id="cahier-${C.p}"><span class="lettre" aria-hidden="true">${C.p}</span><h3>${C.t}</h3><p>${C.s}</p></div>` + ms.map((m, i) => article(m, i)).join('');
+    }).join('')}<div class="panneau fin"><span class="lettre" aria-hidden="true">★</span><h3>${faitsTotal === livres.length ? 'Tu es reporter du club !' : 'Ta carte de presse t’attend'}</h3><p>${faitsTotal} tampon${faitsTotal > 1 ? 's' : ''} sur ${livres.length}. Chaque module terminé en ajoute un.</p><a class="cta" href="${suivant ? 'module.html?m=' + encodeURIComponent(suivant.id) : '#bilan'}"><span><small>${suivant ? 'Ton prochain module' : 'Bravo'}</small><span>${suivant ? 'Module ' + suivant.num + ' : ' + esc(suivant.titre) : 'Télécharge ton bilan'}</span></span><span class="fl" aria-hidden="true">→</span></a></div></div></div>
+  </section>`;
+  function article(m, i) {
+    const x = p(m.id), av = x ? (x.termine ? 1 : x.avance || 0) : 0;
+    const lien = 'module.html?m=' + encodeURIComponent(m.id);
+    const ateliers = mods.filter(a => a.type === 'atelier' && a.parent === m.id);
+    return `<article class="article ${m.pret ? 'pret' : 'bientot'}" data-num="${m.num}">
+      <div class="cadre-vignette">${m === dernier ? '<span class="nouveau" aria-label="Nouveau">Nouveau</span>' : ''}<div class="vignette trame"><span class="num">${m.num}</span><img src="${m.image}" alt="" loading="lazy">${m.pret ? (x && x.termine ? `<span class="tampon vert" style="--r:-8deg">Badge<br>obtenu</span>` : '') : `<span class="tampon">En<br>préparation</span>`}</div></div>
+      <p class="meta">Module ${m.num}${m.pret ? ` · ${m.chapitres} chapitres · ${m.duree} min` : ' · bientôt'} ${etat(m)}</p>
+      <h3>${m.pret ? `<a href="${lien}">${esc(m.titre)}</a>` : esc(m.titre)}</h3>
+      <p class="chapo">${esc(m.chapo)}</p>
+      <blockquote><b>Le réflexe du reporter</b>« ${esc(m.ethique)} »</blockquote>
+      <div class="pied-art">
+        ${ateliers.length ? `<div class="ateliers">${ateliers.map(a => `<a class="atelier" href="module.html?m=${encodeURIComponent(a.id)}"><span class="pic">Atelier</span><span>${esc(a.titre)}<small>${esc(a.genre)}, à faire après le module</small></span>${etat(a)}</a>`).join('')}</div>` : ''}
+        ${av && !(x && x.termine) ? `<div class="jauge" aria-hidden="true"><span style="width:${Math.round(av * 100)}%"></span></div>` : ''}
+        <p class="credit">Photo : ${esc(m.credit)}</p>
+      </div></article>`;
+  }
+  document.getElementById('cahiers').innerHTML = html;
+
+  // la page est prête : animations.js peut lancer la mise en scène
+  document.dispatchEvent(new Event('club-pret'));
+  window.CLUB_PRET = true;
+
+  // crédits
+  const credits = [['La une', 'La Gazette de Dupanloup, n° 1, mai 2026']].concat(livres.map(m => ['Module ' + m.num, m.credit, m.page]));
+  document.getElementById('credits').innerHTML = credits.map(([q, c, u]) => `<li><strong>${q}</strong> : ${u ? `<a href="${esc(u)}">${esc(c)}</a>` : esc(c)}</li>`).join('');
+
+  // mon bilan
+  const ident = CLUB.identite();
+  ['prenom', 'nom', 'classe'].forEach(k => { const el = document.getElementById(k); el.value = ident[k] || ''; el.oninput = () => { CLUB.garderIdentite(k, el.value.trim()); cartePresse(); }; });
+  const msg = document.getElementById('msg-bilan');
+  document.getElementById('reprendre').onchange = async (e) => {
+    const f = e.target.files[0]; if (!f) return;
+    const r = await CLUB.chargerBilan(await f.text());
+    if (!r.ok) { msg.textContent = r.raison; return; }
+    try { sessionStorage.setItem('club-msg', r.n ? `Progression retrouvée : ${r.n} module${r.n > 1 ? 's' : ''} mis à jour.` : 'Ce bilan n’apporte rien de plus récent que ce qui est déjà sur cet ordinateur.'); } catch (e) {}
+    location.hash = 'bilan'; location.reload();
+  };
+  try { const m = sessionStorage.getItem('club-msg'); if (m) { msg.textContent = m; sessionStorage.removeItem('club-msg'); } } catch (e) {}
+  document.getElementById('telecharger').onclick = async () => {
+    const id = CLUB.identite();
+    if (!id.prenom || !id.nom || !id.classe) { msg.textContent = 'Écris ton prénom, ton nom et ta classe avant de télécharger ton bilan.'; return; }
+    const nb = await CLUB.telechargerBilan(mods);
+    msg.textContent = `Bilan téléchargé (${nb} module${nb > 1 ? 's' : ''} commencé${nb > 1 ? 's' : ''}). Range-le bien, ou dépose-le là où ton professeur te l’a demandé.`;
+  };
+  const raz = document.getElementById('raz');
+  raz.onclick = () => {
+    if (raz.dataset.armer) { CLUB.effacer(); location.reload(); return; }
+    raz.dataset.armer = '1'; raz.textContent = 'Clique encore pour tout effacer sur cet ordinateur';
+    setTimeout(() => { delete raz.dataset.armer; raz.textContent = 'Effacer ma progression sur cet ordinateur'; }, 5000);
+  };
+})();
+</script>
+<canvas id="webgl" aria-hidden="true" hidden></canvas>
+</body>
+</html>
