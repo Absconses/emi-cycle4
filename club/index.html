@@ -12,6 +12,9 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bree+Serif&family=Federo&family=IBM+Plex+Mono:wght@600;700&display=swap">
 <link rel="stylesheet" href="style.css">
 <script src="progression.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="animations.js" defer></script>
 </head>
 <body>
 <div class="flash" aria-label="Dernière minute"><span class="etiquette">Dernière minute</span><div class="piste"><div class="defile" id="defile"></div></div></div>
@@ -25,13 +28,13 @@
   </div>
   <p class="devise">Neuf modules pour apprendre le métier, du premier article à l’émission de radio.</p>
   <div class="filets" aria-hidden="true"></div>
-  <nav class="rubriques" aria-label="Rubriques"><a href="#cahier-A">Les bases</a><a href="#cahier-B">Sur le terrain</a><a href="#cahier-C">Son, vidéo, émission</a><a href="#bilan">Mon bilan</a></nav>
+  <nav class="rubriques" aria-label="Rubriques"><a href="#cahier-A" data-panneau>Les bases</a><a href="#cahier-B" data-panneau>Sur le terrain</a><a href="#cahier-C" data-panneau>Son, vidéo, émission</a><a href="#bilan">Mon bilan</a><button type="button" class="bouton-anim" id="bouton-anim" hidden></button></nav>
 </header>
 
 <main class="int">
   <section class="une" aria-labelledby="titre-une">
     <figure class="photo-une">
-      <div class="triptyque"><img src="img/college-1.jpg" alt="La façade du collège Dupanloup, avec ses fenêtres sculptées." width="269" height="720"><img src="img/college-2.jpg" alt="L’angle du bâtiment principal et son perron." width="269" height="720"><img src="img/college-3.jpg" alt="La terrasse fleurie et l’aile moderne du collège." width="270" height="720"><span class="tampon grand tampon-une coup" style="--r:-9deg;--d:.9s" aria-hidden="true">Bienvenue<br>à la rédaction</span></div>
+      <div class="triptyque"><img src="img/college-1.jpg" alt="La façade du collège Dupanloup, avec ses fenêtres sculptées." width="269" height="720"><img src="img/college-2.jpg" alt="L’angle du bâtiment principal et son perron." width="269" height="720"><img src="img/college-3.jpg" alt="La terrasse fleurie et l’aile moderne du collège." width="270" height="720"><span class="tampon grand tampon-une" style="transform:rotate(-9deg)" aria-hidden="true">Bienvenue<br>à la rédaction</span></div>
       <figcaption>Le collège Dupanloup, à Boulogne. Photos parues à la une de La Gazette de Dupanloup, n° 1, mai 2026.</figcaption>
     </figure>
     <div class="edito">
@@ -108,7 +111,6 @@
   const nomJ = document.getElementById('nom-journal');
   let k = 0;
   nomJ.innerHTML = nomJ.textContent.split(' ').map(mot => `<span class="mot">${[...mot].map(c => `<span style="--k:${k++}" aria-hidden="true">${c}</span>`).join('')}</span>`).join(' ');
-  requestAnimationFrame(() => document.body.classList.add('encrage'));
 
   // dernière minute
   const dernier = parus[parus.length - 1], prochain = livres.find(m => !m.pret);
@@ -154,7 +156,7 @@
       <p class="qui">${nom ? esc(nom) : 'Ton nom ici'}<small>${nom ? (id.classe ? 'Classe de ' + esc(id.classe) + ' · ' : '') + 'reporter du club' : 'Écris ton nom dans « Mon bilan », en bas de la page.'}</small></p>
       <div class="cases">${livres.map((m, i) => {
         const x = p(m.id), r = ((m.num * 37) % 24) - 12;
-        if (x && x.termine) return `<a class="case faite" href="module.html?m=${encodeURIComponent(m.id)}" title="Module ${m.num} : badge obtenu"><span class="t coup" style="--r:${r}deg;--d:${CALME ? 0 : 1.1 + i * .12}s">M${m.num}</span></a>`;
+        if (x && x.termine) return `<a class="case faite" href="module.html?m=${encodeURIComponent(m.id)}" title="Module ${m.num} : badge obtenu"><span class="t" style="--r:${r}deg">M${m.num}</span></a>`;
         if (!m.pret) return `<span class="case avenir" title="Module ${m.num} : en préparation">${m.num}</span>`;
         return `<a class="case${x ? ' encours' : ''}" href="module.html?m=${encodeURIComponent(m.id)}" title="Module ${m.num} : ${esc(m.titre)}">${m.num}</a>`;
       }).join('')}</div>
@@ -163,17 +165,24 @@
   cartePresse();
 
   // les cahiers et leurs articles
-  const html = CAHIERS.map(C => {
-    const ms = livres.filter(m => m.partie === C.p);
-    return `<section class="cahier" id="cahier-${C.p}" aria-labelledby="titre-${C.p}">
-      <div class="cahier-tete"><span class="lettre" aria-hidden="true">${C.p}</span><h2 id="titre-${C.p}">${C.t}</h2><p>${C.s}</p></div>
-      <div class="colonnes">${ms.map((m, i) => article(m, i)).join('')}</div></section>`;
-  }).join('');
+  // le parcours : une seule piste ; sur grand écran, elle défile à l'horizontale (animations.js)
+  const faitsTotal = livres.filter(m => m.pret && p(m.id) && p(m.id).termine).length;
+  const html = `<section class="parcours" id="parcours" aria-labelledby="titre-parcours">
+    <div class="parcours-tete int">
+      <h2 id="titre-parcours">Le parcours du reporter</h2>
+      <p class="consigne">Neuf modules, dans l’ordre, de ta première info à ta première émission.</p>
+      <ol class="route" aria-label="Les neuf modules">${livres.map(m => `<li class="etape${p(m.id) && p(m.id).termine ? ' faite' : ''}${m.pret ? '' : ' avenir'}" data-num="${m.num}"><span>${m.num}</span></li>`).join('')}<li class="barre-route" aria-hidden="true"><i></i></li></ol>
+    </div>
+    <div class="piste-zone"><div class="piste" id="piste">${CAHIERS.map(C => {
+      const ms = livres.filter(m => m.partie === C.p);
+      return `<div class="panneau" id="cahier-${C.p}"><span class="lettre" aria-hidden="true">${C.p}</span><h3>${C.t}</h3><p>${C.s}</p></div>` + ms.map((m, i) => article(m, i)).join('');
+    }).join('')}<div class="panneau fin"><span class="lettre" aria-hidden="true">★</span><h3>${faitsTotal === livres.length ? 'Tu es reporter du club !' : 'Ta carte de presse t’attend'}</h3><p>${faitsTotal} tampon${faitsTotal > 1 ? 's' : ''} sur ${livres.length}. Chaque module terminé en ajoute un.</p><a class="cta" href="${suivant ? 'module.html?m=' + encodeURIComponent(suivant.id) : '#bilan'}"><span><small>${suivant ? 'Ton prochain module' : 'Bravo'}</small><span>${suivant ? 'Module ' + suivant.num + ' : ' + esc(suivant.titre) : 'Télécharge ton bilan'}</span></span><span class="fl" aria-hidden="true">→</span></a></div></div></div>
+  </section>`;
   function article(m, i) {
     const x = p(m.id), av = x ? (x.termine ? 1 : x.avance || 0) : 0;
     const lien = 'module.html?m=' + encodeURIComponent(m.id);
     const ateliers = mods.filter(a => a.type === 'atelier' && a.parent === m.id);
-    return `<article class="article revele ${m.pret ? 'pret' : 'bientot'}" style="--d:${i * .1}s">
+    return `<article class="article ${m.pret ? 'pret' : 'bientot'}" data-num="${m.num}">
       <div class="cadre-vignette">${m === dernier ? '<span class="nouveau" aria-label="Nouveau">Nouveau</span>' : ''}<div class="vignette trame"><span class="num">${m.num}</span><img src="${m.image}" alt="" loading="lazy">${m.pret ? (x && x.termine ? `<span class="tampon vert" style="--r:-8deg">Badge<br>obtenu</span>` : '') : `<span class="tampon">En<br>préparation</span>`}</div></div>
       <p class="meta">Module ${m.num}${m.pret ? ` · ${m.chapitres} chapitres · ${m.duree} min` : ' · bientôt'} ${etat(m)}</p>
       <h3>${m.pret ? `<a href="${lien}">${esc(m.titre)}</a>` : esc(m.titre)}</h3>
@@ -187,9 +196,9 @@
   }
   document.getElementById('cahiers').innerHTML = html;
 
-  // les articles apparaissent quand on descend
-  const vus = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('vu'); vus.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
-  document.querySelectorAll('.revele').forEach(el => CALME ? el.classList.add('vu') : vus.observe(el));
+  // la page est prête : animations.js peut lancer la mise en scène
+  document.dispatchEvent(new Event('club-pret'));
+  window.CLUB_PRET = true;
 
   // crédits
   const credits = [['La une', 'La Gazette de Dupanloup, n° 1, mai 2026']].concat(livres.map(m => ['Module ' + m.num, m.credit, m.page]));
