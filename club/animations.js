@@ -1,6 +1,6 @@
 /* La mise en scène de la une (GSAP 3.12 + ScrollTrigger).
  * - l'ouverture : le sigle se tamponne, le titre s'imprime lettre par lettre, la une se pose ;
- * - le parcours : sur grand écran, la piste des 9 modules défile à l'horizontale quand on descend,
+ * - le parcours : sur grand écran, la piste des 10 modules défile à l'horizontale quand on descend,
  *   la route du reporter se remplit et marque le module en cours ;
  * - la carte de presse : les tampons gagnés s'abattent quand elle apparaît.
  * Appareil réglé sur « animations réduites » : rien ne bouge, sauf si l'élève les réactive avec le bouton

@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Le Jeune Reporter · Club presse Dupanloup</title>
-<meta name="description" content="Le parcours du Club Jeune Reporter du collège Dupanloup : neuf modules interactifs pour devenir reporter, en autonomie au CDI.">
+<meta name="description" content="Le parcours du Club Jeune Reporter du collège Dupanloup : dix modules interactifs pour devenir reporter, en autonomie au CDI.">
 <meta name="theme-color" content="#000177">
 <link rel="icon" href="img/sigle-dupanloup.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -26,7 +26,7 @@
     <h1 class="titre-journal"><span class="le">Le Club</span><span class="nom" id="nom-journal" aria-label="Jeune Reporter">Jeune Reporter</span></h1>
     <span class="vertical" aria-hidden="true">Club presse · Dupanloup</span>
   </div>
-  <p class="devise">Neuf modules pour apprendre le métier, du premier article à l’émission de radio.</p>
+  <p class="devise">Dix modules pour apprendre le métier, du premier article à l’émission et à la mise en page.</p>
   <div class="filets" aria-hidden="true"></div>
   <nav class="rubriques" aria-label="Rubriques"><a href="#cahier-A" data-panneau>Les bases</a><a href="#cahier-B" data-panneau>Sur le terrain</a><a href="#cahier-C" data-panneau>Son, vidéo, émission</a><a href="#bilan">Mon bilan</a><button type="button" class="bouton-anim" id="bouton-anim" hidden></button></nav>
 </header>
@@ -41,7 +41,7 @@
       <p class="surtitre">Édito <span class="pt"></span> À lire avant de commencer</p>
       <h2 id="titre-une">Ta carte de presse se gagne <em>module après module</em></h2>
       <p class="chapo">Bienvenue au Club Jeune Reporter ! Ici, tu apprends le métier de journaliste à ton rythme, seul au CDI.</p>
-      <p class="lettrine">Chaque module dure environ 45 minutes. Lis, observe, réponds : chaque réponse est expliquée, alors prends le temps de lire les explications. Fais les modules dans l’ordre, du 1 au 9. À la fin de chacun, tu gagnes un badge et un tampon sur ta carte de presse.</p>
+      <p class="lettrine">Chaque module dure environ 45 minutes. Lis, observe, réponds : chaque réponse est expliquée, alors prends le temps de lire les explications. Fais les modules dans l’ordre, du 1 au 10. À la fin de chacun, tu gagnes un badge et un tampon sur ta carte de presse.</p>
       <a class="cta" id="cta" href="#cahier-A"><span><small id="cta-sur">Pour commencer</small><span id="cta-titre">Ouvre le module 1</span></span><span class="fl" aria-hidden="true">→</span></a>
       <div class="carte-presse" id="carte-presse" aria-label="Ma carte de presse"></div>
     </div>
@@ -98,6 +98,7 @@
     { p: 'A', t: 'Les bases', s: 'Modules 1 à 3 · l’info, l’article, la rédaction' },
     { p: 'B', t: 'Sur le terrain', s: 'Modules 4 à 6 · l’événement, l’interview, la photo' },
     { p: 'C', t: 'Son, vidéo, émission', s: 'Modules 7 à 9 · le podcast, le reportage, l’émission' },
+    { p: 'D', t: 'Publier', s: 'Module 10 · la mise en page, du site à la gazette' },
   ];
   const mods = await (await fetch('modules.json')).json();
   const livres = mods.filter(m => m.type === 'livre');
@@ -171,8 +172,8 @@
   const html = `<section class="parcours" id="parcours" aria-labelledby="titre-parcours">
     <div class="parcours-tete int">
       <h2 id="titre-parcours">Le parcours du reporter</h2>
-      <p class="consigne">Neuf modules, dans l’ordre, de ta première info à ta première émission.</p>
-      <ol class="route" aria-label="Les neuf modules">${livres.map(m => `<li class="etape${p(m.id) && p(m.id).termine ? ' faite' : ''}${m.pret ? '' : ' avenir'}" data-num="${m.num}"><span>${m.num}</span></li>`).join('')}<li class="barre-route" aria-hidden="true"><i></i></li></ol>
+      <p class="consigne">Dix modules, dans l’ordre, de ta première info à ta première une.</p>
+      <ol class="route" aria-label="Les dix modules">${livres.map(m => `<li class="etape${p(m.id) && p(m.id).termine ? ' faite' : ''}${m.pret ? '' : ' avenir'}" data-num="${m.num}"><span>${m.num}</span></li>`).join('')}<li class="barre-route" aria-hidden="true"><i></i></li></ol>
     </div>
     <div class="piste-zone"><div class="piste" id="piste">${CAHIERS.map(C => {
       const ms = livres.filter(m => m.partie === C.p);

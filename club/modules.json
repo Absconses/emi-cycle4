@@ -168,5 +168,21 @@
   "pret": true,
   "ateliers": [],
   "chapitres": 10
+ },
+ {
+  "num": 10,
+  "partie": "D",
+  "titre": "Mettre en page",
+  "chapo": "Les mots de la page, le chemin de l'œil, lisible d'abord : l'article du site, puis la une de la gazette dans Canva.",
+  "ethique": "Je mets en page pour le lecteur, et chaque photo a sa légende vraie et son crédit.",
+  "duree": 45,
+  "image": "img/journaux.jpg",
+  "credit": "Parvathisri, CC BY-SA 4.0, Wikimedia Commons",
+  "page": "https://commons.wikimedia.org/wiki/File:Wiki_club_activity.jpg",
+  "id": "m10-mettre-en-page",
+  "type": "livre",
+  "pret": true,
+  "ateliers": [],
+  "chapitres": 10
  }
 ]

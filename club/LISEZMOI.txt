@@ -1,7 +1,7 @@
 SITE DU CLUB JEUNE REPORTER (collège Dupanloup), version du 12 octobre 2026
 
 Un site web complet, sans serveur ni base de données :
-- index.html : la une, les 9 modules classés en 3 cahiers (les bases, sur le terrain, son-vidéo-émission),
+- index.html : la une, les 10 modules classés en 4 cahiers (les bases, sur le terrain, son-vidéo-émission, publier),
   la carte de presse de l'élève (un tampon par module terminé) et « Mon bilan » ;
 - module.html?m=<module> : le lecteur d'un module ; enseignant.html : le tableau du club ;
 - modules/ : les modules parus (extraits des .h5p), libraries/ : les bibliothèques H5P, player/ : h5p-standalone 3.8.0.
