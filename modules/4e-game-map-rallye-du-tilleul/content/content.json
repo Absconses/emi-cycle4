@@ -122,7 +122,7 @@
     },
     {
      "id": "b12a8a38-a336-4d11-b321-cdb4a247b6d5",
-     "label": "4.1 · Analyser ses usages des écrans et des médias",
+     "label": "4.1 · Prendre du recul sur mes usages",
      "content": {
       "params": {},
       "dom": {}
@@ -174,7 +174,7 @@
          "introPage": {
           "showIntroPage": false,
           "startButtonText": "Commencer",
-          "title": "4.1 · Analyser ses usages des écrans et des médias",
+          "title": "4.1 · Prendre du recul sur mes usages",
           "introduction": ""
          },
          "progressType": "dots",
@@ -463,10 +463,10 @@
         "metadata": {
          "contentType": "Question Set",
          "license": "U",
-         "title": "4.1 · Analyser ses usages des écrans et des médias",
+         "title": "4.1 · Prendre du recul sur mes usages",
          "authors": [],
          "changes": [],
-         "extraTitle": "4.1 · Analyser ses usages des écrans et des médias"
+         "extraTitle": "4.1 · Prendre du recul sur mes usages"
         }
        }
       }
@@ -1044,7 +1044,7 @@
     },
     {
      "id": "40e5fabf-6ad2-4ebf-ab47-ff110871128f",
-     "label": "4.4 · Affiner une recherche avec les bons outils",
+     "label": "4.4 · Chercher avec les bons outils",
      "content": {
       "params": {},
       "dom": {}
@@ -1166,10 +1166,10 @@
         "metadata": {
          "contentType": "Fill in the Blanks",
          "license": "U",
-         "title": "4.4 · Affiner une recherche avec les bons outils",
+         "title": "4.4 · Chercher avec les bons outils",
          "authors": [],
          "changes": [],
-         "extraTitle": "4.4 · Affiner une recherche avec les bons outils"
+         "extraTitle": "4.4 · Chercher avec les bons outils"
         }
        }
       }
@@ -1182,7 +1182,7 @@
     },
     {
      "id": "ac397733-aff5-4ad4-b5b9-e9b076ae1ba0",
-     "label": "4.5 · Construire un plan de recherche",
+     "label": "4.5 · Organiser sa recherche",
      "content": {
       "params": {},
       "dom": {}
@@ -1234,7 +1234,7 @@
          "introPage": {
           "showIntroPage": false,
           "startButtonText": "Commencer",
-          "title": "4.5 · Construire un plan de recherche",
+          "title": "4.5 · Organiser sa recherche",
           "introduction": ""
          },
          "progressType": "dots",
@@ -1609,10 +1609,10 @@
         "metadata": {
          "contentType": "Question Set",
          "license": "U",
-         "title": "4.5 · Construire un plan de recherche",
+         "title": "4.5 · Organiser sa recherche",
          "authors": [],
          "changes": [],
-         "extraTitle": "4.5 · Construire un plan de recherche"
+         "extraTitle": "4.5 · Organiser sa recherche"
         }
        }
       }
@@ -1781,7 +1781,7 @@
     },
     {
      "id": "690533b2-8c79-490c-aa63-e1d3cd4ea8e9",
-     "label": "4.7 · Écrire un texte original en citant ses sources",
+     "label": "4.7 · Créer un contenu original",
      "content": {
       "params": {},
       "dom": {}
@@ -1873,10 +1873,10 @@
         "metadata": {
          "contentType": "Drag the Words",
          "license": "U",
-         "title": "4.7 · Écrire un texte original en citant ses sources",
+         "title": "4.7 · Créer un contenu original",
          "authors": [],
          "changes": [],
-         "extraTitle": "4.7 · Écrire un texte original en citant ses sources"
+         "extraTitle": "4.7 · Créer un contenu original"
         }
        }
       }
@@ -1889,7 +1889,7 @@
     },
     {
      "id": "e0b66943-0f2c-48a0-8169-acc45c25d4b9",
-     "label": "4.8 · Décider si un contenu peut être publié",
+     "label": "4.8 · Publier dans les règles",
      "content": {
       "params": {},
       "dom": {}
@@ -1941,7 +1941,7 @@
          "introPage": {
           "showIntroPage": false,
           "startButtonText": "Commencer",
-          "title": "4.8 · Décider si un contenu peut être publié",
+          "title": "4.8 · Publier dans les règles",
           "introduction": ""
          },
          "progressType": "dots",
@@ -2286,10 +2286,10 @@
         "metadata": {
          "contentType": "Question Set",
          "license": "U",
-         "title": "4.8 · Décider si un contenu peut être publié",
+         "title": "4.8 · Publier dans les règles",
          "authors": [],
          "changes": [],
-         "extraTitle": "4.8 · Décider si un contenu peut être publié"
+         "extraTitle": "4.8 · Publier dans les règles"
         }
        }
       }

@@ -51,7 +51,7 @@
   "id": "3e-debattre-avec-des-sources",
   "niveau": "3e",
   "num": "3.7",
-  "titre": "Argumenter dans un débat avec des sources",
+  "titre": "Débattre avec des sources",
   "type": "livre",
   "domaine": "Partager et produire"
  },
@@ -59,7 +59,7 @@
   "id": "3e-produire-avec-l-ia",
   "niveau": "3e",
   "num": "3.8",
-  "titre": "Utiliser l’IA de façon responsable dans un média",
+  "titre": "Produire avec l’IA, en responsable",
   "type": "livre",
   "domaine": "Partager et produire"
  },
@@ -83,7 +83,7 @@
   "id": "4e-prendre-du-recul-sur-mes-usages",
   "niveau": "4e",
   "num": "4.1",
-  "titre": "Analyser ses usages des écrans et des médias",
+  "titre": "Prendre du recul sur mes usages",
   "type": "livre",
   "domaine": "Se situer dans les médias"
  },
@@ -107,7 +107,7 @@
   "id": "4e-chercher-avec-les-bons-outils",
   "niveau": "4e",
   "num": "4.4",
-  "titre": "Affiner une recherche avec les bons outils",
+  "titre": "Chercher avec les bons outils",
   "type": "livre",
   "domaine": "S'informer"
  },
@@ -115,7 +115,7 @@
   "id": "4e-organiser-sa-recherche",
   "niveau": "4e",
   "num": "4.5",
-  "titre": "Construire un plan de recherche",
+  "titre": "Organiser sa recherche",
   "type": "livre",
   "domaine": "S'informer"
  },
@@ -131,7 +131,7 @@
   "id": "4e-creer-un-contenu-original",
   "niveau": "4e",
   "num": "4.7",
-  "titre": "Écrire un texte original en citant ses sources",
+  "titre": "Créer un contenu original",
   "type": "livre",
   "domaine": "Partager et produire"
  },
@@ -139,7 +139,7 @@
   "id": "4e-publier-dans-les-regles",
   "niveau": "4e",
   "num": "4.8",
-  "titre": "Décider si un contenu peut être publié",
+  "titre": "Publier dans les règles",
   "type": "livre",
   "domaine": "Partager et produire"
  },
@@ -171,7 +171,7 @@
   "id": "5e-chercher-avec-methode",
   "niveau": "5e",
   "num": "5.5",
-  "titre": "Préparer et mener une recherche",
+  "titre": "Chercher avec méthode",
   "type": "livre",
   "domaine": "S'informer"
  },
@@ -179,7 +179,7 @@
   "id": "5e-qui-parle-evaluer-une-source",
   "niveau": "5e",
   "num": "5.6",
-  "titre": "Évaluer la fiabilité d’une source",
+  "titre": "Qui parle ? Évaluer une source",
   "type": "livre",
   "domaine": "S'informer"
  },
@@ -187,7 +187,7 @@
   "id": "5e-mettre-en-valeur-une-information",
   "niveau": "5e",
   "num": "5.7",
-  "titre": "Écrire une brève à partir de sources croisées",
+  "titre": "Mettre en valeur une information",
   "type": "livre",
   "domaine": "Partager et produire"
  },
@@ -195,7 +195,7 @@
   "id": "5e-publier-de-facon-ethique",
   "niveau": "5e",
   "num": "5.8",
-  "titre": "Publier en respectant la loi et les personnes",
+  "titre": "Publier de façon éthique",
   "type": "livre",
   "domaine": "Partager et produire"
  },

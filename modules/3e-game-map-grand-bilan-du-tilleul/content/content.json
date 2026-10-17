@@ -1814,7 +1814,7 @@
     },
     {
      "id": "550f0441-5094-48ed-925a-3f23a5f63659",
-     "label": "3.7 · Argumenter dans un débat avec des sources",
+     "label": "3.7 · Débattre avec des sources",
      "content": {
       "params": {},
       "dom": {}
@@ -1910,10 +1910,10 @@
         "metadata": {
          "contentType": "Mark the Words",
          "license": "U",
-         "title": "3.7 · Argumenter dans un débat avec des sources",
+         "title": "3.7 · Débattre avec des sources",
          "authors": [],
          "changes": [],
-         "extraTitle": "3.7 · Argumenter dans un débat avec des sources"
+         "extraTitle": "3.7 · Débattre avec des sources"
         }
        }
       }
@@ -1926,7 +1926,7 @@
     },
     {
      "id": "f7de4ad2-8e2b-498e-a30f-88603e14a856",
-     "label": "3.8 · Utiliser l’IA de façon responsable dans un média",
+     "label": "3.8 · Produire avec l’IA, en responsable",
      "content": {
       "params": {},
       "dom": {}
@@ -2018,10 +2018,10 @@
         "metadata": {
          "contentType": "Drag the Words",
          "license": "U",
-         "title": "3.8 · Utiliser l’IA de façon responsable dans un média",
+         "title": "3.8 · Produire avec l’IA, en responsable",
          "authors": [],
          "changes": [],
-         "extraTitle": "3.8 · Utiliser l’IA de façon responsable dans un média"
+         "extraTitle": "3.8 · Produire avec l’IA, en responsable"
         }
        }
       }
