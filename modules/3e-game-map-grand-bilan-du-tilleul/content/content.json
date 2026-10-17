@@ -122,7 +122,7 @@
     },
     {
      "id": "2554aed1-d654-4bc4-bcef-fed518c4c77c",
-     "label": "3.1 · Ce qui filtre mon info",
+     "label": "3.1 · Repérer ce qui filtre son information",
      "content": {
       "params": {},
       "dom": {}
@@ -262,10 +262,10 @@
         "metadata": {
          "contentType": "Single Choice Set",
          "license": "U",
-         "title": "3.1 · Ce qui filtre mon information",
+         "title": "3.1 · Repérer ce qui filtre son information",
          "authors": [],
          "changes": [],
-         "extraTitle": "3.1 · Ce qui filtre mon information"
+         "extraTitle": "3.1 · Repérer ce qui filtre son information"
         }
        }
       }
@@ -278,7 +278,7 @@
     },
     {
      "id": "6b727101-5058-4e47-b063-ee48640aeaae",
-     "label": "3.2 · Qui fait l’info ?",
+     "label": "3.2 · Distinguer les acteurs de l’information et leur rôle",
      "content": {
       "params": {},
       "dom": {}
@@ -370,10 +370,10 @@
         "metadata": {
          "contentType": "Drag the Words",
          "license": "U",
-         "title": "3.2 · Qui fait l’information ?",
+         "title": "3.2 · Distinguer les acteurs de l’information et leur rôle",
          "authors": [],
          "changes": [],
-         "extraTitle": "3.2 · Qui fait l’information ?"
+         "extraTitle": "3.2 · Distinguer les acteurs de l’information et leur rôle"
         }
        }
       }
@@ -816,7 +816,7 @@
     },
     {
      "id": "0ff39668-c666-480e-a1a0-4503583e0f0a",
-     "label": "3.4 · Moteur ou IA ?",
+     "label": "3.4 · Comprendre et comparer moteur et IA générative",
      "content": {
       "params": {},
       "dom": {}
@@ -868,7 +868,7 @@
          "introPage": {
           "showIntroPage": false,
           "startButtonText": "Commencer",
-          "title": "3.4 · Moteur ou IA générative ?",
+          "title": "3.4 · Comprendre et comparer moteur et IA générative",
           "introduction": ""
          },
          "progressType": "dots",
@@ -1230,10 +1230,10 @@
         "metadata": {
          "contentType": "Question Set",
          "license": "U",
-         "title": "3.4 · Moteur ou IA générative ?",
+         "title": "3.4 · Comprendre et comparer moteur et IA générative",
          "authors": [],
          "changes": [],
-         "extraTitle": "3.4 · Moteur ou IA générative ?"
+         "extraTitle": "3.4 · Comprendre et comparer moteur et IA générative"
         }
        }
       }
@@ -1814,7 +1814,7 @@
     },
     {
      "id": "550f0441-5094-48ed-925a-3f23a5f63659",
-     "label": "3.7 · Débattre",
+     "label": "3.7 · Argumenter dans un débat avec des sources",
      "content": {
       "params": {},
       "dom": {}
@@ -1910,10 +1910,10 @@
         "metadata": {
          "contentType": "Mark the Words",
          "license": "U",
-         "title": "3.7 · Débattre avec des sources",
+         "title": "3.7 · Argumenter dans un débat avec des sources",
          "authors": [],
          "changes": [],
-         "extraTitle": "3.7 · Débattre avec des sources"
+         "extraTitle": "3.7 · Argumenter dans un débat avec des sources"
         }
        }
       }
@@ -1926,7 +1926,7 @@
     },
     {
      "id": "f7de4ad2-8e2b-498e-a30f-88603e14a856",
-     "label": "3.8 · Produire avec l’IA",
+     "label": "3.8 · Utiliser l’IA de façon responsable dans un média",
      "content": {
       "params": {},
       "dom": {}
@@ -2018,10 +2018,10 @@
         "metadata": {
          "contentType": "Drag the Words",
          "license": "U",
-         "title": "3.8 · Produire avec l’IA, en responsable",
+         "title": "3.8 · Utiliser l’IA de façon responsable dans un média",
          "authors": [],
          "changes": [],
-         "extraTitle": "3.8 · Produire avec l’IA, en responsable"
+         "extraTitle": "3.8 · Utiliser l’IA de façon responsable dans un média"
         }
        }
       }
@@ -2034,7 +2034,7 @@
     },
     {
      "id": "7d42b7d2-42f8-4785-883a-5a90c0df88c6",
-     "label": "3.9 · Identité numérique",
+     "label": "3.9 · Construire et protéger son identité numérique",
      "content": {
       "params": {},
       "dom": {}
@@ -2174,10 +2174,10 @@
         "metadata": {
          "contentType": "Single Choice Set",
          "license": "U",
-         "title": "3.9 · Mon identité numérique",
+         "title": "3.9 · Construire et protéger son identité numérique",
          "authors": [],
          "changes": [],
-         "extraTitle": "3.9 · Mon identité numérique"
+         "extraTitle": "3.9 · Construire et protéger son identité numérique"
         }
        }
       }

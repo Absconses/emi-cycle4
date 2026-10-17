@@ -122,7 +122,7 @@
     },
     {
      "id": "b12a8a38-a336-4d11-b321-cdb4a247b6d5",
-     "label": "4.1 · Mes usages",
+     "label": "4.1 · Analyser ses usages des écrans et des médias",
      "content": {
       "params": {},
       "dom": {}
@@ -174,7 +174,7 @@
          "introPage": {
           "showIntroPage": false,
           "startButtonText": "Commencer",
-          "title": "4.1 · Mes usages",
+          "title": "4.1 · Analyser ses usages des écrans et des médias",
           "introduction": ""
          },
          "progressType": "dots",
@@ -463,10 +463,10 @@
         "metadata": {
          "contentType": "Question Set",
          "license": "U",
-         "title": "4.1 · Mes usages",
+         "title": "4.1 · Analyser ses usages des écrans et des médias",
          "authors": [],
          "changes": [],
-         "extraTitle": "4.1 · Mes usages"
+         "extraTitle": "4.1 · Analyser ses usages des écrans et des médias"
         }
        }
       }
@@ -479,7 +479,7 @@
     },
     {
      "id": "768b7a6a-c292-45a3-ae80-f6c9962adaaa",
-     "label": "4.2 · Qui paie l’info ?",
+     "label": "4.2 · Analyser qui finance un média et ce que ça change",
      "content": {
       "params": {},
       "dom": {}
@@ -571,10 +571,10 @@
         "metadata": {
          "contentType": "Drag the Words",
          "license": "U",
-         "title": "4.2 · Qui paie l’information ?",
+         "title": "4.2 · Analyser qui finance un média et ce que ça change",
          "authors": [],
          "changes": [],
-         "extraTitle": "4.2 · Qui paie l’information ?"
+         "extraTitle": "4.2 · Analyser qui finance un média et ce que ça change"
         }
        }
       }
@@ -587,7 +587,7 @@
     },
     {
      "id": "d5b7f7a0-0700-42ee-9250-e4d3a54412e7",
-     "label": "4.3 · La ligne éditoriale",
+     "label": "4.3 · Comparer la ligne éditoriale de deux médias",
      "content": {
       "params": {},
       "dom": {}
@@ -639,7 +639,7 @@
          "introPage": {
           "showIntroPage": false,
           "startButtonText": "Commencer",
-          "title": "4.3 · La ligne éditoriale",
+          "title": "4.3 · Comparer la ligne éditoriale de deux médias",
           "introduction": ""
          },
          "progressType": "dots",
@@ -1028,10 +1028,10 @@
         "metadata": {
          "contentType": "Question Set",
          "license": "U",
-         "title": "4.3 · La ligne éditoriale",
+         "title": "4.3 · Comparer la ligne éditoriale de deux médias",
          "authors": [],
          "changes": [],
-         "extraTitle": "4.3 · La ligne éditoriale"
+         "extraTitle": "4.3 · Comparer la ligne éditoriale de deux médias"
         }
        }
       }
@@ -1044,7 +1044,7 @@
     },
     {
      "id": "40e5fabf-6ad2-4ebf-ab47-ff110871128f",
-     "label": "4.4 · Les bons outils",
+     "label": "4.4 · Affiner une recherche avec les bons outils",
      "content": {
       "params": {},
       "dom": {}
@@ -1166,10 +1166,10 @@
         "metadata": {
          "contentType": "Fill in the Blanks",
          "license": "U",
-         "title": "4.4 · Chercher avec les bons outils",
+         "title": "4.4 · Affiner une recherche avec les bons outils",
          "authors": [],
          "changes": [],
-         "extraTitle": "4.4 · Chercher avec les bons outils"
+         "extraTitle": "4.4 · Affiner une recherche avec les bons outils"
         }
        }
       }
@@ -1182,7 +1182,7 @@
     },
     {
      "id": "ac397733-aff5-4ad4-b5b9-e9b076ae1ba0",
-     "label": "4.5 · Organiser sa recherche",
+     "label": "4.5 · Construire un plan de recherche",
      "content": {
       "params": {},
       "dom": {}
@@ -1234,7 +1234,7 @@
          "introPage": {
           "showIntroPage": false,
           "startButtonText": "Commencer",
-          "title": "4.5 · Organiser sa recherche",
+          "title": "4.5 · Construire un plan de recherche",
           "introduction": ""
          },
          "progressType": "dots",
@@ -1609,10 +1609,10 @@
         "metadata": {
          "contentType": "Question Set",
          "license": "U",
-         "title": "4.5 · Organiser sa recherche",
+         "title": "4.5 · Construire un plan de recherche",
          "authors": [],
          "changes": [],
-         "extraTitle": "4.5 · Organiser sa recherche"
+         "extraTitle": "4.5 · Construire un plan de recherche"
         }
        }
       }
@@ -1625,7 +1625,7 @@
     },
     {
      "id": "89764094-0934-44b9-a7c6-bfbf1c6a4d4d",
-     "label": "4.6 · Info ou intox ?",
+     "label": "4.6 · Vérifier une information comme un fact-checker",
      "content": {
       "params": {},
       "dom": {}
@@ -1765,10 +1765,10 @@
         "metadata": {
          "contentType": "Single Choice Set",
          "license": "U",
-         "title": "4.6 · Information ou désinformation ?",
+         "title": "4.6 · Vérifier une information comme un fact-checker",
          "authors": [],
          "changes": [],
-         "extraTitle": "4.6 · Information ou désinformation ?"
+         "extraTitle": "4.6 · Vérifier une information comme un fact-checker"
         }
        }
       }
@@ -1781,7 +1781,7 @@
     },
     {
      "id": "690533b2-8c79-490c-aa63-e1d3cd4ea8e9",
-     "label": "4.7 · Un contenu original",
+     "label": "4.7 · Écrire un texte original en citant ses sources",
      "content": {
       "params": {},
       "dom": {}
@@ -1873,10 +1873,10 @@
         "metadata": {
          "contentType": "Drag the Words",
          "license": "U",
-         "title": "4.7 · Créer un contenu original",
+         "title": "4.7 · Écrire un texte original en citant ses sources",
          "authors": [],
          "changes": [],
-         "extraTitle": "4.7 · Créer un contenu original"
+         "extraTitle": "4.7 · Écrire un texte original en citant ses sources"
         }
        }
       }
@@ -1889,7 +1889,7 @@
     },
     {
      "id": "e0b66943-0f2c-48a0-8169-acc45c25d4b9",
-     "label": "4.8 · Publier dans les règles",
+     "label": "4.8 · Décider si un contenu peut être publié",
      "content": {
       "params": {},
       "dom": {}
@@ -1941,7 +1941,7 @@
          "introPage": {
           "showIntroPage": false,
           "startButtonText": "Commencer",
-          "title": "4.8 · Publier dans les règles",
+          "title": "4.8 · Décider si un contenu peut être publié",
           "introduction": ""
          },
          "progressType": "dots",
@@ -2286,10 +2286,10 @@
         "metadata": {
          "contentType": "Question Set",
          "license": "U",
-         "title": "4.8 · Publier dans les règles",
+         "title": "4.8 · Décider si un contenu peut être publié",
          "authors": [],
          "changes": [],
-         "extraTitle": "4.8 · Publier dans les règles"
+         "extraTitle": "4.8 · Décider si un contenu peut être publié"
         }
        }
       }
@@ -2302,7 +2302,7 @@
     },
     {
      "id": "20f400df-4914-489b-adb7-8ed1296a0c34",
-     "label": "4.9 · Face aux rumeurs",
+     "label": "4.9 · Repérer une rumeur et y réagir",
      "content": {
       "params": {},
       "dom": {}
@@ -2398,10 +2398,10 @@
         "metadata": {
          "contentType": "Mark the Words",
          "license": "U",
-         "title": "4.9 · Face aux rumeurs",
+         "title": "4.9 · Repérer une rumeur et y réagir",
          "authors": [],
          "changes": [],
-         "extraTitle": "4.9 · Face aux rumeurs"
+         "extraTitle": "4.9 · Repérer une rumeur et y réagir"
         }
        }
       }
