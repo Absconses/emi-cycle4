@@ -59,7 +59,13 @@
     statut.className = 'statut ' + (p.termine ? 'ok' : 'encours');
   };
   montre(EMI.maj(id, p => Object.assign(p, { commence: p.commence || Date.now(), vu: Date.now() })));
-  const precedent = EMI.etat(id);
+  // l'état de reprise n'est valable que pour la version du module qui l'a produit :
+  // un état d'une ancienne version (chapitres ou éléments différents) fait planter le livre
+  const version = await fetch('./modules/' + id + '/content/content.json', { cache: 'no-cache' })
+    .then(r => r.text()).then(t => { let h = 5381; for (let k = 0; k < t.length; k++) h = (h * 33 + t.charCodeAt(k)) >>> 0; return h.toString(36) + '-' + t.length; })
+    .catch(() => '');
+  let precedent = null;
+  try { const e = JSON.parse(EMI.etat(id) || 'null'); if (e && e.version && e.version === version) precedent = e.etat; } catch (e) {}
   const options = {
     h5pJsonPath: './modules/' + id, librariesPath: './libraries',
     frameJs: './player/frame.bundle.js', frameCss: './player/styles/h5p.css',
@@ -78,7 +84,7 @@
   const releve = (fini) => {
     const i = instance();
     if (!i) return;
-    try { const st = i.getCurrentState && i.getCurrentState(); if (st) EMI.garderEtat(id, JSON.stringify(st)); } catch (e) {}
+    try { const st = i.getCurrentState && i.getCurrentState(); if (st && version) EMI.garderEtat(id, JSON.stringify({ version, etat: JSON.stringify(st) })); } catch (e) {}
     montre(EMI.maj(id, p => {
       p.vu = Date.now();
       try {
