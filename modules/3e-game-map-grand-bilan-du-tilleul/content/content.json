@@ -386,7 +386,7 @@
     },
     {
      "id": "529ba6eb-77e7-4341-9207-c2af767c3d1c",
-     "label": "3.3 · Un fait, trois médias",
+     "label": "3.3 · Comparer comment les médias traitent un fait",
      "content": {
       "params": {},
       "dom": {}
@@ -438,7 +438,7 @@
          "introPage": {
           "showIntroPage": false,
           "startButtonText": "Commencer",
-          "title": "3.3 · Un fait, trois médias",
+          "title": "3.3 · Comparer comment les médias traitent un fait",
           "introduction": ""
          },
          "progressType": "dots",
@@ -800,10 +800,10 @@
         "metadata": {
          "contentType": "Question Set",
          "license": "U",
-         "title": "3.3 · Un fait, trois médias",
+         "title": "3.3 · Comparer comment les médias traitent un fait",
          "authors": [],
          "changes": [],
-         "extraTitle": "3.3 · Un fait, trois médias"
+         "extraTitle": "3.3 · Comparer comment les médias traitent un fait"
         }
        }
       }
@@ -1246,7 +1246,7 @@
     },
     {
      "id": "b9c594fd-3986-4c98-8999-3f2de972c71f",
-     "label": "3.5 · Chercher pour produire",
+     "label": "3.5 · Mener une recherche et en faire une synthèse",
      "content": {
       "params": {},
       "dom": {}
@@ -1368,10 +1368,10 @@
         "metadata": {
          "contentType": "Fill in the Blanks",
          "license": "U",
-         "title": "3.5 · Une recherche pour produire",
+         "title": "3.5 · Mener une recherche et en faire une synthèse",
          "authors": [],
          "changes": [],
-         "extraTitle": "3.5 · Une recherche pour produire"
+         "extraTitle": "3.5 · Mener une recherche et en faire une synthèse"
         }
        }
       }
@@ -1384,7 +1384,7 @@
     },
     {
      "id": "fad3ad75-64e0-4cc7-999b-6c39de6a1f80",
-     "label": "3.6 · L’image comme source",
+     "label": "3.6 · Vérifier une image avant d’y croire",
      "content": {
       "params": {},
       "dom": {}
@@ -1436,7 +1436,7 @@
          "introPage": {
           "showIntroPage": false,
           "startButtonText": "Commencer",
-          "title": "3.6 · L’image comme source",
+          "title": "3.6 · Vérifier une image avant d’y croire",
           "introduction": ""
          },
          "progressType": "dots",
@@ -1798,10 +1798,10 @@
         "metadata": {
          "contentType": "Question Set",
          "license": "U",
-         "title": "3.6 · L’image comme source",
+         "title": "3.6 · Vérifier une image avant d’y croire",
          "authors": [],
          "changes": [],
-         "extraTitle": "3.6 · L’image comme source"
+         "extraTitle": "3.6 · Vérifier une image avant d’y croire"
         }
        }
       }
