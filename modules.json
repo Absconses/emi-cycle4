@@ -61,7 +61,15 @@
   "num": "3.8",
   "titre": "Produire avec l'IA, en responsable",
   "type": "livre",
-  "domaine": "Partager et produire"
+  "domaine": "Partager et produire",
+  "compagnon": {
+   "id": "3e-scenario-la-nuit-du-bouclage",
+   "titre": "La nuit du bouclage",
+   "intro": "Le scénario du chapitre 3 : tu es rédacteur ou rédactrice en chef, quatre décisions t'attendent. Joue-le en entier, puis reviens au livre.",
+   "niveau": "3e",
+   "num": "3.8",
+   "type": "compagnon"
+  }
  },
  {
   "id": "3e-mon-identite-numerique",

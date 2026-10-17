@@ -20,18 +20,37 @@
 </header>
 <main class="lecteur">
   <div id="h5p"></div>
+  <section id="compagnon" class="compagnon" hidden>
+    <h2><span class="pastille">+</span> <span id="compagnon-titre"></span></h2>
+    <p id="compagnon-intro" class="compagnon-intro"></p>
+  </section>
   <p class="note">Ta progression est enregistrée automatiquement dans ce navigateur : tu peux t’arrêter et reprendre plus tard, sur le même appareil.</p>
 </main>
 <script>
 (async function () {
-  const id = new URLSearchParams(location.search).get('m');
+  const q = new URLSearchParams(location.search), id = q.get('m');
+  // ?dans=1 : module compagnon, affiché dans un cadre sous le module principal
+  const dans = q.get('dans') === '1' && window.parent !== window;
+  if (dans) document.documentElement.classList.add('integre');
   const mods = await (await fetch('modules.json')).json();
-  const m = mods.find(x => x.id === id);
+  const m = mods.find(x => x.id === id) || mods.map(x => x.compagnon).find(c => c && c.id === id);
   if (!m) { document.getElementById('titre').textContent = 'Module introuvable'; return; }
   document.title = m.titre + ' · EMI ' + m.niveau;
   document.body.style.setProperty('--niv', 'var(--c' + m.niveau[0] + ')');
   document.getElementById('titre').textContent = m.titre;
   document.getElementById('num').textContent = m.num || 'Game Map';
+  // module compagnon (ex. le scénario à embranchements d'un livre) : dans un cadre, sous le livre
+  if (m.compagnon && !dans) {
+    const c = m.compagnon, sec = document.getElementById('compagnon');
+    document.getElementById('compagnon-titre').textContent = c.titre;
+    document.getElementById('compagnon-intro').textContent = c.intro || '';
+    const fr = document.createElement('iframe');
+    fr.className = 'cadre-compagnon'; fr.title = c.titre; fr.src = 'module.html?m=' + encodeURIComponent(c.id) + '&dans=1';
+    sec.append(fr); sec.hidden = false;
+    const ajuste = () => { try { const d = fr.contentDocument; if (d && d.body) fr.style.height = d.documentElement.scrollHeight + 'px'; } catch (e) {} };
+    fr.addEventListener('load', () => { ajuste(); try { new ResizeObserver(ajuste).observe(fr.contentDocument.body); } catch (e) {} });
+    setInterval(ajuste, 1500);
+  }
   const statut = document.getElementById('statut');
   const montre = (p) => {
     const sc = p.meilleur ? ' · score ' + Math.round(p.meilleur * 100) + ' %' : '';
