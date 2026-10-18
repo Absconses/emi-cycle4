@@ -166,7 +166,7 @@ H5P.VideoYouTube = (function ($) {
           }
         }
       });
-      player.g.style = "position:absolute;top:0;left:0;width:100%;height:100%;";
+      /* patch h5p-lumi 2026-09 : player.g a disparu de l'API YouTube actuelle */ var ytFrame = (player.getIframe && player.getIframe()) || player.g; if (ytFrame) { ytFrame.style.cssText = "position:absolute;top:0;left:0;width:100%;height:100%;"; }
     };
 
     /**

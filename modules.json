@@ -160,6 +160,30 @@
   "domaine": null
  },
  {
+  "id": "5e-identifier-comment-et-pourquoi-je-m-informe",
+  "niveau": "5e",
+  "num": "5.1",
+  "titre": "Identifier comment et pourquoi je m’informe",
+  "type": "livre",
+  "domaine": "Se situer dans les médias"
+ },
+ {
+  "id": "5e-identifier-les-medias-et-ceux-qui-font-l-information",
+  "niveau": "5e",
+  "num": "5.2",
+  "titre": "Identifier les médias et ceux qui font l’information",
+  "type": "livre",
+  "domaine": "Se situer dans les médias"
+ },
+ {
+  "id": "5e-decrypter-les-langages-des-medias-et-distinguer-un-fait-d-une-opinion",
+  "niveau": "5e",
+  "num": "5.3",
+  "titre": "Décrypter les langages des médias et distinguer un fait d’une opinion",
+  "type": "livre",
+  "domaine": "Se situer dans les médias"
+ },
+ {
   "id": "5e-les-outils-pour-s-informer",
   "niveau": "5e",
   "num": "5.4",
@@ -206,5 +230,13 @@
   "titre": "Maîtriser ses traces et ses réactions en ligne",
   "type": "livre",
   "domaine": "Partager et produire"
+ },
+ {
+  "id": "5e-game-map-jeu-de-piste-du-tilleul",
+  "niveau": "5e",
+  "num": null,
+  "titre": "Le jeu de piste du Tilleul · 5e",
+  "type": "gamemap",
+  "domaine": null
  }
 ]
