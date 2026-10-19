@@ -17,6 +17,7 @@
   <a class="retour" href="index.html">← Tous les modules</a>
   <div class="barre-titre"><span id="num" class="pastille"></span><h1 id="titre">Chargement…</h1></div>
   <span id="statut" class="statut"></span>
+  <a id="suivant" class="retour suivant" hidden>Module suivant →</a>
 </header>
 <main class="lecteur">
   <div id="h5p"></div>
@@ -24,6 +25,7 @@
     <h2><span class="pastille">+</span> <span id="compagnon-titre"></span></h2>
     <p id="compagnon-intro" class="compagnon-intro"></p>
   </section>
+  <a id="suite" class="suite" hidden><span class="suite-lib">Module suivant</span><span class="suite-titre"><span id="suite-num" class="pastille"></span> <span id="suite-nom"></span></span><span class="suite-fleche" aria-hidden="true">→</span></a>
   <p class="note">Ta progression est enregistrée automatiquement dans ce navigateur : tu peux t’arrêter et reprendre plus tard, sur le même appareil.</p>
 </main>
 <script>
@@ -39,6 +41,18 @@
   document.body.style.setProperty('--niv', 'var(--c' + m.niveau[0] + ')');
   document.getElementById('titre').textContent = m.titre;
   document.getElementById('num').textContent = m.num || 'Game Map';
+  // module suivant du même niveau (après le 9e livre : la Game Map ; après la Game Map : rien)
+  const niveau = mods.filter(x => x.niveau === m.niveau);
+  const apres = niveau[niveau.findIndex(x => x.id === m.id) + 1];
+  if (apres && !dans) {
+    const lien = 'module.html?m=' + encodeURIComponent(apres.id);
+    const haut = document.getElementById('suivant');
+    haut.href = lien; haut.title = (apres.num || 'Game Map') + ' · ' + apres.titre; haut.hidden = false;
+    const bas = document.getElementById('suite');
+    bas.href = lien; bas.hidden = false;
+    document.getElementById('suite-num').textContent = apres.num || 'Game Map';
+    document.getElementById('suite-nom').textContent = apres.titre;
+  }
   // module compagnon (ex. le scénario à embranchements d'un livre) : dans un cadre, sous le livre
   if (m.compagnon && !dans) {
     const c = m.compagnon, sec = document.getElementById('compagnon');
