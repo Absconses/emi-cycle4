@@ -222,12 +222,14 @@
         page = { n: +m[1], nom: (m[2] || '').trim(), articles: [] }; num.pages.push(page); continue;
       }
       if (!page) continue;
-      const champs = l.replace(/^[-•*]\s*/, '').split(/\s*[·|]\s*/).filter(Boolean);
+      // séparateurs acceptés : · | ; et un tiret entouré d'espaces
+      const champs = l.replace(/^[-•*]\s*/, '').split(/\s*[·|;]\s*|\s+[-–—]\s+/).filter(Boolean);
       const a = { rubrique: '', sujet: '', equipe: '', cible: 0, etat: null, id: '' };
       const reste = [];
       for (const c of champs) {
         let mm;
         if ((mm = c.match(/^(\d+)\s*mots?$/i))) a.cible = +mm[1];
+        else if ((mm = c.match(/^(.*\S)\s+(\d+)\s*mots?$/i))) { a.cible = +mm[2]; reste.push(mm[1]); }
         else if (c.startsWith('#')) a.id = c.slice(1).trim();
         else if (etatDe(c)) a.etat = etatDe(c);
         else reste.push(c);
@@ -236,7 +238,10 @@
       else { [a.rubrique, a.sujet, a.equipe] = reste; a.equipe = reste.slice(2).join(', '); }
       if (!a.sujet) continue;
       a.cle = slug(a.id || a.sujet) || 'article';
-      a.pad = `gazette-dupanloup-n${num.num}-${a.cle}-${hash(CONFERENCE + num.num + a.cle)}`;
+      const h = hash(CONFERENCE + num.num + a.cle);
+      a.pad = `gazette-dupanloup-n${num.num}-${a.cle}-${h}`;
+      // Framapad refuse les noms de plus de 50 caractères : on raccourcit
+      if (a.pad.length > 50) { const debut = `gdp-n${num.num}-`, fin = `-${h}`; a.pad = debut + a.cle.slice(0, 50 - debut.length - fin.length).replace(/-+$/, '') + fin; }
       page.articles.push(a);
     }
     numeros.forEach((n) => n.pages.sort((x, y) => x.n - y.n));
