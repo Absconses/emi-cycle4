@@ -26,9 +26,9 @@
     <h1 class="titre-journal"><span class="le">Le Club</span><span class="nom" id="nom-journal" aria-label="Jeune Reporter">Jeune Reporter</span></h1>
     <span class="vertical" aria-hidden="true">Club presse · Dupanloup</span>
   </div>
-  <p class="devise">Dix modules pour apprendre le métier, du premier article à l’émission et à la mise en page.</p>
+  <p class="devise">Six modules pour ta carte de presse, puis une spécialité : le son, l’image, l’émission ou la maquette.</p>
   <div class="filets" aria-hidden="true"></div>
-  <nav class="rubriques" aria-label="Rubriques"><a href="#cahier-A" data-panneau>Les bases</a><a href="#cahier-B" data-panneau>Sur le terrain</a><a href="#cahier-C" data-panneau>Son, vidéo, émission</a><a href="#cahier-D" data-panneau>Publier</a><a href="#bilan">Mon bilan</a><a href="redaction.html" class="lien-redac">✎ Salle de rédaction</a><button type="button" class="bouton-anim" id="bouton-anim" hidden></button></nav>
+  <nav class="rubriques" aria-label="Rubriques"><a href="#cahier-A" data-panneau>Carte de presse</a><a href="#cahier-B" data-panneau>Le son</a><a href="#cahier-C" data-panneau>L’image</a><a href="#cahier-D" data-panneau>L’émission</a><a href="#cahier-E" data-panneau>La maquette</a><a href="#bilan">Mon bilan</a><a href="redaction.html" class="lien-redac">✎ Salle de rédaction</a><button type="button" class="bouton-anim" id="bouton-anim" hidden></button></nav>
 </header>
 
 <main class="int">
@@ -44,9 +44,9 @@
     </figure>
     <div class="edito">
       <p class="surtitre">Édito <span class="pt"></span> À lire avant de commencer</p>
-      <h2 id="titre-une">Ta carte de presse se gagne <em>module après module</em></h2>
+      <h2 id="titre-une">Six modules pour ta carte de presse, <em>puis ta spécialité</em></h2>
       <p class="chapo">Bienvenue au Club Jeune Reporter ! Ici, tu apprends le métier de journaliste à ton rythme, seul au CDI.</p>
-      <p class="lettrine">Chaque module dure environ 45 minutes. Lis, observe, réponds : chaque réponse est expliquée, alors prends le temps de lire les explications. Fais les modules dans l’ordre, du 1 au 10. À la fin de chacun, tu gagnes un badge et un tampon sur ta carte de presse.</p>
+      <p class="lettrine">Chaque module dure environ 45 minutes. Lis, observe, réponds : chaque réponse est expliquée, alors prends le temps de lire les explications. Commence par les <strong>six modules de la carte de presse</strong>, dans l’ordre : ce sont les bases pour participer au club. Ensuite, choisis ta <strong>spécialité</strong> selon ton rôle à la rédaction : le son, l’image, l’émission ou la maquette. Chaque module terminé ajoute un tampon sur ta carte.</p>
       <a class="cta" id="cta" href="#cahier-A"><span><small id="cta-sur">Pour commencer</small><span id="cta-titre">Ouvre le module 1</span></span><span class="fl" aria-hidden="true">→</span></a>
       <div class="carte-presse" id="carte-presse" aria-label="Ma carte de presse"></div>
     </div>
@@ -100,16 +100,22 @@
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
   const pct = x => Math.round(x * 100) + ' %';
   const CAHIERS = [
-    { p: 'A', t: 'Les bases', s: 'Modules 1 à 3 · l’info, l’article, la rédaction' },
-    { p: 'B', t: 'Sur le terrain', s: 'Modules 4 à 6 · l’événement, l’interview, la photo' },
-    { p: 'C', t: 'Son, vidéo, émission', s: 'Modules 7 à 9 · le podcast, le reportage, l’émission' },
-    { p: 'D', t: 'Publier', s: 'Module 10 · la mise en page, du site à la gazette' },
+    { p: 'A', t: 'La carte de presse', s: 'Tronc commun · modules 1 à 6, dans l’ordre : les bases pour participer au club' },
+    { p: 'B', t: 'Le son', s: 'Spécialité · le podcast, après la carte de presse' },
+    { p: 'C', t: 'L’image', s: 'Spécialité · le reportage vidéo, après la carte de presse' },
+    { p: 'D', t: 'L’émission', s: 'Spécialité · après le son et l’image' },
+    { p: 'E', t: 'La maquette', s: 'Spécialité · du site à la gazette, après la carte de presse' },
   ];
+  const SPE = { B: 'Chroniqueur', C: 'Reporter d’images', D: 'Réalisateur', E: 'Maquettiste' };
   const mods = await (await fetch('modules.json')).json();
   const livres = mods.filter(m => m.type === 'livre');
   const parus = livres.filter(m => m.pret);
   const prog = CLUB.lire();
   const p = id => prog[id];
+  const fait = m => !!(m && p(m.id) && p(m.id).termine);
+  const tronc = livres.filter(m => m.partie === 'A');
+  const troncFait = tronc.length && tronc.every(fait);
+  const nomDe = id => (livres.find(x => x.id === id) || {}).titre || id;
 
   // la manchette : la date du jour et le nombre de modules parus
   document.getElementById('date-edition').textContent = 'Édition du ' + new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
@@ -138,52 +144,55 @@
     return '<span class="etat encours">' + (x.avance ? pct(x.avance) + ' lu' : 'Commencé') + '</span>';
   }
 
-  // l'appel à l'action : le premier module pas terminé
-  const suivant = parus.find(m => !(p(m.id) && p(m.id).termine));
+  // l'appel à l'action : le premier module du tronc commun pas terminé, puis une spécialité
+  const suivant = parus.find(m => m.partie === 'A' && !fait(m)) || parus.find(m => !fait(m) && (m.prerequis || []).every(id => fait(livres.find(x => x.id === id))));
   const cta = document.getElementById('cta');
   if (suivant) {
     cta.href = 'module.html?m=' + encodeURIComponent(suivant.id);
     const commence = p(suivant.id);
-    document.getElementById('cta-sur').textContent = commence ? 'Reprendre là où tu en étais' : (suivant.num === 1 ? 'Pour commencer' : 'Ton prochain module');
+    document.getElementById('cta-sur').textContent = commence ? 'Reprendre là où tu en étais' : (suivant.num === 1 ? 'Pour commencer' : (suivant.partie === 'A' ? 'Ton prochain module' : 'Carte de presse validée · une spécialité ?'));
     document.getElementById('cta-titre').textContent = `Module ${suivant.num} : ${suivant.titre}`;
+    if (suivant.partie !== 'A' && !commence) cta.href = '#cahier-' + suivant.partie;
   } else {
     document.getElementById('cta-sur').textContent = 'Bravo !';
     document.getElementById('cta-titre').textContent = 'Tous les modules parus sont faits';
     cta.href = '#bilan';
   }
 
-  // la carte de presse : un tampon par module terminé
+  // la carte de presse : six tampons pour le tronc commun, puis un par spécialité
   function cartePresse() {
     const id = CLUB.identite();
-    const faits = livres.filter(m => m.pret && p(m.id) && p(m.id).termine).length;
+    const faits = tronc.filter(fait).length;
+    const spes = livres.filter(m => m.partie !== 'A' && fait(m));
     const nom = [id.prenom, id.nom].filter(Boolean).join(' ');
     document.getElementById('carte-presse').innerHTML = `
       <div class="haut"><b>Carte de presse</b><span>Club Jeune Reporter · Dupanloup</span></div>
       <p class="qui">${nom ? esc(nom) : 'Ton nom ici'}<small>${nom ? (id.classe ? 'Classe de ' + esc(id.classe) + ' · ' : '') + 'reporter du club' : 'Écris ton nom dans « Mon bilan », en bas de la page.'}</small></p>
-      <div class="cases">${livres.map((m, i) => {
+      <div class="cases">${tronc.map((m, i) => {
         const x = p(m.id), r = ((m.num * 37) % 24) - 12;
         if (x && x.termine) return `<a class="case faite" href="module.html?m=${encodeURIComponent(m.id)}" title="Module ${m.num} : badge obtenu"><span class="t" style="--r:${r}deg">M${m.num}</span></a>`;
         if (!m.pret) return `<span class="case avenir" title="Module ${m.num} : en préparation">${m.num}</span>`;
         return `<a class="case${x ? ' encours' : ''}" href="module.html?m=${encodeURIComponent(m.id)}" title="Module ${m.num} : ${esc(m.titre)}">${m.num}</a>`;
       }).join('')}</div>
-      <p class="bas">${faits ? `<strong>${faits} tampon${faits > 1 ? 's' : ''} sur ${livres.length}.</strong> ` : ''}${faits === livres.length ? 'Ta carte est complète : tu es membre de la rédaction !' : 'Termine un module pour gagner son tampon.'}</p>
-      ${faits === livres.length ? '<span class="tampon vert badge-final" style="--r:-10deg">Membre de<br>la rédaction</span>' : ''}`;
+      <p class="bas">${faits ? `<strong>${faits} tampon${faits > 1 ? 's' : ''} sur ${tronc.length}.</strong> ` : ''}${troncFait ? 'Ta carte est validée : tu es membre de la rédaction ! Choisis maintenant ta spécialité.' : 'Termine un module pour gagner son tampon.'}</p>
+      <p class="specialites">${CAHIERS.filter(C => C.p !== 'A').map(C => { const m = livres.find(x => x.partie === C.p); const ok = fait(m); return `<span class="spe${ok ? ' ok' : ''}" title="${esc(C.t)} : ${ok ? 'spécialité obtenue' : 'à faire après la carte de presse'}">${ok ? '✓ ' : ''}${esc(SPE[C.p])}</span>`; }).join('')}</p>
+      ${troncFait ? '<span class="tampon vert badge-final" style="--r:-10deg">Membre de<br>la rédaction</span>' : ''}`;
   }
   cartePresse();
 
   // les cahiers et leurs articles
   // le parcours : une seule piste ; sur grand écran, elle défile à l'horizontale (animations.js)
-  const faitsTotal = livres.filter(m => m.pret && p(m.id) && p(m.id).termine).length;
+  const faitsTotal = tronc.filter(fait).length;
   const html = `<section class="parcours" id="parcours" aria-labelledby="titre-parcours">
     <div class="parcours-tete int">
       <h2 id="titre-parcours">Le parcours du reporter</h2>
-      <p class="consigne">Dix modules, dans l’ordre, de ta première info à ta première une.</p>
+      <p class="consigne">Six modules dans l’ordre pour ta carte de presse, puis la spécialité de ton choix.</p>
       <ol class="route" aria-label="Les dix modules">${livres.map(m => `<li class="etape${p(m.id) && p(m.id).termine ? ' faite' : ''}${m.pret ? '' : ' avenir'}" data-num="${m.num}"><span>${m.num}</span></li>`).join('')}<li class="barre-route" aria-hidden="true"><i></i></li></ol>
     </div>
     <div class="piste-zone"><div class="piste" id="piste">${CAHIERS.map(C => {
       const ms = livres.filter(m => m.partie === C.p);
       return `<div class="panneau" id="cahier-${C.p}"><span class="lettre" aria-hidden="true">${C.p}</span><h3>${C.t}</h3><p>${C.s}</p></div>` + ms.map((m, i) => article(m, i)).join('');
-    }).join('')}<div class="panneau fin"><span class="lettre" aria-hidden="true">★</span><h3>${faitsTotal === livres.length ? 'Tu es reporter du club !' : 'Ta carte de presse t’attend'}</h3><p>${faitsTotal} tampon${faitsTotal > 1 ? 's' : ''} sur ${livres.length}. Chaque module terminé en ajoute un.</p><a class="cta" href="${suivant ? 'module.html?m=' + encodeURIComponent(suivant.id) : '#bilan'}"><span><small>${suivant ? 'Ton prochain module' : 'Bravo'}</small><span>${suivant ? 'Module ' + suivant.num + ' : ' + esc(suivant.titre) : 'Télécharge ton bilan'}</span></span><span class="fl" aria-hidden="true">→</span></a></div></div></div>
+    }).join('')}<div class="panneau fin"><span class="lettre" aria-hidden="true">★</span><h3>${troncFait ? 'Tu es reporter du club !' : 'Ta carte de presse t’attend'}</h3><p>${faitsTotal} tampon${faitsTotal > 1 ? 's' : ''} sur ${tronc.length}. ${troncFait ? 'Chaque spécialité terminée s’ajoute à ta carte.' : 'Chaque module terminé en ajoute un.'}</p><a class="cta" href="${suivant ? 'module.html?m=' + encodeURIComponent(suivant.id) : '#bilan'}"><span><small>${suivant ? 'Ton prochain module' : 'Bravo'}</small><span>${suivant ? 'Module ' + suivant.num + ' : ' + esc(suivant.titre) : 'Télécharge ton bilan'}</span></span><span class="fl" aria-hidden="true">→</span></a></div></div></div>
   </section>`;
   function article(m, i) {
     const x = p(m.id), av = x ? (x.termine ? 1 : x.avance || 0) : 0;
@@ -193,6 +202,7 @@
       <div class="cadre-vignette">${m === dernier ? '<span class="nouveau" aria-label="Nouveau">Nouveau</span>' : ''}<div class="vignette trame"><span class="num">${m.num}</span><img src="${m.image}" alt="" loading="lazy">${m.pret ? (x && x.termine ? `<span class="tampon vert" style="--r:-8deg">Badge<br>obtenu</span>` : '') : `<span class="tampon">En<br>préparation</span>`}</div></div>
       <p class="meta">Module ${m.num}${m.pret ? ` · ${m.chapitres} chapitres · ${m.duree} min` : ' · bientôt'} ${etat(m)}</p>
       <h3>${m.pret ? `<a href="${lien}">${esc(m.titre)}</a>` : esc(m.titre)}</h3>
+      ${m.partie !== 'A' ? `<p class="prerequis">À faire après : ${m.prerequis && m.prerequis.some(id => tronc.every(t => t.id !== id)) ? m.prerequis.filter(id => tronc.every(t => t.id !== id)).map(id => esc(nomDe(id).charAt(0).toLowerCase() + nomDe(id).slice(1))).join(' et ') : 'la carte de presse (modules 1 à 6)'}</p>` : ''}
       <p class="chapo">${esc(m.chapo)}</p>
       <blockquote><b>Le réflexe du reporter</b>« ${esc(m.ethique)} »</blockquote>
       <div class="pied-art">

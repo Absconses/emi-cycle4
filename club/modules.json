@@ -18,6 +18,22 @@
  {
   "num": 2,
   "partie": "A",
+  "titre": "La rédaction du club",
+  "chapo": "Gazette, petit journal, site : qui fait quoi, la conférence de rédaction, la charte du club.",
+  "ethique": "Je signe, je respecte les délais et la relecture, je corrige mes erreurs.",
+  "duree": 60,
+  "image": "img/kiosque.jpg",
+  "credit": "athenswalk, CC0, Wikimedia Commons",
+  "page": "https://commons.wikimedia.org/wiki/File:Athens_newspaper_kiosk.jpg",
+  "id": "m3-la-redaction-du-club",
+  "type": "livre",
+  "pret": true,
+  "ateliers": [],
+  "chapitres": 10
+ },
+ {
+  "num": 3,
+  "partie": "A",
   "titre": "Écrire un article",
   "chapo": "Choisir un angle, la pyramide inversée, le titre, le chapô, l'attaque et la chute.",
   "ethique": "Je sépare les faits de mon avis.",
@@ -35,7 +51,7 @@
  },
  {
   "id": "m2-ecris-ton-article",
-  "num": 2,
+  "num": 3,
   "titre": "Écris ton article",
   "genre": "Bande d’écriture guidée",
   "type": "atelier",
@@ -45,24 +61,8 @@
   "bib": "H5P.StructureStrip"
  },
  {
-  "num": 3,
-  "partie": "A",
-  "titre": "La rédaction du club",
-  "chapo": "Gazette, petit journal, site : qui fait quoi, la conférence de rédaction, la charte du club.",
-  "ethique": "Je signe, je respecte les délais et la relecture, je corrige mes erreurs.",
-  "duree": 60,
-  "image": "img/kiosque.jpg",
-  "credit": "athenswalk, CC0, Wikimedia Commons",
-  "page": "https://commons.wikimedia.org/wiki/File:Athens_newspaper_kiosk.jpg",
-  "id": "m3-la-redaction-du-club",
-  "type": "livre",
-  "pret": true,
-  "ateliers": [],
-  "chapitres": 10
- },
- {
   "num": 4,
-  "partie": "B",
+  "partie": "A",
   "titre": "Couvrir un événement",
   "chapo": "Le cross académique : préparer, noter, écrire le compte rendu et la réaction d'après-course.",
   "ethique": "Je vérifie les résultats et les noms, et je respecte tous les coureurs.",
@@ -78,7 +78,7 @@
  },
  {
   "num": 5,
-  "partie": "B",
+  "partie": "A",
   "titre": "L'art de l'interview",
   "chapo": "Préparer ses questions, écouter, relancer et citer sans trahir.",
   "ethique": "Je demande l'accord de la personne et je respecte le off.",
@@ -102,12 +102,12 @@
   "type": "atelier",
   "parent": "m5-l-art-de-l-interview",
   "pret": true,
-  "partie": "B",
+  "partie": "A",
   "bib": "H5P.Cornell"
  },
  {
   "num": 6,
-  "partie": "B",
+  "partie": "A",
   "titre": "La photo de presse",
   "chapo": "Saisir le bon moment, cadrer, trier ses photos, écrire la légende et le crédit.",
   "ethique": "Je respecte le droit à l'image, surtout celui des mineurs.",
@@ -123,7 +123,7 @@
  },
  {
   "num": 7,
-  "partie": "C",
+  "partie": "B",
   "titre": "Le podcast",
   "chapo": "Écrire pour l'oreille, le conducteur, bien enregistrer et monter sa chronique dans Canva.",
   "ethique": "Je n'enregistre personne sans le lui dire, et je cite les musiques permises.",
@@ -155,9 +155,9 @@
  },
  {
   "num": 9,
-  "partie": "C",
+  "partie": "D",
   "titre": "Monter une émission",
-  "chapo": "Le conducteur, les rôles, le plateau, assembler dans Canva, vérifier avant de publier. Et le résumé de tout le parcours.",
+  "chapo": "Le conducteur, les rôles, le plateau, assembler dans Canva, vérifier avant de publier.",
   "ethique": "Je vérifie tout avant de publier, et un montage ne fait pas dire ce qui n'a pas été dit.",
   "duree": 45,
   "image": "img/redaction.jpg",
@@ -167,11 +167,15 @@
   "type": "livre",
   "pret": true,
   "ateliers": [],
-  "chapitres": 10
+  "chapitres": 10,
+  "prerequis": [
+   "m7-le-podcast",
+   "m8-le-reportage-video"
+  ]
  },
  {
   "num": 10,
-  "partie": "D",
+  "partie": "E",
   "titre": "Mettre en page",
   "chapo": "Les mots de la page, le chemin de l'œil, lisible d'abord : l'article du site, puis la une de la gazette dans Canva.",
   "ethique": "Je mets en page pour le lecteur, et chaque photo a sa légende vraie et son crédit.",

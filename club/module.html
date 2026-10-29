@@ -87,7 +87,13 @@
       document.getElementById('bravo-suite').textContent = 'Retour au module';
       document.getElementById('bravo-suite').href = 'module.html?m=' + encodeURIComponent(parent.id);
     } else {
-      document.getElementById('bravo-texte').textContent = `Tu as terminé le module ${m.num}. Son tampon est maintenant sur ta carte de presse.`;
+      const prog = CLUB.lire();
+      const tronc = mods.filter(x => x.type === 'livre' && x.partie === 'A');
+      const valide = m.partie === 'A' && tronc.every(x => x.id === m.id || (prog[x.id] && prog[x.id].termine));
+      document.getElementById('bravo-texte').textContent = valide
+        ? `Tu as terminé le module ${m.num}, et ta carte de presse est validée : tu es membre de la rédaction ! Choisis maintenant ta spécialité.`
+        : m.partie === 'A' ? `Tu as terminé le module ${m.num}. Son tampon est maintenant sur ta carte de presse.`
+        : `Tu as terminé la spécialité « ${m.titre} ». Elle s'ajoute à ta carte de presse.`;
     }
     const t = document.getElementById('bravo-tampon'); t.classList.remove('coup'); void t.offsetWidth; t.classList.add('coup');
     bravo.hidden = false; document.getElementById('bravo-suite').focus();
