@@ -343,3 +343,16 @@ table.classe .eleve { text-align: left; white-space: nowrap; font-weight: 700; }
   .horizontal .panneau.fin { flex-basis: 80vw; margin-left: 18px; }
 }
 .carte-presse .badge-final { position: absolute; right: 12px; top: 64px; z-index: 1; }
+
+/* accès à la salle de rédaction (une) */
+.rubriques a.lien-redac { background: var(--marine); color: var(--papier); padding: 4px 10px; border: none; }
+.rubriques a.lien-redac:hover { background: var(--rouge); color: #fff; }
+.bandeau-redac { display: grid; grid-template-columns: auto 1fr auto; align-items: center; gap: 14px 18px; margin: 18px 0 6px; padding: 16px 20px; background: var(--marine); color: var(--papier); text-decoration: none; border-left: 8px solid var(--or); box-shadow: 4px 4px 0 var(--or); transition: transform .15s, box-shadow .15s; }
+.bandeau-redac:hover { transform: translate(-2px, -2px); box-shadow: 6px 6px 0 var(--or); }
+.bandeau-redac .plume { font-size: 34px; line-height: 1; color: var(--or); }
+.bandeau-redac small { display: block; font: 700 12px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--or); margin-bottom: 4px; }
+.bandeau-redac b { display: block; font: 400 clamp(20px, 2.6vw, 27px)/1.15 var(--titre); color: #fff; }
+.bandeau-redac .txt > span { display: block; font-size: 15.5px; line-height: 1.4; margin-top: 4px; color: #e9e6f5; }
+.bandeau-redac .fl { font-size: 30px; color: var(--or); transition: transform .2s; }
+.bandeau-redac:hover .fl { transform: translateX(5px); }
+@media (max-width: 520px) { .bandeau-redac { grid-template-columns: 1fr auto; padding: 14px 16px; } .bandeau-redac .plume { display: none; } }
