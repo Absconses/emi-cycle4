@@ -1,0 +1,453 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000177">
+<title>La salle de rédaction · Gazette de Dupanloup</title>
+<meta name="description" content="La salle de rédaction du Club Jeune Reporter : le chemin de fer des prochains numéros de la Gazette de Dupanloup, et un pad pour chaque article.">
+<link rel="icon" href="img/sigle-dupanloup.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bree+Serif&family=Federo&family=IBM+Plex+Mono:wght@600;700&display=swap">
+<link rel="stylesheet" href="style.css">
+<style>
+/* La salle de rédaction : mêmes couleurs et polices que la une du club (style.css) */
+.redac { max-width: 1180px; margin: 0 auto; padding: 18px 16px 60px; }
+.redac h2 { font: 400 clamp(26px, 4vw, 40px)/1.05 var(--gothique); color: var(--marine); margin: 0; }
+.redac h3 { font: 400 22px/1.15 var(--titre); color: var(--marine); margin: 0 0 8px; }
+.tete-num { display: grid; gap: 14px; border-bottom: 3px solid var(--or); padding-bottom: 14px; margin-bottom: 18px; }
+@media (min-width: 860px) { .tete-num { grid-template-columns: 1fr auto; align-items: end; } }
+.tete-num .sous { font: 700 13px/1.3 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--encre-2); margin: 6px 0 0; }
+.compteurs { display: flex; gap: 10px; flex-wrap: wrap; }
+.compteur { background: #fffdf7; border: 1px solid var(--filet); padding: 8px 12px; min-width: 104px; }
+.compteur b { display: block; font: 400 26px/1 var(--titre); color: var(--marine); }
+.compteur span { font: 600 11px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--gris); }
+.outils { display: flex; gap: 10px; flex-wrap: wrap; margin: 0 0 16px; align-items: center; }
+.legende-etats { display: flex; gap: 6px 12px; flex-wrap: wrap; font: 600 12px/1.2 var(--mono); text-transform: uppercase; color: var(--encre-2); margin: 0 0 18px; }
+.legende-etats i { display: inline-block; width: 12px; height: 12px; border-radius: 2px; vertical-align: -1px; margin-right: 5px; }
+.info { background: #fffdf7; border-left: 4px solid var(--or); padding: 10px 14px; margin: 0 0 16px; font-size: 15px; }
+.info.erreur { border-color: var(--rouge); }
+/* états */
+.e-commande { --c: #8a8698; } .e-ecriture { --c: var(--bleu); } .e-relire { --c: #a8740f; }
+.e-corriger { --c: var(--rouge); } .e-valide { --c: var(--vert); } .e-maquette { --c: var(--marine); }
+.pt-etat { background: var(--c); }
+.badge-etat { display: inline-block; font: 700 11px/1 var(--mono); text-transform: uppercase; letter-spacing: .05em; color: var(--c); border: 1.5px solid var(--c); padding: 4px 6px; border-radius: 2px; white-space: nowrap; background: rgba(255, 253, 247, .8); }
+/* le chemin de fer */
+.cdf { display: flex; flex-wrap: wrap; gap: 26px 22px; align-items: flex-start; }
+.planche { display: flex; gap: 0; }
+.page { width: 220px; min-width: 0; aspect-ratio: 1 / 1.414; background: #fffdf7; border: 1.5px solid var(--filet); box-shadow: var(--ombre); display: flex; flex-direction: column; padding: 8px; position: relative; }
+.planche .page + .page { border-left: 1px dashed var(--or); }
+.page-tete { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; border-bottom: 2px solid var(--or); padding-bottom: 4px; margin-bottom: 6px; }
+.page-tete b { font: 700 12px/1 var(--mono); color: var(--marine); text-transform: uppercase; }
+.page-tete span { font: 400 13px/1.1 var(--titre); color: var(--encre-2); text-align: right; }
+.page.p-une .page-tete { background: var(--marine); border: none; padding: 6px; margin: -8px -8px 6px; }
+.page.p-une .page-tete b, .page.p-une .page-tete span { color: var(--papier); }
+.blocs { flex: 1; display: flex; flex-direction: column; gap: 5px; min-height: 0; }
+.bloc { flex: var(--poids, 1) 1 auto; min-height: 52px; text-align: left; border: 1.5px solid var(--c); border-left-width: 5px; background: #fff; padding: 5px 6px; cursor: pointer; display: flex; flex-direction: column; gap: 2px; font: inherit; color: inherit; border-radius: 0; }
+.bloc:hover, .bloc:focus-visible { background: #fff7e6; outline: 2px solid var(--or); outline-offset: 1px; }
+.bloc .rub { font: 700 10px/1.1 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--rouge); }
+.bloc .tit { font: 400 14px/1.15 var(--titre); color: var(--encre); }
+.bloc .tit.attente { font-style: italic; color: var(--gris); }
+.bloc .qui { font-size: 11.5px; line-height: 1.2; color: var(--encre-2); }
+.bloc .bas { margin-top: auto; display: flex; align-items: center; gap: 6px; }
+.jauge { flex: 1; height: 5px; background: #ece4d2; border-radius: 3px; overflow: hidden; }
+.jauge span { display: block; height: 100%; background: var(--c); }
+.bloc .mots { font: 600 10px/1 var(--mono); color: var(--encre-2); white-space: nowrap; }
+.page .vide { flex: 1; display: grid; place-items: center; color: var(--gris); font-style: italic; font-size: 13px; border: 1.5px dashed #d8cdb6; }
+.num-page { position: absolute; bottom: -20px; left: 0; right: 0; text-align: center; font: 600 11px/1 var(--mono); color: var(--encre-2); }
+@media (max-width: 520px) { .cdf { gap: 26px 0; } .page { width: calc((100vw - 32px) / 2); } .bloc .tit { font-size: 13px; } }
+/* la vue article */
+.retour { margin: 0 0 12px; }
+.article-tete { display: grid; gap: 8px; margin-bottom: 14px; }
+.article-tete .ligne { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; font-size: 15px; color: var(--encre-2); }
+.etabli { display: grid; gap: 18px; }
+@media (min-width: 980px) { .etabli { grid-template-columns: 380px 1fr; align-items: start; } }
+.panneau-g { display: grid; gap: 14px; }
+.carte { background: #fffdf7; border: 1px solid var(--filet); padding: 14px; }
+.carte ol, .carte ul { margin: 0; padding-left: 20px; font-size: 15px; line-height: 1.5; }
+.modele { font: 600 13px/1.5 var(--mono); background: #f4ecdb; padding: 8px 10px; white-space: pre-wrap; margin: 8px 0; }
+.apercu { background: #fff; border: 1px solid #d8cdb6; padding: 16px; }
+.apercu .surt { font: 700 12px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--rouge); }
+.apercu h4 { font: 400 25px/1.15 var(--titre); color: var(--marine); margin: 4px 0 8px; }
+.apercu .chapo { font-weight: 700; margin: 0 0 10px; }
+.apercu p { margin: 0 0 8px; font-size: 15.5px; }
+.apercu h5 { font: 700 16px/1.2 var(--texte); color: var(--marine); margin: 12px 0 4px; }
+.apercu .leg { font-size: 13px; color: var(--encre-2); border-top: 1px solid #e5dcc8; padding-top: 6px; margin-top: 10px; }
+.apercu .sig { font: 600 12px/1.2 var(--mono); text-align: right; color: var(--encre-2); }
+.apercu .vide { color: var(--gris); font-style: italic; }
+.pad { width: 100%; height: min(78vh, 820px); min-height: 520px; border: 1.5px solid var(--filet); background: #fff; display: block; }
+.prenom { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; font-size: 15px; margin: 0 0 8px; }
+.prenom input { font: inherit; padding: 6px 8px; border: 1.5px solid var(--filet); width: 160px; }
+/* le rédacteur en chef */
+.chef { border: 2px solid var(--marine); background: #fffdf7; padding: 14px; margin: 0 0 24px; }
+.chef .pad { height: 520px; min-height: 0; }
+.chef details { margin-top: 10px; font-size: 15px; }
+.chef summary { cursor: pointer; font-weight: 700; color: var(--marine); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media print {
+  .barre, .outils, .chef, .info, #vue-article { display: none !important; }
+  body { background: #fff; }
+  .page { box-shadow: none; break-inside: avoid; }
+}
+</style>
+</head>
+<body>
+<header class="barre">
+  <a href="index.html">← La une</a>
+  <div class="barre-titre"><span class="pastille">✎</span><h1>La salle de rédaction</h1></div>
+  <label class="sr" for="choix-num">Numéro</label>
+  <select id="choix-num" hidden></select>
+</header>
+
+<main class="redac">
+  <section class="chef" id="chef" hidden aria-labelledby="chef-titre">
+    <h3 id="chef-titre">Rédacteur en chef · la conférence de rédaction</h3>
+    <p style="margin:0 0 10px;font-size:15px">Ce que tu écris dans ce pad apparaît dans le chemin de fer en dessous, en direct (quelques secondes). <strong>Garde ce lien pour toi</strong> : les élèves utilisent l'adresse de la page sans « chef ».</p>
+    <iframe class="pad" id="pad-chef" title="Le pad de la conférence de rédaction"></iframe>
+    <details>
+      <summary>Comment écrire la conférence</summary>
+      <ul>
+        <li><code>NUMÉRO 2 · décembre 2026</code> ouvre un numéro (tu peux en préparer plusieurs).</li>
+        <li><code>Bouclage : vendredi 12 décembre</code> donne la date limite.</li>
+        <li><code>PAGE 1 · La une</code> ouvre une page.</li>
+        <li>Une ligne par article : <code>rubrique · sujet · équipe · 300 mots · état</code>.</li>
+        <li>États : commandé, en écriture, à relire, à corriger, validé, maquetté. Sans état, la page met « commandé » tant que le pad est vide, puis « en écriture », ou l'état que les élèves écrivent dans leur pad.</li>
+        <li>Ne change plus le sujet d'un article commencé : son pad en dépend. Pour le renommer quand même, ajoute à la fin <code>· #ancien sujet</code>.</li>
+        <li>Les lignes qui commencent par <code>#</code> sont des notes pour toi.</li>
+      </ul>
+    </details>
+  </section>
+
+  <div id="message" class="info" hidden></div>
+
+  <section id="vue-cdf" aria-labelledby="titre-num">
+    <div class="tete-num">
+      <div>
+        <h2 id="titre-num">La Gazette de Dupanloup</h2>
+        <p class="sous" id="sous-num">Chargement de la conférence de rédaction…</p>
+      </div>
+      <div class="compteurs" id="compteurs"></div>
+    </div>
+    <div class="outils">
+      <button class="btn" id="telecharger" type="button">Télécharger les textes du numéro</button>
+      <button class="lien-btn" id="imprimer" type="button">Imprimer le chemin de fer</button>
+      <span id="maj" style="font-size:13px;color:var(--gris)"></span>
+    </div>
+    <p class="legende-etats" id="legende"></p>
+    <div class="cdf" id="cdf"></div>
+  </section>
+
+  <section id="vue-article" hidden aria-labelledby="art-titre">
+    <p class="retour"><a href="#" id="retour" class="lien-btn" style="text-decoration:none;display:inline-block">← Le chemin de fer</a></p>
+    <div class="article-tete">
+      <p class="surtitre" id="art-rub"></p>
+      <h2 id="art-titre"></h2>
+      <div class="ligne" id="art-ligne"></div>
+    </div>
+    <div class="etabli">
+      <div class="panneau-g">
+        <div class="carte">
+          <h3>Comment écrire dans le pad</h3>
+          <ol>
+            <li>La première fois, efface le texte d'accueil de Framapad.</li>
+            <li>Colle le modèle, puis remplis-le avec ton équipe. Chacun écrit dans sa couleur.</li>
+            <li>Quand l'article est fini et relu, écris <code>ÉTAT : à relire</code>.</li>
+          </ol>
+          <p class="modele" id="modele"></p>
+          <button class="lien-btn" id="copier" type="button">Copier le modèle</button>
+          <span id="copie-ok" role="status" style="font-size:14px;color:var(--vert);margin-left:8px"></span>
+        </div>
+        <div class="carte">
+          <h3>Avant d'écrire « à relire »</h3>
+          <ul>
+            <li>Le titre dit l'essentiel, le chapô répond à qui, quoi, où, quand.</li>
+            <li>Les noms et les chiffres sont vérifiés.</li>
+            <li>Chaque photo a sa légende vraie et son crédit, et l'autorisation des élèves photographiés.</li>
+            <li>Les faits sont séparés des avis.</li>
+          </ul>
+        </div>
+        <div>
+          <h3>Ton article dans la gazette</h3>
+          <div class="apercu" id="apercu" aria-live="polite"></div>
+        </div>
+      </div>
+      <div>
+        <p class="prenom"><label for="prenom">Ton prénom dans le pad :</label><input id="prenom" autocomplete="given-name" maxlength="30"><a id="ouvrir-pad" target="_blank" rel="noopener" style="font-size:14px">Ouvrir le pad dans un nouvel onglet ↗</a></p>
+        <iframe class="pad" id="pad-article" title="Le pad de l'article"></iframe>
+      </div>
+    </div>
+  </section>
+</main>
+
+<script>
+(function () {
+  /* ---- Réglages : l'instance Framapad et le lien en lecture seule de la conférence de rédaction ---- */
+  const INSTANCE = 'https://annuel.framapad.org';
+  const CONFERENCE = 'r.b075a65d87848eb7f246bdc92c9b5256';   // lien « lecture seule » (r.…) du pad de conférence
+  const RAFRAICHIR = 20000;                      // ms
+
+  const ETATS = [
+    { k: 'commande', nom: 'commandé', mots: ['commande'] },
+    { k: 'ecriture', nom: 'en écriture', mots: ['en ecriture', 'ecriture'] },
+    { k: 'relire', nom: 'à relire', mots: ['a relire', 'relire'] },
+    { k: 'corriger', nom: 'à corriger', mots: ['a corriger', 'corriger'] },
+    { k: 'valide', nom: 'validé', mots: ['valide'] },
+    { k: 'maquette', nom: 'maquetté', mots: ['maquette'] },
+  ];
+  const MODELE = 'SURTITRE : \nTITRE : \nCHAPÔ : \nTEXTE :\n(ton article, en paragraphes courts)\nINTERTITRE : \nPHOTO : (ce qu’on voit)\nLÉGENDE : \nCRÉDIT : Photo : \nSIGNÉ : \nÉTAT : en écriture';
+
+  const $ = (id) => document.getElementById(id);
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const plat = (s) => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().trim();
+  const slug = (s) => plat(s).replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48);
+  const hash = (s) => { let h = 2166136261; for (const c of s) { h ^= c.codePointAt(0); h = Math.imul(h, 16777619); } return (h >>> 0).toString(36).slice(0, 5); };
+  const etatDe = (s) => { const p = plat(s || ''); return ETATS.find((e) => e.mots.some((m) => p === m)); };
+  const params = new URLSearchParams(location.search);
+  const CHEF = params.get('chef');
+
+  /* ---- Lire la conférence de rédaction ---- */
+  function lireConference(txt) {
+    const numeros = []; let num = null, page = null;
+    for (const brut of txt.split(/\r?\n/)) {
+      const l = brut.trim();
+      if (!l || l.startsWith('#') || l.startsWith('//')) continue;
+      let m;
+      if ((m = l.match(/^(?:NUM[ÉE]RO|N°)\s*(\d+)\s*(?:[·|:\-–]\s*(.*))?$/i))) {
+        num = { num: m[1], label: (m[2] || '').trim(), bouclage: '', pages: [] }; numeros.push(num); page = null; continue;
+      }
+      if (!num) continue;
+      if ((m = l.match(/^bouclage\s*:\s*(.*)$/i))) { num.bouclage = m[1].trim(); continue; }
+      if ((m = l.match(/^PAGE\s*(\d+)\s*(?:[·|:\-–]\s*(.*))?$/i))) {
+        page = { n: +m[1], nom: (m[2] || '').trim(), articles: [] }; num.pages.push(page); continue;
+      }
+      if (!page) continue;
+      const champs = l.replace(/^[-•*]\s*/, '').split(/\s*[·|]\s*/).filter(Boolean);
+      const a = { rubrique: '', sujet: '', equipe: '', cible: 0, etat: null, id: '' };
+      const reste = [];
+      for (const c of champs) {
+        let mm;
+        if ((mm = c.match(/^(\d+)\s*mots?$/i))) a.cible = +mm[1];
+        else if (c.startsWith('#')) a.id = c.slice(1).trim();
+        else if (etatDe(c)) a.etat = etatDe(c);
+        else reste.push(c);
+      }
+      if (reste.length === 1) a.sujet = reste[0];
+      else { [a.rubrique, a.sujet, a.equipe] = reste; a.equipe = reste.slice(2).join(', '); }
+      if (!a.sujet) continue;
+      a.cle = slug(a.id || a.sujet) || 'article';
+      a.pad = `gazette-dupanloup-n${num.num}-${a.cle}-${hash(CONFERENCE + num.num + a.cle)}`;
+      page.articles.push(a);
+    }
+    numeros.forEach((n) => n.pages.sort((x, y) => x.n - y.n));
+    return numeros;
+  }
+
+  /* ---- Lire un pad d'article ---- */
+  const ETIQ = /^\s*(SURTITRE|TITRE|CHAP[OÔ]|TEXTE|INTERTITRE|PHOTO|L[ÉE]GENDE|CR[ÉE]DIT|SIGN[ÉE]|SIGNATURE|[ÉE]TAT)\s*:\s*(.*)$/i;
+  function lirePad(txt) {
+    const r = { vide: true, surtitre: '', titre: '', chapo: '', texte: [], photo: '', legende: '', credit: '', signe: '', etat: null, mots: 0 };
+    if (!txt || /Bienvenue sur Framapad/i.test(txt)) return r;
+    let cur = 'texte';
+    for (const brut of txt.split(/\r?\n/)) {
+      const m = brut.match(ETIQ);
+      if (m) {
+        const k = plat(m[1]), v = m[2].trim();
+        if (k === 'texte') { cur = 'texte'; if (v) r.texte.push({ p: v }); }
+        else if (k === 'intertitre') { cur = 'texte'; if (v) r.texte.push({ h: v }); }
+        else if (k === 'etat') { r.etat = etatDe(v) || null; cur = null; }
+        else {
+          const cle = { surtitre: 'surtitre', titre: 'titre', chapo: 'chapo', photo: 'photo', legende: 'legende', credit: 'credit', signe: 'signe', signature: 'signe' }[k];
+          r[cle] = v; cur = cle;
+        }
+        continue;
+      }
+      const l = brut.trim();
+      if (!l || /^\(.*\)$/.test(l)) continue;
+      if (cur === 'texte') r.texte.push({ p: l });
+      else if (cur && typeof r[cur] === 'string') r[cur] = (r[cur] ? r[cur] + ' ' : '') + l;
+    }
+    const compte = (s) => (s.match(/[\p{L}\p{N}][\p{L}\p{N}'’-]*/gu) || []).length;
+    if (/^photo\s*:?\s*$/i.test(r.credit)) r.credit = '';
+    r.mots = compte(r.chapo) + r.texte.reduce((n, x) => n + compte(x.p || x.h), 0);
+    r.vide = !(r.titre || r.chapo || r.texte.length);
+    return r;
+  }
+
+  async function lireTexte(nom) {
+    const rep = await fetch(`${INSTANCE}/p/${encodeURIComponent(nom)}/export/txt`, { cache: 'no-store' });
+    if (rep.status === 404) return '';
+    if (!rep.ok) throw new Error('pad ' + rep.status);
+    return rep.text();
+  }
+
+  /* ---- État de la page ---- */
+  let numeros = [], courant = null, pads = {}, derniereMaj = null, erreur = '';
+  const etatArticle = (a) => {
+    const p = pads[a.pad];
+    if (a.etat) return a.etat;
+    if (p && p.etat) return p.etat;
+    return p && !p.vide ? ETATS[1] : ETATS[0];
+  };
+
+  async function charger() {
+    try {
+      numeros = lireConference(await lireTexte(CONFERENCE));
+      erreur = '';
+    } catch (e) { erreur = 'La conférence de rédaction ne répond pas (Framapad). La page réessaie toute seule.'; }
+    if (!courant || !numeros.find((n) => n.num === courant)) courant = (numeros[0] || {}).num || null;
+    const num = numeros.find((n) => n.num === courant);
+    if (num) {
+      const tous = num.pages.flatMap((p) => p.articles);
+      await Promise.all(tous.map(async (a) => {
+        try { pads[a.pad] = lirePad(await lireTexte(a.pad)); } catch (e) { /* on garde l'ancienne lecture */ }
+      }));
+    }
+    derniereMaj = new Date();
+    rendre();
+  }
+
+  /* ---- Affichage ---- */
+  function rendre() {
+    const msg = $('message');
+    msg.hidden = !erreur && numeros.length > 0;
+    msg.className = 'info' + (erreur ? ' erreur' : '');
+    msg.textContent = erreur || (numeros.length ? '' : (CONFERENCE.startsWith('__') ? 'La conférence de rédaction n’est pas encore reliée à cette page.' : 'Aucun numéro en préparation pour l’instant.'));
+
+    const sel = $('choix-num');
+    sel.hidden = numeros.length < 2;
+    sel.innerHTML = numeros.map((n) => `<option value="${esc(n.num)}"${n.num === courant ? ' selected' : ''}>N° ${esc(n.num)}</option>`).join('');
+
+    const num = numeros.find((n) => n.num === courant);
+    $('legende').innerHTML = ETATS.map((e) => `<span class="e-${e.k}"><i class="pt-etat"></i>${e.nom}</span>`).join('');
+    $('maj').textContent = derniereMaj ? 'Mis à jour à ' + derniereMaj.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '';
+    if (!num) { $('cdf').innerHTML = ''; $('compteurs').innerHTML = ''; $('sous-num').textContent = ''; rendreArticle(); return; }
+
+    $('titre-num').textContent = `La Gazette de Dupanloup · n° ${num.num}`;
+    $('sous-num').textContent = [num.label, num.bouclage && 'Bouclage : ' + num.bouclage].filter(Boolean).join(' · ');
+    const tous = num.pages.flatMap((p) => p.articles);
+    const ecrits = tous.reduce((n, a) => n + ((pads[a.pad] || {}).mots || 0), 0);
+    const prevus = tous.reduce((n, a) => n + a.cible, 0);
+    const prets = tous.filter((a) => ['valide', 'maquette'].includes(etatArticle(a).k)).length;
+    $('compteurs').innerHTML = [
+      [num.pages.length, num.pages.length > 1 ? 'pages' : 'page'],
+      [tous.length, tous.length > 1 ? 'articles' : 'article'],
+      [prets + ' / ' + tous.length, 'validés'],
+      [ecrits + (prevus ? ' / ' + prevus : ''), 'mots écrits'],
+    ].map(([b, s]) => `<div class="compteur"><b>${esc(b)}</b><span>${esc(s)}</span></div>`).join('');
+
+    // les planches : la une seule, puis les doubles pages (2-3, 4-5…)
+    const planches = []; const ps = num.pages;
+    for (let i = 0; i < ps.length;) {
+      if (ps[i].n === 1 || i === ps.length - 1 || ps[i].n % 2 === 1 || ps[i + 1].n !== ps[i].n + 1) { planches.push([ps[i]]); i++; }
+      else { planches.push([ps[i], ps[i + 1]]); i += 2; }
+    }
+    $('cdf').innerHTML = planches.map((pl) => `<div class="planche">${pl.map(pageHTML).join('')}</div>`).join('');
+    rendreArticle();
+  }
+
+  function pageHTML(p) {
+    const blocs = p.articles.map((a) => {
+      const e = etatArticle(a), d = pads[a.pad] || {};
+      const titre = d.titre ? `<span class="tit">${esc(d.titre)}</span>` : `<span class="tit attente">${esc(a.sujet)}</span>`;
+      const pct = a.cible ? Math.min(100, Math.round(100 * (d.mots || 0) / a.cible)) : (d.vide === false ? 100 : 0);
+      return `<button type="button" class="bloc e-${e.k}" style="--poids:${Math.max(1, Math.round((a.cible || 150) / 100))}" data-art="${esc(a.cle)}" aria-label="${esc((a.rubrique ? a.rubrique + ', ' : '') + a.sujet + ', ' + e.nom)}">
+        ${a.rubrique ? `<span class="rub">${esc(a.rubrique)}</span>` : ''}${titre}
+        ${a.equipe ? `<span class="qui">${esc(a.equipe)}</span>` : ''}
+        <span class="bas"><span class="jauge" aria-hidden="true"><span style="width:${pct}%"></span></span><span class="mots">${d.mots || 0}${a.cible ? '/' + a.cible : ''} mots</span></span>
+        <span class="badge-etat">${e.nom}</span></button>`;
+    }).join('');
+    return `<div class="page${p.n === 1 ? ' p-une' : ''}"><div class="page-tete"><b>${p.n === 1 ? 'La une' : 'Page ' + p.n}</b><span>${esc(p.n === 1 && /^la une$/i.test(p.nom) ? '' : p.nom)}</span></div>
+      <div class="blocs">${blocs || '<div class="vide">Page à remplir</div>'}</div><span class="num-page">${p.n}</span></div>`;
+  }
+
+  /* ---- La vue article (#n2/le-cross) ---- */
+  let padOuvert = '';
+  function trouverArticle() {
+    const m = location.hash.match(/^#n(\d+)\/(.+)$/);
+    if (!m) return null;
+    const num = numeros.find((n) => n.num === m[1]);
+    if (!num) return null;
+    for (const p of num.pages) for (const a of p.articles) if (a.cle === decodeURIComponent(m[2])) return { num, p, a };
+    return null;
+  }
+  function rendreArticle() {
+    const t = trouverArticle();
+    $('vue-article').hidden = !t; $('vue-cdf').hidden = !!t;
+    if (!t) { padOuvert = ''; $('pad-article').removeAttribute('src'); return; }
+    const { num, p, a } = t, d = pads[a.pad] || lirePad(''), e = etatArticle(a);
+    $('art-rub').textContent = [`N° ${num.num}`, p.n === 1 ? 'la une' : 'page ' + p.n, a.rubrique].filter(Boolean).join(' · ');
+    $('art-titre').textContent = d.titre || a.sujet;
+    $('art-ligne').innerHTML = `<span class="badge-etat e-${e.k}">${e.nom}</span>${a.equipe ? `<span>Équipe : ${esc(a.equipe)}</span>` : ''}<span>${d.mots} mot${d.mots > 1 ? 's' : ''}${a.cible ? ' sur ' + a.cible : ''}</span>${d.titre ? `<span>Sujet : ${esc(a.sujet)}</span>` : ''}`;
+    $('apercu').innerHTML = d.vide ? '<p class="vide">Rien d’écrit pour l’instant. L’aperçu se remplit tout seul quand ton équipe écrit dans le pad.</p>' :
+      `${d.surtitre || a.rubrique ? `<div class="surt">${esc(d.surtitre || a.rubrique)}</div>` : ''}<h4>${esc(d.titre || a.sujet)}</h4>
+      ${d.chapo ? `<p class="chapo">${esc(d.chapo)}</p>` : ''}${d.texte.map((x) => x.h ? `<h5>${esc(x.h)}</h5>` : `<p>${esc(x.p)}</p>`).join('')}
+      ${d.photo || d.legende || d.credit ? `<p class="leg">${esc([d.photo && '[Photo : ' + d.photo + ']', d.legende, d.credit].filter(Boolean).join(' · '))}</p>` : ''}
+      ${d.signe ? `<p class="sig">${esc(d.signe)}</p>` : ''}`;
+    if (padOuvert !== a.pad) {
+      padOuvert = a.pad;
+      const nom = lirePrenom();
+      const url = `${INSTANCE}/p/${a.pad}?lang=fr&showLineNumbers=false${nom ? '&userName=' + encodeURIComponent(nom) : ''}`;
+      $('ouvrir-pad').href = url;
+      requestAnimationFrame(() => requestAnimationFrame(() => { $('pad-article').src = url; }));
+      document.title = `${a.sujet} · La salle de rédaction`;
+      window.scrollTo(0, 0);
+    }
+  }
+  const lirePrenom = () => { try { return localStorage.getItem('club-redaction-prenom') || ''; } catch (e) { return ''; } };
+  $('prenom').value = lirePrenom();
+  $('prenom').addEventListener('change', () => {
+    try { localStorage.setItem('club-redaction-prenom', $('prenom').value.trim()); } catch (e) {}
+    padOuvert = ''; rendreArticle();
+  });
+
+  $('modele').textContent = MODELE;
+  $('copier').onclick = async () => {
+    try { await navigator.clipboard.writeText(MODELE); $('copie-ok').textContent = 'Copié ! Colle-le dans le pad.'; }
+    catch (e) { $('copie-ok').textContent = 'Sélectionne le modèle et copie-le (Ctrl + C).'; }
+  };
+  $('cdf').addEventListener('click', (ev) => {
+    const b = ev.target.closest('.bloc'); if (b) location.hash = `n${courant}/${b.dataset.art}`;
+  });
+  $('retour').onclick = (ev) => { ev.preventDefault(); history.pushState('', '', location.pathname + location.search + '#n' + courant); rendreArticle(); };
+  window.addEventListener('hashchange', () => {
+    const m = location.hash.match(/^#n(\d+)/); if (m && m[1] !== courant && numeros.find((n) => n.num === m[1])) { courant = m[1]; charger(); }
+    else rendreArticle();
+  });
+  $('choix-num').onchange = (ev) => { courant = ev.target.value; location.hash = 'n' + courant; charger(); };
+  $('imprimer').onclick = () => window.print();
+
+  // tous les textes du numéro, dans l'ordre du chemin de fer, pour la mise en page dans Canva
+  $('telecharger').onclick = () => {
+    const num = numeros.find((n) => n.num === courant); if (!num) return;
+    const out = [`LA GAZETTE DE DUPANLOUP · N° ${num.num}${num.label ? ' · ' + num.label : ''}`, ''];
+    for (const p of num.pages) {
+      out.push('==========', (p.n === 1 ? 'LA UNE' : 'PAGE ' + p.n) + (p.nom && p.n !== 1 ? ' · ' + p.nom : ''), '==========', '');
+      for (const a of p.articles) {
+        const d = pads[a.pad] || lirePad('');
+        out.push(`[${etatArticle(a).nom}] ${a.rubrique || ''}`.trim());
+        if (d.vide) { out.push(a.sujet + ' (pas encore écrit)', ''); continue; }
+        if (d.surtitre) out.push(d.surtitre.toUpperCase());
+        out.push(d.titre || a.sujet);
+        if (d.chapo) out.push('', d.chapo);
+        out.push('', ...d.texte.map((x) => x.h ? '\n' + x.h.toUpperCase() : x.p));
+        if (d.photo || d.legende || d.credit) out.push('', [d.photo && 'Photo : ' + d.photo, d.legende, d.credit].filter(Boolean).join(' · '));
+        if (d.signe) out.push(d.signe);
+        out.push('', '----------', '');
+      }
+    }
+    const lien = document.createElement('a');
+    lien.href = URL.createObjectURL(new Blob([out.join('\n')], { type: 'text/plain;charset=utf-8' }));
+    lien.download = `gazette-dupanloup-n${num.num}.txt`; lien.click();
+    setTimeout(() => URL.revokeObjectURL(lien.href), 2000);
+  };
+
+  if (CHEF) { $('chef').hidden = false; $('pad-chef').src = `${INSTANCE}/p/${encodeURIComponent(CHEF)}?lang=fr&showLineNumbers=false&userName=${encodeURIComponent('Rédacteur en chef')}`; }
+  const m0 = location.hash.match(/^#n(\d+)/); if (m0) courant = m0[1];
+  charger();
+  setInterval(() => { if (!document.hidden) charger(); }, RAFRAICHIR);
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) charger(); });
+})();
+</script>
+</body>
+</html>
