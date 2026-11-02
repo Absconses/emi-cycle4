@@ -36,15 +36,15 @@
 /* le chemin de fer */
 .cdf { display: flex; flex-wrap: wrap; gap: 26px 22px; align-items: flex-start; }
 .planche { display: flex; gap: 0; }
-.page { width: 220px; min-width: 0; aspect-ratio: 1 / 1.414; background: #fffdf7; border: 1.5px solid var(--filet); box-shadow: var(--ombre); display: flex; flex-direction: column; padding: 8px; position: relative; }
+.page { width: 220px; min-width: 0; min-height: 311px; background: #fffdf7; border: 1.5px solid var(--filet); box-shadow: var(--ombre); display: flex; flex-direction: column; padding: 8px; position: relative; }
 .planche .page + .page { border-left: 1px dashed var(--or); }
 .page-tete { display: flex; justify-content: space-between; align-items: baseline; gap: 6px; border-bottom: 2px solid var(--or); padding-bottom: 4px; margin-bottom: 6px; }
 .page-tete b { font: 700 12px/1 var(--mono); color: var(--marine); text-transform: uppercase; }
 .page-tete span { font: 400 13px/1.1 var(--titre); color: var(--encre-2); text-align: right; }
 .page.p-une .page-tete { background: var(--marine); border: none; padding: 6px; margin: -8px -8px 6px; }
 .page.p-une .page-tete b, .page.p-une .page-tete span { color: var(--papier); }
-.blocs { flex: 1; display: flex; flex-direction: column; gap: 5px; min-height: 0; }
-.bloc { flex: var(--poids, 1) 1 auto; min-height: 52px; text-align: left; border: 1.5px solid var(--c); border-left-width: 5px; background: #fff; padding: 5px 6px; cursor: pointer; display: flex; flex-direction: column; gap: 2px; font: inherit; color: inherit; border-radius: 0; }
+.blocs { flex: 1; display: flex; flex-direction: column; gap: 5px; }
+.bloc { flex: var(--poids, 1) 0 auto; min-height: 52px; text-align: left; border: 1.5px solid var(--c); border-left-width: 5px; background: #fff; padding: 5px 6px; cursor: pointer; display: flex; flex-direction: column; gap: 2px; font: inherit; color: inherit; border-radius: 0; }
 .bloc:hover, .bloc:focus-visible { background: #fff7e6; outline: 2px solid var(--or); outline-offset: 1px; }
 .bloc .rub { font: 700 10px/1.1 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--rouge); }
 .bloc .tit { font: 400 14px/1.15 var(--titre); color: var(--encre); }
@@ -114,7 +114,7 @@
         <li>Une ligne par article : <code>rubrique · sujet · équipe · 300 mots · état</code>.</li>
         <li>États : commandé, en écriture, à relire, à corriger, validé, maquetté. Sans état, la page met « commandé » tant que le pad est vide, puis « en écriture », ou l'état que les élèves écrivent dans leur pad.</li>
         <li>Ne change plus le sujet d'un article commencé : son pad en dépend. Pour le renommer quand même, ajoute à la fin <code>· #ancien sujet</code>.</li>
-        <li>Les lignes qui commencent par <code>#</code> sont des notes pour toi.</li>
+        <li>Toute autre ligne devient un article. Pour une consigne ou un rappel (« rajouter des photos »), commence la ligne par <code>#</code> : c'est une note pour toi, la page ne l'affiche pas.</li>
       </ul>
     </details>
   </section>
@@ -224,7 +224,7 @@
       }
       if (!num) continue;
       if ((m = l.match(/^bouclage\s*:\s*(.*)$/i))) { num.bouclage = m[1].trim(); continue; }
-      if ((m = l.match(/^PAGE\s*(\d+)\s*(?:[·|:\-–]\s*(.*))?$/i))) {
+      if ((m = l.match(/^PAGE\s*(\d+)\b\s*(?:[·|:\-–]\s*)?(.*)$/i))) {
         page = { n: +m[1], nom: (m[2] || '').trim(), articles: [] }; num.pages.push(page); continue;
       }
       if (!page) continue;
