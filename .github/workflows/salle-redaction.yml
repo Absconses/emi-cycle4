@@ -1,11 +1,16 @@
 # Copie de la salle de rédaction du club : relit la conférence et les pads
 # d'article sur Framapad, puis publie cache.json sur la branche salle-redaction.
 # Voir .github/salle-redaction/lire-pads.mjs pour le pourquoi.
+#
+# Le déclencheur « schedule » de GitHub ne s'est jamais lancé sur ce dépôt :
+# chaque run tourne donc en boucle près de 6 h (toutes les 4 min en semaine
+# de 7 h à 19 h, heure de Paris ; toutes les 30 min sinon), puis relance le
+# suivant. Le groupe de concurrence garde une seule chaîne.
 name: Salle de rédaction
 
 on:
   schedule:
-    - cron: '*/5 * * * *'
+    - cron: '*/30 * * * *'
   workflow_dispatch:
   push:
     branches: [main]
@@ -13,6 +18,7 @@ on:
 
 permissions:
   contents: write
+  actions: write
 
 concurrency:
   group: salle-redaction
@@ -21,25 +27,35 @@ concurrency:
 jobs:
   lire:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 355
     steps:
       - uses: actions/checkout@v4
         with:
           sparse-checkout: |
             club/redaction.html
             .github/salle-redaction
-      - name: Reprendre la copie précédente
-        run: git fetch --depth=1 origin salle-redaction && git show FETCH_HEAD:cache.json > /tmp/cache.json || true
       - uses: actions/setup-node@v4
         with:
           node-version: 22
-      - name: Lire la conférence et les pads
-        run: node .github/salle-redaction/lire-pads.mjs club/redaction.html /tmp/cache.json
-      - name: Publier cache.json
+      - name: Lire et publier en boucle
+        env:
+          DEPOT: https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git
         run: |
-          mkdir /tmp/publie && cd /tmp/publie
-          git init -q -b salle-redaction
-          cp /tmp/cache.json .
-          git -c user.name='salle-redaction' -c user.email='actions@github.com' add cache.json
-          git -c user.name='salle-redaction' -c user.email='actions@github.com' commit -qm 'Copie de la salle de rédaction'
-          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" salle-redaction
+          git fetch --depth=1 origin salle-redaction && git show FETCH_HEAD:cache.json > /tmp/cache.json || true
+          publier() {
+            rm -rf /tmp/publie && mkdir /tmp/publie && cp /tmp/cache.json /tmp/publie/
+            ( cd /tmp/publie && git init -q -b salle-redaction && git add cache.json \
+              && git -c user.name='salle-redaction' -c user.email='actions@github.com' commit -qm 'Copie de la salle de rédaction' \
+              && git push -qf "$DEPOT" salle-redaction )
+          }
+          fin=$((SECONDS + 20400))
+          while [ $SECONDS -lt $fin ]; do
+            node .github/salle-redaction/lire-pads.mjs club/redaction.html /tmp/cache.json && publier || echo "lecture ratée, on réessaie"
+            h=$(TZ=Europe/Paris date +%-H); j=$(TZ=Europe/Paris date +%u)
+            if [ "$j" -le 5 ] && [ "$h" -ge 7 ] && [ "$h" -lt 19 ]; then sleep 240; else sleep 1800; fi
+          done
+      - name: Relancer la suite
+        run: |
+          curl -sf -X POST -H "Authorization: Bearer ${{ github.token }}" -H "Accept: application/vnd.github+json" \
+            "https://api.github.com/repos/${{ github.repository }}/actions/workflows/salle-redaction.yml/dispatches" \
+            -d '{"ref":"main"}'
