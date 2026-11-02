@@ -1,0 +1,42 @@
+# Copie de la salle de rédaction du club : relit la conférence et les pads
+# d'article sur Framapad, puis publie cache.json sur la branche salle-redaction.
+# Voir .github/salle-redaction/lire-pads.mjs pour le pourquoi.
+name: Salle de rédaction
+
+on:
+  schedule:
+    - cron: '*/5 * * * *'
+  workflow_dispatch:
+
+permissions:
+  contents: write
+
+concurrency:
+  group: salle-redaction
+  cancel-in-progress: false
+
+jobs:
+  lire:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          sparse-checkout: |
+            club/redaction.html
+            .github/salle-redaction
+      - name: Reprendre la copie précédente
+        run: git fetch --depth=1 origin salle-redaction && git show FETCH_HEAD:cache.json > /tmp/cache.json || true
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Lire la conférence et les pads
+        run: node .github/salle-redaction/lire-pads.mjs club/redaction.html /tmp/cache.json
+      - name: Publier cache.json
+        run: |
+          mkdir /tmp/publie && cd /tmp/publie
+          git init -q -b salle-redaction
+          cp /tmp/cache.json .
+          git -c user.name='salle-redaction' -c user.email='actions@github.com' add cache.json
+          git -c user.name='salle-redaction' -c user.email='actions@github.com' commit -qm 'Copie de la salle de rédaction'
+          git push -qf "https://x-access-token:${{ github.token }}@github.com/${{ github.repository }}.git" salle-redaction

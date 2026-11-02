@@ -103,7 +103,7 @@
 <main class="redac">
   <section class="chef" id="chef" hidden aria-labelledby="chef-titre">
     <h3 id="chef-titre">Rédacteur en chef · la conférence de rédaction</h3>
-    <p style="margin:0 0 10px;font-size:15px">Ce que tu écris dans ce pad apparaît dans le chemin de fer en dessous, en direct (quelques secondes). <strong>Garde ce lien pour toi</strong> : les élèves utilisent l'adresse de la page sans « chef ».</p>
+    <p style="margin:0 0 10px;font-size:15px">Ce que tu écris dans ce pad apparaît dans le chemin de fer en dessous, en direct (une trentaine de secondes). Les textes des élèves y arrivent toutes les 5 à 10 minutes, sauf l'article que tu ouvres, relu en direct. <strong>Garde ce lien pour toi</strong> : les élèves utilisent l'adresse de la page sans « chef ».</p>
     <iframe class="pad" id="pad-chef" title="Le pad de la conférence de rédaction"></iframe>
     <details>
       <summary>Comment écrire la conférence</summary>
@@ -185,7 +185,13 @@
   /* ---- Réglages : l'instance Framapad et le lien en lecture seule de la conférence de rédaction ---- */
   const INSTANCE = 'https://annuel.framapad.org';
   const CONFERENCE = 'r.b075a65d87848eb7f246bdc92c9b5256';   // lien « lecture seule » (r.…) du pad de conférence
-  const RAFRAICHIR = 20000;                      // ms
+  /* Framapad n'accepte que 10 exports par 1 min 30 et par adresse IP, et laisse les suivants sans réponse.
+   * Au CDI, tous les postes sortent par la même adresse : les élèves lisent donc une copie des pads,
+   * refaite toutes les 5 à 10 minutes par GitHub (.github/workflows/salle-redaction.yml).
+   * Seul le rédacteur en chef lit en direct la conférence et l'article ouvert. */
+  const COPIE = 'https://raw.githubusercontent.com/Absconses/emi-cycle4/salle-redaction/cache.json';
+  const RAFRAICHIR = 30000;                      // ms
+  const ATTENTE = 8000;                          // ms avant d'abandonner une lecture
 
   const ETATS = [
     { k: 'commande', nom: 'commandé', mots: ['commande'] },
@@ -280,14 +286,14 @@
   }
 
   async function lireTexte(nom) {
-    const rep = await fetch(`${INSTANCE}/p/${encodeURIComponent(nom)}/export/txt`, { cache: 'no-store' });
+    const rep = await fetch(`${INSTANCE}/p/${encodeURIComponent(nom)}/export/txt`, { cache: 'no-store', signal: AbortSignal.timeout(ATTENTE) });
     if (rep.status === 404) return '';
     if (!rep.ok) throw new Error('pad ' + rep.status);
     return rep.text();
   }
 
   /* ---- État de la page ---- */
-  let numeros = [], courant = null, pads = {}, derniereMaj = null, erreur = '';
+  let numeros = [], courant = null, pads = {}, derniereMaj = null, copieDu = null, erreur = '';
   const etatArticle = (a) => {
     const p = pads[a.pad];
     if (a.etat) return a.etat;
@@ -295,19 +301,30 @@
     return p && !p.vide ? ETATS[1] : ETATS[0];
   };
 
+  async function lireCopie() {
+    const rep = await fetch(`${COPIE}?t=${Date.now()}`, { cache: 'no-store', signal: AbortSignal.timeout(ATTENTE) });
+    if (!rep.ok) throw new Error('copie ' + rep.status);
+    return rep.json();
+  }
+
   async function charger() {
-    try {
-      numeros = lireConference(await lireTexte(CONFERENCE));
-      erreur = '';
-    } catch (e) { erreur = 'La conférence de rédaction ne répond pas (Framapad). La page réessaie toute seule.'; }
-    if (!courant || !numeros.find((n) => n.num === courant)) courant = (numeros[0] || {}).num || null;
-    const num = numeros.find((n) => n.num === courant);
-    if (num) {
-      const tous = num.pages.flatMap((p) => p.articles);
-      await Promise.all(tous.map(async (a) => {
-        try { pads[a.pad] = lirePad(await lireTexte(a.pad)); } catch (e) { /* on garde l'ancienne lecture */ }
-      }));
+    let conference = null, copie = null;
+    try { copie = await lireCopie(); } catch (e) { /* pas de copie : on tente Framapad */ }
+    if (CHEF || !copie) { try { conference = await lireTexte(CONFERENCE); } catch (e) { /* Framapad ne répond pas */ } }
+    if (conference == null && copie) conference = copie.conference;
+    if (conference == null) {
+      erreur = 'La conférence de rédaction ne répond pas pour l’instant. La page réessaie toute seule.';
+    } else {
+      numeros = lireConference(conference); erreur = '';
     }
+    if (copie) {
+      copieDu = new Date(copie.lu);
+      for (const [nom, txt] of Object.entries(copie.pads || {})) pads[nom] = lirePad(txt);
+    }
+    if (!courant || !numeros.find((n) => n.num === courant)) courant = (numeros[0] || {}).num || null;
+    // le rédacteur en chef relit en direct l'article qu'il a ouvert
+    const t = CHEF && trouverArticle();
+    if (t) { try { pads[t.a.pad] = lirePad(await lireTexte(t.a.pad)); } catch (e) { /* on garde la copie */ } }
     derniereMaj = new Date();
     rendre();
   }
@@ -325,7 +342,8 @@
 
     const num = numeros.find((n) => n.num === courant);
     $('legende').innerHTML = ETATS.map((e) => `<span class="e-${e.k}"><i class="pt-etat"></i>${e.nom}</span>`).join('');
-    $('maj').textContent = derniereMaj ? 'Mis à jour à ' + derniereMaj.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit', second: '2-digit' }) : '';
+    const heure = (d) => d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
+    $('maj').textContent = copieDu ? `Textes des articles relus à ${heure(copieDu)} (toutes les 5 à 10 minutes)` : (derniereMaj ? 'Mis à jour à ' + heure(derniereMaj) : '');
     if (!num) { $('cdf').innerHTML = ''; $('compteurs').innerHTML = ''; $('sous-num').textContent = ''; rendreArticle(); return; }
 
     $('titre-num').textContent = `La Gazette de Dupanloup · n° ${num.num}`;
@@ -384,7 +402,7 @@
     $('art-rub').textContent = [`N° ${num.num}`, p.n === 1 ? 'la une' : 'page ' + p.n, a.rubrique].filter(Boolean).join(' · ');
     $('art-titre').textContent = d.titre || a.sujet;
     $('art-ligne').innerHTML = `<span class="badge-etat e-${e.k}">${e.nom}</span>${a.equipe ? `<span>Équipe : ${esc(a.equipe)}</span>` : ''}<span>${d.mots} mot${d.mots > 1 ? 's' : ''}${a.cible ? ' sur ' + a.cible : ''}</span>${d.titre ? `<span>Sujet : ${esc(a.sujet)}</span>` : ''}`;
-    $('apercu').innerHTML = d.vide ? '<p class="vide">Rien d’écrit pour l’instant. L’aperçu se remplit tout seul quand ton équipe écrit dans le pad.</p>' :
+    $('apercu').innerHTML = d.vide ? '<p class="vide">Rien d’écrit pour l’instant. L’aperçu se remplit tout seul quand ton équipe écrit dans le pad, avec quelques minutes de retard.</p>' :
       `${d.surtitre || a.rubrique ? `<div class="surt">${esc(d.surtitre || a.rubrique)}</div>` : ''}<h4>${esc(d.titre || a.sujet)}</h4>
       ${d.chapo ? `<p class="chapo">${esc(d.chapo)}</p>` : ''}${d.texte.map((x) => x.h ? `<h5>${esc(x.h)}</h5>` : `<p>${esc(x.p)}</p>`).join('')}
       ${d.photo || d.legende || d.credit ? `<p class="leg">${esc([d.photo && '[Photo : ' + d.photo + ']', d.legende, d.credit].filter(Boolean).join(' · '))}</p>` : ''}
