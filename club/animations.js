@@ -1,7 +1,7 @@
 /* La mise en scène de la une (GSAP 3.12 + ScrollTrigger).
  * - l'ouverture : le sigle se tamponne, le titre s'imprime lettre par lettre, la une se pose ;
- * - le parcours : sur grand écran, la piste des 10 modules défile à l'horizontale quand on descend,
- *   la route du reporter se remplit et marque le module en cours ;
+ * - le parcours : une piste par étape (carte de presse, puis chaque spécialité) ; sur grand écran,
+ *   chacune défile à l'horizontale quand on descend, sa route se remplit et marque le module en cours ;
  * - la carte de presse : les tampons gagnés s'abattent quand elle apparaît.
  * Appareil réglé sur « animations réduites » : rien ne bouge, sauf si l'élève les réactive avec le bouton
  * « Animations » (son choix est gardé dans ce navigateur). Sans GSAP, la page reste lisible telle quelle. */
@@ -28,7 +28,7 @@
       ouverture();
       parallaxeUne();
       tampons();
-      const fin = grand && document.getElementById('piste') ? pisteHorizontale() : apparitions('.piste > .article, .panneau');
+      const fin = grand && document.querySelector('#parcours .piste') ? pistesHorizontales() : apparitions('.piste > .article, .panneau, .intertitre-spe');
       apparitions('.bilan, .ours');
       return fin;
     });
@@ -78,51 +78,56 @@
     });
   }
 
-  function pisteHorizontale() {
+  // chaque étape (carte de presse, puis chaque spécialité) a sa propre piste, qui défile à l'horizontale
+  function pistesHorizontales() {
     const html = document.documentElement;
     html.classList.add('horizontal');
-    const piste = document.getElementById('piste');
-    const dist = () => Math.max(0, piste.scrollWidth - innerWidth);
-    const barre = document.querySelector('.barre-route i');
-    const defile = gsap.to(piste, {
-      x: () => -dist(), ease: 'none',
-      scrollTrigger: {
-        trigger: '#parcours', start: 'top top', end: () => '+=' + dist(),
-        pin: true, scrub: .6, invalidateOnRefresh: true, anticipatePin: 1,
-        onUpdate: (st) => gsap.set(barre, { scaleX: st.progress }),
-      },
+    gsap.utils.toArray('#parcours .parcours').forEach((sec) => {
+      const piste = sec.querySelector('.piste');
+      const dist = () => Math.max(0, piste.scrollWidth - innerWidth);
+      const barre = sec.querySelector('.barre-route i');
+      const arts = gsap.utils.toArray(sec.querySelectorAll('.piste > .article'));
+      const etapeDe = (art) => sec.querySelector(`.route .etape[data-num="${art.dataset.num}"]`);
+      if (dist() < 40) {
+        // piste courte (une spécialité d'un module) : elle tient à l'écran, les blocs se posent
+        gsap.from(sec.querySelectorAll('.piste > *'), {
+          x: 80, autoAlpha: 0, duration: .7, stagger: .14, ease: 'power3.out',
+          scrollTrigger: { trigger: sec, start: 'top 70%', toggleActions: 'play none none reverse' },
+        });
+        arts.forEach((art) => ScrollTrigger.create({ trigger: sec, start: 'top 60%', end: 'bottom 40%', onToggle: (st) => { const e = etapeDe(art); if (e) e.classList.toggle('ici', st.isActive); } }));
+        return;
+      }
+      const defile = gsap.to(piste, {
+        x: () => -dist(), ease: 'none',
+        scrollTrigger: {
+          trigger: sec, start: 'top top', end: () => '+=' + dist(),
+          pin: true, scrub: .6, invalidateOnRefresh: true, anticipatePin: 1,
+          onUpdate: (st) => barre && gsap.set(barre, { scaleX: st.progress }),
+        },
+      });
+      arts.forEach((art) => {
+        const etape = etapeDe(art);
+        ScrollTrigger.create({
+          trigger: art, containerAnimation: defile, start: 'left 50%', end: 'right 50%',
+          onToggle: (st) => etape && etape.classList.toggle('ici', st.isActive),
+        });
+        const img = art.querySelector('.vignette img');
+        if (img) gsap.fromTo(img, { xPercent: -7 }, {
+          xPercent: 7, ease: 'none',
+          scrollTrigger: { trigger: art, containerAnimation: defile, start: 'left right', end: 'right left', scrub: true },
+        });
+        gsap.from(art.querySelectorAll('.meta, h3, .chapo, blockquote, .pied-art'), {
+          y: 30, autoAlpha: 0, duration: .5, stagger: .06, ease: 'power3.out',
+          scrollTrigger: { trigger: art, containerAnimation: defile, start: 'left 88%', toggleActions: 'play none none reverse' },
+        });
+      });
+      sec.querySelectorAll('.panneau .lettre').forEach((l) => gsap.from(l, {
+        scale: .3, rotation: -25, autoAlpha: 0, duration: .7, ease: 'back.out(1.7)',
+        scrollTrigger: { trigger: l.parentNode, containerAnimation: defile, start: 'left 85%', toggleActions: 'play none none reverse' },
+      }));
     });
-    gsap.utils.toArray('.piste > .article').forEach((art) => {
-      const etape = document.querySelector(`.route .etape[data-num="${art.dataset.num}"]`);
-      ScrollTrigger.create({
-        trigger: art, containerAnimation: defile, start: 'left 50%', end: 'right 50%',
-        onToggle: (st) => etape && etape.classList.toggle('ici', st.isActive),
-      });
-      const img = art.querySelector('.vignette img');
-      if (img) gsap.fromTo(img, { xPercent: -7 }, {
-        xPercent: 7, ease: 'none',
-        scrollTrigger: { trigger: art, containerAnimation: defile, start: 'left right', end: 'right left', scrub: true },
-      });
-      gsap.from(art.querySelectorAll('.meta, h3, .chapo, blockquote, .pied-art'), {
-        y: 30, autoAlpha: 0, duration: .5, stagger: .06, ease: 'power3.out',
-        scrollTrigger: { trigger: art, containerAnimation: defile, start: 'left 88%', toggleActions: 'play none none reverse' },
-      });
-    });
-    gsap.utils.toArray('.panneau .lettre').forEach((l) => gsap.from(l, {
-      scale: .3, rotation: -25, autoAlpha: 0, duration: .7, ease: 'back.out(1.7)',
-      scrollTrigger: { trigger: l.parentNode, containerAnimation: defile, start: 'left 85%', toggleActions: 'play none none reverse' },
-    }));
-    // les rubriques du haut mènent au bon endroit de la piste
-    const aller = (e) => {
-      const a = e.target.closest('a[data-panneau]'); if (!a) return;
-      const cible = document.querySelector(a.getAttribute('href')); if (!cible) return;
-      e.preventDefault();
-      const st = defile.scrollTrigger, d = dist() || 1;
-      const x = cible.offsetLeft - parseFloat(getComputedStyle(piste).paddingLeft);
-      scrollTo({ top: st.start + Math.min(1, Math.max(0, x / d)) * (st.end - st.start) + 2, behavior: 'smooth' });
-    };
-    document.addEventListener('click', aller);
-    return () => { html.classList.remove('horizontal'); document.removeEventListener('click', aller); };
+    gsap.from('.intertitre-spe > *', { y: 26, autoAlpha: 0, duration: .6, stagger: .1, ease: 'power3.out', scrollTrigger: { trigger: '.intertitre-spe', start: 'top 80%', once: true } });
+    return () => html.classList.remove('horizontal');
   }
 
   if (window.CLUB_PRET) lancer(); else document.addEventListener('club-pret', lancer, { once: true });

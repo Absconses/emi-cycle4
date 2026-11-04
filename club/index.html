@@ -181,7 +181,7 @@
   }
   cartePresse();
 
-  // le parcours, sans animation : la carte de presse (obligatoire), puis les spécialités (au choix)
+  // le parcours : la carte de presse (obligatoire), puis les spécialités (au choix), chacune à part
   const ROLES = {
     B: 'Tu couvres les compétitions sportives du collège : le compte rendu, l’interview des athlètes, les photos.',
     C: 'Tu racontes l’actualité au micro : la chronique et le podcast du club.',
@@ -190,53 +190,59 @@
     F: 'Tu mets les articles en page, sur le site du collège et dans la gazette.',
   };
   const AVANT = { D: 'Avant : la photo de presse (module 6).', E: 'Avant : le son et l’image.' };
-  const ateliersDe = m => mods.filter(a => a.type === 'atelier' && a.parent === m.id);
-  const atelierHTML = a => `<a class="mini-atelier" href="module.html?m=${encodeURIComponent(a.id)}"><span class="pic">Atelier</span> ${esc(a.titre)} ${etat(a)}</a>`;
-  function moduleTronc(m) {
-    const x = p(m.id), lien = 'module.html?m=' + encodeURIComponent(m.id);
-    return `<li class="mod-tronc${m.pret ? '' : ' bientot'}${x && x.termine ? ' fait' : ''}">
-      <div class="vign"><img src="${m.image}" alt="" loading="lazy"><span class="num">${m.num}</span>${x && x.termine ? '<span class="tampon vert" style="--r:-8deg">Tampon<br>obtenu</span>' : ''}</div>
-      <div class="corps">
-        <p class="meta">Module ${m.num}${m.pret ? ` · ${m.duree} min` : ' · bientôt'} ${etat(m)}</p>
-        <h4>${m.pret ? `<a href="${lien}">${esc(m.titre)}</a>` : esc(m.titre)}</h4>
-        <p class="chapo">${esc(m.chapo)}</p>
-        ${ateliersDe(m).map(atelierHTML).join('')}
-      </div></li>`;
-  }
-  function moduleSpe(m) {
-    const x = p(m.id), lien = 'module.html?m=' + encodeURIComponent(m.id);
-    return `<li class="mod-spe${x && x.termine ? ' fait' : ''}">
-      <span class="num">${x && x.termine ? '✓' : m.num}</span>
-      <span class="txt">${m.pret ? `<a href="${lien}">${esc(m.titre)}</a>` : esc(m.titre)}<small>Module ${m.num} · ${m.duree} min ${etat(m)}</small>${ateliersDe(m).map(atelierHTML).join('')}</span></li>`;
-  }
   const faitsTotal = tronc.filter(fait).length;
-  const specialites = CAHIERS.filter(C => C.p !== 'A').map(C => {
+  // le parcours animé, une piste par étape : la carte de presse, puis chaque spécialité séparément
+  // (sur grand écran, chaque piste défile à l'horizontale quand on descend : animations.js)
+  function article(m, i) {
+    const x = p(m.id), av = x ? (x.termine ? 1 : x.avance || 0) : 0;
+    const lien = 'module.html?m=' + encodeURIComponent(m.id);
+    const ateliers = mods.filter(a => a.type === 'atelier' && a.parent === m.id);
+    return `<article class="article ${m.pret ? 'pret' : 'bientot'}" data-num="${m.num}">
+      <div class="cadre-vignette">${m === dernier ? '<span class="nouveau" aria-label="Nouveau">Nouveau</span>' : ''}<div class="vignette trame"><span class="num">${m.num}</span><img src="${m.image}" alt="" loading="lazy">${m.pret ? (x && x.termine ? `<span class="tampon vert" style="--r:-8deg">${m.partie === 'A' ? 'Tampon' : 'Badge'}<br>obtenu</span>` : '') : `<span class="tampon">En<br>préparation</span>`}</div></div>
+      <p class="meta">Module ${m.num}${m.pret ? ` · ${m.chapitres} chapitres · ${m.duree} min` : ' · bientôt'} ${etat(m)}</p>
+      <h3>${m.pret ? `<a href="${lien}">${esc(m.titre)}</a>` : esc(m.titre)}</h3>
+      <p class="chapo">${esc(m.chapo)}</p>
+      <blockquote><b>Le réflexe du reporter</b>« ${esc(m.ethique)} »</blockquote>
+      <div class="pied-art">
+        ${ateliers.length ? `<div class="ateliers">${ateliers.map(a => `<a class="atelier" href="module.html?m=${encodeURIComponent(a.id)}"><span class="pic">Atelier</span><span>${esc(a.titre)}<small>${esc(a.genre)}, à faire après le module</small></span>${etat(a)}</a>`).join('')}</div>` : ''}
+        ${av && !(x && x.termine) ? `<div class="jauge" aria-hidden="true"><span style="width:${Math.round(av * 100)}%"></span></div>` : ''}
+        <p class="credit">Photo : ${esc(m.credit)}</p>
+      </div></article>`;
+  }
+  const route = ms => `<ol class="route" aria-label="Les modules de cette étape">${ms.map(m => `<li class="etape${fait(m) ? ' faite' : ''}${m.pret ? '' : ' avenir'}" data-num="${m.num}"><span>${m.num}</span></li>`).join('')}<li class="barre-route" aria-hidden="true"><i></i></li></ol>`;
+  const bouton = (m, sur) => `<a class="cta" href="module.html?m=${encodeURIComponent(m.id)}"><span><small>${sur}</small><span>Module ${m.num} : ${esc(m.titre)}</span></span><span class="fl" aria-hidden="true">→</span></a>`;
+  function piste(C, ms, fin) {
+    return `<div class="piste-zone"><div class="piste"><div class="panneau"><span class="lettre" aria-hidden="true">${C.p}</span><h3>${esc(C.p === 'A' ? C.t : SPE[C.p])}</h3><p>${esc(C.s)}</p></div>${ms.map(article).join('')}${fin}</div></div>`;
+  }
+  const A = CAHIERS[0], suiteA = tronc.find(m => !fait(m));
+  let html = `<div id="parcours" aria-labelledby="titre-parcours">
+    <section class="parcours etape-carte" id="cahier-A">
+      <div class="parcours-tete int">
+        <div><p class="etiquette-etape"><b>Étape 1</b> Obligatoire · dans l’ordre</p><h2 id="titre-parcours">La carte de presse</h2></div>
+        <p class="consigne">Trois modules pour apprendre les bases. À la fin, tu es <strong>membre de la rédaction</strong> et tu peux participer au club.</p>
+        ${route(tronc)}
+      </div>
+      ${piste(A, tronc, `<div class="panneau fin"><span class="lettre" aria-hidden="true">★</span><h3>${troncFait ? 'Ta carte de presse est validée !' : 'Ta carte de presse t’attend'}</h3><p>${faitsTotal} tampon${faitsTotal > 1 ? 's' : ''} sur ${tronc.length}. ${troncFait ? 'Choisis maintenant ta spécialité, plus bas.' : 'Chaque module terminé en ajoute un.'}</p>${suiteA && suiteA.pret ? bouton(suiteA, p(suiteA.id) ? 'Reprendre' : 'Ton prochain module') : ''}</div>`)}
+    </section>
+    <div class="intertitre-spe int">
+      <p class="etiquette-etape"><b>Étape 2</b> Au choix · une ou plusieurs</p>
+      <h2>Les spécialités</h2>
+      <p>Choisis selon ton rôle à la rédaction. Chaque spécialité terminée ajoute son nom sur ta carte de presse.${troncFait ? '' : ' Elles s’ouvrent après la carte de presse.'}</p>
+    </div>`;
+  CAHIERS.filter(C => C.p !== 'A').forEach(C => {
     const ms = livres.filter(m => m.partie === C.p), ok = ms.length > 0 && ms.every(fait);
-    return `<article class="spe-carte${ok ? ' obtenue' : ''}" id="cahier-${C.p}">
-      <p class="spe-nom">${ok ? '✓ ' : ''}${esc(SPE[C.p])}</p>
-      <h4>${esc(C.t)}</h4>
-      <p class="role">${esc(ROLES[C.p])}</p>
-      <ol class="mods">${ms.map(moduleSpe).join('')}</ol>
-      ${AVANT[C.p] ? `<p class="avant">${esc(AVANT[C.p])}</p>` : ''}
-    </article>`;
-  }).join('');
-  const html = `<section class="plan" id="parcours" aria-labelledby="titre-parcours">
-    <h2 id="titre-parcours">Le parcours du reporter</h2>
-    <div class="etape-plan tronc${troncFait ? ' validee' : ''}" id="cahier-A">
-      <p class="etiquette"><b>Étape 1</b> Obligatoire · dans l’ordre</p>
-      <h3>La carte de presse</h3>
-      <p class="sous">Trois modules pour apprendre les bases. À la fin, tu es <strong>membre de la rédaction</strong> et tu peux participer au club. ${faitsTotal ? `<strong>${faitsTotal} sur ${tronc.length} fait${faitsTotal > 1 ? 's' : ''}.</strong>` : ''}</p>
-      <ol class="tronc-mods">${tronc.map(moduleTronc).join('')}</ol>
-      ${troncFait ? '<p class="valide">✓ Ta carte de presse est validée.</p>' : ''}
-    </div>
-    <p class="liaison" aria-hidden="true">↓ puis ↓</p>
-    <div class="etape-plan">
-      <p class="etiquette"><b>Étape 2</b> Au choix · une ou plusieurs</p>
-      <h3>Les spécialités</h3>
-      <p class="sous">Choisis selon ton rôle à la rédaction. Chaque spécialité terminée ajoute son nom sur ta carte de presse.${troncFait ? '' : ' Elles s’ouvrent après la carte de presse.'}</p>
-      <div class="spe-grille">${specialites}</div>
-    </div>
-  </section>`;
+    const suite = ms.find(m => !fait(m) && m.pret);
+    const fin = `<div class="panneau fin"><span class="lettre" aria-hidden="true">${ok ? '✓' : '★'}</span><h3>${ok ? `Bravo, ${esc(SPE[C.p].toLowerCase())} !` : esc(SPE[C.p])}</h3><p>${ok ? 'Cette spécialité est inscrite sur ta carte de presse.' : `Termine ${ms.length > 1 ? 'ces modules' : 'ce module'} pour l’inscrire sur ta carte de presse.`}</p>${suite ? bouton(suite, p(suite.id) ? 'Reprendre' : 'Commencer') : ''}</div>`;
+    html += `<section class="parcours etape-spe${ok ? ' obtenue' : ''}" id="cahier-${C.p}">
+      <div class="parcours-tete int">
+        <div><p class="etiquette-etape"><b>Spécialité</b> ${ok ? '✓ obtenue' : (ms.length > 1 ? ms.length + ' modules dans l’ordre' : '1 module')}</p><h2>${esc(SPE[C.p])}</h2></div>
+        <p class="consigne">${esc(ROLES[C.p])}${AVANT[C.p] ? ' ' + esc(AVANT[C.p]) : ''}</p>
+        ${route(ms)}
+      </div>
+      ${piste(C, ms, fin)}
+    </section>`;
+  });
+  html += `</div>`;
   document.getElementById('cahiers').innerHTML = html;
 
   // la page est prête : animations.js peut lancer la mise en scène

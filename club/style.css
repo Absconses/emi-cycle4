@@ -402,3 +402,22 @@ table.classe .eleve { text-align: left; white-space: nowrap; font-weight: 700; }
 .spe-carte .avant { margin: auto 0 0; padding-top: 8px; font: 700 12px/1.4 var(--mono); color: var(--encre); }
 .mini-atelier { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; font: 600 13px/1.3 var(--corps, inherit); margin-top: 4px; color: var(--marine); }
 .mini-atelier .pic { font: 700 10px/1 var(--mono); text-transform: uppercase; background: var(--or); color: var(--marine); padding: 3px 5px; }
+
+/* ---------- Le parcours animé, une piste par étape (2026-11-04) ---------- */
+.etiquette-etape { font: 700 12px/1.3 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--rouge); margin: 0 0 6px; }
+.etiquette-etape b { background: var(--marine); color: #fff; padding: 3px 7px; margin-right: 8px; font-weight: 700; }
+.etape-spe .etiquette-etape b { background: var(--or); color: var(--marine); }
+.etape-spe.obtenue .etiquette-etape { color: var(--vert, #2e7d32); }
+.intertitre-spe { padding-top: 46px; padding-bottom: 6px; }
+.intertitre-spe h2 { font: 400 clamp(30px, 4.4vw, 50px)/1 var(--gothique); color: var(--marine); margin: 0 0 8px; }
+.intertitre-spe p:last-child { margin: 0; color: var(--encre-2); max-width: 60ch; }
+.etape-spe { border-top: 1px dashed rgba(0, 1, 119, .35); }
+.etape-spe .parcours-tete h2 { font-size: clamp(26px, 3.6vw, 40px); }
+.etape-spe .route { justify-content: flex-start; gap: 24px; }
+.etape-spe .route .barre-route { display: none; }
+.horizontal .etape-spe .panneau:not(.fin) { background: var(--or); color: var(--marine); box-shadow: 10px 10px 0 var(--marine); }
+.horizontal .etape-spe .panneau:not(.fin) .lettre { color: var(--marine); }
+.horizontal .etape-spe .panneau:not(.fin) h3 { color: var(--marine); }
+.horizontal .etape-spe .panneau:not(.fin) p { color: rgba(0, 1, 119, .8); }
+.panneau.fin .cta { margin-top: 14px; }
+.horizontal .parcours > .parcours-tete { width: 100%; box-sizing: border-box; }
