@@ -1,0 +1,639 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Banc de montage · Club Jeune Reporter</title>
+<meta name="description" content="Monte toi-même un petit reportage sur le cross : dérushage, ligne de temps, coupes, titres et son.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bree+Serif&family=IBM+Plex+Mono:wght@600;700&display=swap">
+<style>
+:root {
+  --papier: #fcecd0; --papier-2: #f6dfb6; --blanc: #fffaf0; --encre: #161b45; --encre-2: #3e4266; --gris: #6e6a7c;
+  --marine: #000177; --rouge: #b44a12; --or: #e9b85a; --abricot: #f2a477; --vert: #1f6b45; --alerte: #a4161a;
+  --titre: "Bree Serif", Georgia, serif; --texte: "Atkinson Hyperlegible", "Segoe UI", system-ui, sans-serif; --mono: "IBM Plex Mono", ui-monospace, monospace;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { height: 100%; margin: 0; }
+body { background: var(--papier); color: var(--encre); font: 15px/1.45 var(--texte); overflow: hidden; }
+button, input, select { font: inherit; color: inherit; }
+button { cursor: pointer; }
+:focus-visible { outline: 3px solid var(--or); outline-offset: 2px; }
+.appli { height: 100%; max-width: 1180px; margin: 0 auto; display: flex; flex-direction: column; padding: 8px 10px 8px; gap: 8px; }
+
+/* en-tête et étapes */
+.tete { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; }
+.tete h1 { font: 400 20px/1.1 var(--titre); color: var(--marine); margin: 0; flex: 1 1 auto; }
+.tete h1 small { display: block; font: 700 10.5px/1.2 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--rouge); }
+.etapes { display: flex; gap: 4px; list-style: none; margin: 0; padding: 0; flex-wrap: wrap; }
+.etapes button { border: 2px solid var(--marine); background: var(--blanc); color: var(--marine); border-radius: 999px; padding: 3px 10px; font: 700 12px/1.2 var(--mono); }
+.etapes button[aria-current="step"] { background: var(--marine); color: #fff; }
+.etapes button.faite { background: var(--or); border-color: var(--or); color: var(--marine); }
+.etapes button:disabled { opacity: .4; cursor: default; }
+.recommencer { border: none; background: none; color: var(--gris); text-decoration: underline; font-size: 12px; }
+
+/* le haut : l'écran et la consigne */
+.haut { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr); gap: 10px; }
+.ecran { display: flex; flex-direction: column; gap: 6px; min-height: 0; }
+.moniteur { position: relative; background: #000; border: 3px solid var(--marine); border-radius: 4px; aspect-ratio: 16 / 9; width: 100%; }
+.moniteur canvas { width: 100%; height: 100%; display: block; }
+.moniteur .etiquette-ecran { position: absolute; left: 6px; top: 6px; background: rgba(0, 1, 119, .85); color: #fff; font: 700 11px/1 var(--mono); padding: 4px 6px; border-radius: 2px; }
+.commandes { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; }
+.btn { border: 2px solid var(--marine); background: var(--marine); color: #fff; border-radius: 3px; padding: 6px 12px; font-weight: 700; }
+.btn.clair { background: var(--blanc); color: var(--marine); }
+.btn.or { background: var(--or); border-color: var(--or); color: var(--marine); }
+.btn:disabled { opacity: .45; cursor: default; }
+.tc { font: 700 13px/1 var(--mono); color: var(--marine); }
+.panneau { background: var(--blanc); border: 2px solid var(--marine); border-radius: 4px; padding: 10px 12px; overflow: auto; min-height: 0; }
+.panneau h2 { font: 400 19px/1.15 var(--titre); color: var(--marine); margin: 0 0 4px; }
+.panneau h2 small { display: block; font: 700 10.5px/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: var(--rouge); margin-bottom: 2px; }
+.panneau p { margin: 0 0 8px; }
+.consigne { color: var(--encre-2); }
+.alerte { border-left: 4px solid var(--alerte); background: #fde8e4; padding: 6px 9px; margin: 6px 0; border-radius: 2px; }
+.ok { border-left: 4px solid var(--vert); background: #e3f1e8; padding: 6px 9px; margin: 6px 0; border-radius: 2px; }
+.info { border-left: 4px solid var(--or); background: #fdf3dc; padding: 6px 9px; margin: 6px 0; border-radius: 2px; }
+details.pourquoi { border: 2px solid var(--or); border-radius: 3px; margin: 8px 0; background: #fffdf6; }
+details.pourquoi summary { cursor: pointer; padding: 6px 10px; font-weight: 700; color: var(--marine); }
+details.pourquoi > div { padding: 0 12px 8px; }
+details.pourquoi ul { margin: 4px 0; padding-left: 18px; }
+
+/* dérushage */
+.rushes { display: grid; grid-template-columns: repeat(auto-fill, minmax(118px, 1fr)); gap: 8px; }
+.rush { border: 2px solid #cdbf9f; border-radius: 3px; background: #fff; padding: 4px; display: flex; flex-direction: column; gap: 4px; }
+.rush.choisi { border-color: var(--marine); }
+.rush canvas { width: 100%; aspect-ratio: 16 / 9; display: block; background: #000; cursor: pointer; }
+.rush .nom { font: 700 11.5px/1.2 var(--mono); color: var(--marine); display: flex; justify-content: space-between; }
+.rush .choix { display: flex; gap: 4px; }
+.rush .choix button { flex: 1; border: 2px solid var(--marine); background: #fff; color: var(--marine); border-radius: 3px; padding: 2px 0; font-size: 12px; font-weight: 700; }
+.rush .choix button[aria-pressed="true"].garder { background: var(--vert); border-color: var(--vert); color: #fff; }
+.rush .choix button[aria-pressed="true"].jeter { background: var(--alerte); border-color: var(--alerte); color: #fff; }
+.retours { margin: 6px 0; padding-left: 18px; }
+.retours li { margin: 3px 0; }
+.retours li.bien::marker { content: "✓ "; color: var(--vert); }
+.retours li.revoir::marker { content: "! "; color: var(--alerte); font-weight: 700; }
+
+/* chutier */
+.chutier { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0; min-height: 40px; padding: 6px; border: 2px dashed #cdbf9f; border-radius: 3px; }
+.chutier .vide { color: var(--gris); font-style: italic; align-self: center; }
+.puce { display: inline-flex; align-items: center; gap: 6px; border: 2px solid var(--marine); background: #fff; border-radius: 3px; padding: 3px 7px 3px 3px; font-size: 12.5px; font-weight: 700; color: var(--marine); touch-action: none; user-select: none; cursor: grab; }
+.puce canvas { width: 48px; height: 27px; display: block; }
+.puce.musique { border-color: #1f8a70; color: #155e4b; padding-left: 8px; }
+.jauge { height: 12px; border-radius: 6px; background: #eadfca; position: relative; margin: 4px 0 2px; overflow: visible; }
+.jauge i { position: absolute; inset: 0 auto 0 0; background: var(--marine); border-radius: 6px; }
+.jauge b { position: absolute; top: -4px; bottom: -4px; width: 3px; background: var(--rouge); }
+.jauge-txt { font: 700 12px/1.3 var(--mono); color: var(--marine); }
+
+/* coupe */
+.poignees label { display: block; font-weight: 700; color: var(--marine); margin-top: 6px; }
+.poignees input[type=range] { width: 100%; accent-color: var(--marine); }
+.champ { display: block; margin: 6px 0; }
+.champ span { display: block; font-weight: 700; color: var(--marine); font-size: 13px; }
+.champ input[type=text], .champ select { width: 100%; border: 2px solid var(--marine); border-radius: 3px; padding: 4px 6px; background: #fff; }
+.fiche { font: 12.5px/1.4 var(--mono); background: #f3ead6; padding: 6px 8px; border-radius: 2px; margin: 6px 0; }
+
+/* grille de relecture et montage modèle */
+.grille { list-style: none; padding: 0; margin: 6px 0; }
+.grille li { display: grid; grid-template-columns: 26px 1fr; gap: 2px 6px; padding: 5px 0; border-bottom: 1px solid #eadfca; }
+.grille li .m { font-weight: 700; font-size: 16px; }
+.grille li.bien .m { color: var(--vert); } .grille li.revoir .m { color: var(--alerte); }
+.grille li .c { grid-column: 2; color: var(--encre-2); font-size: 13.5px; }
+.modele { margin: 6px 0; padding-left: 20px; }
+.modele li { margin: 4px 0; }
+
+/* la ligne de temps */
+.ldt { flex: 0 0 auto; background: #20234a; border-radius: 4px; padding: 6px 8px 8px; color: #fff; position: relative; user-select: none; }
+.ldt-tete { display: flex; justify-content: space-between; font: 700 11px/1 var(--mono); color: #c9cbe8; margin-bottom: 4px; }
+.ldt-tete b { color: var(--or); }
+.pistes { position: relative; }
+.regle { height: 14px; margin-left: 78px; position: relative; font: 600 9.5px/1 var(--mono); color: #9ea2cf; }
+.regle span { position: absolute; top: 0; transform: translateX(-50%); }
+.regle span.cible { color: var(--or); }
+.piste { display: flex; align-items: stretch; height: 30px; margin: 3px 0; }
+.piste.video { height: 44px; }
+.piste .nom { flex: 0 0 74px; margin-right: 4px; font: 700 10px/1.1 var(--mono); text-transform: uppercase; letter-spacing: .04em; color: #c9cbe8; display: flex; align-items: center; }
+.piste .zone { flex: 1; position: relative; background: #2c3060; border-radius: 3px; }
+.piste .zone.cible-depot { outline: 2px dashed var(--or); }
+.bloc { position: absolute; top: 2px; bottom: 2px; border-radius: 3px; overflow: hidden; font: 700 10px/1.1 var(--texte); color: #fff; display: flex; align-items: center; gap: 4px; padding: 0 4px; white-space: nowrap; border: 1px solid rgba(255,255,255,.35); }
+.bloc.vid { background: #457b9d; cursor: pointer; touch-action: none; }
+.bloc.vid canvas { height: 34px; width: 60px; flex: none; border-radius: 2px; }
+.bloc.vid.sel { outline: 3px solid var(--or); outline-offset: -1px; z-index: 2; }
+.bloc.vid .coupe-g, .bloc.vid .coupe-d { position: absolute; top: 0; bottom: 0; width: 5px; background: var(--or); }
+.bloc.vid .coupe-g { left: 0; } .bloc.vid .coupe-d { right: 0; }
+.bloc.txt { background: var(--or); color: var(--marine); }
+.bloc.txt.faux { background: #f08a7e; }
+.bloc.son { background: #6d597a; }
+.bloc.son.voix { background: #b5179e; }
+.bloc.mus { background: #1f8a70; justify-content: center; cursor: pointer; }
+.bloc.mus.bas { background: #145c4b; } .bloc.mus.coupe { background: #3a3d5c; color: #9ea2cf; }
+.bloc.mus.faux { box-shadow: inset 0 0 0 2px #ff6b6b; }
+.tete-lecture { position: absolute; top: 14px; bottom: 0; width: 2px; background: #ff4d4d; pointer-events: none; display: none; }
+.insertion { position: absolute; top: 2px; bottom: 2px; width: 4px; background: var(--or); display: none; border-radius: 2px; }
+.fantome { position: fixed; z-index: 50; pointer-events: none; opacity: .9; transform: translate(-50%, -50%); }
+.modele-actif .ldt { box-shadow: 0 0 0 3px var(--or); }
+.bandeau-modele { display: none; background: var(--or); color: var(--marine); font-weight: 700; padding: 4px 10px; border-radius: 3px; text-align: center; }
+.modele-actif .bandeau-modele { display: block; }
+.legende { margin: 0; padding: 8px 10px; background: var(--blanc); border-left: 4px solid var(--or); border-radius: 2px; font-size: 14px; color: var(--encre-2); min-height: 2.6em; }
+.legende:empty { display: none; }
+.regle span { white-space: nowrap; }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+
+@media (max-width: 720px) {
+  .appli { overflow: auto; }
+  .haut { grid-template-columns: 1fr; flex: none; }
+  .ldt { position: sticky; bottom: 0; z-index: 5; }
+  .moniteur { aspect-ratio: auto; height: 26vh; }
+  .legende { display: none; }
+  .panneau { overflow: visible; }
+  .etapes button { padding: 2px 7px; font-size: 11px; }
+  .piste .nom { flex-basis: 52px; font-size: 8.5px; } .regle { margin-left: 56px; }
+  .tete h1 { font-size: 17px; }
+}
+</style>
+</head>
+<body>
+<div class="appli" id="appli">
+  <div class="tete">
+    <h1><small>Module 9 · Banc de montage</small>« Dupanloup au cross » : à toi de monter</h1>
+    <ol class="etapes" id="etapes" aria-label="Les étapes du montage"></ol>
+    <button class="recommencer" id="recommencer" type="button">Recommencer</button>
+  </div>
+  <div class="bandeau-modele" id="bandeau-modele">Tu regardes le montage modèle. <button class="btn clair" id="sortir-modele" type="button" style="padding:1px 8px;margin-left:6px">Revenir à mon montage</button></div>
+  <div class="haut">
+    <div class="ecran">
+      <div class="moniteur"><canvas id="moniteur" width="640" height="360" aria-label="L'écran de lecture"></canvas><span class="etiquette-ecran" id="etiquette-ecran">Écran</span></div>
+      <div class="commandes">
+        <button class="btn" id="lire" type="button">▶ Lire le montage</button>
+        <span class="tc" id="tc">0:00,0</span>
+      </div>
+      <p class="legende" id="legende" aria-live="off"></p>
+    </div>
+    <section class="panneau" id="panneau" aria-live="polite"></section>
+  </div>
+  <div class="ldt" id="ldt" aria-label="La ligne de temps">
+    <div class="ldt-tete"><span>LIGNE DE TEMPS</span><span>Durée : <b id="duree">0,0 s</b> · cible 45 s</span></div>
+    <div class="pistes" id="pistes">
+      <div class="regle" id="regle"></div>
+      <div class="piste"><span class="nom">Textes</span><div class="zone" id="z-txt"></div></div>
+      <div class="piste video"><span class="nom">Vidéo</span><div class="zone" id="z-vid"><div class="insertion" id="insertion"></div></div></div>
+      <div class="piste"><span class="nom">Son des plans</span><div class="zone" id="z-son"></div></div>
+      <div class="piste"><span class="nom">Musique</span><div class="zone" id="z-mus"></div></div>
+      <div class="tete-lecture" id="tete-lecture"></div>
+    </div>
+  </div>
+</div>
+<script src="plans.js"></script>
+<script src="son.js"></script>
+<script>
+(function () {
+  const $ = (s) => document.querySelector(s);
+  const esc = (s) => String(s == null ? '' : s).replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const fmt = (s) => (Math.round(s * 10) / 10).toLocaleString('fr-FR', { minimumFractionDigits: 1, maximumFractionDigits: 1 });
+  const CIBLE = 45, MIN_PLAN = 1.5, NIVEAU = { fort: .55, bas: .1, coupe: 0 }, NOM_NIVEAU = { fort: 'Fort', bas: 'Bas', coupe: 'Coupé' };
+  const CLE = 'club-banc-m9';
+  const ETAPES = ['Dérushage', 'Ligne de temps', 'Couper', 'Titrer', 'Son', 'Visionner'];
+  const vierge = () => ({ etape: 1, max: 1, tri: {}, triValide: false, piste: [], titre: { txt: '', sur: null }, synthe: { txt: '', sur: null }, fondu: false, musique: false, niveaux: {}, vu: false });
+  let E = vierge();
+  try { const s = JSON.parse(localStorage.getItem(CLE)); if (s && s.piste) E = Object.assign(vierge(), s); } catch (e) {}
+  const sauver = () => { try { localStorage.setItem(CLE, JSON.stringify(E)); } catch (e) {} };
+
+  /* ---------- le montage modèle ---------- */
+  const MODELE = {
+    piste: [{ id: 1, a: 1, b: 8 }, { id: 2, a: 1, b: 5 }, { id: 3, a: 0, b: 5 }, { id: 5, a: 0, b: 4 }, { id: 6, a: .5, b: 4.5 }, { id: 7, a: 0, b: 6 }, { id: 9, a: 0, b: 10 }, { id: 10, a: 0, b: 4 }],
+    titre: { txt: 'Dupanloup au cross', sur: 1 }, synthe: { txt: 'Jade Morin, 4e, 3e de l’académie', sur: 9 }, fondu: true, musique: true, niveaux: { 9: 'bas', 3: 'bas' },
+  };
+  const COMMENTAIRES = {
+    1: '<strong>Le plan d’ensemble</strong> ouvre l’émission, avec le titre par-dessus : on sait tout de suite où l’on est. Coupé d’une seconde au début, le temps que l’image se stabilise.',
+    2: '<strong>Les coureurs sur la ligne</strong> : on se rapproche, on attend le départ. 4 secondes suffisent.',
+    3: '<strong>Le départ</strong>, avec le coup de sifflet. La musique baisse un instant pour qu’on l’entende.',
+    5: '<strong>Les pieds dans la boue</strong> : un gros plan qui fait sentir l’effort, au milieu de la course.',
+    6: '<strong>Le public</strong> est le plan de coupe : il fait passer le temps de la course sans faux raccord entre le départ et l’arrivée.',
+    7: '<strong>L’arrivée de Jade</strong> : la meilleure prise (la deuxième, penchée et cachée, est jetée).',
+    9: '<strong>La réaction de Jade</strong>, en entier : le moment fort. Le synthé dit qui elle est, la musique est baissée pour qu’on entende sa voix.',
+    10: '<strong>Les dossards rangés</strong> : une image calme pour finir, avec un fondu au noir.',
+  };
+  let modeModele = false;
+  const M = () => (modeModele ? MODELE : E);
+
+  /* ---------- calendrier du montage ---------- */
+  function calendrier(src) {
+    let t = 0;
+    return src.piste.map((c) => { const p = PLAN[c.id], d = c.b - c.a, r = { id: c.id, plan: p, debut: t, duree: d, a: c.a }; t += d; return r; });
+  }
+  const total = (src) => src.piste.reduce((s, c) => s + c.b - c.a, 0);
+
+  /* ---------- l'écran ---------- */
+  const cv = $('#moniteur'), cx = cv.getContext('2d');
+  function ajusterEcran() {
+    const r = cv.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+    cv.width = Math.max(320, Math.round(r.width * dpr)); cv.height = Math.max(180, Math.round(r.height * dpr));
+  }
+  function peindre(c, w, h, plan, t, d) {
+    // garde le rapport 16:9 au centre
+    const s = Math.min(w / 320, h / 180), ox = (w - 320 * s) / 2, oy = (h - 180 * s) / 2;
+    c.setTransform(1, 0, 0, 1, 0, 0); c.fillStyle = '#000'; c.fillRect(0, 0, w, h);
+    c.save(); c.setTransform(s, 0, 0, s, ox, oy); c.beginPath(); c.rect(0, 0, 320, 180); c.clip();
+    if (plan) plan.dessin(c, t, d); c.restore();
+    return { s, ox, oy };
+  }
+  function bandeauTexte(c, g, txt, y, taille, fond, coul, align) {
+    c.save(); c.setTransform(g.s, 0, 0, g.s, g.ox, g.oy);
+    c.font = `700 ${taille}px "Atkinson Hyperlegible", system-ui, sans-serif`; c.textBaseline = 'middle';
+    const w = c.measureText(txt).width;
+    if (align === 'centre') { c.fillStyle = fond; c.fillRect(160 - w / 2 - 10, y - taille * .9, w + 20, taille * 1.8); c.fillStyle = coul; c.textAlign = 'center'; c.fillText(txt, 160, y); }
+    else { c.fillStyle = fond; c.fillRect(14, y - taille * .85, w + 18, taille * 1.7); c.fillStyle = '#c1121f'; c.fillRect(14, y - taille * .85, 4, taille * 1.7); c.fillStyle = coul; c.textAlign = 'left'; c.fillText(txt, 24, y); }
+    c.restore();
+  }
+  function soustitre(c, g, txt) {
+    c.save(); c.setTransform(g.s, 0, 0, g.s, g.ox, g.oy); c.font = '700 10px "Atkinson Hyperlegible", system-ui, sans-serif'; c.textAlign = 'center'; c.textBaseline = 'middle';
+    const w = c.measureText(txt).width; c.fillStyle = 'rgba(0,0,0,.72)'; c.fillRect(160 - w / 2 - 6, 158, w + 12, 15); c.fillStyle = '#fff'; c.fillText(txt, 160, 165.5); c.restore();
+  }
+  // dessine l'image du montage à l'instant t
+  function imageMontage(t) {
+    const src = M(), cal = calendrier(src), tot = total(src);
+    const k = cal.find((x) => t >= x.debut && t < x.debut + x.duree) || cal[cal.length - 1];
+    if (!k) { peindre(cx, cv.width, cv.height, null); return; }
+    const loc = Math.min(k.duree, Math.max(0, t - k.debut)), tp = k.a + loc;
+    const g = peindre(cx, cv.width, cv.height, k.plan, tp, k.plan.duree);
+    legende(k.id, cal.indexOf(k));
+    if (k.plan.soustitres) { const st = k.plan.soustitres.find(([a, b]) => tp >= a && tp < b); if (st) soustitre(cx, g, st[2]); }
+    if (src.titre.txt && src.titre.sur === k.id && loc < Math.min(4, k.duree)) bandeauTexte(cx, g, src.titre.txt, 90, 20, 'rgba(0,1,119,.86)', '#fff', 'centre');
+    if (src.synthe.txt && src.synthe.sur === k.id && loc > .4 && loc < k.duree - .3) bandeauTexte(cx, g, src.synthe.txt, 134, 9.5, 'rgba(255,250,240,.95)', '#000177');
+    if (src.fondu && tot - t < 1.2) { cx.setTransform(1, 0, 0, 1, 0, 0); cx.fillStyle = `rgba(0,0,0,${Math.min(1, (1.2 - (tot - t)) / 1.2)})`; cx.fillRect(0, 0, cv.width, cv.height); }
+  }
+
+  // la légende sous l'écran : ce plan, et en mode modèle le commentaire du monteur
+  let legendeVue = null;
+  function legende(id, i) {
+    const cle = (modeModele ? 'm' : 'e') + id + '-' + i; if (cle === legendeVue) return; legendeVue = cle;
+    const el = $('#legende'), p = PLAN[id];
+    if (id == null) { el.innerHTML = ''; return; }
+    if (modeModele) { el.innerHTML = `<strong>Plan ${i + 1}</strong> · ${COMMENTAIRES[id] || ''}`; return; }
+    el.innerHTML = E.triValide ? `<strong>${i == null ? 'Rush ' + id : 'Plan ' + (i + 1)} · ${esc(p.nom)}</strong> : ${esc(p.desc)}` : `<strong>Rush ${id}</strong> · ${p.duree} s. Regarde-le jusqu’au bout avant de décider.`;
+  }
+
+  /* ---------- la lecture ---------- */
+  let lecture = null;
+  function stop() {
+    if (lecture) cancelAnimationFrame(lecture.raf); lecture = null; SON.couper();
+    $('#lire').textContent = '▶ Lire le montage'; $('#tete-lecture').style.display = 'none';
+  }
+  function horloge(t0audio, t0perf) { return () => (t0audio ? SON.maintenant() - t0audio : (performance.now() - t0perf) / 1000); }
+  function lireMontage(depuis = 0, fin) {
+    stop(); const src = M(), cal = calendrier(src), tot = total(src); if (!cal.length) return;
+    const jusqua = fin == null ? tot : fin;
+    const morceaux = cal.filter((k) => k.debut + k.duree > depuis && k.debut < jusqua).map((k) => {
+      const a = Math.max(k.debut, depuis), b = Math.min(k.debut + k.duree, jusqua);
+      return { debut: a - depuis, duree: b - a, son: k.plan.son, decalage: k.a + (a - k.debut) };
+    });
+    const mus = src.musique ? { niveaux: cal.filter((k) => k.debut + k.duree > depuis).map((k) => [Math.max(0, k.debut - depuis), k.debut + k.duree - depuis, NIVEAU[src.niveaux[k.id] || 'fort']]) } : null;
+    const t0a = SON.jouer(morceaux, mus, jusqua - depuis), now = horloge(t0a, performance.now());
+    $('#lire').textContent = '■ Arrêter'; $('#etiquette-ecran').textContent = modeModele ? 'Montage modèle' : 'Ton montage';
+    const tl = $('#tete-lecture'); tl.style.display = 'block';
+    const boucle = () => {
+      const t = depuis + Math.max(0, now());
+      if (t >= jusqua) { imageMontage(Math.max(0, jusqua - .01)); const fini = fin == null; stop(); if (fini) finLecture(); return; }
+      imageMontage(t); $('#tc').textContent = minutes(t) + ' / ' + minutes(tot);
+      tl.style.left = (LABEL_X + t * echelle()) + 'px';
+      lecture.raf = requestAnimationFrame(boucle);
+    };
+    lecture = { raf: requestAnimationFrame(boucle) };
+  }
+  function lirePlan(id, a, b) {
+    stop(); const p = PLAN[id]; a = a || 0; b = b == null ? p.duree : b;
+    const t0a = SON.jouer([{ debut: 0, duree: b - a, son: p.son, decalage: a }], null, b - a), now = horloge(t0a, performance.now());
+    legende(id, null);
+    $('#lire').textContent = '■ Arrêter'; $('#etiquette-ecran').textContent = 'Rush ' + id;
+    const boucle = () => {
+      const t = a + Math.max(0, now());
+      if (t >= b) { stop(); return; }
+      const g = peindre(cx, cv.width, cv.height, p, t, p.duree);
+      if (p.soustitres) { const st = p.soustitres.find(([x, y]) => t >= x && t < y); if (st) soustitre(cx, g, st[2]); }
+      $('#tc').textContent = minutes(t) + ' / ' + minutes(p.duree);
+      lecture.raf = requestAnimationFrame(boucle);
+    };
+    lecture = { raf: requestAnimationFrame(boucle) };
+  }
+  const minutes = (s) => `${Math.floor(s / 60)}:${String(Math.floor(s % 60)).padStart(2, '0')},${Math.floor((s * 10) % 10)}`;
+  $('#lire').onclick = () => { if (lecture) { stop(); return; } if (!M().piste.length) { lirePlan(1); return; } lireMontage(0); };
+  let finLecture = () => {};
+
+  /* ---------- la ligne de temps ---------- */
+  const LABEL = 78;
+  const largeurZone = () => $('#z-vid').getBoundingClientRect().width || 600;
+  const echelle = () => largeurZone() / Math.max(60, total(M()) + 4);
+  function vignette(id, w, h, t) {
+    const c = document.createElement('canvas'); c.width = w * 2; c.height = h * 2; const p = PLAN[id];
+    peindre(c.getContext('2d'), c.width, c.height, p, t == null ? p.duree / 2 : t, p.duree); return c;
+  }
+  function dessinerLdt() {
+    LABEL_MAJ();
+    const src = M(), cal = calendrier(src), sc = echelle(), tot = total(src);
+    $('#duree').textContent = fmt(tot) + ' s';
+    const regle = $('#regle'); regle.innerHTML = '';
+    const fin = Math.max(60, tot + 4);
+    for (let s = 0; s <= fin; s += 5) { const sp = document.createElement('span'); sp.textContent = s + ' s'; sp.style.left = s * sc + 'px'; if (s === CIBLE) sp.className = 'cible'; regle.appendChild(sp); }
+    const zv = $('#z-vid'), zt = $('#z-txt'), zs = $('#z-son'), zm = $('#z-mus');
+    [zv, zt, zs, zm].forEach((z) => z.querySelectorAll('.bloc').forEach((b) => b.remove()));
+    cal.forEach((k, i) => {
+      const b = document.createElement('div'); b.className = 'bloc vid' + (k.id === sel ? ' sel' : ''); b.dataset.id = k.id; b.dataset.i = i;
+      b.style.left = k.debut * sc + 'px'; b.style.width = Math.max(8, k.duree * sc - 2) + 'px';
+      b.title = `${k.plan.nom} · ${fmt(k.duree)} s`; b.setAttribute('role', 'button'); b.tabIndex = 0;
+      b.setAttribute('aria-label', `Plan ${i + 1} : ${k.plan.nom}, ${fmt(k.duree)} secondes`);
+      if (k.duree * sc > 70) b.appendChild(vignette(k.id, 30, 17, k.a + k.duree / 2));
+      const l = document.createElement('span'); l.textContent = k.duree * sc > 110 ? k.plan.nom : (k.duree * sc > 26 ? '#' + k.id : ''); b.appendChild(l);
+      const pc = src.piste[i]; if (pc.a > 0) b.insertAdjacentHTML('beforeend', '<i class="coupe-g"></i>'); if (pc.b < k.plan.duree) b.insertAdjacentHTML('beforeend', '<i class="coupe-d"></i>');
+      zv.appendChild(b);
+      const s = document.createElement('div'); s.className = 'bloc son' + (k.plan.son === 'voix' ? ' voix' : ''); s.style.left = k.debut * sc + 'px'; s.style.width = Math.max(6, k.duree * sc - 2) + 'px';
+      s.textContent = k.duree * sc > 60 ? ({ ambiance: 'ambiance', foule: 'applaudissements', sifflet: 'sifflet', voix: 'voix de Jade' })[k.plan.son] : ''; zs.appendChild(s);
+      if (src.musique) {
+        const n = src.niveaux[k.id] || 'fort', m = document.createElement('div');
+        m.className = `bloc mus ${n}` + (k.id === 9 && n === 'fort' ? ' faux' : ''); m.dataset.id = k.id;
+        m.style.left = k.debut * sc + 'px'; m.style.width = Math.max(6, k.duree * sc - 2) + 'px'; m.textContent = k.duree * sc > 34 ? NOM_NIVEAU[n] : '';
+        m.title = `Niveau de la musique sous « ${k.plan.nom} » : ${NOM_NIVEAU[n]}`;
+        if (!modeModele && E.etape === 5) { m.setAttribute('role', 'button'); m.tabIndex = 0; m.onclick = () => changerNiveau(k.id); m.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); changerNiveau(k.id); } }; }
+        zm.appendChild(m);
+      }
+    });
+    [['titre', 'Titre'], ['synthe', 'Synthé']].forEach(([k, nom]) => {
+      const o = src[k]; if (!o.txt || o.sur == null) return; const c = cal.find((x) => x.id === o.sur); if (!c) return;
+      const b = document.createElement('div'); const faux = k === 'synthe' ? o.sur !== 9 : o.sur !== (cal[0] && cal[0].id);
+      b.className = 'bloc txt' + (faux ? ' faux' : ''); const d = k === 'titre' ? Math.min(4, c.duree) : c.duree;
+      b.style.left = c.debut * sc + 'px'; b.style.width = Math.max(8, d * sc - 2) + 'px'; b.textContent = d * sc > 40 ? nom + ' : ' + o.txt : nom; b.title = nom + ' : ' + o.txt; zt.appendChild(b);
+    });
+    if (src.fondu && tot) { const b = document.createElement('div'); b.className = 'bloc txt'; b.style.left = (tot - 1.2) * sc + 'px'; b.style.width = 1.2 * sc + 'px'; b.textContent = ''; b.title = 'Fondu au noir'; b.style.background = 'linear-gradient(90deg, transparent, #000)'; zt.appendChild(b); }
+  }
+  function LABEL_MAJ() { const r = $('#z-vid').getBoundingClientRect(), p = $('#pistes').getBoundingClientRect(); LABEL_X = r.left - p.left; }
+  let LABEL_X = LABEL;
+
+  /* ---------- glisser-déposer sur la piste vidéo (souris, doigt, stylet) ---------- */
+  let glisse = null;
+  function indexInsertion(x) {
+    const r = $('#z-vid').getBoundingClientRect(), t = (x - r.left) / echelle(), cal = calendrier(E);
+    let i = cal.findIndex((k) => t < k.debut + k.duree / 2); if (i < 0) i = cal.length; return i;
+  }
+  function montrerInsertion(i) {
+    const ins = $('#insertion'), cal = calendrier(E), sc = echelle();
+    const t = i < cal.length ? cal[i].debut : total(E); ins.style.left = Math.max(0, t * sc - 2) + 'px'; ins.style.display = 'block';
+  }
+  function demarrerGlisse(e, id, depuis) {
+    if (E.etape !== 2 || modeModele) return;
+    glisse = { id, depuis, x0: e.clientX, y0: e.clientY, actif: false, el: null };
+    e.target.setPointerCapture && e.target.setPointerCapture(e.pointerId);
+  }
+  window.addEventListener('pointermove', (e) => {
+    if (!glisse) return;
+    if (!glisse.actif && Math.hypot(e.clientX - glisse.x0, e.clientY - glisse.y0) > 6) {
+      glisse.actif = true; const f = document.createElement('div'); f.className = 'fantome puce'; f.appendChild(vignette(glisse.id, 24, 13.5)); f.insertAdjacentText('beforeend', PLAN[glisse.id].nom); document.body.appendChild(f); glisse.el = f;
+    }
+    if (!glisse.actif) return;
+    glisse.el.style.left = e.clientX + 'px'; glisse.el.style.top = e.clientY + 'px';
+    const r = $('#z-vid').getBoundingClientRect(), dessus = e.clientY > r.top - 40 && e.clientY < r.bottom + 40 && e.clientX > r.left - 20 && e.clientX < r.right + 20;
+    $('#z-vid').classList.toggle('cible-depot', dessus);
+    if (dessus) montrerInsertion(indexInsertion(e.clientX)); else $('#insertion').style.display = 'none';
+  });
+  window.addEventListener('pointerup', (e) => {
+    if (!glisse) return; const g = glisse; glisse = null;
+    $('#insertion').style.display = 'none'; $('#z-vid').classList.remove('cible-depot'); if (g.el) g.el.remove();
+    if (!g.actif) { if (g.depuis === 'chutier') ajouterPlan(g.id); else choisirBloc(g.id); return; }
+    const r = $('#z-vid').getBoundingClientRect(), dessus = e.clientY > r.top - 40 && e.clientY < r.bottom + 40;
+    if (!dessus) { if (g.depuis === 'piste') { retirerPlan(g.id); } return; }
+    let i = indexInsertion(e.clientX);
+    const ancien = E.piste.findIndex((c) => c.id === g.id); let clip = { id: g.id, a: 0, b: PLAN[g.id].duree };
+    if (ancien >= 0) { clip = E.piste.splice(ancien, 1)[0]; if (ancien < i) i--; }
+    E.piste.splice(i, 0, clip); sauver(); tout();
+  });
+  $('#z-vid').addEventListener('pointerdown', (e) => { const b = e.target.closest('.bloc.vid'); if (!b) return; if (E.etape === 2 && !modeModele) demarrerGlisse(e, +b.dataset.id, 'piste'); else choisirBloc(+b.dataset.id); });
+  $('#z-vid').addEventListener('keydown', (e) => { const b = e.target.closest('.bloc.vid'); if (!b) return; const id = +b.dataset.id, i = E.piste.findIndex((c) => c.id === id);
+    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); choisirBloc(id); }
+    if (E.etape === 2 && (e.key === 'ArrowLeft' || e.key === 'ArrowRight')) { e.preventDefault(); const j = i + (e.key === 'ArrowLeft' ? -1 : 1); if (j < 0 || j >= E.piste.length) return; const [c] = E.piste.splice(i, 1); E.piste.splice(j, 0, c); sauver(); tout(); const nb = document.querySelector(`.bloc.vid[data-id="${id}"]`); nb && nb.focus(); }
+    if (E.etape === 2 && (e.key === 'Delete' || e.key === 'Backspace')) { e.preventDefault(); retirerPlan(id); } });
+
+  function ajouterPlan(id) { if (E.piste.some((c) => c.id === id)) return; E.piste.push({ id, a: 0, b: PLAN[id].duree }); sauver(); tout(); }
+  function retirerPlan(id) { E.piste = E.piste.filter((c) => c.id !== id); if (sel === id) sel = null; ['titre', 'synthe'].forEach((k) => { if (E[k].sur === id) E[k].sur = null; }); sauver(); tout(); }
+  let sel = null;
+  function choisirBloc(id) {
+    sel = id; const c = M().piste.find((x) => x.id === id);
+    if (c) { stop(); peindre(cx, cv.width, cv.height, PLAN[id], c.a + (c.b - c.a) / 2, PLAN[id].duree); $('#etiquette-ecran').textContent = PLAN[id].nom; legende(id, M().piste.indexOf(c)); }
+    tout();
+  }
+  function changerNiveau(id) { const n = E.niveaux[id] || 'fort'; E.niveaux[id] = n === 'fort' ? 'bas' : n === 'bas' ? 'coupe' : 'fort'; sauver(); tout(); }
+
+  /* ---------- les étapes ---------- */
+  function dessinerEtapes() {
+    $('#etapes').innerHTML = ETAPES.map((n, i) => `<li><button type="button" data-e="${i + 1}" ${i + 1 === E.etape ? 'aria-current="step"' : ''} class="${i + 1 < E.max && i + 1 !== E.etape ? 'faite' : ''}" ${i + 1 > E.max ? 'disabled' : ''}>${i + 1}. ${n}</button></li>`).join('');
+    $('#etapes').querySelectorAll('button').forEach((b) => (b.onclick = () => aller(+b.dataset.e)));
+  }
+  function aller(n) { stop(); quitterModele(); E.etape = n; E.max = Math.max(E.max, n); sauver(); tout(); $('#panneau').scrollTop = 0; }
+  const suivant = (ok = true, txt = 'Étape suivante →') => `<p style="margin-top:10px"><button class="btn or" type="button" id="suite" ${ok ? '' : 'disabled'}>${txt}</button></p>`;
+  const brancherSuite = () => { const s = $('#suite'); if (s) s.onclick = () => aller(E.etape + 1); };
+
+  const panneaux = {
+    1() {
+      const decides = PLANS.filter((p) => E.tri[p.id]).length;
+      let h = `<h2><small>Étape 1 sur 6</small>Le dérushage</h2>
+        <p class="consigne">Le cadreur te rapporte <strong>10 rushes</strong> filmés au cross. Clique sur chaque image pour la regarder, puis <strong>garde</strong> ou <strong>jette</strong> le plan. On ne garde que ce qui sert le reportage.</p>
+        <div class="rushes">${PLANS.map((p) => `<div class="rush${E.tri[p.id] ? ' choisi' : ''}"><span class="nom"><span>Rush ${p.id}</span><span>${p.duree} s</span></span><canvas data-voir="${p.id}" width="236" height="133" aria-label="Regarder le rush ${p.id}" tabindex="0"></canvas>
+          <span class="choix"><button type="button" class="garder" data-r="${p.id}" data-v="garde" aria-pressed="${E.tri[p.id] === 'garde'}">Garder</button><button type="button" class="jeter" data-r="${p.id}" data-v="jete" aria-pressed="${E.tri[p.id] === 'jete'}">Jeter</button></span></div>`).join('')}</div>
+        <p style="margin-top:8px"><button class="btn" type="button" id="valider-tri" ${decides < 10 ? 'disabled' : ''}>Valider mon tri</button> <span class="jauge-txt">${decides} / 10 rushes triés</span></p>`;
+      if (E.triValide) {
+        const g = (id) => E.tri[id] === 'garde', items = [];
+        items.push(g(4) ? ['revoir', '<strong>Rush 4</strong> : il est flou et un doigt cache l’objectif. Un plan raté ne se monte jamais : jette-le.'] : ['bien', '<strong>Rush 4</strong> jeté : flou, avec un doigt devant l’objectif, il est inutilisable.']);
+        items.push(g(8) ? ['revoir', '<strong>Rush 8</strong> : c’est l’arrivée de Jade une deuxième fois, en moins bien (le cadre penche, un dos passe devant). Garde seulement la meilleure prise, le rush 7.'] : ['bien', '<strong>Rush 8</strong> jeté : tu as déjà l’arrivée de Jade, mieux cadrée, dans le rush 7.']);
+        if (!g(9)) items.push(['revoir', '<strong>Rush 9</strong> : la réaction de Jade est le moment fort du reportage. Sans elle, on n’entend personne : garde-la.']);
+        if (!g(1)) items.push(['revoir', '<strong>Rush 1</strong> : sans plan d’ensemble, le spectateur ne sait pas où il est. Il sert souvent d’ouverture.']);
+        if (!g(6)) items.push(['revoir', '<strong>Rush 6</strong> : le public est un <em>plan de coupe</em>. Il permet de passer du départ à l’arrivée sans faux raccord.']);
+        if (!g(7)) items.push(['revoir', '<strong>Rush 7</strong> : c’est la meilleure prise de l’arrivée de Jade. Sans arrivée, la course n’a pas de fin.']);
+        [2, 3, 5, 10].forEach((id) => { if (!g(id)) items.push(['info', `<strong>Rush ${id}</strong> jeté : tu peux t’en passer, mais il aide à raconter la course.`]); });
+        h += `<ul class="retours">${items.map(([c, t]) => `<li class="${c === 'info' ? '' : c}">${t}</li>`).join('')}</ul>
+        <details class="pourquoi"><summary>Pourquoi jeter les rushes 4 et 8 ?</summary><div>
+          <ul><li><strong>Le rush 4 est un plan raté</strong> : flou, un doigt devant l’objectif. Au tournage, on filme beaucoup ; au dérushage, on jette sans regret ce qui est inutilisable.</li>
+          <li><strong>Le rush 8 est une deuxième prise</strong> de la même action. Montrer deux fois l’arrivée de Jade, le spectateur croirait à une erreur. On garde <strong>la meilleure prise</strong> : stable, bien cadrée, sans obstacle.</li>
+          <li>Les autres plans ont chacun un rôle : situer (plan d’ensemble), raconter (départ, boue, arrivée), relier (le public, plan de coupe), faire entendre (la réaction), finir (les dossards).</li></ul></div></details>`;
+        h += suivant(E.piste.length >= 0);
+      }
+      return h;
+    },
+    2() {
+      const dans = new Set(E.piste.map((c) => c.id)), reste = PLANS.filter((p) => E.tri[p.id] === 'garde' && !dans.has(p.id)), tot = total(E);
+      let h = `<h2><small>Étape 2 sur 6</small>La ligne de temps</h2>
+        <p class="consigne"><strong>Glisse</strong> les plans gardés sur la <strong>piste vidéo</strong>, en bas, dans l’ordre de ton choix. Un clic ajoute le plan au bout. Sur la piste, glisse un plan pour le déplacer, ou fais-le sortir de la piste pour le retirer.</p>
+        <p style="font-weight:700;color:var(--marine);margin:0">Tes plans gardés</p>
+        <div class="chutier" id="chutier">${reste.length ? reste.map((p) => `<span class="puce" data-id="${p.id}" tabindex="0" role="button" aria-label="Ajouter ${esc(p.nom)} à la piste"><canvas data-v="${p.id}" width="96" height="54"></canvas>${esc(p.nom)} · ${p.duree} s</span>`).join('') : '<span class="vide">Tous tes plans sont sur la piste.</span>'}</div>
+        ${jauge(tot)}`;
+      if (E.piste.length >= 5 || !reste.length) h += `<details class="pourquoi"><summary>Pourquoi cet ordre ?</summary><div><ul>
+        <li><strong>On ouvre large</strong> : le plan d’ensemble dit au spectateur où il est.</li>
+        <li><strong>On suit l’ordre de la course</strong> : la ligne, le départ, l’effort, l’arrivée. Le spectateur comprend sans commentaire.</li>
+        <li><strong>On relie avec un plan de coupe</strong> : le public, entre le départ et l’arrivée, fait passer les minutes de course. Sans lui, Jade partirait et arriverait d’un coup : c’est un faux raccord.</li>
+        <li><strong>On finit calme</strong> : après la réaction, une image tranquille (les dossards) referme le reportage.</li></ul></div></details>`;
+      h += suivant(E.piste.length >= 3, E.piste.length >= 3 ? 'Étape suivante →' : 'Pose au moins 3 plans');
+      return h;
+    },
+    3() {
+      const tot = total(E), brut = E.piste.reduce((s, c) => s + PLAN[c.id].duree, 0);
+      let h = `<h2><small>Étape 3 sur 6</small>Couper</h2>
+        <p class="consigne"><strong>Clique sur un plan</strong> de la piste vidéo, puis tire ses <strong>deux poignées</strong> : on garde le cœur de l’action, on coupe le début qui attend et la fin qui traîne.</p>
+        ${jauge(tot)}<p class="jauge-txt">Avant les coupes : ${fmt(brut)} s · tu as gagné ${fmt(brut - tot)} s</p>`;
+      const c = E.piste.find((x) => x.id === sel);
+      if (!c) h += '<p class="info">Choisis un plan en cliquant dessus dans la piste vidéo.</p>';
+      else {
+        const p = PLAN[c.id];
+        h += `<div class="poignees"><p style="margin:6px 0 0"><strong>${esc(p.nom)}</strong> : ${p.duree} s → ${fmt(c.b - c.a)} s · tu gagnes <strong>${fmt(p.duree - (c.b - c.a))} s</strong></p>
+          <label for="pg">Poignée de début : ${fmt(c.a)} s</label><input id="pg" type="range" min="0" max="${p.duree}" step="0.5" value="${c.a}">
+          <label for="pd">Poignée de fin : ${fmt(c.b)} s</label><input id="pd" type="range" min="0" max="${p.duree}" step="0.5" value="${c.b}">
+          <p class="consigne" style="font-size:13px;margin-top:6px">L’écran montre l’image où se trouve la poignée que tu tires. Un plan garde au moins ${fmt(MIN_PLAN)} s. <button class="btn clair" type="button" id="voir-coupe" style="padding:2px 8px">▶ Voir ce plan coupé</button></p></div>`;
+        if (c.id === 9 && c.b - c.a < 9.5) h += '<p class="alerte">Attention : en coupant la réaction de Jade, tu lui coupes la parole. Garde ses phrases en entier.</p>';
+      }
+      if (tot > 50) h += '<p class="info">Ton montage dépasse 50 s : coupe encore un peu, ou retire un plan à l’étape 2.</p>';
+      else if (tot >= 40) h += '<p class="ok">Ta durée est proche de la cible de 45 s.</p>';
+      h += suivant();
+      return h;
+    },
+    4() {
+      const cal = calendrier(E), opts = (v) => `<option value="">— choisis un plan —</option>` + cal.map((k, i) => `<option value="${k.id}" ${v === k.id ? 'selected' : ''}>Plan ${i + 1} · ${esc(k.plan.nom)}</option>`).join('');
+      let h = `<h2><small>Étape 4 sur 6</small>Titrer</h2>
+        <p class="consigne">Écris le <strong>titre d’ouverture</strong> de l’émission et le <strong>synthé</strong> : le bandeau qui présente la personne qui parle. Puis pose chacun sur un plan.</p>
+        <label class="champ"><span>Titre d’ouverture</span><input type="text" id="t-titre" maxlength="32" value="${esc(E.titre.txt)}" placeholder="Par exemple : Dupanloup au cross"></label>
+        <label class="champ"><span>Le titre se pose sur…</span><select id="s-titre">${opts(E.titre.sur)}</select></label>
+        <p class="fiche">Notes du reporter, rush 9 : Jade Morin, 4e, 3e de l’académie au cross.</p>
+        <label class="champ"><span>Synthé</span><input type="text" id="t-synthe" maxlength="40" value="${esc(E.synthe.txt)}" placeholder="Prénom Nom, classe, résultat"></label>
+        <label class="champ"><span>Le synthé se pose sur…</span><select id="s-synthe">${opts(E.synthe.sur)}</select></label>
+        <label class="champ" style="display:flex;gap:8px;align-items:center"><input type="checkbox" id="fondu" ${E.fondu ? 'checked' : ''}> <span style="display:inline">Ajouter un <strong>fondu</strong> au noir à la fin</span></label>
+        <div id="alertes-titre">${alertesTitre()}</div>`;
+      h += suivant();
+      return h;
+    },
+    5() {
+      const n9 = E.niveaux[9] || 'fort', a9 = E.piste.some((c) => c.id === 9);
+      let h = `<h2><small>Étape 5 sur 6</small>Le son</h2>
+        <p class="consigne">Pose la <strong>musique</strong> sur sa piste, puis règle son <strong>niveau</strong> sous chaque plan : clique sur un morceau de la piste Musique pour passer de <strong>Fort</strong> à <strong>Bas</strong>, puis à <strong>Coupé</strong>.</p>`;
+      if (!E.musique) h += `<div class="chutier" id="chutier-mus"><span class="puce musique" id="puce-mus" role="button" tabindex="0">♪ « Élan », musique libre du club</span></div><p class="consigne" style="font-size:13px">Glisse-la sur la piste Musique, ou clique dessus.</p>`;
+      else {
+        h += '<p class="ok">La musique est posée sur toute la longueur du montage.</p>';
+        if (a9 && n9 === 'fort') h += '<p class="alerte"><strong>La musique couvre la voix de Jade !</strong> Baisse son niveau sous sa réaction : clique sur le morceau de musique sous le plan « La réaction de Jade ».</p>';
+        else if (a9) h += `<p class="ok">Sous la réaction de Jade, la musique est ${n9 === 'bas' ? 'baissée' : 'coupée'} : on entend sa voix.</p>`;
+        if (a9) h += `<p><button class="btn clair" type="button" id="ecouter-9">▶ Écouter la réaction avec ta musique</button></p>`;
+        h += `<details class="pourquoi"><summary>Pourquoi baisser la musique sous la voix ?</summary><div><ul>
+          <li><strong>La voix passe toujours devant</strong> : on doit comprendre chaque mot de Jade. Une musique trop forte la couvre.</li>
+          <li><strong>On baisse, on ne coupe pas forcément</strong> : une musique basse garde l’élan du reportage. Coupée, elle laisse toute la place au son du bord de piste.</li>
+          <li>Les sous-titres aident, mais ils ne remplacent pas un bon son.</li></ul></div></details>`;
+      }
+      h += suivant(E.musique);
+      return h;
+    },
+    6() {
+      let h = `<h2><small>Étape 6 sur 6</small>Visionner</h2>
+        <p class="consigne">Comme un vrai monteur, <strong>regarde ton montage en entier</strong>, avec le son, avant de le montrer à quelqu’un.</p>
+        <p><button class="btn" type="button" id="lire-tout">▶ Lire mon montage en entier</button></p>`;
+      if (!E.vu) h += '<p class="info">La grille de relecture s’affiche quand tu as regardé ton montage jusqu’au bout.</p>';
+      else h += grille() + `<p><button class="btn or" type="button" id="voir-modele">Voir le montage modèle</button></p>` + (modeModele ? modeleHTML() : '');
+      return h;
+    },
+  };
+
+  function jauge(tot) {
+    const max = 70, w = Math.min(100, tot / max * 100);
+    return `<div class="jauge" role="img" aria-label="Durée ${fmt(tot)} secondes, cible 45"><i style="width:${w}%"></i><b style="left:${CIBLE / max * 100}%"></b></div><p class="jauge-txt">Durée : ${fmt(tot)} s · cible : ${CIBLE} s ${tot ? (Math.abs(tot - CIBLE) <= 5 ? '✓' : tot > CIBLE ? `(${fmt(tot - CIBLE)} s de trop)` : `(il manque ${fmt(CIBLE - tot)} s)`) : ''}</p>`;
+  }
+  function alertesTitre() {
+    const cal = calendrier(E), out = [], premier = cal[0] && cal[0].id;
+    if (E.titre.txt && E.titre.sur != null && E.titre.sur !== premier) out.push('<p class="alerte">Le <strong>titre d’ouverture</strong> se pose sur le <strong>premier plan</strong> : c’est lui qui ouvre l’émission.</p>');
+    if (E.synthe.sur != null && E.synthe.sur !== 9) out.push(E.synthe.sur === 7
+      ? '<p class="alerte">Sur ce plan, Jade court : on ne voit pas encore qui parle. Le <strong>synthé</strong> se pose quand elle parle face à nous, sur sa <strong>réaction</strong>.</p>'
+      : '<p class="alerte">Le <strong>synthé</strong> présente la personne qui parle : pose-le sur <strong>la réaction de Jade</strong>.</p>');
+    if (E.synthe.txt && !/morin/i.test(E.synthe.txt)) out.push('<p class="alerte">Vérifie le synthé : le nom de Jade est écrit dans les notes du reporter. Une faute sur un nom, et la personne est vexée.</p>');
+    if (!E.piste.some((c) => c.id === 9)) out.push('<p class="info">La réaction de Jade n’est pas dans ton montage : ajoute-la à l’étape 2 pour y poser le synthé.</p>');
+    if (!out.length && E.titre.sur != null && E.synthe.sur === 9 && E.titre.txt && E.synthe.txt) out.push('<p class="ok">Ton titre ouvre l’émission et ton synthé présente Jade au bon moment.</p>');
+    return out.join('');
+  }
+  function grille() {
+    const cal = calendrier(E), ids = cal.map((k) => k.id), tot = total(E), i6 = ids.indexOf(6), n9 = E.niveaux[9] || 'fort';
+    const L = [];
+    L.push(ids[0] === 1 ? ['bien', 'Ouverture sur un plan d’ensemble', 'Ton émission commence par le parc : le spectateur sait où il est.'] : ['revoir', 'Ouverture sur un plan d’ensemble', 'Ton premier plan n’est pas le plan d’ensemble du parc. Sans lui, on ne sait pas où l’on est.']);
+    L.push(ids.includes(9) ? ['bien', 'La réaction est présente', 'On entend Jade : c’est le moment fort.'] : ['revoir', 'La réaction est présente', 'Il manque la réaction de Jade : ton reportage n’a pas de voix humaine.']);
+    L.push(i6 > 0 && i6 < ids.length - 1 ? ['bien', 'Un plan de coupe pour le raccord', 'Le public relie deux moments de la course sans faux raccord.'] : i6 < 0 ? ['revoir', 'Un plan de coupe pour le raccord', 'Il manque un plan de coupe (le public) : entre le départ et l’arrivée, le temps saute d’un coup.'] : ['revoir', 'Un plan de coupe pour le raccord', 'Le public est au bord du montage : place-le entre deux plans de la course, pour relier le départ et l’arrivée.']);
+    L.push(!ids.includes(4) && !ids.includes(8) ? ['bien', 'Ni plan raté, ni doublon', 'Tu as monté les meilleures prises seulement.'] : ['revoir', 'Ni plan raté, ni doublon', ids.includes(4) && ids.includes(8) ? 'Le plan flou et la deuxième prise de l’arrivée sont encore là.' : ids.includes(4) ? 'Le plan flou (rush 4) est encore là.' : 'L’arrivée de Jade passe deux fois (rush 8).']);
+    L.push(Math.abs(tot - CIBLE) <= 5 ? ['bien', 'La durée', `${fmt(tot)} s, proche de la cible de 45 s.`] : ['revoir', 'La durée', `${fmt(tot)} s : la cible est 45 s. ${tot > CIBLE ? 'Coupe les débuts et les fins qui traînent.' : 'Il manque des plans, ou tu as trop coupé.'}`]);
+    const titreOk = E.titre.txt && E.titre.sur === ids[0], syntheOk = E.synthe.txt && E.synthe.sur === 9 && /morin/i.test(E.synthe.txt);
+    L.push(titreOk && syntheOk ? ['bien', 'Titre et synthé', 'Le titre ouvre l’émission, le synthé présente Jade, son nom est juste.'] : ['revoir', 'Titre et synthé', [!titreOk && 'Le titre doit être écrit et posé sur le premier plan', !syntheOk && (titreOk ? 'Le' : 'le') + ' synthé doit présenter Jade Morin, sur sa réaction'].filter(Boolean).join(' ; ') + '.']);
+    L.push(!E.musique ? ['revoir', 'Le son', 'Pas de musique : ce n’est pas une faute, mais une émission promo en a souvent une, sous la voix.'] : ids.includes(9) && n9 === 'fort' ? ['revoir', 'Le son', 'La musique couvre la voix de Jade : baisse-la sous sa réaction.'] : ['bien', 'Le son', 'La musique laisse passer la voix de Jade.']);
+    const bien = L.filter((x) => x[0] === 'bien').length;
+    return `<p style="font-weight:700;color:var(--marine);margin:8px 0 0">La relecture de ton montage : ${bien} point${bien > 1 ? 's' : ''} sur ${L.length}</p>
+      <ul class="grille">${L.map(([c, t, d]) => `<li class="${c}"><span class="m" aria-hidden="true">${c === 'bien' ? '✓' : '!'}</span><strong>${t}</strong><span class="c">${d}</span></li>`).join('')}</ul>
+      <p class="consigne" style="font-size:13px">Il n’y a pas un seul bon montage. Pour corriger, reviens à une étape en cliquant sur son numéro, en haut.</p>`;
+  }
+  function modeleHTML() {
+    return `<p id="liste-modele" style="font-weight:700;color:var(--marine);margin:8px 0 2px">Le montage modèle, plan par plan (${fmt(total(MODELE))} s)</p>
+      <ol class="modele">${MODELE.piste.map((c) => `<li>${COMMENTAIRES[c.id]} <span class="jauge-txt">(${fmt(c.b - c.a)} s)</span></li>`).join('')}</ol>
+      <p class="consigne" style="font-size:13px">Jetés : le rush 4 (raté) et le rush 8 (deuxième prise de l’arrivée).</p>`;
+  }
+  function entrerModele() { stop(); modeModele = true; document.body.classList.add('modele-actif'); tout(); lireMontage(0); const l = $('#liste-modele'); if (l) $('#panneau').scrollTop = l.offsetTop - 60; }
+  function quitterModele() { if (!modeModele) return; modeModele = false; document.body.classList.remove('modele-actif'); }
+  $('#sortir-modele').onclick = () => { stop(); quitterModele(); tout(); };
+  $('#recommencer').onclick = () => { if (!confirm('Tout effacer et recommencer le montage ?')) return; stop(); quitterModele(); E = vierge(); sel = null; sauver(); tout(); };
+
+  function brancher() {
+    brancherSuite();
+    const P = $('#panneau');
+    P.querySelectorAll('canvas[data-voir]').forEach((c) => {
+      const id = +c.dataset.voir; peindre(c.getContext('2d'), c.width, c.height, PLAN[id], PLAN[id].duree / 2, PLAN[id].duree);
+      c.onclick = () => lirePlan(id); c.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); lirePlan(id); } };
+    });
+    P.querySelectorAll('canvas[data-v]').forEach((c) => { const id = +c.dataset.v; peindre(c.getContext('2d'), c.width, c.height, PLAN[id], PLAN[id].duree / 2, PLAN[id].duree); });
+    P.querySelectorAll('.choix button').forEach((b) => (b.onclick = () => { E.tri[+b.dataset.r] = b.dataset.v; if (b.dataset.v === 'jete') retirerPlan(+b.dataset.r); sauver(); tout(); }));
+    const vt = $('#valider-tri'); if (vt) vt.onclick = () => { E.triValide = true; E.piste = E.piste.filter((c) => E.tri[c.id] === 'garde'); sauver(); tout(); };
+    P.querySelectorAll('#chutier .puce').forEach((pu) => {
+      pu.addEventListener('pointerdown', (e) => demarrerGlisse(e, +pu.dataset.id, 'chutier'));
+      pu.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); ajouterPlan(+pu.dataset.id); } };
+    });
+    const pg = $('#pg'), pd = $('#pd');
+    if (pg && pd) {
+      const c = E.piste.find((x) => x.id === sel), p = PLAN[sel];
+      const maj = (quoi) => {
+        let a = +pg.value, b = +pd.value;
+        if (quoi === 'a') a = Math.min(a, b - MIN_PLAN); else b = Math.max(b, a + MIN_PLAN);
+        a = Math.max(0, a); b = Math.min(p.duree, b); c.a = a; c.b = b; pg.value = a; pd.value = b;
+        peindre(cx, cv.width, cv.height, p, quoi === 'a' ? a : Math.max(0, b - .05), p.duree); $('#etiquette-ecran').textContent = quoi === 'a' ? 'Première image gardée' : 'Dernière image gardée';
+        sauver(); dessinerLdt();
+        P.querySelector('label[for=pg]').textContent = `Poignée de début : ${fmt(a)} s`; P.querySelector('label[for=pd]').textContent = `Poignée de fin : ${fmt(b)} s`;
+      };
+      pg.oninput = () => maj('a'); pd.oninput = () => maj('b'); pg.onchange = pd.onchange = () => { const s = P.scrollTop; tout(); P.scrollTop = s; };
+      $('#voir-coupe').onclick = () => lirePlan(sel, c.a, c.b);
+    }
+    const champ = (id, k, prop, num) => { const el = $(id); if (!el) return; el.oninput = el.onchange = () => { E[k][prop] = num ? (el.value ? +el.value : null) : el.value.trim(); sauver(); dessinerLdt(); $('#alertes-titre').innerHTML = alertesTitre(); }; };
+    champ('#t-titre', 'titre', 'txt'); champ('#s-titre', 'titre', 'sur', true); champ('#t-synthe', 'synthe', 'txt'); champ('#s-synthe', 'synthe', 'sur', true);
+    const fo = $('#fondu'); if (fo) fo.onchange = () => { E.fondu = fo.checked; sauver(); dessinerLdt(); };
+    const pm = $('#puce-mus');
+    if (pm) {
+      const poser = () => { E.musique = true; sauver(); tout(); };
+      pm.onkeydown = (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); poser(); } };
+      pm.addEventListener('pointerdown', (e) => {
+        const x0 = e.clientX, y0 = e.clientY; let f = null;
+        const mv = (ev) => { if (!f && Math.hypot(ev.clientX - x0, ev.clientY - y0) > 6) { f = pm.cloneNode(true); f.classList.add('fantome'); document.body.appendChild(f); } if (f) { f.style.left = ev.clientX + 'px'; f.style.top = ev.clientY + 'px'; const r = $('#z-mus').getBoundingClientRect(); $('#z-mus').classList.toggle('cible-depot', ev.clientY > r.top - 30 && ev.clientY < r.bottom + 30); } };
+        const up = (ev) => { window.removeEventListener('pointermove', mv); window.removeEventListener('pointerup', up); $('#z-mus').classList.remove('cible-depot'); if (f) { f.remove(); const r = $('#z-mus').getBoundingClientRect(); if (ev.clientY > r.top - 30 && ev.clientY < r.bottom + 30) poser(); } else poser(); };
+        window.addEventListener('pointermove', mv); window.addEventListener('pointerup', up);
+      });
+    }
+    const e9 = $('#ecouter-9'); if (e9) e9.onclick = () => { const k = calendrier(E).find((x) => x.id === 9); if (k) lireMontage(Math.max(0, k.debut - 1), k.debut + k.duree); };
+    const lt = $('#lire-tout'); if (lt) lt.onclick = () => { quitterModele(); tout(); lireMontage(0); };
+    const vm = $('#voir-modele'); if (vm) vm.onclick = entrerModele;
+  }
+  finLecture = () => { if (E.etape === 6 && !modeModele && !E.vu) { E.vu = true; sauver(); tout(); } };
+
+  function tout() {
+    if (E.etape > 1 && !E.triValide) E.etape = 1;
+    dessinerEtapes(); $('#panneau').innerHTML = panneaux[E.etape](); brancher(); dessinerLdt();
+    $('#lire').disabled = false;
+    if (!lecture) {
+      if (E.etape === 1 && !modeModele) { const id = sel || 1; peindre(cx, cv.width, cv.height, PLAN[id], PLAN[id].duree / 2, PLAN[id].duree); legende(id, null); $('#lire').textContent = M().piste.length ? '▶ Lire le montage' : '▶ Lire le rush 1'; }
+      else if (!sel || E.etape !== 3) { imageMontage(.5); $('#etiquette-ecran').textContent = modeModele ? 'Montage modèle' : 'Ton montage'; }
+    }
+  }
+  window.addEventListener('resize', () => { ajusterEcran(); tout(); });
+  if (document.fonts) document.fonts.ready.then(() => tout());
+  ajusterEcran(); tout();
+})();
+</script>
+</body>
+</html>
