@@ -47,7 +47,7 @@
   "ateliers": [
    "m2-ecris-ton-article"
   ],
-  "chapitres": 7
+  "chapitres": 8
  },
  {
   "id": "m2-ecris-ton-article",
@@ -62,7 +62,7 @@
  },
  {
   "num": 4,
-  "partie": "A",
+  "partie": "B",
   "titre": "Couvrir un événement",
   "chapo": "Le cross académique : préparer, noter, écrire le compte rendu et la réaction d'après-course.",
   "ethique": "Je vérifie les résultats et les noms, et je respecte tous les coureurs.",
@@ -78,7 +78,7 @@
  },
  {
   "num": 5,
-  "partie": "A",
+  "partie": "B",
   "titre": "L'art de l'interview",
   "chapo": "Préparer ses questions, écouter, relancer et citer sans trahir.",
   "ethique": "Je demande l'accord de la personne et je respecte le off.",
@@ -102,12 +102,12 @@
   "type": "atelier",
   "parent": "m5-l-art-de-l-interview",
   "pret": true,
-  "partie": "A",
+  "partie": "B",
   "bib": "H5P.Cornell"
  },
  {
   "num": 6,
-  "partie": "A",
+  "partie": "B",
   "titre": "La photo de presse",
   "chapo": "Saisir le bon moment, cadrer, trier ses photos, écrire la légende et le crédit.",
   "ethique": "Je respecte le droit à l'image, surtout celui des mineurs.",
@@ -123,7 +123,7 @@
  },
  {
   "num": 7,
-  "partie": "B",
+  "partie": "C",
   "titre": "Le podcast",
   "chapo": "Écrire pour l'oreille, le conducteur, bien enregistrer et monter sa chronique dans Canva.",
   "ethique": "Je n'enregistre personne sans le lui dire, et je cite les musiques permises.",
@@ -139,7 +139,7 @@
  },
  {
   "num": 8,
-  "partie": "C",
+  "partie": "D",
   "titre": "Le reportage vidéo",
   "chapo": "Les cinq plans, tenir son téléphone, le plan de tournage, les rushes et le montage dans Canva.",
   "ethique": "Je ne filme personne sans autorisation, ni dans la difficulté, et je ne gêne pas la course.",
@@ -151,11 +151,14 @@
   "type": "livre",
   "pret": true,
   "ateliers": [],
-  "chapitres": 10
+  "chapitres": 10,
+  "prerequis": [
+   "m6-la-photo-de-presse"
+  ]
  },
  {
   "num": 9,
-  "partie": "D",
+  "partie": "E",
   "titre": "Monter une émission",
   "chapo": "Le conducteur, les rôles, le plateau, assembler dans Canva, vérifier avant de publier.",
   "ethique": "Je vérifie tout avant de publier, et un montage ne fait pas dire ce qui n'a pas été dit.",
@@ -175,7 +178,7 @@
  },
  {
   "num": 10,
-  "partie": "E",
+  "partie": "F",
   "titre": "Mettre en page",
   "chapo": "Les mots de la page, le chemin de l'œil, lisible d'abord : l'article du site, puis la une de la gazette dans Canva.",
   "ethique": "Je mets en page pour le lecteur, et chaque photo a sa légende vraie et son crédit.",
