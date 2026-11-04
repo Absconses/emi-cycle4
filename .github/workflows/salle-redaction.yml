@@ -5,7 +5,8 @@
 # Le déclencheur « schedule » de GitHub ne s'est jamais lancé sur ce dépôt :
 # chaque run tourne donc en boucle près de 6 h (toutes les 4 min en semaine
 # de 7 h à 19 h, heure de Paris ; toutes les 30 min sinon), puis relance le
-# suivant. Le groupe de concurrence garde une seule chaîne.
+# suivant. Le groupe de concurrence garde une seule chaîne ; une mise à jour du
+# code (push) arrête la boucle en cours pour que la nouvelle version parte tout de suite.
 name: Salle de rédaction
 
 on:
@@ -22,7 +23,7 @@ permissions:
 
 concurrency:
   group: salle-redaction
-  cancel-in-progress: false
+  cancel-in-progress: ${{ github.event_name == 'push' }}
 
 jobs:
   lire:
