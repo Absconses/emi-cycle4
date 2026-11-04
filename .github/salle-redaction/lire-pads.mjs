@@ -4,6 +4,7 @@
  * par la même adresse : la page ne peut pas lire les pads elle-même.
  * Ce script lit la conférence et les pads d'article à un rythme sûr, puis
  * écrit cache.json, que la page lit sur la branche salle-redaction.
+ * Il lit aussi la boîte à sujets, où les élèves proposent leurs articles.
  * La lecture de la conférence reprend le code de la page, pour calculer
  * exactement les mêmes noms de pads. */
 import fs from 'node:fs';
@@ -14,8 +15,8 @@ const debut = page.indexOf('const INSTANCE'), fin = page.indexOf('/* ---- Lire u
 if (debut < 0 || fin < 0) throw new Error('redaction.html : repères introuvables');
 const ctx = { location: { search: '' }, URLSearchParams, document: {} };
 vm.createContext(ctx);
-vm.runInContext(page.slice(debut, fin) + '\nthis.lire = { INSTANCE, CONFERENCE, lireConference };', ctx);
-const { INSTANCE, CONFERENCE, lireConference } = ctx.lire;
+vm.runInContext(page.slice(debut, fin) + '\nthis.lire = { INSTANCE, CONFERENCE, BOITE, lireConference, ajouterPropositions };', ctx);
+const { INSTANCE, CONFERENCE, BOITE, lireConference, ajouterPropositions } = ctx.lire;
 
 const PAUSE = 9500;   // 10 exports au plus par fenêtre de 90 s
 const pause = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -31,11 +32,15 @@ async function exporter(nom) {
 
 const ancien = (() => { try { return JSON.parse(fs.readFileSync(process.argv[3] || 'cache.json', 'utf8')); } catch (e) { return { pads: {} }; } })();
 const conference = await exporter(CONFERENCE);
-const noms = [...new Set(lireConference(conference).flatMap((n) => n.pages.flatMap((p) => p.articles.map((a) => a.pad))))];
+let boite = ancien.boite || '';
+try { boite = await exporter(BOITE); } catch (e) { console.warn('boîte : ' + e.message); }
+const numeros = lireConference(conference);
+ajouterPropositions(numeros, boite);
+const noms = [...new Set(numeros.flatMap((n) => [...n.pages, ...(n.propositions ? [n.propositions] : [])].flatMap((p) => p.articles.map((a) => a.pad))))];
 const pads = {};
 for (const nom of noms) {
   try { pads[nom] = await exporter(nom); }
   catch (e) { console.warn(e.message); if (nom in (ancien.pads || {})) pads[nom] = ancien.pads[nom]; }
 }
-fs.writeFileSync(process.argv[3] || 'cache.json', JSON.stringify({ lu: new Date().toISOString(), conference, pads }));
+fs.writeFileSync(process.argv[3] || 'cache.json', JSON.stringify({ lu: new Date().toISOString(), conference, boite, pads }));
 console.log(`conférence + ${noms.length} pads lus`);

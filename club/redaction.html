@@ -33,6 +33,14 @@
 .e-corriger { --c: var(--rouge); } .e-valide { --c: var(--vert); } .e-maquette { --c: var(--marine); }
 .pt-etat { background: var(--c); }
 .badge-etat { display: inline-block; font: 700 11px/1 var(--mono); text-transform: uppercase; letter-spacing: .05em; color: var(--c); border: 1.5px solid var(--c); padding: 4px 6px; border-radius: 2px; white-space: nowrap; background: rgba(255, 253, 247, .8); }
+/* la boîte à sujets et les articles proposés */
+.boite { border: 2px solid var(--vert); background: #fffdf7; padding: 14px; margin: 0 0 22px; }
+.boite ol { margin: 0 0 10px; padding-left: 20px; font-size: 15px; }
+.boite .pad { height: 300px; min-height: 0; }
+.propositions { margin-top: 30px; border-top: 3px solid var(--or); padding-top: 14px; }
+.sous-prop { font-size: 15px; margin: 0 0 12px; color: var(--encre-2); }
+.blocs-prop { display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 8px; }
+.blocs-prop .bloc { min-height: 96px; }
 /* le chemin de fer */
 .cdf { display: flex; flex-wrap: wrap; gap: 26px 22px; align-items: flex-start; }
 .planche { display: flex; gap: 0; }
@@ -86,7 +94,7 @@
 .chef summary { cursor: pointer; font-weight: 700; color: var(--marine); }
 .sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
 @media print {
-  .barre, .outils, .chef, .info, #vue-article { display: none !important; }
+  .barre, .outils, .chef, .info, #vue-article, .boite, .propositions { display: none !important; }
   body { background: #fff; }
   .page { box-shadow: none; break-inside: avoid; }
 }
@@ -114,6 +122,7 @@
         <li>Une ligne par article : <code>rubrique · sujet · équipe · 300 mots · état</code>.</li>
         <li>États : commandé, en écriture, à relire, à corriger, validé, maquetté. Sans état, la page met « commandé » tant que le pad est vide, puis « en écriture », ou l'état que les élèves écrivent dans leur pad.</li>
         <li>Ne change plus le sujet d'un article commencé : son pad en dépend. Pour le renommer quand même, ajoute à la fin <code>· #ancien sujet</code>.</li>
+        <li>Les élèves proposent leurs articles dans la <strong>boîte à sujets</strong> (bouton « Lancer un article ») : ils apparaissent sous le chemin de fer, dans « Articles proposés ». Pour en placer un, recopie sa ligne dans une page <strong>avec le même sujet</strong> : l'équipe garde son pad. Les propositions vont au premier numéro de ta conférence.</li>
         <li>Toute autre ligne devient un article. Pour une consigne ou un rappel (« rajouter des photos »), commence la ligne par <code>#</code> : c'est une note pour toi, la page ne l'affiche pas.</li>
       </ul>
     </details>
@@ -132,10 +141,26 @@
     <div class="outils">
       <button class="btn" id="telecharger" type="button">Télécharger les textes du numéro</button>
       <button class="lien-btn" id="imprimer" type="button">Imprimer le chemin de fer</button>
+      <button class="btn" id="lancer" type="button" aria-expanded="false" aria-controls="boite">✚ Lancer un article</button>
       <span id="maj" style="font-size:13px;color:var(--gris)"></span>
+    </div>
+    <div class="boite" id="boite" hidden>
+      <h3>La boîte à sujets</h3>
+      <ol>
+        <li>Écris <strong>une ligne</strong> tout en bas du pad&nbsp;: <code>ton sujet · vos prénoms</code>. Par exemple <code>Le nouveau baby-foot du foyer · Inès, Tom</code>.</li>
+        <li>Clique sur <strong>« Ouvrir mon pad »</strong>&nbsp;: ton article a son pad, où ton équipe l'écrit.</li>
+        <li>Le rédacteur en chef le place ensuite dans une page du journal. Tu gardes ton pad.</li>
+      </ol>
+      <iframe class="pad" id="pad-boite" title="Le pad de la boîte à sujets"></iframe>
+      <p style="margin:10px 0 0"><button class="btn" id="ouvrir-mien" type="button">J'ai écrit ma ligne : ouvrir mon pad</button> <span id="boite-msg" role="status" style="font-size:14px"></span></p>
     </div>
     <p class="legende-etats" id="legende"></p>
     <div class="cdf" id="cdf"></div>
+    <section class="propositions" id="propositions" hidden aria-labelledby="titre-prop">
+      <h3 id="titre-prop">Articles proposés par les élèves</h3>
+      <p class="sous-prop" id="sous-prop"></p>
+      <div class="blocs-prop" id="blocs-prop"></div>
+    </section>
   </section>
 
   <section id="vue-article" hidden aria-labelledby="art-titre">
@@ -185,6 +210,7 @@
   /* ---- Réglages : l'instance Framapad et le lien en lecture seule de la conférence de rédaction ---- */
   const INSTANCE = 'https://annuel.framapad.org';
   const CONFERENCE = 'r.b075a65d87848eb7f246bdc92c9b5256';   // lien « lecture seule » (r.…) du pad de conférence
+  const BOITE = 'gazette-dupanloup-boite-a-sujets-50530b64';  // pad ouvert aux élèves : leurs propositions d'articles
   /* Framapad n'accepte que 10 exports par 1 min 30 et par adresse IP, et laisse les suivants sans réponse.
    * Au CDI, tous les postes sortent par la même adresse : les élèves lisent donc une copie des pads,
    * refaite toutes les 5 à 10 minutes par GitHub (.github/workflows/salle-redaction.yml).
@@ -243,15 +269,40 @@
       if (reste.length === 1) a.sujet = reste[0];
       else { [a.rubrique, a.sujet, a.equipe] = reste; a.equipe = reste.slice(2).join(', '); }
       if (!a.sujet) continue;
-      a.cle = slug(a.id || a.sujet) || 'article';
-      const h = hash(CONFERENCE + num.num + a.cle);
-      a.pad = `gazette-dupanloup-n${num.num}-${a.cle}-${h}`;
-      // Framapad refuse les noms de plus de 50 caractères : on raccourcit
-      if (a.pad.length > 50) { const debut = `gdp-n${num.num}-`, fin = `-${h}`; a.pad = debut + a.cle.slice(0, 50 - debut.length - fin.length).replace(/-+$/, '') + fin; }
+      nommerPad(num.num, a);
       page.articles.push(a);
     }
     numeros.forEach((n) => n.pages.sort((x, y) => x.n - y.n));
     return numeros;
+  }
+
+  function nommerPad(n, a) {
+    a.cle = slug(a.id || a.sujet) || 'article';
+    const h = hash(CONFERENCE + n + a.cle);
+    a.pad = `gazette-dupanloup-n${n}-${a.cle}-${h}`;
+    // Framapad refuse les noms de plus de 50 caractères : on raccourcit
+    if (a.pad.length > 50) { const debut = `gdp-n${n}-`, fin = `-${h}`; a.pad = debut + a.cle.slice(0, 50 - debut.length - fin.length).replace(/-+$/, '') + fin; }
+  }
+
+  /* ---- Lire la boîte à sujets : une ligne par proposition, « sujet · prénoms » ou « rubrique · sujet · prénoms ».
+   * Les propositions vont au premier numéro de la conférence. Leur pad porte le nom qu'aurait le même sujet
+   * dans une page de ce numéro : quand le rédacteur en chef y recopie la ligne, l'équipe garde son pad. */
+  function ajouterPropositions(numeros, txt) {
+    const num = numeros[0]; if (!num) return;
+    const vus = new Set(num.pages.flatMap((p) => p.articles.map((a) => a.pad)));
+    num.propositions = { n: 0, nom: 'Articles proposés', articles: [] };
+    for (const brut of (txt || '').split(/\r?\n/)) {
+      const l = brut.trim();
+      if (!l || l.startsWith('#') || l.startsWith('//')) continue;
+      const champs = l.replace(/^[-•*]\s*/, '').split(/\s*[·|;]\s*|\s+[-–—]\s+/).filter(Boolean);
+      const a = { rubrique: '', sujet: '', equipe: '', cible: 0, etat: null, id: '' };
+      if (champs.length >= 3) { a.rubrique = champs[0]; a.sujet = champs[1]; a.equipe = champs.slice(2).join(', '); }
+      else { a.sujet = champs[0]; a.equipe = champs[1] || ''; }
+      if (!a.sujet) continue;
+      nommerPad(num.num, a);
+      if (vus.has(a.pad)) continue;
+      vus.add(a.pad); num.propositions.articles.push(a);
+    }
   }
 
   /* ---- Lire un pad d'article ---- */
@@ -293,7 +344,7 @@
   }
 
   /* ---- État de la page ---- */
-  let numeros = [], courant = null, pads = {}, derniereMaj = null, copieDu = null, erreur = '';
+  let numeros = [], courant = null, pads = {}, derniereMaj = null, copieDu = null, erreur = '', boite = '', boiteDirecte = 0, tour = 0;
   const etatArticle = (a) => {
     const p = pads[a.pad];
     if (a.etat) return a.etat;
@@ -312,10 +363,13 @@
     try { copie = await lireCopie(); } catch (e) { /* pas de copie : on tente Framapad */ }
     if (CHEF || !copie) { try { conference = await lireTexte(CONFERENCE); } catch (e) { /* Framapad ne répond pas */ } }
     if (conference == null && copie) conference = copie.conference;
+    if (copie && copie.boite != null && new Date(copie.lu) > boiteDirecte) boite = copie.boite;
+    // le rédacteur en chef relit la boîte à sujets en direct une fois sur deux (Framapad : 10 lectures par 1 min 30)
+    if (CHEF && tour++ % 2 === 0) { try { boite = await lireTexte(BOITE); } catch (e) { /* on garde la copie */ } }
     if (conference == null) {
       erreur = 'La conférence de rédaction ne répond pas pour l’instant. La page réessaie toute seule.';
     } else {
-      numeros = lireConference(conference); erreur = '';
+      numeros = lireConference(conference); ajouterPropositions(numeros, boite); erreur = '';
     }
     if (copie) {
       copieDu = new Date(copie.lu);
@@ -344,7 +398,7 @@
     $('legende').innerHTML = ETATS.map((e) => `<span class="e-${e.k}"><i class="pt-etat"></i>${e.nom}</span>`).join('');
     const heure = (d) => d.toLocaleTimeString('fr-FR', { hour: '2-digit', minute: '2-digit' });
     $('maj').textContent = copieDu ? `Textes des articles relus à ${heure(copieDu)} (toutes les 5 à 10 minutes)` : (derniereMaj ? 'Mis à jour à ' + heure(derniereMaj) : '');
-    if (!num) { $('cdf').innerHTML = ''; $('compteurs').innerHTML = ''; $('sous-num').textContent = ''; rendreArticle(); return; }
+    if (!num) { $('cdf').innerHTML = ''; $('propositions').hidden = true; $('compteurs').innerHTML = ''; $('sous-num').textContent = ''; rendreArticle(); return; }
 
     $('titre-num').textContent = `La Gazette de Dupanloup · n° ${num.num}`;
     $('sous-num').textContent = [num.label, num.bouclage && 'Bouclage : ' + num.bouclage].filter(Boolean).join(' · ');
@@ -366,20 +420,28 @@
       else { planches.push([ps[i], ps[i + 1]]); i += 2; }
     }
     $('cdf').innerHTML = planches.map((pl) => `<div class="planche">${pl.map(pageHTML).join('')}</div>`).join('');
+    const props = num === numeros[0] && num.propositions ? num.propositions.articles : null;
+    $('propositions').hidden = !props;
+    if (props) {
+      $('sous-prop').textContent = props.length ? `${props.length} article${props.length > 1 ? 's' : ''} en attente d'une page. Clique sur un article pour ouvrir son pad.` : 'Aucune proposition pour l’instant. Une idée d’article ? Clique sur « Lancer un article ».';
+      $('blocs-prop').innerHTML = props.map(blocHTML).join('');
+    }
     rendreArticle();
   }
 
+  function blocHTML(a) {
+    const e = etatArticle(a), d = pads[a.pad] || {};
+    const titre = d.titre ? `<span class="tit">${esc(d.titre)}</span>` : `<span class="tit attente">${esc(a.sujet)}</span>`;
+    const pct = a.cible ? Math.min(100, Math.round(100 * (d.mots || 0) / a.cible)) : (d.vide === false ? 100 : 0);
+    return `<button type="button" class="bloc e-${e.k}" style="--poids:${Math.max(1, Math.round((a.cible || 150) / 100))}" data-art="${esc(a.cle)}" aria-label="${esc((a.rubrique ? a.rubrique + ', ' : '') + a.sujet + ', ' + e.nom)}">
+      ${a.rubrique ? `<span class="rub">${esc(a.rubrique)}</span>` : ''}${titre}
+      ${a.equipe ? `<span class="qui">${esc(a.equipe)}</span>` : ''}
+      <span class="bas"><span class="jauge" aria-hidden="true"><span style="width:${pct}%"></span></span><span class="mots">${d.mots || 0}${a.cible ? '/' + a.cible : ''} mots</span></span>
+      <span class="badge-etat">${e.nom}</span></button>`;
+  }
+
   function pageHTML(p) {
-    const blocs = p.articles.map((a) => {
-      const e = etatArticle(a), d = pads[a.pad] || {};
-      const titre = d.titre ? `<span class="tit">${esc(d.titre)}</span>` : `<span class="tit attente">${esc(a.sujet)}</span>`;
-      const pct = a.cible ? Math.min(100, Math.round(100 * (d.mots || 0) / a.cible)) : (d.vide === false ? 100 : 0);
-      return `<button type="button" class="bloc e-${e.k}" style="--poids:${Math.max(1, Math.round((a.cible || 150) / 100))}" data-art="${esc(a.cle)}" aria-label="${esc((a.rubrique ? a.rubrique + ', ' : '') + a.sujet + ', ' + e.nom)}">
-        ${a.rubrique ? `<span class="rub">${esc(a.rubrique)}</span>` : ''}${titre}
-        ${a.equipe ? `<span class="qui">${esc(a.equipe)}</span>` : ''}
-        <span class="bas"><span class="jauge" aria-hidden="true"><span style="width:${pct}%"></span></span><span class="mots">${d.mots || 0}${a.cible ? '/' + a.cible : ''} mots</span></span>
-        <span class="badge-etat">${e.nom}</span></button>`;
-    }).join('');
+    const blocs = p.articles.map(blocHTML).join('');
     return `<div class="page${p.n === 1 ? ' p-une' : ''}"><div class="page-tete"><b>${p.n === 1 ? 'La une' : 'Page ' + p.n}</b><span>${esc(p.n === 1 && /^la une$/i.test(p.nom) ? '' : p.nom)}</span></div>
       <div class="blocs">${blocs || '<div class="vide">Page à remplir</div>'}</div><span class="num-page">${p.n}</span></div>`;
   }
@@ -391,7 +453,7 @@
     if (!m) return null;
     const num = numeros.find((n) => n.num === m[1]);
     if (!num) return null;
-    for (const p of num.pages) for (const a of p.articles) if (a.cle === decodeURIComponent(m[2])) return { num, p, a };
+    for (const p of [...num.pages, ...(num.propositions ? [num.propositions] : [])]) for (const a of p.articles) if (a.cle === decodeURIComponent(m[2])) return { num, p, a };
     return null;
   }
   function rendreArticle() {
@@ -399,7 +461,7 @@
     $('vue-article').hidden = !t; $('vue-cdf').hidden = !!t;
     if (!t) { padOuvert = ''; $('pad-article').removeAttribute('src'); return; }
     const { num, p, a } = t, d = pads[a.pad] || lirePad(''), e = etatArticle(a);
-    $('art-rub').textContent = [`N° ${num.num}`, p.n === 1 ? 'la une' : 'page ' + p.n, a.rubrique].filter(Boolean).join(' · ');
+    $('art-rub').textContent = [`N° ${num.num}`, p.n === 1 ? 'la une' : p.n === 0 ? 'article proposé' : 'page ' + p.n, a.rubrique].filter(Boolean).join(' · ');
     $('art-titre').textContent = d.titre || a.sujet;
     $('art-ligne').innerHTML = `<span class="badge-etat e-${e.k}">${e.nom}</span>${a.equipe ? `<span>Équipe : ${esc(a.equipe)}</span>` : ''}<span>${d.mots} mot${d.mots > 1 ? 's' : ''}${a.cible ? ' sur ' + a.cible : ''}</span>${d.titre ? `<span>Sujet : ${esc(a.sujet)}</span>` : ''}`;
     $('apercu').innerHTML = d.vide ? '<p class="vide">Rien d’écrit pour l’instant. L’aperçu se remplit tout seul quand ton équipe écrit dans le pad, avec quelques minutes de retard.</p>' :
@@ -432,6 +494,27 @@
   $('cdf').addEventListener('click', (ev) => {
     const b = ev.target.closest('.bloc'); if (b) location.hash = `n${courant}/${b.dataset.art}`;
   });
+  $('blocs-prop').addEventListener('click', (ev) => {
+    const b = ev.target.closest('.bloc'); if (b) location.hash = `n${courant}/${b.dataset.art}`;
+  });
+  $('lancer').onclick = () => {
+    const ouvert = $('boite').hidden;
+    $('boite').hidden = !ouvert; $('lancer').setAttribute('aria-expanded', String(ouvert));
+    if (ouvert && !$('pad-boite').src) { const nom = lirePrenom(); $('pad-boite').src = `${INSTANCE}/p/${BOITE}?lang=fr&showLineNumbers=false${nom ? '&userName=' + encodeURIComponent(nom) : ''}`; }
+  };
+  // l'élève vient d'écrire sa ligne : on relit la boîte une fois, en direct, et on ouvre le pad de son article
+  $('ouvrir-mien').onclick = async () => {
+    const num = numeros[0]; if (!num) return;
+    const avant = new Set((num.propositions ? num.propositions.articles : []).map((a) => a.pad));
+    $('boite-msg').textContent = 'Je cherche ta ligne…';
+    try { boite = await lireTexte(BOITE); boiteDirecte = Date.now(); }
+    catch (e) { $('boite-msg').textContent = 'Framapad ne répond pas. Réessaie dans une minute.'; return; }
+    ajouterPropositions(numeros, boite);
+    const nouveaux = num.propositions.articles.filter((a) => !avant.has(a.pad));
+    const a = nouveaux[nouveaux.length - 1];
+    if (a) { $('boite-msg').textContent = ''; $('boite').hidden = true; $('lancer').setAttribute('aria-expanded', 'false'); if (courant !== num.num) courant = num.num; location.hash = `n${num.num}/${a.cle}`; rendre(); }
+    else { rendre(); $('boite-msg').textContent = 'Je ne trouve pas de nouvelle ligne. Écris « sujet · prénoms » sans # devant, puis réessaie. Ton article est peut-être déjà dans « Articles proposés », en bas de la page.'; }
+  };
   $('retour').onclick = (ev) => { ev.preventDefault(); history.pushState('', '', location.pathname + location.search + '#n' + courant); rendreArticle(); };
   window.addEventListener('hashchange', () => {
     const m = location.hash.match(/^#n(\d+)/); if (m && m[1] !== courant && numeros.find((n) => n.num === m[1])) { courant = m[1]; charger(); }
