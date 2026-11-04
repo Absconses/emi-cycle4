@@ -69,7 +69,14 @@ a { color: inherit; }
 
 /* ---------- À la une ---------- */
 .une { display: grid; gap: 28px; padding: 28px 0 8px; }
-@media (min-width: 900px) { .une { grid-template-columns: 1.35fr 1fr; gap: 36px; } .une .edito { border-left: 1px solid var(--filet); padding-left: 32px; } }
+/* la photo du collège sur toute la largeur (demande de Pierre, 2026-11-04), l'édito et la carte de presse en dessous */
+@media (min-width: 900px) {
+  .une { gap: 30px; }
+  .une .triptyque img { aspect-ratio: 3 / 4; }
+  .une .edito { display: grid; grid-template-columns: 1.3fr 1fr; column-gap: 40px; align-items: start; }
+  .une .edito > * { grid-column: 1; }
+  .une .edito .carte-presse { grid-column: 2; grid-row: 1 / span 6; }
+}
 .photo-une { margin: 0; position: relative; }
 .photo-une .cadre { position: relative; overflow: hidden; border: 1px solid var(--filet); background: #222; aspect-ratio: 4 / 3; }
 .photo-une img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) contrast(1.15) sepia(.12); transform: scale(1.04); transition: transform 8s ease-out; }
