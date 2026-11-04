@@ -28,7 +28,7 @@
       ouverture();
       parallaxeUne();
       tampons();
-      const fin = grand ? pisteHorizontale() : apparitions('.piste > .article, .panneau');
+      const fin = grand && document.getElementById('piste') ? pisteHorizontale() : apparitions('.piste > .article, .panneau');
       apparitions('.bilan, .ours');
       return fin;
     });

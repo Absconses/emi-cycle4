@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Le Jeune Reporter · Club presse Dupanloup</title>
+<meta name="description" content="Le parcours du Club Jeune Reporter du collège Dupanloup : dix modules interactifs pour devenir reporter, en autonomie au CDI.">
+<meta name="theme-color" content="#000177">
+<link rel="icon" href="img/sigle-dupanloup.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bree+Serif&family=Federo&family=IBM+Plex+Mono:wght@600;700&display=swap">
+<link rel="stylesheet" href="style.css">
+<script src="progression.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js" defer></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js" defer></script>
+<script src="animations.js" defer></script>
+<style>
+/* aperçu : le parcours sans animation (carte de presse, puis spécialités) */
+.plan { padding: 34px 0 10px; }
+.plan > h2 { font: 400 clamp(30px, 4.4vw, 50px)/1 var(--gothique); color: var(--marine); margin: 0 0 18px; border-bottom: 3px solid var(--or); padding-bottom: 12px; }
+.etape-plan { border: 2px solid var(--marine); background: #fffdf7; padding: 18px; }
+.etape-plan.tronc { border-width: 3px; }
+.etape-plan .etiquette { font: 700 12px/1.3 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--rouge); margin: 0 0 4px; }
+.etape-plan .etiquette b { background: var(--marine); color: #fff; padding: 3px 7px; margin-right: 8px; }
+.etape-plan h3 { font: 400 clamp(26px, 3vw, 34px)/1.05 var(--titre); color: var(--marine); margin: 6px 0 4px; }
+.etape-plan .sous { margin: 0 0 14px; color: var(--encre-2); }
+.tronc-mods { list-style: none; margin: 0; padding: 0; display: grid; gap: 14px; counter-reset: m; }
+@media (min-width: 820px) { .tronc-mods { grid-template-columns: repeat(3, 1fr); } }
+.mod-tronc { border: 1px solid var(--filet); background: #fff; display: flex; flex-direction: column; }
+.mod-tronc .vign { position: relative; aspect-ratio: 3 / 2; background: #2a251c; overflow: hidden; }
+.mod-tronc .vign img { width: 100%; height: 100%; object-fit: cover; display: block; }
+.mod-tronc .vign .num, .mod-spe .num { background: var(--marine); color: #fff; font: 400 24px/1 var(--titre); padding: 7px 11px 8px; }
+.mod-tronc .vign .num { position: absolute; left: 0; top: 0; }
+.mod-tronc .vign .tampon { position: absolute; right: 10px; bottom: 10px; }
+.mod-tronc .corps { padding: 12px 14px 14px; }
+.mod-tronc .meta, .mod-spe small { font: 600 12px/1.3 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--gris); margin: 0 0 4px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.mod-tronc h4 { font: 400 23px/1.1 var(--titre); margin: 0 0 6px; }
+.mod-tronc h4 a, .mod-spe a { color: var(--marine); }
+.mod-tronc .chapo { margin: 0 0 8px; font-size: 15px; color: var(--encre-2); }
+.mod-tronc.fait { border-color: var(--vert); }
+.valide { margin: 12px 0 0; font: 700 15px/1.3 var(--mono); color: var(--vert); }
+.liaison { text-align: center; font: 700 15px/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--marine); margin: 14px 0; }
+.spe-grille { display: grid; gap: 12px; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); }
+.spe-carte { border: 1.5px solid var(--marine); border-top: 6px solid var(--or); background: #fff; padding: 12px 14px 14px; display: flex; flex-direction: column; }
+.spe-carte.obtenue { border-top-color: var(--vert); }
+.spe-nom { display: inline-block; align-self: flex-start; font: 700 12px/1 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--rouge); border: 1.5px solid currentColor; padding: 4px 7px; margin: 0 0 8px; transform: rotate(-2deg); }
+.spe-carte.obtenue .spe-nom { color: var(--vert); }
+.spe-carte h4 { font: 400 22px/1.1 var(--titre); color: var(--marine); margin: 0 0 4px; }
+.spe-carte .role { font-size: 15px; margin: 0 0 10px; color: var(--encre-2); }
+.spe-carte .mods { list-style: none; margin: 0 0 8px; padding: 0; display: grid; gap: 8px; }
+.mod-spe { display: flex; gap: 10px; align-items: flex-start; }
+.mod-spe .num { font-size: 18px; padding: 5px 9px 6px; min-width: 34px; text-align: center; }
+.mod-spe.fait .num { background: var(--vert); }
+.mod-spe .txt { display: flex; flex-direction: column; gap: 2px; font: 400 18px/1.15 var(--titre); min-width: 0; }
+.mod-spe .mini-atelier { font-size: 14px; }
+.spe-carte .avant { margin: auto 0 0; padding-top: 8px; font: 700 12px/1.4 var(--mono); color: var(--encre); }
+.mini-atelier { display: flex; flex-wrap: wrap; gap: 4px 6px; align-items: center; font: 600 13px/1.3 var(--corps, inherit); margin-top: 4px; color: var(--marine); }
+.mini-atelier .pic { font: 700 10px/1 var(--mono); text-transform: uppercase; background: var(--or); color: var(--marine); padding: 3px 5px; }
+</style>
+</head>
+<body>
+<div class="flash" aria-label="Dernière minute"><span class="etiquette">Dernière minute</span><div class="piste"><div class="defile" id="defile"></div></div></div>
+
+<header class="manchette int">
+  <div class="infos"><span>Collège Dupanloup · Boulogne</span><span id="date-edition">Édition du jour</span><span id="numero">Numéro spécial</span></div>
+  <div class="tete-journal">
+    <img class="sigle" src="img/sigle-dupanloup.png" alt="Sigle du collège Dupanloup, Boulogne" width="400" height="400">
+    <h1 class="titre-journal"><span class="le">Le Club</span><span class="nom" id="nom-journal" aria-label="Jeune Reporter">Jeune Reporter</span></h1>
+    <span class="vertical" aria-hidden="true">Club presse · Dupanloup</span>
+  </div>
+  <p class="devise">Trois modules pour ta carte de presse, puis tes spécialités : reporter UNSS, le son, l’image, l’émission ou la maquette.</p>
+  <div class="filets" aria-hidden="true"></div>
+  <nav class="rubriques" aria-label="Rubriques"><a href="#cahier-A" data-panneau>Carte de presse</a><a href="#cahier-B" data-panneau>Reporter UNSS</a><a href="#cahier-C" data-panneau>Le son</a><a href="#cahier-D" data-panneau>L’image</a><a href="#cahier-E" data-panneau>L’émission</a><a href="#cahier-F" data-panneau>La maquette</a><a href="#bilan">Mon bilan</a><a href="redaction.html" class="lien-redac">✎ Salle de rédaction</a><button type="button" class="bouton-anim" id="bouton-anim" hidden></button></nav>
+</header>
+
+<main class="int">
+  <a class="bandeau-redac" href="redaction.html">
+    <span class="plume" aria-hidden="true">✎</span>
+    <span class="txt"><small>La salle de rédaction est ouverte</small><b>La Gazette de Dupanloup se fabrique ici : écris ton article</b><span>Le chemin de fer du prochain numéro se remplit en direct. Choisis ton article et écris-le avec ton équipe.</span></span>
+    <span class="fl" aria-hidden="true">→</span>
+  </a>
+  <section class="une" aria-labelledby="titre-une">
+    <figure class="photo-une">
+      <div class="triptyque"><img src="img/college-1.jpg" alt="La façade du collège Dupanloup, avec ses fenêtres sculptées." width="269" height="720"><img src="img/college-2.jpg" alt="L’angle du bâtiment principal et son perron." width="269" height="720"><img src="img/college-3.jpg" alt="La terrasse fleurie et l’aile moderne du collège." width="270" height="720"><span class="tampon grand tampon-une" style="transform:rotate(-9deg)" aria-hidden="true">Bienvenue<br>à la rédaction</span></div>
+      <figcaption>Le collège Dupanloup, à Boulogne. Photos parues à la une de La Gazette de Dupanloup, n° 1, mai 2026.</figcaption>
+    </figure>
+    <div class="edito">
+      <p class="surtitre">Édito <span class="pt"></span> À lire avant de commencer</p>
+      <h2 id="titre-une">Trois modules pour ta carte de presse, <em>puis tes spécialités</em></h2>
+      <p class="chapo">Bienvenue au Club Jeune Reporter ! Ici, tu apprends le métier de journaliste à ton rythme, seul au CDI.</p>
+      <p class="lettrine">Chaque module dure environ 45 minutes. Lis, observe, réponds : chaque réponse est expliquée, alors prends le temps de lire les explications. Commence par les <strong>trois modules de la carte de presse</strong>, dans l’ordre : ce sont les bases pour participer au club. Ensuite, choisis ta <strong>spécialité</strong> selon ton rôle à la rédaction : reporter UNSS (les modules 4 à 6, pour couvrir les compétitions du collège), le son, l’image, l’émission ou la maquette. Chaque module terminé ajoute un tampon sur ta carte.</p>
+      <a class="cta" id="cta" href="#cahier-A"><span><small id="cta-sur">Pour commencer</small><span id="cta-titre">Ouvre le module 1</span></span><span class="fl" aria-hidden="true">→</span></a>
+      <div class="carte-presse" id="carte-presse" aria-label="Ma carte de presse"></div>
+    </div>
+  </section>
+  <div id="cahiers"></div>
+
+  <section class="bilan" id="bilan" aria-labelledby="titre-bilan">
+    <p class="surtitre">Mon bilan <span class="pt"></span> Ma sauvegarde et mon rapport</p>
+    <div>
+      <h2 id="titre-bilan">Garde une trace de ton travail</h2>
+      <p>Ta progression s’enregistre toute seule dans ce navigateur, sur cet ordinateur. Tu peux t’arrêter au milieu d’un module : il rouvrira là où tu en étais.</p>
+      <ol>
+        <li><strong>À la fin de chaque séance</strong>, télécharge ton bilan et range-le (ENT, clé USB). C’est ta sauvegarde.</li>
+        <li><strong>Sur un autre ordinateur</strong>, clique sur « Reprendre avec mon bilan » et choisis ce fichier : tu retrouves ta progression.</li>
+        <li><strong>Quand ton professeur le demande</strong>, dépose ton dernier bilan là où il te l’indique.</li>
+      </ol>
+    </div>
+    <div>
+      <div class="ident">
+        <label for="prenom">Prénom <input id="prenom" autocomplete="given-name" maxlength="40"></label>
+        <label for="nom">Nom <input id="nom" autocomplete="family-name" maxlength="40"></label>
+        <label for="classe">Classe <input id="classe" placeholder="ex. 6eB" maxlength="12"></label>
+      </div>
+      <div class="actions">
+        <button class="btn" id="telecharger">Télécharger mon bilan</button>
+        <label class="lien-btn">Reprendre avec mon bilan<input type="file" id="reprendre" accept=".json,application/json" hidden></label>
+        <button class="lien-btn discret" id="raz">Effacer ma progression sur cet ordinateur</button>
+      </div>
+      <p class="petit">Ne modifie pas le fichier : il porte un sceau. Un bilan retouché est refusé ici et signalé à ton professeur.</p>
+      <p class="petit" id="msg-bilan" role="status"></p>
+    </div>
+  </section>
+
+  <footer class="ours">
+    <div>
+      <h4>L’ours du journal</h4>
+      <p>Club Jeune Reporter, collège Dupanloup, Boulogne. Parcours de formation du club presse, à faire en autonomie au CDI.</p>
+      <p>Aucune donnée ne quitte cet ordinateur sans toi : pas de compte, pas d’envoi.</p>
+      <p><a class="ens" href="enseignant.html">Espace enseignant : tableau du club →</a></p>
+    </div>
+    <div>
+      <h4>Crédits photos</h4>
+      <ul id="credits"></ul>
+    </div>
+  </footer>
+</main>
+
+<script>
+(async function () {
+  const CALME = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const pct = x => Math.round(x * 100) + ' %';
+  const CAHIERS = [
+    { p: 'A', t: 'La carte de presse', s: 'Tronc commun · modules 1 à 3, dans l’ordre : les bases pour participer au club' },
+    { p: 'B', t: 'Reporter UNSS', s: 'Spécialité · modules 4 à 6, dans l’ordre : couvrir les compétitions du collège' },
+    { p: 'C', t: 'Le son', s: 'Spécialité · le podcast, après la carte de presse' },
+    { p: 'D', t: 'L’image', s: 'Spécialité · le reportage vidéo, après la photo de presse (module 6)' },
+    { p: 'E', t: 'L’émission', s: 'Spécialité · après le son et l’image' },
+    { p: 'F', t: 'La maquette', s: 'Spécialité · du site à la gazette, après la carte de presse' },
+  ];
+  const SPE = { B: 'Reporter UNSS', C: 'Chroniqueur', D: 'Reporter d’images', E: 'Réalisateur', F: 'Maquettiste' };
+  const mods = await (await fetch('modules.json')).json();
+  const livres = mods.filter(m => m.type === 'livre');
+  const parus = livres.filter(m => m.pret);
+  const prog = CLUB.lire();
+  const p = id => prog[id];
+  const fait = m => !!(m && p(m.id) && p(m.id).termine);
+  const tronc = livres.filter(m => m.partie === 'A');
+  const troncFait = tronc.length && tronc.every(fait);
+  const nomDe = id => (livres.find(x => x.id === id) || {}).titre || id;
+
+  // la manchette : la date du jour et le nombre de modules parus
+  document.getElementById('date-edition').textContent = 'Édition du ' + new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+  document.getElementById('numero').textContent = parus.length + ' modules parus sur ' + livres.length;
+  const nomJ = document.getElementById('nom-journal');
+  let k = 0;
+  nomJ.innerHTML = nomJ.textContent.split(' ').map(mot => `<span class="mot">${[...mot].map(c => `<span style="--k:${k++}" aria-hidden="true">${c}</span>`).join('')}</span>`).join(' ');
+
+  // dernière minute
+  const dernier = parus[parus.length - 1], prochain = livres.find(m => !m.pret);
+  const flash = [
+    dernier && `Vient de paraître : le module ${dernier.num}, ${dernier.titre}`,
+    prochain && `En préparation : le module ${prochain.num}, ${prochain.titre}`,
+    ...livres.map(m => `Réflexe du reporter n° ${m.num} : ${m.ethique}`),
+    'Un bon reporter vérifie toujours ses sources',
+  ].filter(Boolean);
+  const defile = document.getElementById('defile');
+  defile.innerHTML = [...flash, ...flash].map(t => `<span>${esc(t)}</span>`).join('');
+  defile.style.animationDuration = Math.max(40, flash.join('').length / 9) + 's';
+
+  function etat(m) {
+    const x = p(m.id);
+    if (!m.pret) return '';
+    if (!x) return '<span class="etat afaire">À lire</span>';
+    if (x.termine) return '<span class="etat ok">✓ Badge' + (x.meilleur ? ' · ' + pct(x.meilleur) : '') + '</span>';
+    return '<span class="etat encours">' + (x.avance ? pct(x.avance) + ' lu' : 'Commencé') + '</span>';
+  }
+
+  // l'appel à l'action : le premier module du tronc commun pas terminé, puis une spécialité
+  const suivant = parus.find(m => m.partie === 'A' && !fait(m)) || parus.find(m => !fait(m) && (m.prerequis || []).every(id => fait(livres.find(x => x.id === id))));
+  const cta = document.getElementById('cta');
+  if (suivant) {
+    cta.href = 'module.html?m=' + encodeURIComponent(suivant.id);
+    const commence = p(suivant.id);
+    document.getElementById('cta-sur').textContent = commence ? 'Reprendre là où tu en étais' : (suivant.num === 1 ? 'Pour commencer' : (suivant.partie === 'A' ? 'Ton prochain module' : 'Carte de presse validée · une spécialité ?'));
+    document.getElementById('cta-titre').textContent = `Module ${suivant.num} : ${suivant.titre}`;
+    if (suivant.partie !== 'A' && !commence) cta.href = '#cahier-' + suivant.partie;
+  } else {
+    document.getElementById('cta-sur').textContent = 'Bravo !';
+    document.getElementById('cta-titre').textContent = 'Tous les modules parus sont faits';
+    cta.href = '#bilan';
+  }
+
+  // la carte de presse : trois tampons pour le tronc commun, puis un par spécialité
+  function cartePresse() {
+    const id = CLUB.identite();
+    const faits = tronc.filter(fait).length;
+    const spes = livres.filter(m => m.partie !== 'A' && fait(m));
+    const nom = [id.prenom, id.nom].filter(Boolean).join(' ');
+    document.getElementById('carte-presse').innerHTML = `
+      <div class="haut"><b>Carte de presse</b><span>Club Jeune Reporter · Dupanloup</span></div>
+      <p class="qui">${nom ? esc(nom) : 'Ton nom ici'}<small>${nom ? (id.classe ? 'Classe de ' + esc(id.classe) + ' · ' : '') + 'reporter du club' : 'Écris ton nom dans « Mon bilan », en bas de la page.'}</small></p>
+      <div class="cases">${tronc.map((m, i) => {
+        const x = p(m.id), r = ((m.num * 37) % 24) - 12;
+        if (x && x.termine) return `<a class="case faite" href="module.html?m=${encodeURIComponent(m.id)}" title="Module ${m.num} : badge obtenu"><span class="t" style="--r:${r}deg">M${m.num}</span></a>`;
+        if (!m.pret) return `<span class="case avenir" title="Module ${m.num} : en préparation">${m.num}</span>`;
+        return `<a class="case${x ? ' encours' : ''}" href="module.html?m=${encodeURIComponent(m.id)}" title="Module ${m.num} : ${esc(m.titre)}">${m.num}</a>`;
+      }).join('')}</div>
+      <p class="bas">${faits ? `<strong>${faits} tampon${faits > 1 ? 's' : ''} sur ${tronc.length}.</strong> ` : ''}${troncFait ? 'Ta carte est validée : tu es membre de la rédaction ! Choisis maintenant ta spécialité.' : 'Termine un module pour gagner son tampon.'}</p>
+      <p class="specialites">${CAHIERS.filter(C => C.p !== 'A').map(C => { const ms = livres.filter(x => x.partie === C.p); const ok = ms.length > 0 && ms.every(fait); return `<span class="spe${ok ? ' ok' : ''}" title="${esc(C.t)} : ${ok ? 'spécialité obtenue' : 'à faire après la carte de presse'}">${ok ? '✓ ' : ''}${esc(SPE[C.p])}</span>`; }).join('')}</p>
+      ${troncFait ? '<span class="tampon vert badge-final" style="--r:-10deg">Membre de<br>la rédaction</span>' : ''}`;
+  }
+  cartePresse();
+
+  // le parcours, sans animation : la carte de presse (obligatoire), puis les spécialités (au choix)
+  const ROLES = {
+    B: 'Tu couvres les compétitions sportives du collège : le compte rendu, l’interview des athlètes, les photos.',
+    C: 'Tu racontes l’actualité au micro : la chronique et le podcast du club.',
+    D: 'Tu filmes et tu montes les reportages vidéo du club.',
+    E: 'Tu assembles le son, l’image et les interviews en une émission.',
+    F: 'Tu mets les articles en page, sur le site du collège et dans la gazette.',
+  };
+  const AVANT = { D: 'Avant : la photo de presse (module 6).', E: 'Avant : le son et l’image.' };
+  const ateliersDe = m => mods.filter(a => a.type === 'atelier' && a.parent === m.id);
+  const atelierHTML = a => `<a class="mini-atelier" href="module.html?m=${encodeURIComponent(a.id)}"><span class="pic">Atelier</span> ${esc(a.titre)} ${etat(a)}</a>`;
+  function moduleTronc(m) {
+    const x = p(m.id), lien = 'module.html?m=' + encodeURIComponent(m.id);
+    return `<li class="mod-tronc${m.pret ? '' : ' bientot'}${x && x.termine ? ' fait' : ''}">
+      <div class="vign"><img src="${m.image}" alt="" loading="lazy"><span class="num">${m.num}</span>${x && x.termine ? '<span class="tampon vert" style="--r:-8deg">Tampon<br>obtenu</span>' : ''}</div>
+      <div class="corps">
+        <p class="meta">Module ${m.num}${m.pret ? ` · ${m.duree} min` : ' · bientôt'} ${etat(m)}</p>
+        <h4>${m.pret ? `<a href="${lien}">${esc(m.titre)}</a>` : esc(m.titre)}</h4>
+        <p class="chapo">${esc(m.chapo)}</p>
+        ${ateliersDe(m).map(atelierHTML).join('')}
+      </div></li>`;
+  }
+  function moduleSpe(m) {
+    const x = p(m.id), lien = 'module.html?m=' + encodeURIComponent(m.id);
+    return `<li class="mod-spe${x && x.termine ? ' fait' : ''}">
+      <span class="num">${x && x.termine ? '✓' : m.num}</span>
+      <span class="txt">${m.pret ? `<a href="${lien}">${esc(m.titre)}</a>` : esc(m.titre)}<small>Module ${m.num} · ${m.duree} min ${etat(m)}</small>${ateliersDe(m).map(atelierHTML).join('')}</span></li>`;
+  }
+  const faitsTotal = tronc.filter(fait).length;
+  const specialites = CAHIERS.filter(C => C.p !== 'A').map(C => {
+    const ms = livres.filter(m => m.partie === C.p), ok = ms.length > 0 && ms.every(fait);
+    return `<article class="spe-carte${ok ? ' obtenue' : ''}" id="cahier-${C.p}">
+      <p class="spe-nom">${ok ? '✓ ' : ''}${esc(SPE[C.p])}</p>
+      <h4>${esc(C.t)}</h4>
+      <p class="role">${esc(ROLES[C.p])}</p>
+      <ol class="mods">${ms.map(moduleSpe).join('')}</ol>
+      ${AVANT[C.p] ? `<p class="avant">${esc(AVANT[C.p])}</p>` : ''}
+    </article>`;
+  }).join('');
+  const html = `<section class="plan" id="parcours" aria-labelledby="titre-parcours">
+    <h2 id="titre-parcours">Le parcours du reporter</h2>
+    <div class="etape-plan tronc${troncFait ? ' validee' : ''}" id="cahier-A">
+      <p class="etiquette"><b>Étape 1</b> Obligatoire · dans l’ordre</p>
+      <h3>La carte de presse</h3>
+      <p class="sous">Trois modules pour apprendre les bases. À la fin, tu es <strong>membre de la rédaction</strong> et tu peux participer au club. ${faitsTotal ? `<strong>${faitsTotal} sur ${tronc.length} fait${faitsTotal > 1 ? 's' : ''}.</strong>` : ''}</p>
+      <ol class="tronc-mods">${tronc.map(moduleTronc).join('')}</ol>
+      ${troncFait ? '<p class="valide">✓ Ta carte de presse est validée.</p>' : ''}
+    </div>
+    <p class="liaison" aria-hidden="true">↓ puis ↓</p>
+    <div class="etape-plan">
+      <p class="etiquette"><b>Étape 2</b> Au choix · une ou plusieurs</p>
+      <h3>Les spécialités</h3>
+      <p class="sous">Choisis selon ton rôle à la rédaction. Chaque spécialité terminée ajoute son nom sur ta carte de presse.${troncFait ? '' : ' Elles s’ouvrent après la carte de presse.'}</p>
+      <div class="spe-grille">${specialites}</div>
+    </div>
+  </section>`;
+  document.getElementById('cahiers').innerHTML = html;
+
+  // la page est prête : animations.js peut lancer la mise en scène
+  document.dispatchEvent(new Event('club-pret'));
+  window.CLUB_PRET = true;
+
+  // crédits
+  const credits = [['La une', 'La Gazette de Dupanloup, n° 1, mai 2026']].concat(livres.map(m => ['Module ' + m.num, m.credit, m.page]));
+  document.getElementById('credits').innerHTML = credits.map(([q, c, u]) => `<li><strong>${q}</strong> : ${u ? `<a href="${esc(u)}">${esc(c)}</a>` : esc(c)}</li>`).join('');
+
+  // mon bilan
+  const ident = CLUB.identite();
+  ['prenom', 'nom', 'classe'].forEach(k => { const el = document.getElementById(k); el.value = ident[k] || ''; el.oninput = () => { CLUB.garderIdentite(k, el.value.trim()); cartePresse(); }; });
+  const msg = document.getElementById('msg-bilan');
+  document.getElementById('reprendre').onchange = async (e) => {
+    const f = e.target.files[0]; if (!f) return;
+    const r = await CLUB.chargerBilan(await f.text());
+    if (!r.ok) { msg.textContent = r.raison; return; }
+    try { sessionStorage.setItem('club-msg', r.n ? `Progression retrouvée : ${r.n} module${r.n > 1 ? 's' : ''} mis à jour.` : 'Ce bilan n’apporte rien de plus récent que ce qui est déjà sur cet ordinateur.'); } catch (e) {}
+    location.hash = 'bilan'; location.reload();
+  };
+  try { const m = sessionStorage.getItem('club-msg'); if (m) { msg.textContent = m; sessionStorage.removeItem('club-msg'); } } catch (e) {}
+  document.getElementById('telecharger').onclick = async () => {
+    const id = CLUB.identite();
+    if (!id.prenom || !id.nom || !id.classe) { msg.textContent = 'Écris ton prénom, ton nom et ta classe avant de télécharger ton bilan.'; return; }
+    const nb = await CLUB.telechargerBilan(mods);
+    msg.textContent = `Bilan téléchargé (${nb} module${nb > 1 ? 's' : ''} commencé${nb > 1 ? 's' : ''}). Range-le bien, ou dépose-le là où ton professeur te l’a demandé.`;
+  };
+  const raz = document.getElementById('raz');
+  raz.onclick = () => {
+    if (raz.dataset.armer) { CLUB.effacer(); location.reload(); return; }
+    raz.dataset.armer = '1'; raz.textContent = 'Clique encore pour tout effacer sur cet ordinateur';
+    setTimeout(() => { delete raz.dataset.armer; raz.textContent = 'Effacer ma progression sur cet ordinateur'; }, 5000);
+  };
+})();
+</script>
+</body>
+</html>
