@@ -23,3 +23,10 @@ Le son et la vidéo restent sur PodEduc (apps.education.fr) : seuls ces lecteurs
 Les fiches marquées "exemple": true sont des exemples à supprimer.
 
 ESSAYER SUR UN ORDINATEUR : à la racine du dépôt, `python -m http.server 8000` puis http://localhost:8000/media/
+
+LE SPECTACLE (2e passe, 12 novembre 2026)
+- Le générique : la mire couvre l'écran puis se lève, une fois par visite, sur l'accueil (un clic ou une touche le passe).
+- Le fond vivant : une lumière liquide en WebGL (fx.js), à la couleur de la chaîne ; sans WebGL, les halos en CSS restent.
+- Le voyage : sur l'accueil, descendre la page fait traverser les trois chaînes en profondeur (media.js, monterVoyage).
+- Le curseur rond qui annonce le geste (« Regarder », « Écouter », « Lire ») sur ordinateur.
+En mode calme, rien de tout cela : pas de générique, fond fixe, et la grille des trois chaînes à la place du voyage.
