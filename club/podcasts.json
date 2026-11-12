@@ -1,0 +1,49 @@
+[
+  {
+    "id": "exemple-cross",
+    "exemple": true,
+    "numero": 1,
+    "titre": "Le cross, vu du micro",
+    "rubrique": "Reportage sonore",
+    "date": "2026-11-05",
+    "duree": "4 min 30",
+    "chapo": "Le jour du cross, l'équipe son a posé son micro sur la ligne de départ. Ambiance, souffle des coureurs et deux interviews à l'arrivée.",
+    "image": "img/cross-envol.jpg",
+    "podeduc": "",
+    "equipe": [
+      { "prenom": "Léa", "role": "Présentation" },
+      { "prenom": "Sami", "role": "Prise de son" },
+      { "prenom": "Inès", "role": "Montage" }
+    ],
+    "transcription": [
+      "LÉA : Bonjour à tous, et bienvenue sur la radio du Club Jeune Reporter. Aujourd'hui, on vous emmène au cross du collège.",
+      "[Ambiance : coup de sifflet, foule qui encourage]",
+      "SAMI : Il est 9 h, les 6e sont sur la ligne de départ. Écoutez…",
+      "(Épisode d'exemple : la transcription complète se met ici.)"
+    ],
+    "article": "",
+    "sources": "Interviews enregistrées avec l'accord des élèves et de leurs familles. Musique : libre de droits."
+  },
+  {
+    "id": "exemple-trois-questions",
+    "exemple": true,
+    "numero": 2,
+    "titre": "Trois questions au CDI",
+    "rubrique": "Interview",
+    "date": "2026-11-12",
+    "duree": "3 min",
+    "chapo": "Pourquoi le CDI achète-t-il des BD ? Comment choisir un livre ? Le club a posé trois questions au professeur documentaliste.",
+    "image": "img/m7-interview-micro.jpg",
+    "podeduc": "",
+    "equipe": [
+      { "prenom": "Noé", "role": "Questions" },
+      { "prenom": "Léa", "role": "Montage" }
+    ],
+    "transcription": [
+      "NOÉ : Première question : comment le CDI choisit-il ses BD ?",
+      "(Épisode d'exemple : la transcription complète se met ici.)"
+    ],
+    "article": "",
+    "sources": ""
+  }
+]

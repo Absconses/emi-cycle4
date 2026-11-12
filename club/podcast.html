@@ -1,0 +1,193 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000177">
+<title>La radio du club · Club Jeune Reporter</title>
+<meta name="description" content="Les podcasts du Club Jeune Reporter du collège Dupanloup : chroniques, interviews et reportages sonores réalisés par les élèves.">
+<link rel="icon" href="img/sigle-dupanloup.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bree+Serif&family=Federo&family=IBM+Plex+Mono:wght@600;700&display=swap">
+<link rel="stylesheet" href="style.css">
+<style>
+/* La radio du club : mêmes couleurs et polices que la une (style.css) */
+.radio { max-width: 1180px; margin: 0 auto; padding: 22px 16px 60px; }
+.radio-tete { display: grid; gap: 10px 28px; border-bottom: 3px solid var(--or); padding-bottom: 16px; margin-bottom: 22px; }
+@media (min-width: 860px) { .radio-tete { grid-template-columns: 1fr auto; align-items: end; } }
+.radio-tete h2 { font: 400 clamp(34px, 5.4vw, 64px)/1 var(--gothique); color: var(--marine); margin: 0; }
+.radio-tete .chapo { font: 700 18px/1.45 var(--texte); margin: 8px 0 0; max-width: 62ch; }
+.onair { display: inline-flex; align-items: center; gap: 10px; background: var(--marine); color: var(--papier); font: 700 13px/1 var(--mono); text-transform: uppercase; letter-spacing: .1em; padding: 10px 14px; box-shadow: 4px 4px 0 var(--or); }
+.onair::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: #e2463a; box-shadow: 0 0 0 3px rgba(226, 70, 58, .3); animation: clignote 1.6s infinite; }
+@media (prefers-reduced-motion: reduce) { .onair::before { animation: none; } }
+
+/* les filtres */
+.filtres-radio { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 20px; }
+.filtres-radio button { font: 700 12.5px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; background: #fffdf7; color: var(--marine); border: 1.5px solid var(--marine); padding: 8px 12px; border-radius: 20px; cursor: pointer; }
+.filtres-radio button[aria-pressed="true"] { background: var(--marine); color: #fff; }
+
+/* le dernier épisode, à la une */
+.une-radio { display: grid; gap: 22px; border: 2px solid var(--marine); background: rgba(255, 253, 247, .7); padding: 18px; margin: 0 0 30px; box-shadow: 8px 8px 0 var(--or); }
+@media (min-width: 900px) { .une-radio { grid-template-columns: 1fr 1.1fr; padding: 24px; } }
+.une-radio .visuel { position: relative; aspect-ratio: 3 / 2; border: 1px solid var(--filet); overflow: hidden; background: #2a251c; }
+.une-radio .visuel img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) contrast(1.1) sepia(.1); }
+.une-radio h3 { font: 400 clamp(28px, 3.6vw, 42px)/1.05 var(--titre); color: var(--marine); margin: 4px 0 10px; }
+.une-radio h3 a { text-decoration: none; }
+.une-radio h3 a:hover { text-decoration: underline; text-decoration-color: var(--or); text-decoration-thickness: 4px; }
+
+/* les épisodes */
+.grille-ep { display: grid; gap: 0; grid-template-columns: 1fr; }
+@media (min-width: 720px) { .grille-ep { grid-template-columns: repeat(3, 1fr); } }
+.ep { position: relative; padding: 18px 0 22px; border-bottom: 1px solid rgba(27, 36, 112, .35); display: flex; flex-direction: column; }
+@media (min-width: 720px) { .ep { padding: 18px 22px 24px; border-bottom: none; } .ep:not(:nth-child(3n+1)) { border-left: 1px solid rgba(27, 36, 112, .35); } .ep:nth-child(3n+1) { padding-left: 0; } }
+.ep .visuel { position: relative; aspect-ratio: 3 / 2; border: 1px solid var(--filet); overflow: hidden; background: #2a251c; margin-bottom: 12px; }
+.ep .visuel img { width: 100%; height: 100%; object-fit: cover; display: block; filter: grayscale(1) contrast(1.1) sepia(.1); transition: filter .5s, transform .6s; }
+.ep:hover .visuel img, .ep:focus-within .visuel img { filter: none; transform: scale(1.05); }
+.ep h3 { font: 400 clamp(22px, 2.4vw, 27px)/1.1 var(--titre); margin: 0 0 8px; }
+.ep h3 a { text-decoration: none; }
+.ep h3 a::after { content: ""; position: absolute; inset: 0; }
+.ep .chapo { margin: 0; color: var(--encre-2); font-size: 15.5px; }
+.num-ep { position: absolute; left: 0; top: 0; z-index: 1; background: var(--marine); color: #fff; font: 400 22px/1 var(--titre); padding: 7px 11px 8px; }
+.visuel .tampon { position: absolute; right: 10px; bottom: 10px; z-index: 1; }
+.meta-ep { font: 600 12px/1.3 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--gris); margin: 0 0 6px; display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.rubrique { color: var(--rouge); }
+.ecouter { display: inline-flex; align-items: center; gap: 8px; margin-top: 10px; font: 700 13px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--marine); }
+.ecouter .rond { width: 30px; height: 30px; border-radius: 50%; background: var(--marine); color: var(--or); display: grid; place-items: center; font-size: 12px; }
+
+/* la page d'un épisode */
+.fiche { display: grid; gap: 26px; }
+@media (min-width: 980px) { .fiche { grid-template-columns: 1.45fr 1fr; align-items: start; } }
+.fiche h2 { font: 400 clamp(32px, 4.6vw, 54px)/1.02 var(--titre); color: var(--marine); margin: 4px 0 12px; }
+.fiche .chapo { font: 700 19px/1.45 var(--texte); margin: 0 0 18px; }
+.lecteur-audio { background: var(--marine); padding: 12px; box-shadow: 6px 6px 0 var(--or); margin: 0 0 22px; }
+.lecteur-audio iframe { width: 100%; aspect-ratio: 16 / 9; border: 0; display: block; background: #000; }
+.lecteur-audio .attente { aspect-ratio: 16 / 7; display: grid; place-items: center; text-align: center; color: var(--papier); padding: 18px; background: repeating-linear-gradient(90deg, rgba(233, 184, 90, .18) 0 3px, transparent 3px 9px); }
+.lecteur-audio .attente b { display: block; font: 400 26px/1.1 var(--titre); color: #fff; margin-bottom: 6px; }
+.onde { display: flex; gap: 4px; align-items: center; justify-content: center; height: 46px; margin: 0 0 12px; }
+.onde i { width: 5px; background: var(--or); border-radius: 3px; height: calc(var(--h) * 1%); animation: onde 1.2s ease-in-out infinite alternate; animation-delay: calc(var(--k) * -110ms); }
+@keyframes onde { from { transform: scaleY(.35); } to { transform: scaleY(1); } }
+@media (prefers-reduced-motion: reduce) { .onde i { animation: none; } }
+.transcription { border: 1.5px solid var(--filet); background: #fffdf7; }
+.transcription summary { cursor: pointer; padding: 12px 14px; font: 700 14px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: var(--marine); }
+.transcription > div { padding: 0 16px 14px; }
+.transcription p { margin: 0 0 8px; }
+.cote { display: grid; gap: 16px; }
+.encadre { background: #fffdf7; border: 1px solid var(--filet); padding: 16px; }
+.encadre h3 { font: 700 12px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .1em; color: var(--rouge); margin: 0 0 10px; }
+.equipe { list-style: none; margin: 0; padding: 0; display: grid; gap: 8px; }
+.equipe li { display: flex; justify-content: space-between; gap: 10px; border-bottom: 1px dotted rgba(27, 36, 112, .35); padding-bottom: 6px; }
+.equipe b { font: 400 19px/1.2 var(--titre); color: var(--marine); }
+.equipe span { font: 600 12px/1.6 var(--mono); text-transform: uppercase; color: var(--gris); }
+.reflexe { border-left: 4px solid var(--or); padding-left: 12px; font: italic 16px/1.45 var(--titre); margin: 0; }
+.vide-radio { border: 2px dashed var(--filet); padding: 30px 18px; text-align: center; background: rgba(255, 253, 247, .6); }
+.vide-radio b { display: block; font: 400 26px/1.1 var(--titre); color: var(--marine); margin-bottom: 6px; }
+.liens-bas { display: flex; flex-wrap: wrap; gap: 10px 22px; margin-top: 34px; border-top: 3px solid var(--filet); padding-top: 14px; font: 700 13px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+.liens-bas a { text-decoration: none; color: var(--marine); }
+.liens-bas a:hover { color: var(--rouge); }
+</style>
+</head>
+<body>
+<header class="barre">
+  <a href="index.html">← La une</a>
+  <div class="barre-titre"><span class="pastille">🎙</span><h1>La radio du club</h1></div>
+  <a href="podcast.html" id="lien-tous" hidden>Tous les épisodes</a>
+</header>
+
+<main class="radio" id="radio" aria-live="polite">
+  <p class="petit">Chargement des émissions…</p>
+</main>
+
+<script>
+(async function () {
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const zone = document.getElementById('radio');
+  const dateFr = d => { const x = new Date(d + 'T12:00:00'); return isNaN(x) ? '' : x.toLocaleDateString('fr-FR', { day: 'numeric', month: 'long', year: 'numeric' }); };
+
+  // Seuls les lecteurs PodEduc (apps.education.fr) sont intégrés : le son des élèves reste chez le ministère.
+  function lecteur(url) {
+    let u;
+    try { u = new URL(url); } catch (e) { return ''; }
+    if (u.protocol !== 'https:' || !/(^|\.)apps\.education\.fr$/.test(u.hostname)) return '';
+    u.searchParams.set('is_iframe', 'true');
+    return u.href;
+  }
+
+  let eps = [];
+  try { eps = await (await fetch('podcasts.json', { cache: 'no-cache' })).json(); }
+  catch (e) { zone.innerHTML = '<div class="vide-radio"><b>La radio est en panne</b>Le fichier des émissions (podcasts.json) est introuvable ou mal écrit.</div>'; return; }
+  eps = eps.filter(e => e && e.id && e.titre).sort((a, b) => String(b.date).localeCompare(String(a.date)) || (b.numero || 0) - (a.numero || 0));
+
+  const tampon = e => e.exemple ? '<span class="tampon" style="--r:-8deg">Épisode<br>d’exemple</span>' : (e.podeduc ? '' : '<span class="tampon">Bientôt<br>à l’antenne</span>');
+  const meta = e => `<p class="meta-ep"><span class="rubrique">${esc(e.rubrique || 'Podcast')}</span>${e.date ? `<span>· ${esc(dateFr(e.date))}</span>` : ''}${e.duree ? `<span>· ${esc(e.duree)}</span>` : ''}</p>`;
+  const lien = e => 'podcast.html?e=' + encodeURIComponent(e.id);
+
+  const id = new URLSearchParams(location.search).get('e');
+  if (id) return fiche(eps.find(e => e.id === id));
+  liste();
+
+  function liste() {
+    const rubriques = [...new Set(eps.map(e => e.rubrique).filter(Boolean))];
+    let filtre = '';
+    const tete = `<div class="radio-tete">
+      <div><p class="surtitre">Le son <span class="pt"></span> Podcasts du Club Jeune Reporter</p>
+        <h2>La radio du club</h2>
+        <p class="chapo">Chroniques, interviews et reportages sonores : l’actualité du collège racontée au micro par les reporters du club.</p></div>
+      <span class="onair">${eps.filter(e => !e.exemple).length ? 'À l’antenne' : 'Bientôt à l’antenne'}</span></div>`;
+    function dessiner() {
+      const vus = eps.filter(e => !filtre || e.rubrique === filtre);
+      if (!eps.length) { zone.innerHTML = tete + '<div class="vide-radio"><b>Pas encore d’émission</b>Le premier épisode arrive bientôt. En attendant, le module 7 t’apprend à faire ton podcast.</div>' + bas(); return; }
+      const [premier, ...autres] = vus;
+      zone.innerHTML = tete +
+        (rubriques.length > 1 ? `<div class="filtres-radio" role="group" aria-label="Choisir une rubrique"><button type="button" data-r="" aria-pressed="${!filtre}">Tout</button>${rubriques.map(r => `<button type="button" data-r="${esc(r)}" aria-pressed="${filtre === r}">${esc(r)}</button>`).join('')}</div>` : '') +
+        (premier ? `<article class="une-radio">
+          <a class="visuel trame" href="${lien(premier)}" tabindex="-1" aria-hidden="true"><span class="num-ep">${esc(premier.numero || '')}</span>${premier.image ? `<img src="${esc(premier.image)}" alt="">` : ''}${tampon(premier)}</a>
+          <div><p class="surtitre">Dernier épisode</p>${meta(premier)}
+            <h3><a href="${lien(premier)}">${esc(premier.titre)}</a></h3>
+            <p class="chapo" style="font-weight:400;color:var(--encre-2)">${esc(premier.chapo)}</p>
+            <a class="cta" href="${lien(premier)}"><span><small>${premier.podeduc ? 'Écouter' : 'Découvrir'}</small><span>${esc(premier.titre)}</span></span><span class="fl" aria-hidden="true">→</span></a></div>
+        </article>` : '') +
+        (autres.length ? `<div class="grille-ep">${autres.map(e => `<article class="ep">
+          <div class="visuel trame"><span class="num-ep">${esc(e.numero || '')}</span>${e.image ? `<img src="${esc(e.image)}" alt="" loading="lazy">` : ''}${tampon(e)}</div>
+          ${meta(e)}<h3><a href="${lien(e)}">${esc(e.titre)}</a></h3><p class="chapo">${esc(e.chapo)}</p>
+          <span class="ecouter" aria-hidden="true"><span class="rond">▶</span>${e.podeduc ? 'Écouter' : 'Découvrir'}</span></article>`).join('')}</div>` : '') + bas();
+      zone.querySelectorAll('.filtres-radio button').forEach(b => b.onclick = () => { filtre = b.dataset.r; dessiner(); });
+    }
+    dessiner();
+  }
+
+  function fiche(e) {
+    document.getElementById('lien-tous').hidden = false;
+    if (!e) { zone.innerHTML = '<div class="vide-radio"><b>Épisode introuvable</b><a href="podcast.html">Revenir à toutes les émissions</a></div>'; return; }
+    document.title = e.titre + ' · La radio du club';
+    const src = e.podeduc ? lecteur(e.podeduc) : '';
+    const onde = Array.from({ length: 28 }, (_, k) => `<i style="--k:${k};--h:${30 + ((k * 47) % 70)}"></i>`).join('');
+    const audio = src
+      ? `<iframe src="${esc(src)}" title="Lecteur PodEduc : ${esc(e.titre)}" allowfullscreen loading="lazy"></iframe>`
+      : `<div class="attente"><div><div class="onde" aria-hidden="true">${onde}</div><b>${e.exemple ? 'Épisode d’exemple' : 'Bientôt à l’antenne'}</b>${e.exemple ? 'Ici apparaîtra le lecteur PodEduc de l’épisode.' : 'Le son de cet épisode n’est pas encore en ligne.'}${e.podeduc && !src ? '<br><small>(Le lien indiqué n’est pas un lien PodEduc : il n’est pas affiché.)</small>' : ''}</div></div>`;
+    const transcr = (e.transcription || []).length ? `<details class="transcription"><summary>Lire la transcription</summary><div>${e.transcription.map(p => `<p>${esc(p)}</p>`).join('')}</div></details>` : '';
+    zone.innerHTML = `<div class="fiche">
+      <div>
+        <p class="surtitre">Épisode ${esc(e.numero || '')} <span class="pt"></span> ${esc(e.rubrique || 'Podcast')}</p>
+        <h2>${esc(e.titre)}</h2>
+        <p class="meta-ep">${e.date ? esc(dateFr(e.date)) : ''}${e.duree ? ' · ' + esc(e.duree) : ''}</p>
+        <p class="chapo">${esc(e.chapo)}</p>
+        <div class="lecteur-audio">${audio}</div>
+        ${transcr}
+      </div>
+      <aside class="cote">
+        ${(e.equipe || []).length ? `<div class="encadre"><h3>L’équipe de l’épisode</h3><ul class="equipe">${e.equipe.map(m => `<li><b>${esc(m.prenom)}</b><span>${esc(m.role)}</span></li>`).join('')}</ul></div>` : ''}
+        ${e.article ? `<div class="encadre"><h3>À lire aussi</h3><p style="margin:0"><a href="${esc(e.article)}">L’article de la Gazette de Dupanloup →</a></p></div>` : ''}
+        ${e.sources ? `<div class="encadre"><h3>Sources et autorisations</h3><p style="margin:0;font-size:15px">${esc(e.sources)}</p></div>` : ''}
+        <div class="encadre"><h3>Le réflexe du reporter</h3><p class="reflexe">« Au micro, je ne fais parler personne sans son accord, et je ne coupe jamais une phrase pour lui faire dire autre chose. »</p></div>
+        <div class="encadre"><h3>Toi aussi, prends le micro</h3><p style="margin:0 0 10px;font-size:15px">Le module 7 t’apprend à préparer, enregistrer et monter ton podcast.</p><a class="cta" href="module.html?m=m7-le-podcast"><span><small>Spécialité Le son</small><span>Module 7 : Le podcast</span></span><span class="fl" aria-hidden="true">→</span></a></div>
+      </aside></div>` + bas();
+  }
+
+  function bas() {
+    return `<nav class="liens-bas" aria-label="Plus loin"><a href="index.html">← La une du club</a><a href="redaction.html">✎ La salle de rédaction</a><a href="module.html?m=m7-le-podcast">Module 7 : le podcast</a><a href="podcast-publier.html">Publier un épisode</a></nav>`;
+  }
+})();
+</script>
+</body>
+</html>
