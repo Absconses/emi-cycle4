@@ -2,7 +2,12 @@
  * Les productions sont décrites dans trois fichiers :
  *   emissions.json (ici), ../club/podcasts.json (partagé avec la radio du club), gazette.json (ici).
  * Le son et la vidéo restent sur PodEduc (apps.education.fr) : seuls ces lecteurs sont intégrés. */
+(function () {
+  let choix = null; try { choix = localStorage.getItem('media-effets'); } catch (e) {}
+  if (choix === 'calme' || (!choix && matchMedia('(prefers-reduced-motion: reduce)').matches)) document.documentElement.classList.add('calme');
+})();
 window.MEDIA = (function () {
+  const COULEUR = { emission: 'corail', podcast: 'jaune', gazette: 'papier' };
   const CLUB_DIR = '../club/';
   const CHAINES = {
     emission: { n: 1, nom: 'Émissions', page: 'emissions.html', fichier: 'emissions.json', verbe: 'Regarder', dernier: 'Dernière émission',
@@ -45,12 +50,13 @@ window.MEDIA = (function () {
   }
   const drapeau = e => e.exemple ? '<span class="drapeau">Exemple</span>' : (enLigne(e) ? '' : '<span class="drapeau">Bientôt</span>');
 
+  const visuel = e => e.type === 'gazette'
+    ? `<div class="une-gazette"><b>La Gazette</b><span>n° ${esc(e.numero || '')}, ${esc(dateFr(e.date))}</span>${e.image ? `<img src="${esc(img(e.image))}" alt="" loading="lazy" style="object-fit:cover">` : ''}</div>`
+    : (e.image ? `<img src="${esc(img(e.image))}" alt="" loading="lazy">` : '');
+  const geste = e => `<span class="geste" aria-hidden="true">${e.type === 'gazette' ? 'Lire' : e.type === 'podcast' ? '▶ Écouter' : '▶ Regarder'}</span>`;
   function carte(e) {
-    const vignette = e.type === 'gazette'
-      ? `<div class="une-gazette"><b>La Gazette</b><span>n° ${esc(e.numero || '')}, ${esc(dateFr(e.date))}</span>${e.image ? `<img src="${esc(img(e.image))}" alt="" loading="lazy" style="object-fit:cover">` : ''}</div>`
-      : `${e.image ? `<img src="${esc(img(e.image))}" alt="" loading="lazy">` : ''}${e.numero ? `<span class="numero">n° ${esc(e.numero)}</span>` : ''}`;
     return `<article class="carte-m c-${e.type}">
-      <div class="vignette">${vignette}${drapeau(e)}</div>
+      <div class="vignette">${visuel(e)}${e.type !== 'gazette' && e.numero ? `<span class="numero">n° ${esc(e.numero)}</span>` : ''}${drapeau(e)}${geste(e)}</div>
       <h3><a href="${lien(e)}">${esc(e.titre)}</a></h3>
       <p class="infos">${infos(e)}</p>
       ${e.chapo ? `<p class="chapo">${esc(e.chapo)}</p>` : ''}</article>`;
@@ -60,14 +66,17 @@ window.MEDIA = (function () {
   /* ---------- la barre et le pied, communs à toutes les pages ---------- */
   function habiller(page) {
     const nav = [['emission', 'emissions.html', 'Émissions'], ['podcast', 'radio.html', 'Radio'], ['gazette', 'gazette.html', 'Gazette'], ['formation', 'formation.html', 'Se former']];
-    document.body.insertAdjacentHTML('afterbegin', `<header class="barre-media"><div class="int">
+    document.body.insertAdjacentHTML('afterbegin', `<div class="ambiance" aria-hidden="true"><i></i><i></i><i></i></div><div class="mire" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
+    <header class="barre-media"><div class="barre-verre">
       <a class="marque" href="index.html"><img src="${CLUB_DIR}img/sigle-dupanloup.png" alt="" width="40" height="40"><span><b>Dupanloup Média</b><small>Le média des élèves, fabriqué au CDI</small></span></a>
       <nav class="chaines-nav" aria-label="Les chaînes">${nav.map(([c, h, t]) => `<a class="c-${c}" href="${h}"${page === c ? ' aria-current="page"' : ''}>${t}</a>`).join('')}</nav>
-    </div><div class="mire" aria-hidden="true"><i></i><i></i><i></i><i></i></div></header>`);
+      <button type="button" class="chercher" id="ouvrir-palette" aria-haspopup="dialog"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg><span>Chercher</span><kbd>Ctrl K</kbd></button>
+    </div></header>
+    <dialog class="palette" id="palette" aria-label="Chercher sur Dupanloup Média"><input type="search" id="palette-champ" placeholder="Une émission, un podcast, un module…" aria-label="Chercher" autocomplete="off"><ul id="palette-liste"></ul><p class="infos">Flèches haut et bas pour choisir, Entrée pour ouvrir, Échap pour fermer.</p></dialog>`);
     document.body.insertAdjacentHTML('beforeend', `<footer class="pied-media"><div class="int">
       <div><b>Dupanloup Média</b><p>Les émissions, les podcasts et la gazette des élèves du collège Dupanloup, à Boulogne. Tout est préparé, enregistré et monté au CDI.</p><p>Aucun compte, aucune publicité. Les sons et les vidéos sont hébergés par l’Éducation nationale.</p></div>
       <div><b>Les chaînes</b><ul><li><a href="emissions.html">Émissions</a></li><li><a href="radio.html">Radio</a></li><li><a href="gazette.html">Gazette</a></li><li><a href="formation.html">Se former au reportage</a></li></ul></div>
-      <div><b>La rédaction</b><ul><li><a href="${CLUB_DIR}redaction.html">Salle de rédaction</a></li><li><a href="${CLUB_DIR}banc/">Banc de montage</a></li><li><a href="publier.html">Publier une production</a></li><li><a href="${CLUB_DIR}enseignant.html">Espace enseignant</a></li></ul></div>
+      <div><b>La rédaction</b><ul><li><a href="${CLUB_DIR}redaction.html">Salle de rédaction</a></li><li><a href="${CLUB_DIR}banc/">Banc de montage</a></li><li><a href="publier.html">Publier une production</a></li><li><a href="${CLUB_DIR}enseignant.html">Espace enseignant</a></li><li><button type="button" class="lien-m" id="effets"></button></li></ul></div>
     </div></footer>`);
   }
 
@@ -76,20 +85,13 @@ window.MEDIA = (function () {
     const [em, po, ga] = await Promise.all(['emission', 'podcast', 'gazette'].map(charger));
     const tout = { emission: em || [], podcast: po || [], gazette: ga || [] };
     const tous = [...tout.emission, ...tout.podcast, ...tout.gazette].sort((a, b) => String(b.date).localeCompare(String(a.date)));
-    const une = tous.find(e => enLigne(e) && !e.exemple) || tout.emission[0] || tous[0];
-    let h = '';
-    if (une) {
-      const C = CHAINES[une.type];
-      h += `<section class="antenne int c-${une.type}">
-        <div><span class="pastille-c">${C.dernier}</span>
-          <h1>${esc(une.titre)}</h1>
-          <p class="chapo">${esc(une.chapo)}</p><p class="infos">${infos(une)}</p>
-          <div class="actions-m"><a class="btn-m" href="${lien(une)}">${enLigne(une) ? C.verbe : 'Découvrir'}</a><a class="btn-m creux" href="${C.page}">Toute la chaîne ${C.nom}</a></div></div>
-        <a class="ecran" href="${lien(une)}" tabindex="-1" aria-hidden="true">${une.image ? `<img src="${esc(img(une.image))}" alt="">` : ''}${drapeau(une)}<span class="jouer">▶</span></a>
-      </section>`;
-    } else {
-      h += `<section class="antenne int"><div><h1>Dupanloup Média</h1><p class="chapo">Les émissions, les podcasts et la gazette des élèves arrivent ici.</p></div></section>`;
-    }
+    const mur = tous.slice(0, 6);
+    let h = mur.length ? `<section class="antenne int"><div class="antenne-texte" id="mur-texte"></div>
+        <div class="mur" id="mur" tabindex="0" role="group" aria-roledescription="carrousel" aria-label="Les dernières productions. Flèches gauche et droite pour changer.">
+          <div class="mur-scene">${mur.map((e, i) => `<a class="ecran-mur c-${e.type} f-${e.type}" data-i="${i}" href="${lien(e)}" aria-label="${esc(e.titre)}" draggable="false">${visuel(e)}${drapeau(e)}${e.type === 'gazette' ? '' : '<span class="jouer" aria-hidden="true">▶</span>'}</a>`).join('')}</div>
+          <div class="mur-cmd"><button type="button" data-pas="-1" aria-label="Production précédente">←</button><span id="mur-compte"></span><button type="button" data-pas="1" aria-label="Production suivante">→</button></div>
+        </div></section>`
+      : `<section class="antenne int"><div><h1>Dupanloup Média</h1><p class="chapo">Les émissions, les podcasts et la gazette des élèves arrivent ici.</p></div></section>`;
     const compte = (n, un, des) => n ? `${n} ${n > 1 ? des : un}` : 'Bientôt';
     h += `<nav class="chaines int" aria-label="Choisir une chaîne">
       <a class="chaine c-emission" href="emissions.html"><span class="canal" aria-hidden="true">1</span><span class="combien">${compte(tout.emission.length, 'émission', 'émissions')}</span><h2>Émissions</h2><p>${CHAINES.emission.slogan}</p></a>
@@ -97,7 +99,7 @@ window.MEDIA = (function () {
       <a class="chaine c-gazette" href="gazette.html"><span class="canal" aria-hidden="true">3</span><span class="combien">${compte(tout.gazette.length, 'numéro', 'numéros')}</span><h2>Gazette</h2><p>${CHAINES.gazette.slogan}</p></a>
     </nav>`;
     for (const t of ['emission', 'podcast', 'gazette']) {
-      const C = CHAINES[t], liste = tout[t].filter(e => e !== une).slice(0, t === 'emission' ? 3 : 4);
+      const C = CHAINES[t], liste = tout[t].slice(0, t === 'emission' ? 3 : 4);
       if (!liste.length) continue;
       h += `<section class="rayon int c-${t}"><div class="rayon-tete"><h2>${C.nom}</h2><a href="${C.page}">Tout voir</a></div><div class="${classeGrille(t)}">${liste.map(carte).join('')}</div></section>`;
     }
@@ -114,6 +116,47 @@ window.MEDIA = (function () {
       <div class="tampons" aria-label="Ma carte de presse">${nums.map(x => `<span class="${x.ok ? 'fait' : ''}">${x.ok ? '✓' : x.n}</span>`).join('')}<p>${faits === total ? 'Ta carte de presse est validée.' : `Ma carte de presse : ${faits} tampon${faits > 1 ? 's' : ''} sur ${total}`}</p></div>
     </section></div>`;
     zone.innerHTML = h;
+    monterMur(mur);
+  }
+
+  /* Le mur de la régie : les dernières productions en profondeur.
+   * On change à la flèche, au clavier, au doigt, ou en touchant un écran du fond. */
+  function monterMur(items) {
+    const mur = document.getElementById('mur'); if (!mur) return;
+    const ecrans = [...mur.querySelectorAll('.ecran-mur')], texte = document.getElementById('mur-texte'), compte = document.getElementById('mur-compte');
+    const boutons = [...mur.querySelectorAll('[data-pas]')];
+    let actif = 0, glisse = null, aGlisse = false;
+    function ecrire() {
+      const e = items[actif], C = CHAINES[e.type];
+      texte.className = 'antenne-texte c-' + e.type;
+      texte.innerHTML = `<span class="pastille-c">${C.nom}</span><h1>${esc(e.titre)}</h1>
+        <p class="chapo">${esc(e.chapo)}</p><p class="infos">${infos(e)}</p>
+        <div class="actions-m"><a class="btn-m" href="${lien(e)}">${enLigne(e) ? C.verbe : 'Découvrir'}</a><a class="btn-m creux" href="${C.page}">Toute la chaîne ${C.nom}</a></div>`;
+      compte.textContent = `${actif + 1} sur ${items.length}`;
+      document.documentElement.style.setProperty('--amb', `var(--${COULEUR[e.type]})`);
+    }
+    function placer() {
+      ecrans.forEach((el, i) => { const d = i - actif;
+        el.style.setProperty('--d', d); el.style.setProperty('--ad', Math.abs(d)); el.style.zIndex = 10 - Math.abs(d);
+        el.classList.toggle('actif', d === 0); el.classList.toggle('passe', d < 0); el.classList.toggle('loin', d > 2);
+        el.tabIndex = d === 0 ? 0 : -1; el.setAttribute('aria-hidden', d === 0 ? 'false' : 'true'); });
+      boutons[0].disabled = actif === 0; boutons[1].disabled = actif === items.length - 1;
+    }
+    function aller(i) {
+      i = Math.max(0, Math.min(items.length - 1, i)); if (i === actif) return;
+      actif = i; placer();
+      if (document.documentElement.classList.contains('calme')) return ecrire();
+      texte.classList.add('change'); setTimeout(() => { ecrire(); texte.classList.remove('change'); }, 170);
+    }
+    boutons.forEach(b => b.onclick = () => aller(actif + Number(b.dataset.pas)));
+    mur.addEventListener('keydown', e => { if (e.key === 'ArrowRight') { aller(actif + 1); e.preventDefault(); } if (e.key === 'ArrowLeft') { aller(actif - 1); e.preventDefault(); } });
+    mur.addEventListener('pointerdown', e => { glisse = e.clientX; aGlisse = false; });
+    mur.addEventListener('pointerup', e => { if (glisse == null) return; const dx = e.clientX - glisse; glisse = null;
+      if (Math.abs(dx) > 45) { aGlisse = true; aller(actif + (dx < 0 ? 1 : -1)); } });
+    mur.addEventListener('click', e => { const el = e.target.closest('.ecran-mur'); if (!el) return;
+      if (aGlisse) { e.preventDefault(); aGlisse = false; return; }
+      const i = Number(el.dataset.i); if (i !== actif) { e.preventDefault(); aller(i); } });
+    placer(); ecrire();
   }
 
   /* ---------- une chaîne : la liste, ou la fiche d'une production ---------- */
@@ -184,5 +227,5 @@ window.MEDIA = (function () {
     if (page === 'accueil') accueil(zone);
     else if (CHAINES[page]) chaine(zone, page);
   }
-  return { demarrer, habiller, esc, img, CHAINES, CLUB_DIR };
+  return { demarrer, habiller, esc, img, charger, lien, CHAINES, CLUB_DIR };
 })();

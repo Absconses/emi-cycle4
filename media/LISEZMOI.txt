@@ -7,6 +7,14 @@ la progression et la carte de presse sont donc les mêmes que sur le site du Clu
 - formation.html : les 10 modules, la carte de presse, « Mon bilan ». module.html?m=<id> : le lecteur d'un module.
 - publier.html : les vérifications avant publication et la fiche à coller sur GitHub.
 - media.js, media.css : le code et le style communs.
+- fx.js : les effets (lumière d'ambiance, relief sous le pointeur, recherche Ctrl+K, passage de la vignette au lecteur).
+- manifest.webmanifest, icone-*.png : pour installer le site sur un téléphone ou une tablette.
+
+LES EFFETS (couche immersive, 12 novembre 2026)
+Verre dépoli, mur des productions en profondeur sur l'accueil, transitions entre les pages, dock en bas d'écran sur téléphone.
+Tout est un supplément : sur un navigateur ancien, le site s'affiche sans ces effets.
+Le mode calme (classe « calme » sur <html>) coupe le flou et les animations : il s'active tout seul si l'ordinateur
+demande moins d'animations, ou avec le lien « Effets visuels » en bas de chaque page (choix gardé dans le navigateur).
 
 LES PRODUCTIONS
 - emissions.json : les émissions vidéo.   - ../club/podcasts.json : les podcasts (fichier partagé avec la radio du club).
