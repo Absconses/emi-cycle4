@@ -52,11 +52,11 @@
       void main(){vec2 uv=gl_FragCoord.xy/r;vec2 p=(gl_FragCoord.xy-.5*r)/r.y;vec2 d=p-m;float md=exp(-dot(d,d)*3.5);
         vec2 q=vec2(fbm(p*1.25+t*.06),fbm(p*1.25+vec2(5.2,1.3)-t*.05));
         float f=fbm(p*1.5+q*1.9+md*.7+t*.03);
-        vec3 col=mix(vec3(0.,0.,.2),vec3(0.,.004,.47),smoothstep(.2,.7,f));
-        col=mix(col,vec3(.16,.2,.95),smoothstep(.55,.92,f)*.5);
+        vec3 col=mix(vec3(.995,.945,.84),vec3(.975,.885,.72),smoothstep(.2,.72,f));
+        col=mix(col,vec3(.955,.74,.56),smoothstep(.55,.95,f)*.38);
         float g=smoothstep(.38,.95,fbm(p*1.05-q*1.6+t*.025+3.));
-        col+=c*g*g*.36+c*md*.1;
-        col*=1.-.55*dot(uv-.5,uv-.5);
+        col=mix(col,c,g*g*.17+md*.05);
+        col*=1.-.1*dot(uv-.5,uv-.5);
         gl_FragColor=vec4(col,1.);}`);
     if (!vs || !fs) return;
     const pr = gl.createProgram(); gl.attachShader(pr, vs); gl.attachShader(pr, fs); gl.linkProgram(pr);
@@ -91,9 +91,9 @@
     const MOTS = { emission: 'Regarder', podcast: 'Écouter', gazette: 'Lire' };
     document.addEventListener('pointermove', e => {
       vx = e.clientX; vy = e.clientY;
-      const el = e.target.closest && e.target.closest('.carte-m, .ecran-mur.actif, .v-carte, .mod');
+      const el = e.target.closest && e.target.closest('.carte-m, .ecran-mur.actif, .mod');
       if (el) { const t = ['emission', 'podcast', 'gazette'].find(k => el.classList.contains('c-' + k) || el.classList.contains('f-' + k));
-        c.textContent = t ? MOTS[t] : 'Ouvrir'; c.style.background = t ? `var(--${t === 'emission' ? 'corail' : t === 'podcast' ? 'jaune' : 'papier'})` : 'var(--menthe)'; }
+        c.textContent = t ? MOTS[t] : 'Ouvrir'; c.style.background = t ? `var(--${t === 'emission' ? 'corail' : t === 'podcast' ? 'jaune' : 'bleu'})` : 'var(--menthe)'; }
       c.classList.toggle('geste-on', !!el);
       if (!actif) { actif = true; x = vx; y = vy; requestAnimationFrame(suivre); }
     }, { passive: true });
@@ -106,13 +106,13 @@
 
   /* ---------- d'une carte à sa fiche : la vignette devient le lecteur ---------- */
   document.addEventListener('click', e => {
-    const a = e.target.closest && e.target.closest('.carte-m a, a.ecran-mur.actif, a.v-carte');
+    const a = e.target.closest && e.target.closest('.carte-m a, a.ecran-mur.actif');
     if (!a || calme()) return;
     const carte = a.closest('.carte-m');
     (carte ? carte.querySelector('.vignette') : a).style.viewTransitionName = 'heros';
   }, true);
   addEventListener('pageswap', e => { if (calme() && e.viewTransition) e.viewTransition.skipTransition(); });
-  addEventListener('pageshow', () => document.querySelectorAll('.vignette, .ecran-mur, .v-carte').forEach(el => el.style.removeProperty('view-transition-name')));
+  addEventListener('pageshow', () => document.querySelectorAll('.vignette, .ecran-mur').forEach(el => el.style.removeProperty('view-transition-name')));
 
   /* ---------- la recherche : tout le site dans une seule boîte ---------- */
   const palette = document.getElementById('palette'), champ = document.getElementById('palette-champ'), liste = document.getElementById('palette-liste');
