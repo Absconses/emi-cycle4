@@ -1,0 +1,17 @@
+DUPANLOUP MÉDIA (créé le 12 novembre 2026) : le lieu des productions multimédia du CDI.
+Site statique, sans serveur. Il s'appuie sur le dossier ../club (modules H5P, lecteur, images, progression des élèves) :
+la progression et la carte de presse sont donc les mêmes que sur le site du Club Jeune Reporter, qui reste en place.
+
+- index.html : l'accueil (dernière production, les trois chaînes, la bande « Se former »).
+- emissions.html, radio.html, gazette.html : une chaîne ; avec ?e=<id>, la fiche d'une production.
+- formation.html : les 10 modules, la carte de presse, « Mon bilan ». module.html?m=<id> : le lecteur d'un module.
+- publier.html : les vérifications avant publication et la fiche à coller sur GitHub.
+- media.js, media.css : le code et le style communs.
+
+LES PRODUCTIONS
+- emissions.json : les émissions vidéo.   - ../club/podcasts.json : les podcasts (fichier partagé avec la radio du club).
+- gazette.json : les numéros de la gazette ; les PDF se rangent dans gazette/.
+Le son et la vidéo restent sur PodEduc (apps.education.fr) : seuls ces lecteurs sont intégrés.
+Les fiches marquées "exemple": true sont des exemples à supprimer.
+
+ESSAYER SUR UN ORDINATEUR : à la racine du dépôt, `python -m http.server 8000` puis http://localhost:8000/media/

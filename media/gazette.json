@@ -1,0 +1,14 @@
+[
+  {
+    "id": "gazette-1",
+    "numero": 1,
+    "titre": "La Gazette de Dupanloup, numéro 1",
+    "date": "2026-05",
+    "chapo": "Le premier numéro de la Gazette de Dupanloup, paru en mai 2026.",
+    "image": "img/college-1.jpg",
+    "pdf": "",
+    "sommaire": [],
+    "equipe": [],
+    "sources": ""
+  }
+]

@@ -1,0 +1,82 @@
+[
+  {
+    "id": "exemple-dupanloup-au-cross",
+    "exemple": true,
+    "numero": 1,
+    "titre": "Dupanloup au cross",
+    "rubrique": "Émission",
+    "date": "2026-11-10",
+    "duree": "3 min",
+    "chapo": "Le départ, la course, l'arrivée : trois minutes pour revivre le cross du collège, avec la chronique de l'équipe son et une interview à chaud.",
+    "image": "img/cross-envol.jpg",
+    "podeduc": "",
+    "conducteur": [
+      {
+        "t": "0:00",
+        "titre": "Plateau d'ouverture"
+      },
+      {
+        "t": "0:20",
+        "titre": "Reportage : le départ des 6e"
+      },
+      {
+        "t": "1:30",
+        "titre": "Interview à l'arrivée"
+      },
+      {
+        "t": "2:30",
+        "titre": "Plateau de fin et générique"
+      }
+    ],
+    "equipe": [
+      {
+        "prenom": "Léa",
+        "role": "Présentation"
+      },
+      {
+        "prenom": "Sami",
+        "role": "Images"
+      },
+      {
+        "prenom": "Inès",
+        "role": "Montage"
+      },
+      {
+        "prenom": "Noé",
+        "role": "Son"
+      }
+    ],
+    "transcription": [
+      "LÉA : Bonjour et bienvenue dans « Dupanloup au cross ».",
+      "(Émission d'exemple : la transcription complète se met ici.)"
+    ],
+    "article": "",
+    "sources": "Images tournées avec l'accord des élèves et de leurs familles. Musique libre de droits."
+  },
+  {
+    "id": "exemple-dans-les-coulisses-du-cdi",
+    "exemple": true,
+    "numero": 2,
+    "titre": "Dans les coulisses du club",
+    "rubrique": "Reportage",
+    "date": "2026-11-03",
+    "duree": "2 min",
+    "chapo": "Comment se prépare un numéro de la gazette ? La caméra suit une conférence de rédaction, du choix des sujets au bouclage.",
+    "image": "img/redaction.jpg",
+    "podeduc": "",
+    "conducteur": [],
+    "equipe": [
+      {
+        "prenom": "Noé",
+        "role": "Images"
+      },
+      {
+        "prenom": "Léa",
+        "role": "Voix off"
+      }
+    ],
+    "transcription": [],
+    "article": "",
+    "sources": ""
+  }
+]

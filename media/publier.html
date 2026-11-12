@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#00004d">
+<title>Publier une production · Dupanloup Média</title>
+<meta name="description" content="Les émissions, les podcasts et la gazette des élèves du collège Dupanloup, fabriqués au CDI.">
+<link rel="icon" href="../club/img/sigle-dupanloup.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap">
+<link rel="stylesheet" href="media.css">
+<script src="../club/progression.js"></script>
+<script src="media.js"></script>
+</head>
+<body data-page="publier">
+<main class="int" style="max-width:1000px;padding-top:34px">
+  <header class="tete-chaine" style="padding-top:0"><h1 style="font-size:clamp(40px,6vw,76px);color:var(--clair)">Publier une production</h1>
+    <p>Pour le rédacteur en chef et le professeur. Le son et la vidéo restent sur PodEduc ; cette page prépare la fiche à ajouter au site.</p></header>
+
+  <section class="etape-m"><h2><i>1</i>Que veux-tu publier ?</h2>
+    <div class="filtres-m" id="types" role="group" aria-label="Type de production" style="margin:0">
+      <button type="button" class="c-emission" data-t="emission" aria-pressed="true">Une émission vidéo</button>
+      <button type="button" class="c-podcast" data-t="podcast" aria-pressed="false">Un podcast</button>
+      <button type="button" class="c-gazette" data-t="gazette" aria-pressed="false">Un numéro de la gazette</button>
+    </div></section>
+
+  <section class="etape-m"><h2><i>2</i>Vérifier avant de publier</h2>
+    <ul class="coches-m" id="coches"></ul></section>
+
+  <section class="etape-m"><h2><i>3</i><span id="t-depot">Déposer la vidéo sur PodEduc</span></h2><ol id="depot"></ol></section>
+
+  <section class="etape-m"><h2><i>4</i>Remplir la fiche</h2>
+    <form class="form-m" id="form" autocomplete="off">
+      <label class="large">Titre <input name="titre" maxlength="90"></label>
+      <label data-pour="emission podcast">Rubrique <select name="rubrique"></select></label>
+      <label>Numéro <input name="numero" type="number" min="1" step="1"></label>
+      <label>Date <small data-pour="gazette">Le premier jour du mois de parution suffit.</small><input name="date" type="date"></label>
+      <label data-pour="emission podcast">Durée <input name="duree" placeholder="ex. 3 min"></label>
+      <label class="large">Chapô <small>Deux phrases qui donnent envie.</small><textarea name="chapo" maxlength="320"></textarea></label>
+      <label class="large" data-pour="emission podcast">Adresse PodEduc <small>Laisse vide si ce n’est pas encore en ligne : la fiche s’affichera « Bientôt ».</small><input name="podeduc" type="url" placeholder="https://podeduc.apps.education.fr/video/…"></label>
+      <label class="large" data-pour="gazette">Nom du fichier PDF <small>Tel que tu l’as déposé dans le dossier gazette/ (ex. gazette-2.pdf). Ou un lien https vers le PDF.</small><input name="pdf" placeholder="gazette-2.pdf"></label>
+      <label>Image <select name="image"><option value="img/cross-envol.jpg">Le cross</option><option value="img/m7-interview-micro.jpg">Micro d’interview</option><option value="img/redaction.jpg">La rédaction</option><option value="img/reporters-college.jpg">Reporters au collège</option><option value="img/camera.jpg">Caméra</option><option value="img/photo-photographe.jpg">Photographe</option><option value="img/journaux.jpg">Journaux</option><option value="img/kiosque.jpg">Kiosque</option><option value="img/ecrire.jpg">Écrire</option><option value="img/college-1.jpg">Le collège</option></select></label>
+      <label data-pour="emission podcast">Lien vers l’article de la gazette <small>Facultatif.</small><input name="article" type="url" placeholder="https://…"></label>
+      <label class="large" data-pour="emission">Le conducteur <small>Une ligne par séquence : le moment, deux-points, le titre. Ex. « 0:20 : Reportage au départ ».</small><textarea name="conducteur"></textarea></label>
+      <label class="large" data-pour="gazette">Le sommaire <small>Une ligne par article : la page, deux-points, le titre. Ex. « 2 : Le cross du collège ».</small><textarea name="sommaire"></textarea></label>
+      <label class="large">L’équipe <small>Une ligne par élève : prénom, deux-points, rôle. Prénoms seulement.</small><textarea name="equipe" placeholder="Léa : présentation"></textarea></label>
+      <label class="large" data-pour="emission podcast">Transcription <small>Un paragraphe par ligne. Elle permet aux élèves sourds ou malentendants de suivre.</small><textarea name="transcription" style="min-height:130px"></textarea></label>
+      <label class="large">Sources et autorisations <input name="sources"></label>
+    </form></section>
+
+  <section class="etape-m"><h2><i>5</i>Ajouter la fiche au site</h2><div id="sortie"></div></section>
+</main>
+<script>
+MEDIA.habiller('publier');
+(function () {
+  const esc = MEDIA.esc, GH = 'https://github.com/Absconses/emi-cycle4/';
+  const T = {
+    emission: { fichier: 'media/emissions.json', rub: ['Émission', 'Reportage', 'Interview filmée', 'Tutoriel'], depot: 'Déposer la vidéo sur PodEduc',
+      etapes: ['Connecte-toi à <a href="https://podeduc.apps.education.fr/" target="_blank" rel="noopener">podeduc.apps.education.fr</a> avec le compte académique.', 'Dépose la vidéo (MP4) avec son titre, et choisis qui peut la voir : tout le monde, ou un mot de passe.', 'Ouvre la page du média et copie son adresse.'],
+      coches: ['Chaque élève qu’on voit ou qu’on entend a une autorisation parentale signée (image, voix et diffusion).', 'Chaque personne filmée ou interviewée a donné son accord, et sait où l’émission sera diffusée.', 'Aucun plan ne ridiculise quelqu’un, et on ne lit aucun nom de famille à l’écran.'] },
+    podcast: { fichier: 'club/podcasts.json', rub: ['Chronique', 'Interview', 'Reportage sonore', 'Débat', 'Revue de presse', 'Fiction'], depot: 'Déposer le son sur PodEduc',
+      etapes: ['Connecte-toi à <a href="https://podeduc.apps.education.fr/" target="_blank" rel="noopener">podeduc.apps.education.fr</a> avec le compte académique.', 'Dépose le fichier audio (MP3) avec son titre, et choisis qui peut l’écouter : tout le monde, ou un mot de passe.', 'Ouvre la page du média et copie son adresse.'],
+      coches: ['Chaque élève qu’on entend a une autorisation parentale signée (enregistrement et diffusion).', 'Chaque personne interviewée a donné son accord, et sait où le podcast sera diffusé.', 'On ne cite que des prénoms : ni nom de famille, ni détail qui permette de retrouver un élève.'] },
+    gazette: { fichier: 'media/gazette.json', rub: [], depot: 'Déposer le PDF du numéro',
+      etapes: ['Exporte le numéro en PDF et donne-lui un nom simple, sans accent ni espace (ex. <code>gazette-2.pdf</code>).', 'Ouvre <a href="' + GH + 'upload/main/media/gazette" target="_blank" rel="noopener">le dossier gazette/ sur GitHub</a>, glisse le PDF et clique sur « Commit changes ».'],
+      coches: ['Chaque élève en photo a une autorisation parentale signée, et les légendes ne donnent que des prénoms.', 'Chaque article est signé, relu, et ses informations sont vérifiées.', 'Chaque photo a un crédit : son auteur, ou sa source et sa licence.'] },
+  };
+  const COMMUNES = ['Les musiques, les images et les textes repris ailleurs sont libres de droits, et leur source est notée.', 'Le chef d’établissement a validé la publication.'];
+  const form = document.getElementById('form'), sortie = document.getElementById('sortie'), coches = document.getElementById('coches');
+  let type = 'emission';
+  const slug = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50);
+  const lignes = (v, f) => v.split('\n').map(l => l.trim()).filter(Boolean).map(l => { const i = l.indexOf(':', /^\d+:\d\d/.test(l) ? l.indexOf(':') + 1 : 0); return f(i < 0 ? l : l.slice(0, i).trim(), i < 0 ? '' : l.slice(i + 1).trim()); });
+  form.date.value = new Date().toISOString().slice(0, 10);
+
+  function choisir(t) {
+    type = t; const X = T[t];
+    document.querySelectorAll('#types button').forEach(b => b.setAttribute('aria-pressed', b.dataset.t === t));
+    document.getElementById('t-depot').textContent = X.depot;
+    document.getElementById('depot').innerHTML = X.etapes.map(e => `<li>${e}</li>`).join('');
+    coches.innerHTML = [...X.coches, ...COMMUNES].map(c => `<li><label><input type="checkbox"> ${esc(c)}</label></li>`).join('');
+    form.rubrique.innerHTML = X.rub.map(r => `<option>${esc(r)}</option>`).join('');
+    form.querySelectorAll('[data-pour]').forEach(el => { el.hidden = !el.dataset.pour.split(' ').includes(t); });
+    maj();
+  }
+  function fiche() {
+    const f = form, e = { id: slug((type === 'gazette' ? 'gazette-' + (f.numero.value || f.date.value) : f.date.value + '-' + f.titre.value.trim())) };
+    if (f.numero.value) e.numero = Number(f.numero.value);
+    e.titre = f.titre.value.trim();
+    if (type !== 'gazette') { e.rubrique = f.rubrique.value; e.date = f.date.value; e.duree = f.duree.value.trim(); } else e.date = f.date.value.slice(0, 7);
+    e.chapo = f.chapo.value.trim(); e.image = f.image.value;
+    if (type === 'gazette') { const p = f.pdf.value.trim(); e.pdf = !p || /^https:\/\//.test(p) ? p : 'gazette/' + p.replace(/^.*\//, ''); e.sommaire = lignes(f.sommaire.value, (a, b) => b ? { page: a, titre: b } : { page: '', titre: a }); }
+    else { e.podeduc = f.podeduc.value.trim(); }
+    if (type === 'emission') e.conducteur = lignes(f.conducteur.value, (a, b) => b ? { t: a, titre: b } : { t: '', titre: a });
+    e.equipe = lignes(f.equipe.value, (a, b) => ({ prenom: a.split(/\s+/)[0], role: b }));
+    if (type !== 'gazette') { e.transcription = f.transcription.value.split('\n').map(l => l.trim()).filter(Boolean); e.article = f.article.value.trim(); }
+    e.sources = f.sources.value.trim();
+    return e;
+  }
+  function maj() {
+    const manque = [...coches.querySelectorAll('input')].filter(c => !c.checked).length;
+    if (manque) { sortie.innerHTML = `<p class="verrou-m">Encore ${manque} point${manque > 1 ? 's' : ''} à vérifier à l’étape 2 avant de pouvoir publier.</p>`; return; }
+    const e = fiche(), X = T[type];
+    if (!e.titre) { sortie.innerHTML = '<p class="verrou-m">Écris au moins le titre.</p>'; return; }
+    const alertes = [];
+    if (e.podeduc && !/^https:\/\/([a-z0-9-]+\.)*apps\.education\.fr\//i.test(e.podeduc)) alertes.push('L’adresse indiquée n’est pas une adresse PodEduc : le site ne l’affichera pas.');
+    if (e.pdf && !/^https:\/\//.test(e.pdf) && !/^gazette\/[\w.-]+\.pdf$/i.test(e.pdf)) alertes.push('Le nom du PDF doit être simple : lettres sans accent, chiffres, tirets, et finir par .pdf.');
+    if (e.equipe.some(m => !m.role)) alertes.push('Il manque un rôle dans l’équipe (« Prénom : rôle »).');
+    const texte = JSON.stringify(e, null, 2).split('\n').map(l => '  ' + l).join('\n');
+    sortie.innerHTML = `<ol><li>Copie la fiche ci-dessous.</li>
+      <li>Ouvre <a href="${GH}edit/main/${X.fichier}" target="_blank" rel="noopener">${X.fichier} sur GitHub</a>.</li>
+      <li>Juste après le premier crochet <code>[</code>, passe à la ligne et colle la fiche (la virgule de fin est déjà copiée).</li>
+      <li>Clique sur « Commit changes ». La production apparaît sur le site une à deux minutes plus tard.</li></ol>
+      ${alertes.map(a => `<p class="verrou-m" style="margin-top:10px">${esc(a)}</p>`).join('')}
+      <pre class="sortie-m">${esc(texte)}</pre>
+      <div class="actions-m"><button type="button" class="btn-m" id="copier">Copier la fiche</button><span class="infos" id="copie" role="status"></span></div>
+      <p class="infos" style="margin-top:12px">Pour retirer une production d’exemple, supprime dans le fichier sa fiche marquée "exemple": true.</p>`;
+    document.getElementById('copier').onclick = async () => {
+      try { await navigator.clipboard.writeText(texte + ','); document.getElementById('copie').textContent = 'Fiche copiée'; }
+      catch (err) { document.getElementById('copie').textContent = 'Sélectionne le texte et copie-le à la main (Ctrl + C).'; }
+    };
+  }
+  document.querySelectorAll('#types button').forEach(b => b.onclick = () => choisir(b.dataset.t));
+  form.addEventListener('input', maj); coches.addEventListener('change', maj);
+  choisir('emission');
+})();
+</script>
+</body>
+</html>
