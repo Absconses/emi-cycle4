@@ -17,3 +17,10 @@ ESSAYER SUR UN ORDINATEUR : dans ce dossier, `python -m http.server 8000` puis h
 AJOUTER UN MODULE (M7, M8, M9) : déposer Club-Reporter-M7-Le-podcast.h5p (le nom attendu est dans
 build-club-site.py, liste MODULES) avec les autres .h5p, puis relancer
 python3 build-club-site.py <dossier des .h5p> <jeune-reporter/img> <jeune-reporter/images.json> <player h5p-standalone> pages <sortie>
+
+LA RADIO DU CLUB (ajoutée le 12 novembre 2026, à la main : hors de build-club-site.py)
+- podcast.html : la liste des épisodes ; podcast.html?e=<id> : la page d'un épisode (lecteur PodEduc, transcription, équipe).
+- podcasts.json : les épisodes. Le son reste sur PodEduc (apps.education.fr) ; seuls ces lecteurs sont intégrés.
+- podcast-publier.html : la liste de vérification avant publication et la fabrique de la fiche d'un épisode.
+- index.html : un lien « 🎙 La radio » dans les rubriques et dans l'ours. Si build-club-site.py régénère index.html,
+  remettre ces deux liens (ou les ajouter au gabarit du script).

@@ -1,0 +1,160 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#000177">
+<meta name="robots" content="noindex">
+<title>Publier un épisode · La radio du club</title>
+<link rel="icon" href="img/sigle-dupanloup.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bree+Serif&family=Federo&family=IBM+Plex+Mono:wght@600;700&display=swap">
+<link rel="stylesheet" href="style.css">
+<style>
+.pub { max-width: 1100px; margin: 0 auto; padding: 22px 16px 60px; }
+.pub h2 { font: 400 clamp(30px, 4.4vw, 48px)/1.02 var(--gothique); color: var(--marine); margin: 0 0 8px; }
+.pub h3 { font: 400 24px/1.1 var(--titre); color: var(--marine); margin: 0 0 10px; }
+.pub .chapo { font-weight: 700; max-width: 70ch; }
+.etapes-pub { display: grid; gap: 18px; margin-top: 18px; }
+.bloc-pub { background: #fffdf7; border: 2px solid var(--marine); padding: 18px; }
+.bloc-pub .no { display: inline-block; background: var(--marine); color: #fff; font: 700 12px/1 var(--mono); padding: 5px 8px; margin-right: 8px; vertical-align: 3px; }
+.bloc-pub ol { margin: 0; padding-left: 22px; } .bloc-pub li { margin-bottom: 6px; }
+.coches { list-style: none; padding: 0; margin: 0; display: grid; gap: 8px; }
+.coches label { display: flex; gap: 10px; align-items: flex-start; cursor: pointer; }
+.coches input { width: 20px; height: 20px; margin-top: 2px; accent-color: var(--vert); flex: none; }
+.form-pub { display: grid; gap: 12px; }
+@media (min-width: 760px) { .form-pub { grid-template-columns: 1fr 1fr; } .form-pub .large { grid-column: 1 / -1; } }
+.form-pub label { display: flex; flex-direction: column; gap: 4px; font: 700 12px/1.2 var(--mono); text-transform: uppercase; letter-spacing: .06em; }
+.form-pub label small { text-transform: none; letter-spacing: 0; font: 400 13px/1.3 var(--texte); color: var(--gris); }
+.form-pub input, .form-pub select, .form-pub textarea { font: 16px/1.4 var(--texte); padding: 8px 10px; border: 1.5px solid var(--filet); background: #fff; border-radius: 2px; min-width: 0; }
+.form-pub textarea { min-height: 90px; resize: vertical; }
+.sortie { font: 600 13px/1.5 var(--mono); background: #f4ecdb; border: 1px solid var(--filet); padding: 12px; white-space: pre-wrap; word-break: break-word; max-height: 360px; overflow: auto; margin: 10px 0; }
+.verrou { border-left: 4px solid var(--rouge); background: #fdeee6; padding: 10px 14px; font-weight: 700; }
+.alerte-pub { color: var(--rouge); font-weight: 700; margin: 6px 0 0; }
+</style>
+</head>
+<body>
+<header class="barre">
+  <a href="podcast.html">← La radio du club</a>
+  <div class="barre-titre"><span class="pastille">🎙</span><h1>Publier un épisode</h1></div>
+</header>
+
+<main class="pub">
+  <p class="surtitre">Rédacteur en chef et professeur <span class="pt"></span> Avant la mise en ligne</p>
+  <h2>Mettre un épisode à l’antenne</h2>
+  <p class="chapo">Le son reste sur PodEduc, la plateforme de l’Éducation nationale. Cette page fabrique la fiche de l’épisode à ajouter au fichier <code>podcasts.json</code> du site.</p>
+
+  <div class="etapes-pub">
+    <section class="bloc-pub">
+      <h3><span class="no">1</span>Vérifier avant de publier</h3>
+      <p style="margin:0 0 10px">Le réflexe du module 9 : on ne publie rien sans avoir tout vérifié. Coche chaque point.</p>
+      <ul class="coches" id="coches">
+        <li><label><input type="checkbox"> Chaque élève qu’on entend a une autorisation parentale signée (enregistrement et diffusion).</label></li>
+        <li><label><input type="checkbox"> Chaque personne interviewée a donné son accord, et sait où l’épisode sera diffusé.</label></li>
+        <li><label><input type="checkbox"> On ne cite que des prénoms : ni nom de famille, ni classe, ni détail qui permette de retrouver un élève.</label></li>
+        <li><label><input type="checkbox"> Les musiques et les bruitages sont libres de droits, et leur source est notée.</label></li>
+        <li><label><input type="checkbox"> Les informations ont été vérifiées, et le montage ne fait dire à personne ce qu’il n’a pas dit.</label></li>
+        <li><label><input type="checkbox"> Le chef d’établissement a validé l’épisode.</label></li>
+      </ul>
+    </section>
+
+    <section class="bloc-pub">
+      <h3><span class="no">2</span>Déposer le son sur PodEduc</h3>
+      <ol>
+        <li>Connecte-toi à <a href="https://podeduc.apps.education.fr/" target="_blank" rel="noopener">podeduc.apps.education.fr</a> avec ton compte académique.</li>
+        <li>Dépose le fichier audio (MP3) avec son titre. Choisis qui peut l’écouter : tout le monde, ou un mot de passe si l’épisode doit rester dans le collège.</li>
+        <li>Ouvre la page du média et copie son adresse (elle commence par <code>https://podeduc.apps.education.fr/video/</code>).</li>
+      </ol>
+    </section>
+
+    <section class="bloc-pub">
+      <h3><span class="no">3</span>Remplir la fiche de l’épisode</h3>
+      <form class="form-pub" id="form" autocomplete="off">
+        <label class="large">Titre <input name="titre" required maxlength="90" placeholder="ex. Le cross, vu du micro"></label>
+        <label>Rubrique <select name="rubrique"><option>Chronique</option><option>Interview</option><option>Reportage sonore</option><option>Débat</option><option>Revue de presse</option><option>Fiction</option></select></label>
+        <label>Numéro de l’épisode <input name="numero" type="number" min="1" step="1"></label>
+        <label>Date de diffusion <input name="date" type="date"></label>
+        <label>Durée <input name="duree" placeholder="ex. 4 min 30"></label>
+        <label class="large">Chapô <small>Deux phrases qui donnent envie d’écouter.</small><textarea name="chapo" maxlength="320"></textarea></label>
+        <label class="large">Adresse PodEduc <small>Laisse vide si le son n’est pas encore en ligne : l’épisode s’affichera « Bientôt à l’antenne ».</small><input name="podeduc" type="url" placeholder="https://podeduc.apps.education.fr/video/…"></label>
+        <label>Image <small>Une photo du dossier img/ du site.</small><select name="image"><option value="img/m7-interview-micro.jpg">Micro d’interview</option><option value="img/cross-envol.jpg">Le cross</option><option value="img/redaction.jpg">La rédaction</option><option value="img/reporters-college.jpg">Reporters au collège</option><option value="img/journaux.jpg">Journaux</option><option value="img/kiosque.jpg">Kiosque</option><option value="img/ecrire.jpg">Écrire</option><option value="img/camera.jpg">Caméra</option><option value="img/loupe.jpg">Loupe</option><option value="img/college-1.jpg">Le collège</option></select></label>
+        <label>Lien vers l’article de la Gazette <small>Facultatif.</small><input name="article" type="url" placeholder="https://…"></label>
+        <label class="large">L’équipe <small>Une ligne par élève : prénom, deux-points, rôle. Ex. « Léa : présentation ». Prénoms seulement.</small><textarea name="equipe" placeholder="Léa : présentation&#10;Sami : prise de son"></textarea></label>
+        <label class="large">Transcription <small>Un paragraphe par ligne. Elle permet aux élèves sourds ou malentendants de suivre l’épisode.</small><textarea name="transcription" style="min-height:140px"></textarea></label>
+        <label class="large">Sources et autorisations <small>Ex. « Musique : Free Music Archive, licence CC BY. »</small><input name="sources"></label>
+      </form>
+    </section>
+
+    <section class="bloc-pub">
+      <h3><span class="no">4</span>Ajouter la fiche au site</h3>
+      <div id="sortie-zone"></div>
+    </section>
+  </div>
+</main>
+
+<script>
+(function () {
+  const form = document.getElementById('form');
+  const coches = [...document.querySelectorAll('#coches input')];
+  const zone = document.getElementById('sortie-zone');
+  const EDIT = 'https://github.com/Absconses/emi-cycle4/edit/main/club/podcasts.json';
+  const esc = s => String(s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const slug = s => s.normalize('NFD').replace(/[̀-ͯ]/g, '').toLowerCase().replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50);
+  form.date.value = new Date().toISOString().slice(0, 10);
+
+  function fiche() {
+    const f = form;
+    const equipe = f.equipe.value.split('\n').map(l => l.trim()).filter(Boolean).map(l => {
+      const [p, ...r] = l.split(':');
+      return { prenom: p.trim().split(/\s+/)[0], role: r.join(':').trim() };
+    });
+    const e = {
+      id: slug((f.date.value || '') + '-' + f.titre.value.trim()),
+      numero: f.numero.value ? Number(f.numero.value) : undefined,
+      titre: f.titre.value.trim(),
+      rubrique: f.rubrique.value,
+      date: f.date.value,
+      duree: f.duree.value.trim(),
+      chapo: f.chapo.value.trim(),
+      image: f.image.value,
+      podeduc: f.podeduc.value.trim(),
+      equipe,
+      transcription: f.transcription.value.split('\n').map(l => l.trim()).filter(Boolean),
+      article: f.article.value.trim(),
+      sources: f.sources.value.trim(),
+    };
+    return e;
+  }
+
+  function maj() {
+    const manque = coches.filter(c => !c.checked).length;
+    if (manque) { zone.innerHTML = `<p class="verrou">Encore ${manque} point${manque > 1 ? 's' : ''} à vérifier à l’étape 1 avant de pouvoir publier.</p>`; return; }
+    const e = fiche();
+    if (!e.titre) { zone.innerHTML = '<p class="verrou">Écris au moins le titre de l’épisode.</p>'; return; }
+    const alertes = [];
+    if (e.podeduc && !/^https:\/\/([a-z0-9-]+\.)*apps\.education\.fr\//i.test(e.podeduc)) alertes.push('L’adresse du son n’est pas une adresse PodEduc : le site ne l’affichera pas.');
+    if (e.equipe.some(m => !m.role)) alertes.push('Il manque un rôle dans l’équipe (« Prénom : rôle »).');
+    const texte = JSON.stringify(e, null, 2).split('\n').map(l => '  ' + l).join('\n');
+    zone.innerHTML = `<ol>
+        <li>Copie la fiche ci-dessous.</li>
+        <li>Ouvre <a href="${EDIT}" target="_blank" rel="noopener">podcasts.json sur GitHub</a> (bouton crayon, compte du site).</li>
+        <li>Juste après le premier crochet <code>[</code>, colle la fiche, puis ajoute une virgule à la fin de la fiche.</li>
+        <li>Enregistre (« Commit changes »). L’épisode apparaît sur la radio du club en une minute ou deux.</li>
+      </ol>
+      ${alertes.map(a => `<p class="alerte-pub">⚠ ${esc(a)}</p>`).join('')}
+      <pre class="sortie" id="sortie">${esc(texte)}</pre>
+      <button type="button" class="btn" id="copier">Copier la fiche</button> <span class="petit" id="copie" role="status"></span>
+      <p class="petit">Pour retirer les épisodes d’exemple, supprime dans le fichier les deux fiches marquées <code>"exemple": true</code>.</p>`;
+    document.getElementById('copier').onclick = async () => {
+      try { await navigator.clipboard.writeText(texte + ','); document.getElementById('copie').textContent = 'Copié (avec la virgule) !'; }
+      catch (err) { document.getElementById('copie').textContent = 'Sélectionne le texte et copie-le à la main (Ctrl + C).'; }
+    };
+  }
+  form.addEventListener('input', maj);
+  coches.forEach(c => c.addEventListener('change', maj));
+  maj();
+})();
+</script>
+</body>
+</html>
