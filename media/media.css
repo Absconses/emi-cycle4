@@ -20,8 +20,9 @@
 }
 * { box-sizing: border-box; }
 html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; }
-@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } * { animation: none !important; transition: none !important; } }
-body { margin: 0; background: var(--marine); color: var(--clair); font: 17px/1.55 var(--texte); overflow-x: hidden; }
+
+html { background: var(--marine); }
+body { margin: 0; color: var(--clair); font: 17px/1.55 var(--texte); overflow-x: hidden; }
 a { color: inherit; }
 img { max-width: 100%; display: block; }
 :focus-visible { outline: 3px solid var(--jaune); outline-offset: 3px; border-radius: 4px; }
@@ -30,25 +31,10 @@ img { max-width: 100%; display: block; }
 h1, h2, h3 { font-family: var(--titre); font-weight: 800; letter-spacing: -.02em; line-height: 1; margin: 0; }
 .c-emission { --c: var(--corail); } .c-podcast { --c: var(--jaune); } .c-gazette { --c: var(--papier); } .c-formation { --c: var(--menthe); }
 
-/* ---------- La barre et la mire ---------- */
-.barre-media { position: sticky; top: 0; z-index: 20; background: var(--nuit); }
-.barre-media .int { display: flex; align-items: center; gap: 8px 22px; flex-wrap: wrap; padding-top: 10px; padding-bottom: 10px; }
-.marque { display: flex; align-items: center; gap: 10px; text-decoration: none; margin-right: auto; }
-.marque img { width: 40px; height: 40px; background: var(--clair); border-radius: 50%; padding: 2px; }
-.marque b { font: 800 21px/1 var(--titre); letter-spacing: -.02em; }
-.marque small { display: block; font: 400 12.5px/1.2 var(--texte); color: var(--doux); }
-.chaines-nav { display: flex; gap: 4px; flex-wrap: wrap; }
-.chaines-nav a { text-decoration: none; font: 700 15.5px/1 var(--texte); padding: 9px 13px; border-radius: 999px; display: flex; align-items: center; gap: 8px; }
-.chaines-nav a::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--c); }
-.chaines-nav a:hover { background: var(--voile); }
-.chaines-nav a[aria-current="page"] { background: var(--c); color: var(--nuit); }
-.chaines-nav a[aria-current="page"]::before { background: var(--nuit); }
-.mire { display: grid; grid-template-columns: repeat(4, 1fr); height: 5px; }
-.mire i:nth-child(1) { background: var(--corail); } .mire i:nth-child(2) { background: var(--jaune); } .mire i:nth-child(3) { background: var(--papier); } .mire i:nth-child(4) { background: var(--menthe); }
-
 /* ---------- Boutons et pastilles ---------- */
-.btn-m { display: inline-flex; align-items: center; gap: 10px; background: var(--c, var(--clair)); color: var(--nuit); text-decoration: none; font: 700 17px/1.1 var(--texte); padding: 14px 22px; border-radius: 999px; border: 0; cursor: pointer; transition: transform .15s; }
-.btn-m:hover { transform: translateY(-2px); }
+.btn-m { display: inline-flex; align-items: center; gap: 10px; background: var(--c, var(--clair)); color: var(--nuit); text-decoration: none; font: 700 17px/1.1 var(--texte); padding: 14px 22px; border-radius: 999px; border: 0; cursor: pointer; transition: translate .15s, scale .1s; }
+.btn-m:hover { translate: 0 -2px; }
+.btn-m:active { scale: .96; }
 .btn-m.creux { background: none; color: var(--clair); box-shadow: inset 0 0 0 2px var(--trait); }
 .btn-m.creux:hover { box-shadow: inset 0 0 0 2px var(--clair); }
 .pastille-c { display: inline-flex; align-items: center; gap: 8px; background: var(--c); color: var(--nuit); font: 700 14px/1 var(--texte); padding: 7px 12px; border-radius: 999px; }
@@ -70,7 +56,7 @@ h1, h2, h3 { font-family: var(--titre); font-weight: 800; letter-spacing: -.02em
 .chaines { display: grid; gap: 12px; padding-block: 8px 20px; }
 @media (min-width: 760px) { .chaines { grid-template-columns: repeat(3, 1fr); gap: 16px; } }
 .chaine { position: relative; background: var(--c); color: var(--nuit); text-decoration: none; border-radius: 22px; padding: 20px 22px 22px; min-height: 190px; display: flex; flex-direction: column; justify-content: flex-end; overflow: hidden; transition: transform .2s; }
-.chaine:hover { transform: translateY(-4px); }
+
 .chaine .canal { position: absolute; right: 14px; top: -22px; font: 800 170px/1 var(--titre); letter-spacing: -.06em; opacity: .16; }
 .chaine h2 { font-size: clamp(32px, 3.6vw, 46px); }
 .chaine p { margin: 6px 0 0; font-size: 16px; line-height: 1.35; max-width: 30ch; }
@@ -107,7 +93,8 @@ h1, h2, h3 { font-family: var(--titre); font-weight: 800; letter-spacing: -.02em
 .vide-m { border: 2px dashed var(--trait); border-radius: 18px; padding: 28px 20px; color: var(--doux); }
 .vide-m b { display: block; font: 800 26px/1.1 var(--titre); color: var(--clair); margin-bottom: 6px; }
 .filtres-m { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 22px; }
-.filtres-m button { font: 700 15px/1 var(--texte); background: none; color: var(--clair); border: 0; box-shadow: inset 0 0 0 2px var(--trait); padding: 9px 14px; border-radius: 999px; cursor: pointer; }
+.filtres-m button { font: 700 15px/1 var(--texte); background: none; color: var(--clair); border: 0; box-shadow: inset 0 0 0 2px var(--trait); padding: 14px 16px; border-radius: 999px; cursor: pointer; transition: scale .1s; }
+.filtres-m button:active { scale: .95; }
 .filtres-m button[aria-pressed="true"] { background: var(--c); color: var(--nuit); box-shadow: none; }
 
 /* la bande « Se former » */
@@ -195,7 +182,7 @@ h1, h2, h3 { font-family: var(--titre); font-weight: 800; letter-spacing: -.02em
 .spe-m > div > p { margin: 8px 0 0; color: var(--doux); }
 .outils-m { display: grid; gap: 14px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 250px), 1fr)); }
 .outil { background: var(--voile); border-radius: 18px; padding: 18px; text-decoration: none; display: block; transition: transform .2s; }
-.outil:hover { transform: translateY(-3px); box-shadow: inset 0 0 0 2px var(--clair); }
+
 .outil b { display: block; font: 800 24px/1.1 var(--titre); margin-bottom: 6px; }
 .outil span { color: var(--doux); font-size: 15.5px; }
 .bilan-m { background: var(--nuit); border-radius: 22px; padding: 22px; display: grid; gap: 18px; margin-top: 40px; }
@@ -260,3 +247,169 @@ code { background: var(--nuit); padding: 1px 6px; border-radius: 5px; font-size:
 .pied-media ul { list-style: none; margin: 0; padding: 0; display: grid; gap: 6px; }
 .pied-media a { text-underline-offset: 3px; }
 .pied-media a:hover { color: var(--clair); }
+
+
+/* =====================================================================
+ * LA COUCHE IMMERSIVE (novembre 2026)
+ * Le verre : des panneaux translucides qui floutent une lumière d'ambiance.
+ * Le mouvement : le mur de la régie, les transitions entre les pages, le relief sous le pointeur.
+ * L'affordance : ce qui se touche se soulève, s'éclaire, et dit ce qu'il fait.
+ * « html.calme » (mouvement réduit, ou le bouton « Effets visuels » du pied de page)
+ * coupe le flou, le relief et les animations : le site reste entier.
+ * ===================================================================== */
+:root {
+  --amb: var(--corail);
+  --verre: linear-gradient(140deg, rgba(255, 248, 231, .15), rgba(255, 248, 231, .05) 60%);
+  --verre-fort: linear-gradient(140deg, rgba(10, 10, 96, .78), rgba(0, 0, 60, .7));
+  --flou: blur(22px) saturate(1.7);
+  --bord: rgba(255, 248, 231, .24);
+  --reflet: inset 0 1px 0 rgba(255, 255, 255, .28), inset 0 -1px 0 rgba(0, 0, 40, .3);
+  --ombre-verre: 0 24px 50px -24px rgba(0, 0, 30, .75);
+  --ressort: cubic-bezier(.2, .9, .25, 1.15);
+}
+html.calme { --verre: linear-gradient(#12127e, #12127e); --verre-fort: linear-gradient(#00004d, #00004d); --flou: none; scroll-behavior: auto; }
+html.calme *, html.calme *::before, html.calme *::after { animation: none !important; transition: none !important; }
+body[data-page="emission"] { --amb: var(--corail); } body[data-page="podcast"] { --amb: var(--jaune); }
+body[data-page="gazette"] { --amb: var(--papier); } body[data-page="formation"] { --amb: var(--menthe); } body[data-page="publier"] { --amb: var(--doux); }
+
+/* ---------- La lumière d'ambiance : trois halos qui dérivent et suivent un peu le pointeur ---------- */
+.ambiance { position: fixed; inset: 0; z-index: -1; overflow: hidden; background: radial-gradient(120% 90% at 50% 0%, #0a0a92, var(--marine) 55%, #00005e); }
+.ambiance i { position: absolute; width: 62vmax; height: 62vmax; border-radius: 50%; translate: calc(var(--px, 0) * var(--f) * 1px) calc(var(--py, 0) * var(--f) * 1px); transition: translate 1.2s ease-out, background 1.2s; animation: derive 34s ease-in-out infinite alternate; }
+.ambiance i:nth-child(1) { --f: 46; left: -18vmax; top: -24vmax; background: radial-gradient(closest-side, color-mix(in srgb, var(--amb) 52%, transparent), transparent); }
+.ambiance i:nth-child(2) { --f: -30; right: -22vmax; top: 18vh; background: radial-gradient(closest-side, rgba(110, 120, 255, .5), transparent); animation-duration: 41s; animation-direction: alternate-reverse; }
+.ambiance i:nth-child(3) { --f: 22; left: 22vw; bottom: -40vmax; background: radial-gradient(closest-side, color-mix(in srgb, var(--amb) 30%, transparent), transparent); animation-duration: 47s; }
+@keyframes derive { from { transform: translate(-4vmax, -2vmax) scale(1); } to { transform: translate(6vmax, 5vmax) scale(1.18); } }
+
+/* ---------- La barre de verre, la mire, le dock ---------- */
+.mire { position: fixed; inset: 0 0 auto 0; z-index: 30; display: grid; grid-template-columns: repeat(4, 1fr); height: 4px; }
+.mire i:nth-child(1) { background: var(--corail); } .mire i:nth-child(2) { background: var(--jaune); } .mire i:nth-child(3) { background: var(--papier); } .mire i:nth-child(4) { background: var(--menthe); }
+.barre-media { position: sticky; top: 0; z-index: 20; padding: 16px 12px 0; view-transition-name: barre; }
+.barre-verre { max-width: var(--large); margin: 0 auto; display: flex; align-items: center; gap: 8px 14px; padding: 8px 10px 8px 14px; border-radius: 999px; background: var(--verre-fort); backdrop-filter: var(--flou); -webkit-backdrop-filter: var(--flou); border: 1px solid var(--bord); box-shadow: var(--reflet), var(--ombre-verre); transition: padding .3s, box-shadow .3s; }
+.marque { display: flex; align-items: center; gap: 10px; text-decoration: none; margin-right: auto; min-width: 0; }
+.marque img { width: 40px; height: 40px; background: var(--clair); border-radius: 50%; padding: 2px; flex: none; transition: rotate .6s var(--ressort); }
+.marque:hover img { rotate: -14deg; }
+.marque b { font: 800 20px/1 var(--titre); letter-spacing: -.02em; white-space: nowrap; }
+.marque small { display: block; font: 400 12.5px/1.2 var(--texte); color: var(--doux); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.chaines-nav { display: flex; gap: 2px; }
+.chaines-nav a { text-decoration: none; font: 700 15.5px/1 var(--texte); padding: 12px 14px; border-radius: 999px; display: flex; align-items: center; gap: 8px; transition: background .2s, color .2s; }
+.chaines-nav a::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--c); transition: scale .25s var(--ressort); }
+.chaines-nav a:hover { background: rgba(255, 248, 231, .12); }
+.chaines-nav a:hover::before { scale: 1.5; }
+.chaines-nav a:active { scale: .95; }
+.chaines-nav a[aria-current="page"] { background: var(--c); color: var(--nuit); box-shadow: 0 0 26px -4px var(--c); }
+.chaines-nav a[aria-current="page"]::before { background: var(--nuit); }
+.chercher { display: flex; align-items: center; gap: 8px; font: 700 15px/1 var(--texte); color: var(--clair); background: rgba(255, 248, 231, .1); border: 1px solid var(--bord); border-radius: 999px; padding: 11px 14px; cursor: pointer; transition: background .2s, scale .1s; }
+.chercher:hover { background: rgba(255, 248, 231, .2); } .chercher:active { scale: .95; }
+.chercher kbd { font: 700 12px/1 var(--texte); color: var(--doux); border: 1px solid var(--bord); border-radius: 6px; padding: 3px 6px; }
+@media (max-width: 1020px) { .chercher kbd, .marque small { display: none; } }
+@media (max-width: 759px) {
+  body { padding-bottom: 96px; }
+  /* un filtre sur la barre enfermerait le dock, qui doit rester collé au bas de l'écran */
+  .barre-verre { backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(0, 0, 70, .93); }
+  .chercher span { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); }
+  .chercher { padding: 13px; }
+  /* les chaînes descendent sous le pouce */
+  .chaines-nav { position: fixed; left: 10px; right: 10px; bottom: max(10px, env(safe-area-inset-bottom)); z-index: 25; justify-content: space-between; padding: 6px; border-radius: 26px; background: var(--verre-fort); backdrop-filter: var(--flou); -webkit-backdrop-filter: var(--flou); border: 1px solid var(--bord); box-shadow: var(--reflet), 0 18px 40px -10px rgba(0, 0, 30, .9); }
+  .chaines-nav a { flex: 1; flex-direction: column; gap: 7px; font-size: 13.5px; padding: 11px 4px 10px; border-radius: 20px; min-height: 52px; justify-content: center; }
+}
+
+/* ---------- La recherche ---------- */
+.palette { width: min(640px, calc(100vw - 24px)); margin-top: 12vh; padding: 14px; border-radius: 26px; color: var(--clair); background: var(--verre-fort); backdrop-filter: var(--flou); -webkit-backdrop-filter: var(--flou); border: 1px solid var(--bord); box-shadow: var(--reflet), 0 40px 100px -20px #000030; }
+.palette[open] { animation: ouvrir .28s var(--ressort); }
+@keyframes ouvrir { from { opacity: 0; scale: .94; translate: 0 -14px; } }
+.palette::backdrop { background: rgba(0, 0, 50, .55); backdrop-filter: blur(6px); }
+.palette input { width: 100%; font: 700 20px/1.2 var(--texte); color: var(--clair); background: rgba(255, 248, 231, .1); border: 2px solid var(--bord); border-radius: 16px; padding: 14px 16px; }
+.palette input:focus { outline: none; border-color: var(--jaune); }
+.palette input::placeholder { color: var(--doux); font-weight: 400; }
+.palette ul { list-style: none; margin: 10px 0; padding: 0; max-height: 50vh; overflow: auto; display: grid; gap: 2px; }
+.palette li a { display: flex; align-items: center; gap: 12px; padding: 11px 12px; border-radius: 14px; text-decoration: none; }
+.palette li a::before { content: ""; width: 10px; height: 10px; border-radius: 50%; background: var(--c, var(--clair)); flex: none; }
+.palette li b { font-weight: 700; } .palette li span { margin-left: auto; color: var(--doux); font-size: 14.5px; white-space: nowrap; }
+.palette li[aria-selected="true"] a, .palette li a:hover { background: rgba(255, 248, 231, .16); }
+.palette .infos { margin: 0 6px; font-size: 13.5px; }
+
+/* ---------- Le verre sur les panneaux ---------- */
+.bloc-m, .mod, .outil, .etape-m, .depliant, .bilan-m, .voisins a, .vide-m { background: var(--verre); backdrop-filter: var(--flou); -webkit-backdrop-filter: var(--flou); border: 1px solid var(--bord); box-shadow: var(--reflet), var(--ombre-verre); }
+.bilan-m { background: var(--verre-fort); }
+.atelier-m { background: rgba(0, 0, 60, .55); border: 1px solid var(--bord); }
+.champs input, .form-m input, .form-m select, .form-m textarea { background: rgba(0, 0, 60, .5); border-color: var(--bord); }
+.pied-media { background: var(--verre-fort); backdrop-filter: var(--flou); -webkit-backdrop-filter: var(--flou); border-top: 1px solid var(--bord); }
+.pied-media .lien-m { padding: 0; font-size: 15.5px; }
+.drapeau { background: rgba(0, 0, 60, .7); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); box-shadow: inset 0 0 0 1px var(--bord); }
+
+/* ---------- Le relief et la lueur sous le pointeur (fx.js pose --rx, --ry, --mx, --my) ---------- */
+.chaine, .mod, .outil, .carte-m .vignette { transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .35s ease-out, translate .3s var(--ressort), scale .15s, box-shadow .3s; will-change: transform; }
+.chaine:hover, .mod:hover, .outil:hover, .carte-m:hover .vignette { translate: 0 -6px; }
+.chaine:active, .mod:active, .outil:active, .carte-m:active .vignette { scale: .975; }
+.chaine::before, .mod::before, .outil::before, .bloc-m::before, .carte-m .vignette::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; z-index: 2; opacity: 0; transition: opacity .3s; background: radial-gradient(280px circle at var(--mx, 50%) var(--my, 50%), rgba(255, 255, 255, .26), transparent 65%); }
+.chaine:hover::before, .mod:hover::before, .outil:hover::before, .bloc-m:hover::before, .carte-m:hover .vignette::after { opacity: 1; }
+.bloc-m, .outil { position: relative; }
+.chaine { box-shadow: 0 30px 60px -30px var(--c), inset 0 1px 0 rgba(255, 255, 255, .5); }
+.chaine:hover { box-shadow: 0 40px 70px -26px var(--c), inset 0 1px 0 rgba(255, 255, 255, .5); }
+.chaine h2::after { content: " →"; display: inline-block; opacity: 0; translate: -10px 0; transition: opacity .25s, translate .25s; }
+.chaine:hover h2::after, .chaine:focus-visible h2::after { opacity: 1; translate: 0 0; }
+/* ce que fait la carte, dit sur la carte */
+.geste { position: absolute; right: 10px; bottom: 10px; z-index: 3; font: 700 14px/1 var(--texte); color: var(--nuit); background: var(--c); padding: 9px 13px; border-radius: 999px; opacity: 0; translate: 0 8px; transition: opacity .25s, translate .25s var(--ressort); box-shadow: 0 8px 20px -6px rgba(0, 0, 30, .8); }
+.carte-m:hover .geste, .carte-m:focus-within .geste { opacity: 1; translate: 0 0; }
+@media (hover: none) { .geste { opacity: 1; translate: 0 0; } }
+.carte-m.c-gazette .geste { background: var(--marine); color: var(--papier); }
+.carte-m .vignette { box-shadow: 0 20px 40px -22px rgba(0, 0, 30, .9); }
+.carte-m:hover .vignette { box-shadow: 0 30px 50px -22px color-mix(in srgb, var(--c) 60%, transparent); }
+
+/* ---------- L'accueil : le mur de la régie ---------- */
+.antenne { min-height: min(74vh, 720px); }
+.antenne-texte { transition: opacity .17s, translate .17s; }
+.antenne-texte.change { opacity: 0; translate: 0 10px; }
+.mur { border-radius: 30px; outline-offset: 8px; touch-action: pan-y; user-select: none; }
+.mur-scene { position: relative; aspect-ratio: 16 / 11; perspective: 1200px; }
+.ecran-mur { position: absolute; top: 50%; left: 40%; width: 72%; aspect-ratio: 16 / 10; translate: -50% -50%; border-radius: 22px; overflow: hidden; background: var(--nuit); border: 1px solid rgba(255, 248, 231, .4);
+  transform: translateX(calc(var(--d, 0) * 40%)) translateZ(calc(var(--ad, 0) * -240px)) rotateY(calc(var(--d, 0) * -20deg));
+  opacity: calc(1 - var(--ad, 0) * .3); filter: brightness(calc(1 - var(--ad, 0) * .22));
+  transition: transform .75s cubic-bezier(.2, .8, .2, 1), opacity .5s, filter .5s, box-shadow .5s;
+  box-shadow: 0 50px 100px -40px color-mix(in srgb, var(--c) 75%, transparent), inset 0 1px 0 rgba(255, 255, 255, .4); }
+.ecran-mur.f-podcast { width: 50%; aspect-ratio: 1; background: var(--jaune); border-radius: 26px; }
+.ecran-mur.f-podcast > img { filter: grayscale(1) contrast(1.15); mix-blend-mode: multiply; }
+.ecran-mur.f-gazette { width: 40%; aspect-ratio: 3 / 4; background: var(--papier); border-radius: 8px; }
+.ecran-mur > img { width: 100%; height: 100%; object-fit: cover; pointer-events: none; }
+.ecran-mur.passe { opacity: 0; pointer-events: none; transform: translateX(-70%) translateZ(-200px) rotateY(24deg); }
+.ecran-mur.loin { opacity: 0; pointer-events: none; }
+.ecran-mur.actif { box-shadow: 0 60px 120px -36px var(--c), inset 0 1px 0 rgba(255, 255, 255, .5); }
+.ecran-mur:not(.actif) { cursor: pointer; }
+.ecran-mur .drapeau { position: absolute; left: 14px; bottom: 14px; }
+.ecran-mur .jouer { position: absolute; right: 16px; bottom: 16px; width: 62px; height: 62px; border-radius: 50%; background: var(--c); color: var(--nuit); display: grid; place-items: center; font-size: 22px; padding-left: 4px; scale: 0; transition: scale .4s var(--ressort) .2s; box-shadow: 0 0 0 0 var(--c); }
+.ecran-mur.actif .jouer { scale: 1; animation: pouls 2.6s ease-out 1s infinite; }
+@keyframes pouls { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--c) 70%, transparent); } 70%, 100% { box-shadow: 0 0 0 22px transparent; } }
+.mur-cmd { display: flex; align-items: center; justify-content: center; gap: 14px; margin-top: 4px; }
+.mur-cmd button { width: 48px; height: 48px; border-radius: 50%; font: 700 20px/1 var(--texte); color: var(--clair); cursor: pointer; background: var(--verre); backdrop-filter: var(--flou); -webkit-backdrop-filter: var(--flou); border: 1px solid var(--bord); box-shadow: var(--reflet); transition: scale .15s, background .2s; }
+.mur-cmd button:hover:not(:disabled) { background: rgba(255, 248, 231, .25); scale: 1.08; } .mur-cmd button:active:not(:disabled) { scale: .92; }
+.mur-cmd button:disabled { opacity: .35; cursor: default; }
+.mur-cmd span { font-weight: 700; min-width: 7ch; text-align: center; font-variant-numeric: tabular-nums; }
+@media (max-width: 939px) { .antenne { min-height: 0; } .mur { order: -1; } .mur-scene { aspect-ratio: 16 / 11.5; } }
+
+/* ---------- Les fiches ---------- */
+.lecteur-m { view-transition-name: heros; border: 1px solid rgba(255, 248, 231, .35); box-shadow: 0 50px 100px -40px var(--c), inset 0 1px 0 rgba(255, 255, 255, .35); }
+.attente-m div { background: rgba(0, 0, 60, .5); backdrop-filter: blur(14px) saturate(1.5); -webkit-backdrop-filter: blur(14px) saturate(1.5); border: 1px solid var(--bord); border-radius: 20px; padding: 20px 24px; box-shadow: var(--reflet); }
+.attente-m img { opacity: .55; }
+.tete-chaine h1, .former-haut h1 { text-shadow: 0 0 80px color-mix(in srgb, var(--c, var(--menthe)) 55%, transparent); }
+.bande-former { box-shadow: 0 40px 90px -40px var(--menthe), inset 0 1px 0 rgba(255, 255, 255, .6); }
+.carte-presse-m { box-shadow: 0 40px 80px -40px var(--papier), inset 0 1px 0 #fff; rotate: 1.5deg; transition: rotate .5s var(--ressort); }
+.carte-presse-m:hover { rotate: 0deg; }
+
+/* ---------- Les passages d'une page à l'autre (navigateurs récents) ---------- */
+@media (prefers-reduced-motion: no-preference) { @view-transition { navigation: auto; } }
+::view-transition-old(root) { animation: .22s ease-in both vt-sortie; }
+::view-transition-new(root) { animation: .42s cubic-bezier(.2, .8, .2, 1) both vt-entree; }
+@keyframes vt-sortie { to { opacity: 0; scale: .985; filter: blur(6px); } }
+@keyframes vt-entree { from { opacity: 0; translate: 0 18px; filter: blur(8px); } }
+::view-transition-group(heros) { animation-duration: .55s; animation-timing-function: cubic-bezier(.2, .8, .2, 1); }
+::view-transition-old(heros), ::view-transition-new(heros) { height: 100%; object-fit: cover; overflow: clip; border-radius: 18px; }
+
+/* ---------- Ce qui entre dans l'écran en descendant (navigateurs récents) ---------- */
+@supports (animation-timeline: view()) {
+  html:not(.calme) :is(.rayon .carte-m, .rayon .mod, .spe-m, .chaines .chaine, .bande-former, .outils-m .outil) { animation: surgir linear both; animation-timeline: view(); animation-range: entry 0% entry 55%; }
+  @keyframes surgir { from { opacity: 0; translate: 0 50px; scale: .93; } }
+  html:not(.calme) .chaine .canal { animation: glisser linear both; animation-timeline: view(); }
+  @keyframes glisser { from { translate: 0 50px; } to { translate: 0 -40px; } }
+}
+
+main { overflow-x: clip; }
