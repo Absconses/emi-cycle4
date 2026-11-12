@@ -1,0 +1,124 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="theme-color" content="#00004d">
+<title>Se former · Dupanloup Média</title>
+<meta name="description" content="Les émissions, les podcasts et la gazette des élèves du collège Dupanloup, fabriqués au CDI.">
+<link rel="icon" href="../club/img/sigle-dupanloup.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:ital,wght@0,400;0,700;1,400&family=Bricolage+Grotesque:opsz,wght@12..96,700;12..96,800&display=swap">
+<link rel="stylesheet" href="media.css">
+<script src="../club/progression.js"></script>
+<script src="media.js"></script>
+</head>
+<body data-page="formation" class="c-formation">
+<main id="zone">
+  <div class="int">
+    <section class="former-haut">
+      <div>
+        <h1>Devenir reporter</h1>
+        <p class="chapo">Dix modules d’environ 45 minutes, à faire à ton rythme au CDI. Commence par les trois modules de la carte de presse, dans l’ordre. Ensuite, choisis ta spécialité selon ton rôle à la rédaction.</p>
+        <div class="actions-m"><a class="btn-m" id="cta" href="#tronc" style="--c:var(--menthe)">Commencer</a><a class="btn-m creux" href="#bilan">Mon bilan</a></div>
+      </div>
+      <div class="carte-presse-m" id="carte" aria-label="Ma carte de presse"></div>
+    </section>
+    <section class="rayon" id="tronc"><div class="rayon-tete"><h2>La carte de presse</h2><p class="infos">Obligatoire, dans l’ordre</p></div><div class="grille" id="grille-tronc"></div></section>
+    <section class="rayon" id="spes"><div class="rayon-tete"><h2>Les spécialités</h2><p class="infos">Au choix, après la carte de presse</p></div><div id="liste-spes"></div></section>
+    <section class="rayon"><div class="rayon-tete"><h2>Les ateliers de la rédaction</h2></div>
+      <div class="outils-m">
+        <a class="outil" href="../club/redaction.html"><b>La salle de rédaction</b><span>Le chemin de fer du prochain numéro de la gazette, et un pad pour écrire chaque article.</span></a>
+        <a class="outil" href="../club/banc/"><b>Le banc de montage</b><span>Monte toi-même un petit reportage sur le cross : dérushage, coupes, titres et son.</span></a>
+        <a class="outil" href="publier.html"><b>Publier une production</b><span>Pour le rédacteur en chef et le professeur : les vérifications, puis la mise en ligne.</span></a>
+      </div></section>
+    <section class="bilan-m" id="bilan">
+      <div><h2>Garde une trace de ton travail</h2>
+        <p>Ta progression s’enregistre toute seule dans ce navigateur, sur cet ordinateur.</p>
+        <ol><li><strong>À la fin de chaque séance</strong>, télécharge ton bilan et range-le (ENT, clé USB).</li>
+        <li><strong>Sur un autre ordinateur</strong>, clique sur « Reprendre avec mon bilan » et choisis ce fichier.</li>
+        <li><strong>Quand ton professeur le demande</strong>, dépose ton dernier bilan là où il te l’indique.</li></ol></div>
+      <div>
+        <div class="champs">
+          <label>Prénom <input id="prenom" autocomplete="given-name" maxlength="40"></label>
+          <label>Nom <input id="nom" autocomplete="family-name" maxlength="40"></label>
+          <label>Classe <input id="classe" placeholder="ex. 6eB" maxlength="12"></label>
+        </div>
+        <div class="actions-m">
+          <button class="btn-m" id="telecharger" style="--c:var(--menthe)">Télécharger mon bilan</button>
+          <label class="btn-m creux" style="cursor:pointer">Reprendre avec mon bilan<input type="file" id="reprendre" accept=".json,application/json" hidden></label>
+          <button class="lien-m" id="raz">Effacer ma progression sur cet ordinateur</button>
+        </div>
+        <p class="infos" style="margin-top:12px">Ne modifie pas le fichier : il porte un sceau. Un bilan retouché est refusé ici et signalé à ton professeur.</p>
+        <p class="msg-m" id="msg" role="status"></p>
+      </div>
+    </section>
+  </div>
+</main>
+<script>
+MEDIA.habiller('formation');
+(async function () {
+  const esc = MEDIA.esc, D = MEDIA.CLUB_DIR, pct = x => Math.round(x * 100) + ' %';
+  const SPE = { B: ['Reporter UNSS', 'Tu couvres les compétitions sportives du collège : le compte rendu, l’interview des athlètes, les photos.'],
+    C: ['Chroniqueur', 'Tu racontes l’actualité au micro : la chronique et le podcast du club.'],
+    D: ['Reporter d’images', 'Tu filmes et tu montes les reportages vidéo du club. Avant : la photo de presse (module 6).'],
+    E: ['Réalisateur', 'Tu assembles le son, l’image et les interviews en une émission. Avant : le son et l’image.'],
+    F: ['Maquettiste', 'Tu mets les articles en page, sur le site du collège et dans la gazette.'] };
+  const mods = await (await fetch(D + 'modules.json')).json();
+  const livres = mods.filter(m => m.type === 'livre'), tronc = livres.filter(m => m.partie === 'A');
+  const prog = CLUB.lire(), p = id => prog[id], fait = m => !!(p(m.id) && p(m.id).termine);
+  const lien = m => 'module.html?m=' + encodeURIComponent(m.id);
+  const etat = m => { const x = p(m.id); if (!m.pret) return '<span class="etat-m">En préparation</span>'; if (!x) return '<span class="etat-m">À faire</span>';
+    return x.termine ? `<span class="etat-m ok">✓ Badge${x.meilleur ? ', ' + pct(x.meilleur) : ''}</span>` : `<span class="etat-m encours">${x.avance ? pct(x.avance) + ' lu' : 'Commencé'}</span>`; };
+  const carteMod = m => `<article class="mod"><div class="vignette"><img src="${esc(MEDIA.img(m.image))}" alt="" loading="lazy"><span class="num">${m.num}</span></div>
+    <div class="corps"><h3>${m.pret ? `<a href="${lien(m)}">${esc(m.titre)}</a>` : esc(m.titre)}</h3>
+      <p class="chapo">${esc(m.chapo)}</p><p class="reflexe">« ${esc(m.ethique)} »</p>
+      ${mods.filter(a => a.type === 'atelier' && a.parent === m.id && a.pret).map(a => `<a class="atelier-m" href="${lien(a)}"><b>Atelier</b>${esc(a.titre)}</a>`).join('')}
+      <div class="pied">${etat(m)}<span class="infos">${m.pret ? `${m.chapitres} chapitres, ${m.duree} min` : ''}</span></div></div></article>`;
+  document.getElementById('grille-tronc').innerHTML = tronc.map(carteMod).join('');
+  document.getElementById('liste-spes').innerHTML = Object.keys(SPE).map(k => { const ms = livres.filter(m => m.partie === k); if (!ms.length) return '';
+    const ok = ms.every(fait);
+    return `<div class="spe-m"><div><h3>${esc(SPE[k][0])}</h3><p>${esc(SPE[k][1])}</p>${ok ? '<p><span class="etat-m ok">✓ Spécialité obtenue</span></p>' : ''}</div><div class="grille">${ms.map(carteMod).join('')}</div></div>`; }).join('');
+
+  const suivant = tronc.find(m => m.pret && !fait(m)) || livres.find(m => m.pret && !fait(m));
+  const cta = document.getElementById('cta');
+  if (suivant) { cta.href = suivant.partie === 'A' || p(suivant.id) ? lien(suivant) : '#spes'; cta.textContent = p(suivant.id) ? `Reprendre le module ${suivant.num}` : suivant.partie === 'A' ? `Ouvrir le module ${suivant.num}` : 'Choisir une spécialité'; }
+  else { cta.href = '#bilan'; cta.textContent = 'Tous les modules sont faits'; }
+
+  function carte() {
+    const id = CLUB.identite(), nom = [id.prenom, id.nom].filter(Boolean).join(' '), n = tronc.filter(fait).length, valide = tronc.length && n === tronc.length;
+    document.getElementById('carte').innerHTML = `<h2>Carte de presse</h2>
+      <p class="qui">${nom ? esc(nom) : 'Ton nom ici'}</p><small>${nom ? (id.classe ? 'Classe de ' + esc(id.classe) + ', ' : '') + 'reporter du club' : 'Écris ton nom dans « Mon bilan », en bas de la page.'}</small>
+      <div class="tampons">${tronc.map(m => fait(m) ? `<a class="fait" href="${lien(m)}" title="Module ${m.num} : tampon obtenu">${m.num}</a>` : `<a href="${lien(m)}" title="Module ${m.num} : ${esc(m.titre)}">${m.num}</a>`).join('')}</div>
+      <p style="margin:0 0 12px;font-weight:700">${valide ? 'Ta carte est validée : tu es membre de la rédaction.' : `${n} tampon${n > 1 ? 's' : ''} sur ${tronc.length}. Termine un module pour gagner son tampon.`}</p>
+      <ul class="spes">${Object.keys(SPE).map(k => { const ms = livres.filter(m => m.partie === k), ok = ms.length && ms.every(fait); return `<li class="${ok ? 'ok' : ''}">${ok ? '✓ ' : ''}${esc(SPE[k][0])}</li>`; }).join('')}</ul>`;
+  }
+  carte();
+
+  const ident = CLUB.identite(), msg = document.getElementById('msg');
+  ['prenom', 'nom', 'classe'].forEach(k => { const el = document.getElementById(k); el.value = ident[k] || ''; el.oninput = () => { CLUB.garderIdentite(k, el.value.trim()); carte(); }; });
+  document.getElementById('reprendre').onchange = async (e) => {
+    const f = e.target.files[0]; if (!f) return;
+    const r = await CLUB.chargerBilan(await f.text());
+    if (!r.ok) { msg.textContent = r.raison; return; }
+    try { sessionStorage.setItem('club-msg', r.n ? `Progression retrouvée : ${r.n} module${r.n > 1 ? 's' : ''} mis à jour.` : 'Ce bilan n’apporte rien de plus récent que ce qui est déjà sur cet ordinateur.'); } catch (e) {}
+    location.hash = 'bilan'; location.reload();
+  };
+  try { const m = sessionStorage.getItem('club-msg'); if (m) { msg.textContent = m; sessionStorage.removeItem('club-msg'); } } catch (e) {}
+  document.getElementById('telecharger').onclick = async () => {
+    const id = CLUB.identite();
+    if (!id.prenom || !id.nom || !id.classe) { msg.textContent = 'Écris ton prénom, ton nom et ta classe avant de télécharger ton bilan.'; return; }
+    const nb = await CLUB.telechargerBilan(mods);
+    msg.textContent = `Bilan téléchargé (${nb} module${nb > 1 ? 's' : ''} commencé${nb > 1 ? 's' : ''}). Range-le bien.`;
+  };
+  const raz = document.getElementById('raz');
+  raz.onclick = () => {
+    if (raz.dataset.armer) { CLUB.effacer(); location.reload(); return; }
+    raz.dataset.armer = '1'; raz.textContent = 'Clique encore pour tout effacer sur cet ordinateur';
+    setTimeout(() => { delete raz.dataset.armer; raz.textContent = 'Effacer ma progression sur cet ordinateur'; }, 5000);
+  };
+})();
+</script>
+</body>
+</html>

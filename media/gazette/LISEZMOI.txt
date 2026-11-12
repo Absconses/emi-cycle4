@@ -1,0 +1,2 @@
+Ranger ici les PDF des numéros de la Gazette (ex. gazette-1.pdf), puis écrire "pdf": "gazette/gazette-1.pdf" dans ../gazette.json.
+Nom de fichier : lettres sans accent, chiffres, tirets.
