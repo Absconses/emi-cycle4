@@ -7,8 +7,7 @@
   if (choix === 'calme' || (!choix && matchMedia('(prefers-reduced-motion: reduce)').matches)) document.documentElement.classList.add('calme');
 })();
 window.MEDIA = (function () {
-  const COULEUR = { emission: 'corail', podcast: 'jaune', gazette: 'papier' };
-  let ambMur = 'var(--corail)', voyageActif = false;
+  const COULEUR = { emission: 'corail', podcast: 'jaune', gazette: 'bleu' };
   const CLUB_DIR = '../club/';
   const CHAINES = {
     emission: { n: 1, nom: 'Émissions', page: 'emissions.html', fichier: 'emissions.json', verbe: 'Regarder', dernier: 'Dernière émission',
@@ -101,16 +100,6 @@ window.MEDIA = (function () {
         </div></section>`
       : `<section class="antenne int"><div><h1>Dupanloup Média</h1><p class="chapo">Les émissions, les podcasts et la gazette des élèves arrivent ici.</p></div></section>`;
     const compte = (n, un, des) => n ? `${n} ${n > 1 ? des : un}` : 'Bientôt';
-    h += `<section class="voyage" id="voyage" aria-label="Les trois chaînes"><div class="voyage-cadre">
-      ${['emission', 'podcast', 'gazette'].map((t, i) => { const C = CHAINES[t], P = [[30, -26, 260], [36, 24, 120], [12, 2, -160]];
-        return `<div class="voyage-scene c-${t}" data-type="${t}">
-          <span class="v-canal" aria-hidden="true">${C.n}</span>
-          ${tout[t].slice(0, 3).map((e, k) => `<a class="v-carte f-${t}" href="${lien(e)}" style="--x:${P[k][0]}vw;--y:${P[k][1]}vh;--z:${P[k][2]}px" aria-label="${esc(e.titre)}" tabindex="-1">${visuel(e)}</a>`).join('')}
-          <div class="v-texte"><p class="v-compte">${compte(tout[t].length, t === 'gazette' ? 'numéro' : t === 'podcast' ? 'podcast' : 'émission', t === 'gazette' ? 'numéros' : t === 'podcast' ? 'podcasts' : 'émissions')}</p><h2>${C.nom}</h2><p>${C.slogan}</p><a class="btn-m" href="${C.page}">Entrer dans la chaîne</a></div>
-        </div>`; }).join('')}
-      <div class="voyage-jauge" aria-hidden="true"><i></i><i></i><i></i></div>
-      <p class="voyage-indice" aria-hidden="true">Continue de descendre</p>
-    </div></section>`;
     h += `<nav class="chaines int" aria-label="Choisir une chaîne">
       <a class="chaine c-emission" href="emissions.html"><span class="canal" aria-hidden="true">1</span><span class="combien">${compte(tout.emission.length, 'émission', 'émissions')}</span><h2>Émissions</h2><p>${CHAINES.emission.slogan}</p></a>
       <a class="chaine c-podcast" href="radio.html"><span class="canal" aria-hidden="true">2</span><span class="combien">${compte(tout.podcast.length, 'podcast', 'podcasts')}</span><h2>Radio</h2><p>${CHAINES.podcast.slogan}</p></a>
@@ -135,36 +124,6 @@ window.MEDIA = (function () {
     </section></div>`;
     zone.innerHTML = h;
     monterMur(mur);
-    monterVoyage();
-  }
-
-  /* Le voyage : la section est très haute, son cadre reste collé à l'écran,
-   * et la descente de la page fait avancer la caméra à travers les trois chaînes. */
-  function monterVoyage() {
-    const section = document.getElementById('voyage'); if (!section) return;
-    const scenes = [...section.querySelectorAll('.voyage-scene')], points = [...section.querySelectorAll('.voyage-jauge i')];
-    const indice = section.querySelector('.voyage-indice'), racine = document.documentElement, N = scenes.length;
-    const palier = x => { const f = Math.floor(x), r = x - f, u = Math.min(1, Math.max(0, (r - .28) / .44)); return f + u * u * (3 - 2 * u); };
-    let prevu = false;
-    function dessiner() {
-      prevu = false;
-      if (racine.classList.contains('calme')) { voyageActif = false; return; }
-      const r = section.getBoundingClientRect(), p = Math.min(1, Math.max(0, -r.top / (r.height - innerHeight)));
-      const pos = palier(p * (N - 1) * .999), proche = Math.round(pos);
-      scenes.forEach((sc, i) => { const d = i - pos, o = d >= 0 ? 1 - d * 1.15 : 1 + d * 2.6;
-        sc.style.transform = `translate3d(0,0,${(-d * 1700).toFixed(1)}px)`;
-        sc.style.opacity = Math.max(0, Math.min(1, o)).toFixed(3);
-        sc.style.visibility = o <= 0 ? 'hidden' : 'visible';
-        const ici = Math.abs(d) < .25; sc.style.pointerEvents = ici ? 'auto' : 'none'; sc.inert = !ici; });
-      points.forEach((pt, i) => pt.classList.toggle('ici', i === proche));
-      indice.style.opacity = p > .93 ? 0 : 1;
-      const dedans = r.top < innerHeight * .45 && r.bottom > innerHeight * .55;
-      voyageActif = dedans;
-      racine.style.setProperty('--amb', dedans ? `var(--${COULEUR[scenes[proche].dataset.type]})` : ambMur);
-    }
-    const demander = () => { if (!prevu) { prevu = true; requestAnimationFrame(dessiner); } };
-    addEventListener('scroll', demander, { passive: true }); addEventListener('resize', demander);
-    dessiner();
   }
 
   /* Le mur de la régie : les dernières productions en profondeur.
@@ -181,7 +140,7 @@ window.MEDIA = (function () {
         <p class="chapo">${esc(e.chapo)}</p><p class="infos">${infos(e)}</p>
         <div class="actions-m"><a class="btn-m" href="${lien(e)}">${enLigne(e) ? C.verbe : 'Découvrir'}</a><a class="btn-m creux" href="${C.page}">Toute la chaîne ${C.nom}</a></div>`;
       compte.textContent = `${actif + 1} sur ${items.length}`;
-      ambMur = `var(--${COULEUR[e.type]})`; if (!voyageActif) document.documentElement.style.setProperty('--amb', ambMur);
+      document.documentElement.style.setProperty('--amb', `var(--${COULEUR[e.type]})`);
     }
     function placer() {
       ecrans.forEach((el, i) => { const d = i - actif;
