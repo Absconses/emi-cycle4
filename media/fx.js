@@ -93,7 +93,7 @@
       vx = e.clientX; vy = e.clientY;
       const el = e.target.closest && e.target.closest('.carte-m, .ecran-mur.actif, .mod');
       if (el) { const t = ['emission', 'podcast', 'gazette'].find(k => el.classList.contains('c-' + k) || el.classList.contains('f-' + k));
-        c.textContent = t ? MOTS[t] : 'Ouvrir'; c.style.background = t ? `var(--${t === 'emission' ? 'corail' : t === 'podcast' ? 'jaune' : 'bleu'})` : 'var(--menthe)'; }
+        c.textContent = t ? MOTS[t] : 'Ouvrir'; }
       c.classList.toggle('geste-on', !!el);
       if (!actif) { actif = true; x = vx; y = vy; requestAnimationFrame(suivre); }
     }, { passive: true });
