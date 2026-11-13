@@ -38,3 +38,14 @@ LA UNE (13 novembre 2026) : retour à la première charte, celle du site du club
   qui montent l'une après l'autre, puis l'édito sur verre et le tampon. Tout est dans laUne() de media.js.
 - media.css a été réécrit d'un seul tenant ; les couleurs se règlent dans les premières lignes.
 - Les aperçus des podcasts sont en couleurs naturelles (plus de filtre).
+
+LA SCÈNE (13 novembre 2026)
+- son.js : les sons du site, fabriqués par le navigateur (aucun fichier audio). Coupés par défaut ; ils s'allument avec
+  « Entrer avec le son » ou le bouton « Son » de la barre. Le choix est gardé dans le navigateur.
+- Le rideau : une fois par visite, l'accueil s'ouvre sur un rideau bleu (rideau() dans media.js). Le clic ouvre le rideau,
+  lance l'arrivée de la une et sa bande-son (machine à écrire, souffles, tampon, jingle).
+- Le verre vif (.verre-vif) : panneau épais, liseré de lumière qui tourne, reflet qui suit le pointeur ; dans Chrome et Edge,
+  il déforme aussi ce qu'il recouvre (filtre SVG #verre-liquide).
+- Le plateau : la section « À l'antenne » sur fond bleu marine, avec des lumières or et abricot derrière le verre.
+- Le bandeau « Dernière minute », le grand défilé de mots (il accélère avec le défilement), la mire qui sert de jauge de lecture.
+En mode calme : ni rideau, ni son, ni défilé.

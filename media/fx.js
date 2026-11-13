@@ -36,6 +36,38 @@
     document.addEventListener('pointerleave', () => { lacher(dernier); dernier = null; });
   }
 
+  /* ---------- le son : le bouton de la barre, et les petits bruits de l'interface ---------- */
+  const S = window.SON, bSon = document.getElementById('son');
+  if (S && bSon) {
+    const dire = () => { bSon.setAttribute('aria-pressed', S.actif()); bSon.classList.toggle('joue', S.actif()); };
+    bSon.onclick = () => { S.regler(!S.actif()); if (S.actif()) S.jouer('jingle'); dire(); };
+    document.addEventListener('son-change', dire); dire();
+    const TOUCHE = 'a, button, summary, .carte-m, .mod, .ecran-mur';
+    let sous = null;
+    if (souris) document.addEventListener('pointerover', e => { const el = e.target.closest && e.target.closest(TOUCHE); if (el && el !== sous) S.jouer('survol'); sous = el; }, { passive: true });
+    document.addEventListener('pointerdown', e => { if (e.target.closest && e.target.closest(TOUCHE)) S.jouer('clic'); }, { passive: true });
+    const palette0 = document.getElementById('palette');
+    if (palette0) { document.getElementById('ouvrir-palette').addEventListener('click', () => S.jouer('ouvre')); palette0.addEventListener('close', () => S.jouer('ferme')); }
+    // un module terminé : le tampon tombe, la rédaction applaudit
+    const bravo = document.getElementById('bravo');
+    if (bravo) new MutationObserver(() => { if (!bravo.hidden) { S.jouer('tampon', .12); S.jouer('jingle', .4); } }).observe(bravo, { attributes: true, attributeFilter: ['hidden'] });
+    if (document.body.dataset.page !== 'accueil') S.jouer('souffle', .05);
+  }
+
+  /* ---------- le grand défilé : il accélère et se penche avec la vitesse de la page ---------- */
+  (function defile() {
+    let y0 = scrollY, vit = 0, tourne = false;
+    function pas() {
+      const geant = document.querySelector('.defile-geant'); if (!geant || calme()) { tourne = false; return; }
+      vit += ((scrollY - y0) - vit) * .12; y0 = scrollY;
+      const v = Math.max(-40, Math.min(40, vit));
+      geant.style.setProperty('--penche', (v * -.35).toFixed(2) + 'deg');
+      const anim = geant.firstElementChild.getAnimations()[0]; if (anim) anim.playbackRate = 1 + Math.abs(v) * .22;
+      if (Math.abs(vit) > .05) requestAnimationFrame(pas); else { tourne = false; geant.style.setProperty('--penche', '0deg'); if (anim) anim.playbackRate = 1; }
+    }
+    addEventListener('scroll', () => { if (!tourne) { tourne = true; y0 = scrollY; requestAnimationFrame(pas); } }, { passive: true });
+  })();
+
   /* ---------- le fond vivant : une lumière liquide calculée par la carte graphique ----------
    * Demi-définition et 30 images par seconde : assez pour un fond flou, léger pour un vieux poste.
    * Sans WebGL, ou en mode calme, on garde les halos en CSS. */
@@ -50,13 +82,15 @@
       float n(vec2 p){vec2 i=floor(p),f=fract(p);f=f*f*(3.-2.*f);return mix(mix(h(i),h(i+vec2(1.,0.)),f.x),mix(h(i+vec2(0.,1.)),h(i+vec2(1.,1.)),f.x),f.y);}
       float fbm(vec2 p){float a=.5,s=0.;for(int i=0;i<4;i++){s+=a*n(p);p=p*2.03+vec2(1.7,9.2);a*=.5;}return s;}
       void main(){vec2 uv=gl_FragCoord.xy/r;vec2 p=(gl_FragCoord.xy-.5*r)/r.y;vec2 d=p-m;float md=exp(-dot(d,d)*3.5);
-        vec2 q=vec2(fbm(p*1.25+t*.06),fbm(p*1.25+vec2(5.2,1.3)-t*.05));
+        vec2 q=vec2(fbm(p*1.25+t*.09),fbm(p*1.25+vec2(5.2,1.3)-t*.075));
         float f=fbm(p*1.5+q*1.9+md*.7+t*.03);
-        vec3 col=mix(vec3(.995,.945,.84),vec3(.975,.885,.72),smoothstep(.2,.72,f));
-        col=mix(col,vec3(.955,.74,.56),smoothstep(.55,.95,f)*.38);
-        float g=smoothstep(.38,.95,fbm(p*1.05-q*1.6+t*.025+3.));
-        col=mix(col,c,g*g*.17+md*.05);
-        col*=1.-.1*dot(uv-.5,uv-.5);
+        vec3 col=mix(vec3(.995,.945,.84),vec3(.972,.862,.66),smoothstep(.2,.72,f));
+        col=mix(col,vec3(.95,.66,.47),smoothstep(.5,.93,f)*.5);
+        float g=smoothstep(.4,.95,fbm(p*1.05-q*1.6+t*.03+3.));
+        col=mix(col,c,g*g*.3+md*.1);
+        float encre=smoothstep(.6,.98,fbm(p*.85+q*2.2-t*.025+11.));
+        col=mix(col,vec3(0.,.004,.47),encre*.15);
+        col*=1.-.12*dot(uv-.5,uv-.5);
         gl_FragColor=vec4(col,1.);}`);
     if (!vs || !fs) return;
     const pr = gl.createProgram(); gl.attachShader(pr, vs); gl.attachShader(pr, fs); gl.linkProgram(pr);
