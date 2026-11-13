@@ -54,6 +54,41 @@
     if (document.body.dataset.page !== 'accueil') S.jouer('souffle', .05);
   }
 
+  /* ---------- la lentille : une goutte de verre glisse sous le lien survolé de la barre ---------- */
+  (function lentille() {
+    const nav = document.querySelector('.chaines-nav'); if (!nav) return;
+    const goutte = document.createElement('span'); goutte.className = 'lentille'; goutte.setAttribute('aria-hidden', 'true'); nav.prepend(goutte);
+    const ici = nav.querySelector('[aria-current="page"]');
+    const poser = a => { if (!a) { goutte.style.setProperty('--lo', 0); return; } goutte.style.setProperty('--lx', a.offsetLeft + 'px'); goutte.style.setProperty('--lw', a.offsetWidth + 'px'); goutte.style.setProperty('--lo', 1); };
+    nav.addEventListener('pointerover', e => { const a = e.target.closest('a'); if (a) poser(a); });
+    nav.addEventListener('focusin', e => { const a = e.target.closest('a'); if (a) poser(a); });
+    nav.addEventListener('pointerleave', () => poser(ici)); nav.addEventListener('focusout', () => poser(ici));
+    addEventListener('resize', () => poser(ici)); (document.fonts ? document.fonts.ready : Promise.resolve()).then(() => poser(ici)); poser(ici);
+  })();
+
+  /* ---------- la lumière : un halo suit le pointeur sous le verre, et allume le bord des tuiles voisines ---------- */
+  if (souris) {
+    const halo = document.createElement('div'); halo.className = 'aura'; halo.setAttribute('aria-hidden', 'true');
+    (document.querySelector('.ambiance') || document.body.firstChild).after(halo);
+    const TUILES = '.carte-m, .mod, .outil, .bloc-m, .chaine, .etape-m';
+    let hx = innerWidth / 2, hy = innerHeight / 3, vx = hx, vy = hy, court = false, liste = [], vu = 0;
+    function trame(ms) {
+      if (calme()) { court = false; return; }
+      hx += (vx - hx) * .14; hy += (vy - hy) * .14;
+      halo.style.transform = `translate3d(${hx.toFixed(1)}px,${hy.toFixed(1)}px,0)`;
+      if (ms - vu > 500) { vu = ms; liste = [...document.querySelectorAll(TUILES)]; }
+      for (const el of liste) { const r = el.getBoundingClientRect();
+        if (r.bottom < -100 || r.top > innerHeight + 100) continue;
+        const dx = Math.max(r.left - vx, 0, vx - r.right), dy = Math.max(r.top - vy, 0, vy - r.bottom);
+        el.style.setProperty('--go', Math.max(0, 1 - Math.hypot(dx, dy) / 190).toFixed(2));
+        el.style.setProperty('--gx', (vx - r.left).toFixed(0) + 'px'); el.style.setProperty('--gy', (vy - r.top).toFixed(0) + 'px'); }
+      if (Math.abs(vx - hx) + Math.abs(vy - hy) > .4) requestAnimationFrame(trame); else court = false;
+    }
+    const lancer = () => { if (!court) { court = true; requestAnimationFrame(trame); } };
+    addEventListener('pointermove', e => { vx = e.clientX; vy = e.clientY; lancer(); }, { passive: true });
+    addEventListener('scroll', lancer, { passive: true });
+  }
+
   /* ---------- le grand défilé : il accélère et se penche avec la vitesse de la page ---------- */
   (function defile() {
     let y0 = scrollY, vit = 0, tourne = false;
@@ -88,8 +123,10 @@
         col=mix(col,vec3(.95,.66,.47),smoothstep(.5,.93,f)*.5);
         float g=smoothstep(.4,.95,fbm(p*1.05-q*1.6+t*.03+3.));
         col=mix(col,c,g*g*.3+md*.1);
-        float encre=smoothstep(.6,.98,fbm(p*.85+q*2.2-t*.025+11.));
-        col=mix(col,vec3(0.,.004,.47),encre*.15);
+        float encre=smoothstep(.56,.98,fbm(p*.85+q*2.2-t*.025+11.));
+        col=mix(col,vec3(0.,.004,.47),encre*.24);
+        float braise=smoothstep(.66,.99,fbm(p*1.3-q*1.4+t*.02+27.));
+        col=mix(col,vec3(.71,.29,.07),braise*.2);
         col*=1.-.12*dot(uv-.5,uv-.5);
         gl_FragColor=vec4(col,1.);}`);
     if (!vs || !fs) return;

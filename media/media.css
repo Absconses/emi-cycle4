@@ -582,3 +582,111 @@ html.calme .son-btn { display: none; }
   html:not(.calme) .mire { transform-origin: left; animation: jauge linear both; animation-timeline: scroll(root); }
   @keyframes jauge { from { transform: scaleX(.05); } }
 }
+
+
+/* =====================================================================
+ * LE VERRE 2026 (13 novembre 2026) : tout ce qui se touche devient du verre.
+ * Formes rondes, verre épais, bords qui s'allument près du pointeur, tuiles de verre coloré.
+ * Les couleurs, les polices, les filets or, les tampons et les photos déchirées ne changent pas.
+ * ===================================================================== */
+:root {
+  --v-fond: linear-gradient(135deg, rgba(255, 255, 255, .64), rgba(255, 253, 247, .24));
+  --v-flou: blur(20px) saturate(1.9) brightness(1.04);
+  --v-rim: rgba(255, 255, 255, .85);
+  --v-ombre: inset 0 1px 0 #fff, inset 0 -1px 0 rgba(0, 1, 119, .1), inset 0 0 22px rgba(255, 255, 255, .26), 0 26px 50px -24px rgba(0, 1, 119, .5), 0 6px 14px -8px rgba(0, 1, 119, .25);
+}
+html.calme { --v-fond: linear-gradient(#fffdf7, #fffdf7); --v-flou: none; }
+
+/* ---------- la lumière qui suit le pointeur, sous le verre ---------- */
+.aura { position: fixed; left: 0; top: 0; z-index: -1; width: 620px; height: 620px; margin: -310px 0 0 -310px; border-radius: 50%; pointer-events: none; background: radial-gradient(closest-side, rgba(255, 255, 255, .85), rgba(255, 232, 178, .4) 42%, transparent); will-change: transform; }
+html.calme .aura { display: none; }
+
+/* ---------- la barre : une capsule de verre qui flotte ---------- */
+/* le nom de transition va sur la capsule elle-même : posé sur son enveloppe, il l'isolait de la page et le verre ne floutait rien */
+.barre-media { padding: 12px 12px 0; view-transition-name: none; }
+.barre-verre { view-transition-name: barre; max-width: var(--large); margin-inline: auto; padding: 7px 8px 7px 16px; border-radius: 999px; border: 1px solid var(--v-rim); background: linear-gradient(180deg, rgba(255, 253, 247, .8), rgba(255, 250, 240, .56)); backdrop-filter: blur(26px) saturate(1.9) brightness(1.05); -webkit-backdrop-filter: blur(26px) saturate(1.9) brightness(1.05); box-shadow: var(--v-ombre); }
+.chaines-nav { position: relative; }
+.chaines-nav a { position: relative; z-index: 1; border: 0; border-radius: 999px; padding: 12px 14px; }
+.chaines-nav a:hover { color: var(--marine); }
+.chaines-nav a[aria-current="page"] { background: none; color: var(--marine); }
+.chaines-nav a[aria-current="page"]::before { background: var(--c); rotate: 45deg; }
+.lentille { position: absolute; left: 0; top: 0; height: 100%; width: var(--lw, 0); transform: translateX(var(--lx, 0)); opacity: var(--lo, 0); pointer-events: none; border-radius: 999px; border: 1px solid #fff; background: linear-gradient(180deg, rgba(255, 255, 255, .98), rgba(255, 255, 255, .5)); box-shadow: inset 0 -7px 12px -6px rgba(233, 184, 90, .7), inset 0 1px 0 #fff, 0 8px 16px -8px rgba(0, 1, 119, .5); transition: transform .5s var(--ressort), width .5s var(--ressort), opacity .25s; }
+.son-btn, .chercher { border-radius: 999px; border: 1px solid var(--v-rim); background: rgba(255, 255, 255, .5); box-shadow: inset 0 1px 0 #fff, 0 6px 12px -8px rgba(0, 1, 119, .5); }
+.son-btn:hover, .chercher:hover { translate: 0 -2px; box-shadow: inset 0 1px 0 #fff, 0 0 0 3px rgba(233, 184, 90, .5), 0 10px 16px -8px rgba(0, 1, 119, .5); }
+.son-btn:active, .chercher:active { translate: 0 0; scale: .96; }
+.son-btn[aria-pressed="true"] { background: linear-gradient(180deg, #1414a8, var(--marine)); border-color: rgba(255, 255, 255, .4); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .4), 0 8px 16px -8px rgba(0, 1, 119, .8); }
+@media (max-width: 759px) {
+  .barre-media { padding: 10px 10px 0; }
+  .barre-verre { view-transition-name: none; backdrop-filter: none; -webkit-backdrop-filter: none; background: rgba(255, 252, 244, .95); padding: 6px 6px 6px 12px; }
+  .chaines-nav { position: fixed; left: 12px; right: 12px; padding: 5px; border-radius: 30px; border: 1px solid var(--v-rim); background: var(--v-fond); backdrop-filter: var(--v-flou); -webkit-backdrop-filter: var(--v-flou); box-shadow: var(--v-ombre), 0 20px 40px -14px rgba(0, 1, 119, .6); }
+  .chaines-nav a { border-radius: 24px; padding: 11px 2px 9px; }
+  .lentille { top: 5px; height: calc(100% - 10px); border-radius: 24px; }
+}
+
+/* ---------- les boutons : des pastilles brillantes ---------- */
+.btn-m { border-radius: 999px; padding: 14px 24px; background: linear-gradient(180deg, #1717b4, var(--marine)); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), inset 0 -3px 8px rgba(0, 0, 40, .55), 0 14px 26px -12px rgba(0, 1, 119, .8); transition: translate .25s var(--ressort), box-shadow .25s, scale .1s; }
+.btn-m:hover { translate: 0 -3px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .45), inset 0 -3px 8px rgba(0, 0, 40, .55), 0 0 0 4px rgba(233, 184, 90, .6), 0 20px 30px -12px rgba(0, 1, 119, .8); }
+.btn-m:active { translate: 0 0; scale: .97; box-shadow: inset 0 2px 6px rgba(0, 0, 40, .6), 0 6px 12px -8px rgba(0, 1, 119, .8); }
+.btn-m.creux { background: var(--v-fond); backdrop-filter: blur(12px) saturate(1.6); -webkit-backdrop-filter: blur(12px) saturate(1.6); box-shadow: inset 0 0 0 1px var(--v-rim), inset 0 1px 0 #fff, 0 12px 22px -14px rgba(0, 1, 119, .6); }
+.btn-m.creux:hover { translate: 0 -3px; background: var(--v-fond); box-shadow: inset 0 0 0 1px #fff, 0 0 0 4px rgba(233, 184, 90, .5), 0 18px 26px -14px rgba(0, 1, 119, .6); }
+.btn-m.creux:active { translate: 0 0; scale: .97; }
+.plateau .btn-m:not(.creux), .rideau .btn-m:not(.creux), .bande-former .btn-m { background: linear-gradient(180deg, #f8dc98, var(--or)); color: var(--marine); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .85), inset 0 -3px 8px rgba(160, 100, 0, .35), 0 14px 28px -10px rgba(233, 184, 90, .9); }
+.plateau .btn-m:not(.creux):hover, .rideau .btn-m:not(.creux):hover, .bande-former .btn-m:hover { box-shadow: inset 0 1px 0 rgba(255, 255, 255, .85), 0 0 0 4px rgba(255, 255, 255, .4), 0 20px 34px -10px rgba(233, 184, 90, 1); }
+.plateau .btn-m.creux, .rideau .btn-m.creux { backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .6), inset 0 1px 0 rgba(255, 255, 255, .5); }
+.filtres-m button { border: 1px solid var(--v-rim); background: var(--v-fond); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); box-shadow: inset 0 1px 0 #fff, 0 8px 16px -10px rgba(0, 1, 119, .5); }
+.filtres-m button:hover { box-shadow: inset 0 1px 0 #fff, 0 0 0 3px rgba(233, 184, 90, .5), 0 8px 16px -10px rgba(0, 1, 119, .5); }
+.filtres-m button[aria-pressed="true"] { background: linear-gradient(180deg, #1717b4, var(--marine)); border-color: rgba(255, 255, 255, .4); }
+.mur-cmd button { border-radius: 50%; }
+
+/* ---------- les tuiles de verre ---------- */
+.carte-m { padding: 10px 10px 18px; border-radius: 28px; border: 1px solid var(--v-rim); background: var(--v-fond); backdrop-filter: var(--v-flou); -webkit-backdrop-filter: var(--v-flou); box-shadow: var(--v-ombre); transform: perspective(900px) rotateX(var(--rx, 0deg)) rotateY(var(--ry, 0deg)); transition: transform .35s ease-out, translate .3s var(--ressort), box-shadow .3s; }
+.carte-m:hover { translate: 0 -7px; box-shadow: var(--v-ombre), 0 40px 60px -26px color-mix(in srgb, var(--c) 75%, var(--marine)); }
+.carte-m:active { translate: 0 -2px; }
+.carte-m .vignette { transform: none; border: 0; border-radius: 19px; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .5); margin-bottom: 6px; }
+.carte-m:hover .vignette, .carte-m:active .vignette { translate: none; box-shadow: none; }
+.carte-m h3, .carte-m .infos, .carte-m .chapo { padding-inline: 8px; }
+.carte-m .numero { border-radius: 0 0 16px 0; padding: 8px 13px 9px; }
+.geste { border-radius: 999px; box-shadow: 0 8px 16px -6px rgba(0, 1, 119, .7); }
+.drapeau { border-radius: 999px; padding: 6px 10px; }
+.mod { border-radius: 26px; border: 1px solid var(--v-rim); background: var(--v-fond); box-shadow: var(--v-ombre); }
+.mod:hover { translate: 0 -7px; box-shadow: var(--v-ombre), 0 40px 60px -26px rgba(31, 107, 69, .7); }
+.mod .num { border-radius: 0 0 18px 0; }
+.outil, .bloc-m, .etape-m, .depliant, .bilan-m, .vide-m, .voisins a { position: relative; border-radius: 24px; border: 1px solid var(--v-rim); background: var(--v-fond); backdrop-filter: var(--v-flou); -webkit-backdrop-filter: var(--v-flou); box-shadow: var(--v-ombre); }
+.outil:hover, .voisins a:hover { translate: 0 -5px; box-shadow: var(--v-ombre), 0 0 0 4px rgba(233, 184, 90, .4); }
+.outil { padding: 20px 22px 22px; }
+.etape-m { padding: 22px 24px; }
+.depliant { overflow: hidden; }
+.atelier-m { border-radius: 14px; border-color: var(--v-rim); }
+.atelier-m b { border-radius: 8px; }
+.palette { border-radius: 30px; border: 1px solid var(--v-rim); background: var(--v-fond); box-shadow: var(--v-ombre), 0 50px 100px -30px rgba(0, 1, 119, .7); }
+html.verre-liquide:not(.calme) .palette { backdrop-filter: url(#verre-liquide) saturate(1.8) brightness(1.08); }
+.palette input { border-radius: 18px; border-color: var(--v-rim); background: rgba(255, 255, 255, .75); }
+.palette li a { border-left: 0; border-radius: 14px; }
+.palette li[aria-selected="true"] a, .palette li a:hover { background: rgba(255, 255, 255, .8); box-shadow: inset 0 1px 0 #fff, 0 6px 12px -8px rgba(0, 1, 119, .4); }
+.champs input, .form-m input, .form-m select, .form-m textarea { border-radius: 14px; border-color: rgba(27, 36, 112, .35); }
+.sortie-m, .verrou-m, .msg-m:not(:empty) { border-radius: 14px; }
+.lecteur-m { border-radius: 26px; border: 1px solid var(--v-rim); box-shadow: 0 0 0 7px rgba(255, 255, 255, .4), 0 46px 80px -34px color-mix(in srgb, var(--c) 65%, var(--marine)); }
+.attente-m div { border-radius: 20px; border-left: 1px solid rgba(255, 255, 255, .9); }
+.ecran-mur { border-radius: 16px; border-width: 5px; }
+.edito.verre-vif { border-radius: 28px; }
+.carte-presse-m { border-radius: 22px; box-shadow: 0 0 0 6px rgba(255, 255, 255, .45), 0 40px 70px -30px rgba(0, 1, 119, .6); }
+.bande-former { border-left: 0; border-radius: 32px; background: radial-gradient(60% 130% at 88% 10%, rgba(233, 184, 90, .5), transparent 62%), radial-gradient(50% 120% at 60% 110%, rgba(242, 164, 119, .35), transparent 60%), radial-gradient(120% 90% at 18% 0%, #1b1cab, var(--marine) 46%, #00003c); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .35), 0 46px 80px -36px rgba(0, 1, 119, .9); }
+.flash { margin: 12px 12px 0; border-radius: 999px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .25), 0 14px 26px -14px rgba(0, 1, 119, .8); }
+.flash-etiquette { border-radius: 999px; margin: 4px; padding: 8px 14px; }
+.flash-defile { padding: 13px 0; }
+@media (min-width: 1230px) { .flash { max-width: var(--large); margin-inline: auto; } }
+
+/* le bord des tuiles s'allume quand le pointeur approche (fx.js pose --gx, --gy, --go) */
+.carte-m::before, .mod::before, .outil::before, .bloc-m::before, .chaine::before, .etape-m::before { content: ""; position: absolute; inset: 0; z-index: 2; pointer-events: none; border-radius: inherit; padding: 2px; opacity: var(--go, 0); transition: opacity .35s; background: radial-gradient(240px circle at var(--gx, 50%) var(--gy, 50%), #fff, var(--or) 38%, transparent 72%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); }
+
+/* ---------- les trois chaînes : du verre coloré, et les grands mots qui passent derrière ---------- */
+.chaines { position: relative; z-index: 1; margin-top: clamp(-170px, -11vw, -64px); }
+.chaine { border-radius: 32px; min-height: 256px; border: 1px solid rgba(255, 255, 255, .6); background: linear-gradient(172deg, color-mix(in srgb, var(--c) 46%, transparent), color-mix(in srgb, var(--c) 94%, transparent) 60%); backdrop-filter: blur(13px) saturate(1.9); -webkit-backdrop-filter: blur(13px) saturate(1.9);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7), inset 0 0 34px rgba(255, 255, 255, .16), 0 40px 64px -30px color-mix(in srgb, var(--c) 85%, var(--marine)); }
+.chaine:hover { translate: 0 -9px; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7), inset 0 0 34px rgba(255, 255, 255, .16), 0 54px 70px -30px color-mix(in srgb, var(--c) 85%, var(--marine)); }
+.chaine:active { translate: 0 -2px; scale: .985; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .7), 0 24px 40px -26px color-mix(in srgb, var(--c) 85%, var(--marine)); }
+.chaine .canal { top: 6px; right: 22px; }
+html.calme .chaines { margin-top: 0; }
+html.calme .chaine { background: var(--c); }
+
+.pastille-c { border-radius: 999px; padding: 7px 12px; }

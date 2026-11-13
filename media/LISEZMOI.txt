@@ -49,3 +49,9 @@ LA SCÈNE (13 novembre 2026)
 - Le plateau : la section « À l'antenne » sur fond bleu marine, avec des lumières or et abricot derrière le verre.
 - Le bandeau « Dernière minute », le grand défilé de mots (il accélère avec le défilement), la mire qui sert de jauge de lecture.
 En mode calme : ni rideau, ni son, ni défilé.
+
+LE VERRE 2026 (13 novembre 2026)
+Dernière couche de media.css : la barre devient une capsule de verre flottante (une « lentille » glisse sous le lien survolé),
+les boutons des pastilles, les cartes et les panneaux des tuiles de verre arrondies dont le bord s'allume près du pointeur,
+les trois chaînes des tuiles de verre coloré derrière lesquelles passe le grand défilé. Une lumière suit le pointeur sous le verre.
+Tout cela est dans fx.js (lentille, lumière) et dans la dernière partie de media.css.
