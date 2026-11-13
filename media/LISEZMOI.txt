@@ -25,10 +25,16 @@ Les fiches marquées "exemple": true sont des exemples à supprimer.
 ESSAYER SUR UN ORDINATEUR : à la racine du dépôt, `python -m http.server 8000` puis http://localhost:8000/media/
 
 LE SPECTACLE (2e passe, 12 novembre 2026)
-- Le générique : la mire couvre l'écran puis se lève, une fois par visite, sur l'accueil (un clic ou une touche le passe).
 - Le fond vivant : une lumière liquide en WebGL (fx.js), à la couleur de la chaîne ; sans WebGL, les halos en CSS restent.
 - Le curseur rond qui annonce le geste (« Regarder », « Écouter », « Lire ») sur ordinateur.
-En mode calme, rien de tout cela : pas de générique et fond fixe.
+En mode calme, rien de tout cela : fond fixe, aucune animation.
 
 LES COULEURS (12 novembre 2026) : retour à la charte de la Gazette, papier crème et bleu marine du collège, or et abricot.
 Les chaînes : rouge brique (émissions), bronze (radio), bleu (gazette), vert (formation). Tout se règle en tête de media.css.
+
+LA UNE (13 novembre 2026) : retour à la première charte, celle du site du club.
+- Polices : Federo (grands titres), Bree Serif (titres), Atkinson Hyperlegible (texte), IBM Plex Mono (étiquettes).
+- L'accueil s'ouvre sur la manchette du journal et sur les trois photos du collège (club/img/college-1 à 3.jpg),
+  qui montent l'une après l'autre, puis l'édito sur verre et le tampon. Tout est dans laUne() de media.js.
+- media.css a été réécrit d'un seul tenant ; les couleurs se règlent dans les premières lignes.
+- Les aperçus des podcasts sont en couleurs naturelles (plus de filtre).

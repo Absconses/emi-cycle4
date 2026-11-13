@@ -7,7 +7,7 @@
   if (choix === 'calme' || (!choix && matchMedia('(prefers-reduced-motion: reduce)').matches)) document.documentElement.classList.add('calme');
 })();
 window.MEDIA = (function () {
-  const COULEUR = { emission: 'corail', podcast: 'jaune', gazette: 'bleu' };
+  const COULEUR = { emission: 'abricot', podcast: 'or', gazette: 'or' };
   const CLUB_DIR = '../club/';
   const CHAINES = {
     emission: { n: 1, nom: 'Émissions', page: 'emissions.html', fichier: 'emissions.json', verbe: 'Regarder', dernier: 'Dernière émission',
@@ -66,13 +66,6 @@ window.MEDIA = (function () {
   /* ---------- la barre et le pied, communs à toutes les pages ---------- */
   function habiller(page) {
     const nav = [['emission', 'emissions.html', 'Émissions'], ['podcast', 'radio.html', 'Radio'], ['gazette', 'gazette.html', 'Gazette'], ['formation', 'formation.html', 'Se former']];
-    let vu = true; try { vu = !!sessionStorage.getItem('media-antenne'); sessionStorage.setItem('media-antenne', '1'); } catch (e) {}
-    if (page === 'accueil' && !vu && !document.documentElement.classList.contains('calme')) {
-      document.body.insertAdjacentHTML('afterbegin', `<div class="generique" id="generique" aria-hidden="true"><i></i><i></i><i></i><i></i><div><img src="${CLUB_DIR}img/sigle-dupanloup.png" alt="" width="120" height="120"><b>Dupanloup Média</b><span>À l’antenne</span></div></div>`);
-      const g = document.getElementById('generique'), finir = () => g.remove();
-      g.addEventListener('animationend', e => { if (e.animationName === 'generique-fin') finir(); });
-      g.addEventListener('click', finir); addEventListener('keydown', finir, { once: true }); setTimeout(finir, 3600);
-    }
     document.body.insertAdjacentHTML('afterbegin', `<div class="ambiance" aria-hidden="true"><i></i><i></i><i></i></div><div class="mire" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
     <header class="barre-media"><div class="barre-verre">
       <a class="marque" href="index.html"><img src="${CLUB_DIR}img/sigle-dupanloup.png" alt="" width="40" height="40"><span><b>Dupanloup Média</b><small>Le média des élèves, fabriqué au CDI</small></span></a>
@@ -87,18 +80,48 @@ window.MEDIA = (function () {
     </div></footer>`);
   }
 
+  /* ---------- la une : la manchette du journal, les trois volets du collège, l'édito ---------- */
+  const VOLETS = [['college-1.jpg', 'La façade du collège Dupanloup, avec ses fenêtres sculptées.', 'La façade'],
+    ['college-2.jpg', 'L’angle du bâtiment principal et son perron.', 'Le perron'],
+    ['college-3.jpg', 'La terrasse fleurie et l’aile moderne du collège.', 'La terrasse']];
+  function laUne(n) {
+    const date = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
+    let k = 0;
+    const lettres = 'Dupanloup Média'.split(' ').map(mot => `<span class="mot">${[...mot].map(c => `<span style="--k:${k++}">${c}</span>`).join('')}</span>`).join(' ');
+    return `<header class="manchette int" id="manchette">
+      <p class="manchette-infos"><span>Collège Dupanloup · Boulogne</span><span>Édition du ${date}</span><span>${n ? `${n} production${n > 1 ? 's' : ''} à l’antenne` : 'Bientôt à l’antenne'}</span></p>
+      <div class="tete-journal"><img class="sigle" src="${CLUB_DIR}img/sigle-dupanloup.png" alt="Sigle du collège Dupanloup, Boulogne" width="400" height="400">
+        <h1 class="titre-journal" aria-label="Dupanloup Média, le média des élèves"><span class="le" aria-hidden="true">Le média des élèves</span><span class="nom" aria-hidden="true">${lettres}</span></h1></div>
+      <div class="filets" aria-hidden="true"></div>
+    </header>
+    <section class="une int" aria-labelledby="titre-edito">
+      <figure class="photo-une">
+        <div class="triptyque">${VOLETS.map(([f, alt, leg], i) => `<div class="volet" style="--i:${i}"><div class="volet-in"><img src="${CLUB_DIR}img/${f}" alt="${alt}" width="270" height="720"><span class="legende-volet">${leg}</span></div></div>`).join('')}
+          <span class="tampon grand tampon-une" aria-hidden="true">À<br>l’antenne</span></div>
+        <figcaption>Le collège Dupanloup, à Boulogne. Photos parues à la une de La Gazette de Dupanloup, n° 1, mai 2026.</figcaption>
+      </figure>
+      <div class="edito">
+        <p class="surtitre">Édito</p>
+        <h2 id="titre-edito">Ici, ce sont les élèves qui font l’info</h2>
+        <p class="chapo">Émissions, podcasts, gazette : tout est préparé, enregistré et monté au CDI par les reporters du collège.</p>
+        <div class="actions-m"><a class="btn-m" href="#antenne">Voir les productions</a><a class="btn-m creux" href="formation.html">Devenir reporter</a></div>
+      </div>
+    </section>`;
+  }
+
   /* ---------- l'accueil ---------- */
   async function accueil(zone) {
     const [em, po, ga] = await Promise.all(['emission', 'podcast', 'gazette'].map(charger));
     const tout = { emission: em || [], podcast: po || [], gazette: ga || [] };
     const tous = [...tout.emission, ...tout.podcast, ...tout.gazette].sort((a, b) => String(b.date).localeCompare(String(a.date)));
     const mur = tous.slice(0, 6);
-    let h = mur.length ? `<section class="antenne int"><div class="antenne-texte" id="mur-texte"></div>
+    let h = mur.length ? `<section class="antenne int" id="antenne"><div class="rayon-tete"><h2>À l’antenne</h2><p class="infos">Les dernières productions</p></div><div class="antenne-texte" id="mur-texte"></div>
         <div class="mur" id="mur" tabindex="0" role="group" aria-roledescription="carrousel" aria-label="Les dernières productions. Flèches gauche et droite pour changer.">
           <div class="mur-scene">${mur.map((e, i) => `<a class="ecran-mur c-${e.type} f-${e.type}" data-i="${i}" href="${lien(e)}" aria-label="${esc(e.titre)}" draggable="false">${visuel(e)}${drapeau(e)}${e.type === 'gazette' ? '' : '<span class="jouer" aria-hidden="true">▶</span>'}</a>`).join('')}</div>
           <div class="mur-cmd"><button type="button" data-pas="-1" aria-label="Production précédente">←</button><span id="mur-compte"></span><button type="button" data-pas="1" aria-label="Production suivante">→</button></div>
         </div></section>`
-      : `<section class="antenne int"><div><h1>Dupanloup Média</h1><p class="chapo">Les émissions, les podcasts et la gazette des élèves arrivent ici.</p></div></section>`;
+      : `<section class="antenne int" id="antenne"><div class="vide-m"><b>Bientôt à l’antenne</b>Les émissions, les podcasts et la gazette des élèves arrivent ici.</div></section>`;
+    h = laUne(tous.length) + h;
     const compte = (n, un, des) => n ? `${n} ${n > 1 ? des : un}` : 'Bientôt';
     h += `<nav class="chaines int" aria-label="Choisir une chaîne">
       <a class="chaine c-emission" href="emissions.html"><span class="canal" aria-hidden="true">1</span><span class="combien">${compte(tout.emission.length, 'émission', 'émissions')}</span><h2>Émissions</h2><p>${CHAINES.emission.slogan}</p></a>
@@ -124,6 +147,9 @@ window.MEDIA = (function () {
     </section></div>`;
     zone.innerHTML = h;
     monterMur(mur);
+    // tant que la manchette est à l'écran, la barre n'a pas besoin de répéter le nom du site
+    const manchette = document.getElementById('manchette');
+    if (manchette && 'IntersectionObserver' in window) new IntersectionObserver(([x]) => document.body.classList.toggle('manchette-vue', x.isIntersecting), { rootMargin: '-70px 0px 0px 0px' }).observe(manchette.querySelector('.tete-journal'));
   }
 
   /* Le mur de la régie : les dernières productions en profondeur.
@@ -136,7 +162,7 @@ window.MEDIA = (function () {
     function ecrire() {
       const e = items[actif], C = CHAINES[e.type];
       texte.className = 'antenne-texte c-' + e.type;
-      texte.innerHTML = `<span class="pastille-c">${C.nom}</span><h1 aria-label="${esc(e.titre)}">${e.titre.split(/\s+/).map((m, k) => `<span class="mot" aria-hidden="true"><span style="--k:${k}">${esc(m)}</span></span>`).join(' ')}</h1>
+      texte.innerHTML = `<span class="pastille-c">${C.nom}</span><h3 class="titre-prod" aria-label="${esc(e.titre)}">${e.titre.split(/\s+/).map((m, k) => `<span class="mot" aria-hidden="true"><span style="--k:${k}">${esc(m)}</span></span>`).join(' ')}</h3>
         <p class="chapo">${esc(e.chapo)}</p><p class="infos">${infos(e)}</p>
         <div class="actions-m"><a class="btn-m" href="${lien(e)}">${enLigne(e) ? C.verbe : 'Découvrir'}</a><a class="btn-m creux" href="${C.page}">Toute la chaîne ${C.nom}</a></div>`;
       compte.textContent = `${actif + 1} sur ${items.length}`;
