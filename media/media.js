@@ -5,6 +5,8 @@
 (function () {
   let choix = null; try { choix = localStorage.getItem('media-effets'); } catch (e) {}
   if (choix === 'calme' || (!choix && matchMedia('(prefers-reduced-motion: reduce)').matches)) document.documentElement.classList.add('calme');
+  // la réfraction du verre (un filtre SVG derrière le panneau) n'existe que dans Chrome, Edge et leurs cousins
+  if (window.chrome || (navigator.userAgentData && navigator.userAgentData.brands.some(b => /Chromium/.test(b.brand)))) document.documentElement.classList.add('verre-liquide');
 })();
 window.MEDIA = (function () {
   const COULEUR = { emission: 'abricot', podcast: 'or', gazette: 'or' };
@@ -66,10 +68,14 @@ window.MEDIA = (function () {
   /* ---------- la barre et le pied, communs à toutes les pages ---------- */
   function habiller(page) {
     const nav = [['emission', 'emissions.html', 'Émissions'], ['podcast', 'radio.html', 'Radio'], ['gazette', 'gazette.html', 'Gazette'], ['formation', 'formation.html', 'Se former']];
+    document.body.insertAdjacentHTML('afterbegin', `<svg width="0" height="0" style="position:absolute" aria-hidden="true"><filter id="verre-liquide" x="-10%" y="-10%" width="120%" height="120%" color-interpolation-filters="sRGB"><feTurbulence type="fractalNoise" baseFrequency=".007 .011" numOctaves="2" seed="7" result="n"/><feGaussianBlur in="SourceGraphic" stdDeviation="7" result="b"/><feDisplacementMap in="b" in2="n" scale="60" xChannelSelector="R" yChannelSelector="G"/></filter></svg>`);
+    let entre = true; try { entre = !!sessionStorage.getItem('media-entree'); } catch (e) {}
+    if (page === 'accueil' && !entre && !document.documentElement.classList.contains('calme')) rideau();
     document.body.insertAdjacentHTML('afterbegin', `<div class="ambiance" aria-hidden="true"><i></i><i></i><i></i></div><div class="mire" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
     <header class="barre-media"><div class="barre-verre">
       <a class="marque" href="index.html"><img src="${CLUB_DIR}img/sigle-dupanloup.png" alt="" width="40" height="40"><span><b>Dupanloup Média</b><small>Le média des élèves, fabriqué au CDI</small></span></a>
       <nav class="chaines-nav" aria-label="Les chaînes">${nav.map(([c, h, t]) => `<a class="c-${c}" href="${h}"${page === c ? ' aria-current="page"' : ''}>${t}</a>`).join('')}</nav>
+      <button type="button" class="son-btn" id="son" aria-pressed="false" title="Allumer ou couper les sons du site"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span><span>Son</span></button>
       <button type="button" class="chercher" id="ouvrir-palette" aria-haspopup="dialog"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg><span>Chercher</span><kbd>Ctrl K</kbd></button>
     </div></header>
     <dialog class="palette" id="palette" aria-label="Chercher sur Dupanloup Média"><input type="search" id="palette-champ" placeholder="Une émission, un podcast, un module…" aria-label="Chercher" autocomplete="off"><ul id="palette-liste"></ul><p class="infos">Flèches haut et bas pour choisir, Entrée pour ouvrir, Échap pour fermer.</p></dialog>`);
@@ -78,6 +84,45 @@ window.MEDIA = (function () {
       <div><b>Les chaînes</b><ul><li><a href="emissions.html">Émissions</a></li><li><a href="radio.html">Radio</a></li><li><a href="gazette.html">Gazette</a></li><li><a href="formation.html">Se former au reportage</a></li></ul></div>
       <div><b>La rédaction</b><ul><li><a href="${CLUB_DIR}redaction.html">Salle de rédaction</a></li><li><a href="${CLUB_DIR}banc/">Banc de montage</a></li><li><a href="publier.html">Publier une production</a></li><li><a href="${CLUB_DIR}enseignant.html">Espace enseignant</a></li><li><button type="button" class="lien-m" id="effets"></button></li></ul></div>
     </div></footer>`);
+  }
+
+  /* ---------- le rideau : on entre sur le site comme on passe à l'antenne ----------
+   * Une fois par visite, sur l'accueil. Le clic choisit le son, ouvre le rideau et lance l'arrivée de la une
+   * (jusque-là en pause : classe « attente »). Les navigateurs n'autorisent le son qu'après ce geste. */
+  function rideau() {
+    const racine = document.documentElement; racine.classList.add('attente');
+    document.body.insertAdjacentHTML('beforeend', `<div class="rideau" id="rideau" role="dialog" aria-modal="true" aria-labelledby="rideau-titre">
+      <div class="rideau-pan g"></div><div class="rideau-pan d"></div><div class="lumieres" aria-hidden="true"><i></i><i></i><i></i></div>
+      <div class="rideau-carte verre-vif">
+        <img src="${CLUB_DIR}img/sigle-dupanloup.png" alt="" width="96" height="96">
+        <p class="surtitre">Collège Dupanloup · Boulogne</p>
+        <h2 id="rideau-titre">Dupanloup Média</h2>
+        <p>Le média des élèves, fabriqué au CDI.</p>
+        <div class="actions-m"><button type="button" class="btn-m" data-son="oui"><span class="eq" aria-hidden="true"><i></i><i></i><i></i><i></i></span>Entrer avec le son</button><button type="button" class="btn-m creux" data-son="non">Entrer sans le son</button></div>
+        <p class="infos">Le son se coupe à tout moment, en haut de la page.</p>
+      </div></div>`);
+    const r = document.getElementById('rideau');
+    function entrer(avecSon) {
+      if (r.classList.contains('ouvre')) return;
+      try { sessionStorage.setItem('media-entree', '1'); } catch (e) {}
+      if (window.SON) SON.regler(avecSon);
+      r.classList.add('ouvre'); setTimeout(() => racine.classList.remove('attente'), 480);
+      if (window.SON && avecSon) SON.jouer('ouvre');
+      ouverture(true, .5);
+      setTimeout(() => r.remove(), 1500);
+    }
+    r.querySelectorAll('[data-son]').forEach(b => b.onclick = () => entrer(b.dataset.son === 'oui'));
+    r.addEventListener('keydown', e => { if (e.key === 'Escape') entrer(false); });
+    r.querySelector('[data-son="oui"]').focus();
+  }
+  /* la bande-son de l'arrivée, calée sur les animations de la une (voir media.css) */
+  function ouverture(entiere, d) {
+    if (!window.SON || !SON.actif()) return;
+    SON.jouer('souffle', d);
+    if (entiere) { for (let k = 0; k < 14; k++) SON.jouer('frappe', d + .15 + k * .065); SON.jouer('cloche', d + 1.2); }
+    [0, 1, 2].forEach(i => SON.jouer('glisse', d + .5 + i * .2));
+    SON.jouer('tampon', d + 2.5);
+    if (entiere) SON.jouer('jingle', d + 2.9);
   }
 
   /* ---------- la une : la manchette du journal, les trois volets du collège, l'édito ---------- */
@@ -96,11 +141,11 @@ window.MEDIA = (function () {
     </header>
     <section class="une int" aria-labelledby="titre-edito">
       <figure class="photo-une">
-        <div class="triptyque">${VOLETS.map(([f, alt, leg], i) => `<div class="volet" style="--i:${i}"><div class="volet-in"><img src="${CLUB_DIR}img/${f}" alt="${alt}" width="270" height="720"><span class="legende-volet">${leg}</span></div></div>`).join('')}
+        <div class="triptyque">${VOLETS.map(([f, alt, leg], i) => `<div class="volet" style="--i:${i}"><div class="volet-in"><img src="${CLUB_DIR}img/${f}" alt="${alt}" width="270" height="720"><span class="legende-volet">${leg}</span><i class="reflet" aria-hidden="true"></i></div></div>`).join('')}
           <span class="tampon grand tampon-une" aria-hidden="true">À<br>l’antenne</span></div>
         <figcaption>Le collège Dupanloup, à Boulogne. Photos parues à la une de La Gazette de Dupanloup, n° 1, mai 2026.</figcaption>
       </figure>
-      <div class="edito">
+      <div class="edito verre-vif">
         <p class="surtitre">Édito</p>
         <h2 id="titre-edito">Ici, ce sont les élèves qui font l’info</h2>
         <p class="chapo">Émissions, podcasts, gazette : tout est préparé, enregistré et monté au CDI par les reporters du collège.</p>
@@ -115,13 +160,17 @@ window.MEDIA = (function () {
     const tout = { emission: em || [], podcast: po || [], gazette: ga || [] };
     const tous = [...tout.emission, ...tout.podcast, ...tout.gazette].sort((a, b) => String(b.date).localeCompare(String(a.date)));
     const mur = tous.slice(0, 6);
-    let h = mur.length ? `<section class="antenne int" id="antenne"><div class="rayon-tete"><h2>À l’antenne</h2><p class="infos">Les dernières productions</p></div><div class="antenne-texte" id="mur-texte"></div>
+    let h = mur.length ? `<section class="plateau" id="antenne"><div class="lumieres" aria-hidden="true"><i></i><i></i><i></i></div><div class="antenne int"><div class="rayon-tete"><h2>À l’antenne</h2><p class="infos">Les dernières productions</p></div><div class="antenne-texte" id="mur-texte"></div>
         <div class="mur" id="mur" tabindex="0" role="group" aria-roledescription="carrousel" aria-label="Les dernières productions. Flèches gauche et droite pour changer.">
           <div class="mur-scene">${mur.map((e, i) => `<a class="ecran-mur c-${e.type} f-${e.type}" data-i="${i}" href="${lien(e)}" aria-label="${esc(e.titre)}" draggable="false">${visuel(e)}${drapeau(e)}${e.type === 'gazette' ? '' : '<span class="jouer" aria-hidden="true">▶</span>'}</a>`).join('')}</div>
           <div class="mur-cmd"><button type="button" data-pas="-1" aria-label="Production précédente">←</button><span id="mur-compte"></span><button type="button" data-pas="1" aria-label="Production suivante">→</button></div>
-        </div></section>`
+        </div></div></section>`
       : `<section class="antenne int" id="antenne"><div class="vide-m"><b>Bientôt à l’antenne</b>Les émissions, les podcasts et la gazette des élèves arrivent ici.</div></section>`;
-    h = laUne(tous.length) + h;
+    const flash = [...tous.slice(0, 4).map(e => `${e.exemple ? 'Exemple' : 'Vient de paraître'} : ${e.titre}`), 'Un bon reporter vérifie toujours ses sources', 'Au micro, personne ne parle sans son accord', 'Un montage ne fait jamais dire à quelqu’un ce qu’il n’a pas dit'];
+    const mots = ['Émissions', 'Radio', 'Gazette', 'Se former'];
+    h = `<div class="flash" aria-label="Dernière minute"><span class="flash-etiquette">Dernière minute</span><div class="flash-piste"><div class="flash-defile" style="animation-duration:${Math.max(36, flash.join('').length / 7)}s">${[...flash, ...flash].map(t => `<span>${esc(t)}</span>`).join('')}</div></div></div>`
+      + laUne(tous.length) + h
+      + `<div class="defile-geant" aria-hidden="true"><div class="defile-piste">${[...mots, ...mots, ...mots, ...mots].map((m, i) => `<span class="${i % 2 ? 'plein' : ''}">${m}</span>`).join('')}</div></div>`;
     const compte = (n, un, des) => n ? `${n} ${n > 1 ? des : un}` : 'Bientôt';
     h += `<nav class="chaines int" aria-label="Choisir une chaîne">
       <a class="chaine c-emission" href="emissions.html"><span class="canal" aria-hidden="true">1</span><span class="combien">${compte(tout.emission.length, 'émission', 'émissions')}</span><h2>Émissions</h2><p>${CHAINES.emission.slogan}</p></a>
@@ -147,6 +196,7 @@ window.MEDIA = (function () {
     </section></div>`;
     zone.innerHTML = h;
     monterMur(mur);
+    if (!document.documentElement.classList.contains('attente')) ouverture(false, .05);
     // tant que la manchette est à l'écran, la barre n'a pas besoin de répéter le nom du site
     const manchette = document.getElementById('manchette');
     if (manchette && 'IntersectionObserver' in window) new IntersectionObserver(([x]) => document.body.classList.toggle('manchette-vue', x.isIntersecting), { rootMargin: '-70px 0px 0px 0px' }).observe(manchette.querySelector('.tete-journal'));
@@ -177,7 +227,7 @@ window.MEDIA = (function () {
     }
     function aller(i) {
       i = Math.max(0, Math.min(items.length - 1, i)); if (i === actif) return;
-      actif = i; placer();
+      actif = i; placer(); if (window.SON) SON.jouer('glisse');
       if (document.documentElement.classList.contains('calme')) return ecrire();
       texte.classList.add('change'); setTimeout(() => { ecrire(); texte.classList.remove('change'); }, 170);
     }
