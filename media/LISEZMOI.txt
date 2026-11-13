@@ -49,3 +49,18 @@ LA SCÈNE (13 novembre 2026)
 - Le plateau : la section « À l'antenne » sur fond bleu marine, avec des lumières or et abricot derrière le verre.
 - Le bandeau « Dernière minute », le grand défilé de mots (il accélère avec le défilement), la mire qui sert de jauge de lecture.
 En mode calme : ni rideau, ni son, ni défilé.
+
+LE VERRE 2026 (13 novembre 2026)
+Dernière couche de media.css : la barre devient une capsule de verre flottante (une « lentille » glisse sous le lien survolé),
+les boutons des pastilles, les cartes et les panneaux des tuiles de verre arrondies dont le bord s'allume près du pointeur,
+les trois chaînes des tuiles de verre coloré derrière lesquelles passe le grand défilé. Une lumière suit le pointeur sous le verre.
+Tout cela est dans fx.js (lentille, lumière) et dans la dernière partie de media.css.
+
+LA FINITION (13 novembre 2026), d'après le plugin audit-suite (skills web-animation-design et make-interfaces-feel-better)
+- Courbes : plus de rebond sur l'interface ; ce qui entre ou répond à un geste utilise --sortie, ce qui se déplace --va-vient.
+- Durées : les réponses au survol et au clic passent sous 200 ms ; la recherche s'ouvre en 200 ms, se ferme en 150 ms,
+  part du bouton, et ne s'anime pas quand on l'ouvre au clavier.
+- Performance : la position du pointeur n'est plus posée sur toute la page mais sur les blocs qui s'en servent ;
+  flous d'arrière-plan ramenés à 20 px au plus ; plus de couche graphique réservée en permanence aux tuiles.
+- Tactile : aucun effet de survol sur téléphone et tablette.
+- Détails : rayons concentriques, liseré sur les images, chiffres à largeur fixe, titres équilibrés, cibles de 40 px au moins.
