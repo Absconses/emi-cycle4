@@ -38,3 +38,16 @@ LA UNE (13 novembre 2026) : retour à la première charte, celle du site du club
   qui montent l'une après l'autre, puis l'édito sur verre et le tampon. Tout est dans laUne() de media.js.
 - media.css a été réécrit d'un seul tenant ; les couleurs se règlent dans les premières lignes.
 - Les aperçus des podcasts sont en couleurs naturelles (plus de filtre).
+
+LE GRAND JEU (13 novembre 2026)
+- La porte : une fois par visite, l'accueil demande « Entrer avec le son » ou « sans le son ». Le choix est gardé
+  dans le navigateur ; le bouton aux quatre barres, dans la barre du haut, le change à tout moment.
+- Les sons : fabriqués par le navigateur (fx.js, objet SON), aucun fichier audio. L'indicatif, les touches du titre,
+  les trois photos, le tampon, un tic au survol, une touche au clic, un souffle quand le mur tourne.
+  Rien ne sonne si le visiteur n'a pas choisi le son, ni en mode calme.
+- Le verre liquide : le fond se déforme derrière la barre, l'édito, le dock et la loupe (filtre SVG #verre-liquide).
+  Seulement sur Chrome, Edge et les navigateurs de la même famille ; ailleurs, verre dépoli simple.
+- Le bandeau qui défile sous la une, le studio bleu nuit autour du mur, la loupe et l'onde au clic,
+  les boutons aimantés, et la scène qui bouge quand on incline le téléphone.
+- Le régulateur : fx.js mesure le nombre d'images par seconde quelques secondes après l'arrivée. En dessous de 32,
+  il retire le verre liquide et le fond vivant, puis, si cela ne suffit pas, les grands flous. Le niveau vaut pour la visite.
