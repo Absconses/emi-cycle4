@@ -64,3 +64,12 @@ LA FINITION (13 novembre 2026), d'après le plugin audit-suite (skills web-anima
   flous d'arrière-plan ramenés à 20 px au plus ; plus de couche graphique réservée en permanence aux tuiles.
 - Tactile : aucun effet de survol sur téléphone et tablette.
 - Détails : rayons concentriques, liseré sur les images, chiffres à largeur fixe, titres équilibrés, cibles de 40 px au moins.
+
+L'UNITÉ (13 novembre 2026)
+- redaction.html, montage.html, enseignant.html : les ateliers du club s'ouvrent dans un cadre, sous la barre du média
+  (MEDIA.atelier dans media.js). Les pages du dossier club/ ne sont pas modifiées ; le média leur retire leur barre,
+  rend leur fond transparent et arrondit leurs boutons au chargement.
+- L'accueil gagne la section « Un média encadré » (validation, hébergement, prénoms, aucune donnée).
+- Les productions d'exemple sont étiquetées « Maquette ».
+- Toutes les pages du média portent « noindex » : les moteurs de recherche ne les référencent pas.
+  Pour rendre le site trouvable une fois le projet validé, retirer la ligne <meta name="robots" …> de chaque page.

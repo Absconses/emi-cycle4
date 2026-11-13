@@ -50,7 +50,7 @@ window.MEDIA = (function () {
         .sort((a, b) => String(b.date).localeCompare(String(a.date)) || (b.numero || 0) - (a.numero || 0));
     } catch (e) { return null; }
   }
-  const drapeau = e => e.exemple ? '<span class="drapeau">Exemple</span>' : (enLigne(e) ? '' : '<span class="drapeau">Bientôt</span>');
+  const drapeau = e => e.exemple ? '<span class="drapeau">Maquette</span>' : (enLigne(e) ? '' : '<span class="drapeau">Bientôt</span>');
 
   const visuel = e => e.type === 'gazette'
     ? `<div class="une-gazette"><b>La Gazette</b><span>n° ${esc(e.numero || '')}, ${esc(dateFr(e.date))}</span>${e.image ? `<img src="${esc(img(e.image))}" alt="" loading="lazy" style="object-fit:cover">` : ''}</div>`
@@ -82,7 +82,7 @@ window.MEDIA = (function () {
     document.body.insertAdjacentHTML('beforeend', `<footer class="pied-media"><div class="int">
       <div><b>Dupanloup Média</b><p>Les émissions, les podcasts et la gazette des élèves du collège Dupanloup, à Boulogne. Tout est préparé, enregistré et monté au CDI.</p><p>Aucun compte, aucune publicité. Les sons et les vidéos sont hébergés par l’Éducation nationale.</p></div>
       <div><b>Les chaînes</b><ul><li><a href="emissions.html">Émissions</a></li><li><a href="radio.html">Radio</a></li><li><a href="gazette.html">Gazette</a></li><li><a href="formation.html">Se former au reportage</a></li></ul></div>
-      <div><b>La rédaction</b><ul><li><a href="${CLUB_DIR}redaction.html">Salle de rédaction</a></li><li><a href="${CLUB_DIR}banc/">Banc de montage</a></li><li><a href="publier.html">Publier une production</a></li><li><a href="${CLUB_DIR}enseignant.html">Espace enseignant</a></li><li><button type="button" class="lien-m" id="effets"></button></li></ul></div>
+      <div><b>La rédaction</b><ul><li><a href="redaction.html">Salle de rédaction</a></li><li><a href="montage.html">Banc de montage</a></li><li><a href="publier.html">Publier une production</a></li><li><a href="enseignant.html">Espace enseignant</a></li><li><button type="button" class="lien-m" id="effets"></button></li></ul></div>
     </div></footer>`);
   }
 
@@ -166,7 +166,7 @@ window.MEDIA = (function () {
           <div class="mur-cmd"><button type="button" data-pas="-1" aria-label="Production précédente">←</button><span id="mur-compte"></span><button type="button" data-pas="1" aria-label="Production suivante">→</button></div>
         </div></div></section>`
       : `<section class="antenne int" id="antenne"><div class="vide-m"><b>Bientôt à l’antenne</b>Les émissions, les podcasts et la gazette des élèves arrivent ici.</div></section>`;
-    const flash = [...tous.slice(0, 4).map(e => `${e.exemple ? 'Exemple' : 'Vient de paraître'} : ${e.titre}`), 'Un bon reporter vérifie toujours ses sources', 'Au micro, personne ne parle sans son accord', 'Un montage ne fait jamais dire à quelqu’un ce qu’il n’a pas dit'];
+    const flash = [...tous.slice(0, 4).map(e => `${e.exemple ? 'Maquette' : 'Vient de paraître'} : ${e.titre}`), 'Un bon reporter vérifie toujours ses sources', 'Au micro, personne ne parle sans son accord', 'Un montage ne fait jamais dire à quelqu’un ce qu’il n’a pas dit'];
     const mots = ['Émissions', 'Radio', 'Gazette', 'Se former'];
     h = `<div class="flash" aria-label="Dernière minute"><span class="flash-etiquette">Dernière minute</span><div class="flash-piste"><div class="flash-defile" style="animation-duration:${Math.max(36, flash.join('').length / 7)}s">${[...flash, ...flash].map(t => `<span>${esc(t)}</span>`).join('')}</div></div></div>`
       + laUne(tous.length) + h
@@ -189,6 +189,13 @@ window.MEDIA = (function () {
       const tronc = mods.filter(m => m.type === 'livre' && m.partie === 'A');
       total = tronc.length; nums = tronc.map(m => ({ n: m.num, ok: !!(prog[m.id] && prog[m.id].termine) })); faits = nums.filter(x => x.ok).length;
     } catch (e) { nums = nums.map(n => ({ n, ok: false })); }
+    h += `<section class="rayon int garanties" aria-labelledby="titre-garanties"><div class="rayon-tete"><h2 id="titre-garanties">Un média encadré</h2><p class="infos">Les règles de la maison</p></div>
+      <div class="outils-m">
+        <div class="bloc-m garantie"><h3>Rien ne paraît sans validation</h3><p>Chaque émission, chaque podcast et chaque numéro est vérifié au CDI, puis validé par le chef d’établissement avant d’être publié.</p></div>
+        <div class="bloc-m garantie"><h3>Les voix et les images restent à l’Éducation nationale</h3><p>Les sons et les vidéos sont hébergés sur PodEduc, la plateforme du ministère. Le site n’en garde aucune copie.</p></div>
+        <div class="bloc-m garantie"><h3>Des prénoms, jamais de noms</h3><p>Ni nom de famille, ni classe. Chaque élève enregistré ou filmé a une autorisation signée de ses parents.</p></div>
+        <div class="bloc-m garantie"><h3>Ni compte, ni publicité</h3><p>Le site ne demande aucune inscription et ne recueille aucune donnée. La progression d’un élève reste dans son navigateur.</p></div>
+      </div></section>`;
     h += `<div class="int"><section class="bande-former"><div><h2>Toi aussi, passe à l’antenne</h2>
         <p>Dix modules pour apprendre le métier : trouver une info, écrire, interviewer, enregistrer, filmer, monter. Les trois premiers te donnent ta carte de presse.</p>
         <a class="btn-m" href="formation.html">${faits ? 'Reprendre ma formation' : 'Commencer la formation'}</a></div>
@@ -251,9 +258,9 @@ window.MEDIA = (function () {
     const rubriques = [...new Set(liste.map(e => e.rubrique).filter(Boolean))];
     let filtre = '';
     const extra = type === 'gazette'
-      ? `<div class="int" style="margin-top:36px"><div class="outils-m"><a class="outil" href="${CLUB_DIR}redaction.html"><b>Le prochain numéro s’écrit en ce moment</b><span>Entre dans la salle de rédaction, choisis ton article et écris-le avec ton équipe.</span></a><a class="outil" href="module.html?m=m10-mettre-en-page"><b>Apprendre à mettre en page</b><span>Le module 10 t’apprend à passer d’un texte à une page de journal.</span></a></div></div>`
+      ? `<div class="int" style="margin-top:36px"><div class="outils-m"><a class="outil" href="redaction.html"><b>Le prochain numéro s’écrit en ce moment</b><span>Entre dans la salle de rédaction, choisis ton article et écris-le avec ton équipe.</span></a><a class="outil" href="module.html?m=m10-mettre-en-page"><b>Apprendre à mettre en page</b><span>Le module 10 t’apprend à passer d’un texte à une page de journal.</span></a></div></div>`
       : type === 'emission'
-        ? `<div class="int" style="margin-top:36px"><div class="outils-m"><a class="outil" href="${CLUB_DIR}banc/"><b>Le banc de montage</b><span>Entraîne-toi à monter un reportage sur le cross : dérushage, coupes, titres et son.</span></a><a class="outil" href="module.html?m=m9-monter-une-emission"><b>Apprendre à monter une émission</b><span>Le module 9 : le conducteur, les rôles, le plateau, la vérification.</span></a></div></div>`
+        ? `<div class="int" style="margin-top:36px"><div class="outils-m"><a class="outil" href="montage.html"><b>Le banc de montage</b><span>Entraîne-toi à monter un reportage sur le cross : dérushage, coupes, titres et son.</span></a><a class="outil" href="module.html?m=m9-monter-une-emission"><b>Apprendre à monter une émission</b><span>Le module 9 : le conducteur, les rôles, le plateau, la vérification.</span></a></div></div>`
         : `<div class="int" style="margin-top:36px"><div class="outils-m"><a class="outil" href="module.html?m=m7-le-podcast"><b>Apprendre à faire un podcast</b><span>Le module 7 : préparer, enregistrer et monter ta chronique.</span></a><a class="outil" href="module.html?m=m5-l-art-de-l-interview"><b>L’art de l’interview</b><span>Le module 5 : préparer ses questions et écouter les réponses.</span></a></div></div>`;
     function dessiner() {
       const vus = liste.filter(e => !filtre || e.rubrique === filtre);
@@ -278,11 +285,11 @@ window.MEDIA = (function () {
       const local = pdfLocal(e.pdf), dist = pdfLien(e.pdf);
       lecteur = local ? `<div class="lecteur-m pdf"><iframe src="${esc(local)}" title="${esc(e.titre)}, à feuilleter"></iframe></div><p><a class="btn-m" href="${esc(local)}" target="_blank" rel="noopener">Ouvrir le numéro en grand</a></p>`
         : dist ? `<div class="lecteur-m"><div class="attente-m">${e.image ? `<img src="${esc(img(e.image))}" alt="">` : ''}<div><b>Le numéro est prêt</b><a class="btn-m" href="${esc(dist)}" target="_blank" rel="noopener">Lire le numéro</a></div></div></div>`
-        : `<div class="lecteur-m"><div class="attente-m">${e.image ? `<img src="${esc(img(e.image))}" alt="">` : ''}<div><b>${e.exemple ? 'Numéro d’exemple' : 'Bientôt à lire ici'}</b>Le PDF de ce numéro n’est pas encore en ligne.</div></div></div>`;
+        : `<div class="lecteur-m"><div class="attente-m">${e.image ? `<img src="${esc(img(e.image))}" alt="">` : ''}<div><b>${e.exemple ? 'Numéro de démonstration' : 'Bientôt à lire ici'}</b>Le PDF de ce numéro n’est pas encore en ligne.</div></div></div>`;
     } else {
       const src = podeduc(e.podeduc);
       lecteur = `<div class="lecteur-m">${src ? `<iframe src="${esc(src)}" title="Lecteur PodEduc : ${esc(e.titre)}" allowfullscreen loading="lazy"></iframe>`
-        : `<div class="attente-m">${e.image ? `<img src="${esc(img(e.image))}" alt="">` : ''}<div><b>${e.exemple ? 'Production d’exemple' : 'Bientôt à l’antenne'}</b>${e.exemple ? 'Le lecteur PodEduc s’affichera ici.' : (e.type === 'emission' ? 'La vidéo n’est pas encore en ligne.' : 'Le son n’est pas encore en ligne.')}${e.podeduc && !src ? '<br><small>Le lien indiqué n’est pas un lien PodEduc : il n’est pas affiché.</small>' : ''}</div></div>`}</div>`;
+        : `<div class="attente-m">${e.image ? `<img src="${esc(img(e.image))}" alt="">` : ''}<div><b>${e.exemple ? 'Maquette de démonstration' : 'Bientôt à l’antenne'}</b>${e.exemple ? 'Le lecteur PodEduc s’affichera ici.' : (e.type === 'emission' ? 'La vidéo n’est pas encore en ligne.' : 'Le son n’est pas encore en ligne.')}${e.podeduc && !src ? '<br><small>Le lien indiqué n’est pas un lien PodEduc : il n’est pas affiché.</small>' : ''}</div></div>`}</div>`;
     }
     const liste = (titre, lignes) => (lignes || []).length ? `<details class="depliant"><summary>${titre}</summary><div>${lignes.map(p => `<p>${esc(p)}</p>`).join('')}</div></details>` : '';
     zone.innerHTML = `<div class="int c-${e.type}"><div class="fiche-m">
@@ -304,11 +311,45 @@ window.MEDIA = (function () {
       <a class="retour-m" href="${C.page}">Revenir à la chaîne ${C.nom}</a></div>`;
   }
 
+  /* ---------- les ateliers du club (salle de rédaction, banc de montage, espace enseignant) ----------
+   * Les pages du club ne sont pas modifiées : elles s'ouvrent dans un cadre, sous la barre du média.
+   * Comme elles viennent du même site, on peut leur retirer leur propre barre, rendre leur fond transparent
+   * et arrondir leurs boutons, pour qu'elles aient l'air d'en faire partie. */
+  const ATELIERS = {
+    redaction: { titre: 'La salle de rédaction', texte: 'Le chemin de fer du prochain numéro de la gazette, et un pad pour écrire chaque article.', src: CLUB_DIR + 'redaction.html', tete: true },
+    montage: { titre: 'Le banc de montage', src: CLUB_DIR + 'banc/', plein: true },
+    enseignant: { titre: 'Espace enseignant', src: CLUB_DIR + 'enseignant.html' },
+  };
+  const HABIT = `html, body { background: transparent !important; }
+    .barre, .retour-accueil { display: none !important; }
+    .btn, .cta, .lien-btn, .etapes button, .filtres select { border-radius: 999px !important; }
+    .btn, .cta { box-shadow: inset 0 1px 0 rgba(255,255,255,.4), 0 12px 24px -12px rgba(0,1,119,.75) !important; }
+    .carte, .boite, .chef, .compteur, .depot, .info, .panneau, .tableau-zone, .apercu, .pad, .moniteur, details.pourquoi { border-radius: 18px !important; }
+    .carte, .boite, .chef, .compteur, .depot, .panneau { background: rgba(255,253,247,.72) !important; border-color: rgba(255,255,255,.9) !important; box-shadow: inset 0 1px 0 #fff, 0 24px 48px -26px rgba(0,1,119,.5) !important; }
+    .moniteur, .tableau-zone, .pad { overflow: hidden; }
+    input, select, textarea { border-radius: 12px !important; }`;
+  function atelier(nom) {
+    const A = ATELIERS[nom], zone = document.getElementById('zone'); if (!A) return;
+    habiller('atelier'); document.title = A.titre + ' · Dupanloup Média';
+    zone.innerHTML = `${A.tete ? `<div class="int"><header class="tete-chaine"><h1>${A.titre}</h1><p>${A.texte}</p></header></div>` : ''}<iframe class="cadre${A.plein ? ' plein' : ''}" id="cadre" title="${A.titre}" src="${A.src}"></iframe>`;
+    const cadre = document.getElementById('cadre');
+    cadre.addEventListener('load', () => {
+      try {
+        const d = cadre.contentDocument, style = d.createElement('style'); style.textContent = HABIT; d.head.appendChild(style);
+        if (!A.plein) { const ajuster = () => { cadre.style.height = d.documentElement.scrollHeight + 'px'; }; new ResizeObserver(ajuster).observe(d.body); ajuster(); }
+        // un lien vers la une du club ramène à l'accueil du média
+        d.addEventListener('click', e => { const a = e.target.closest && e.target.closest('a[href]'); if (!a) return; const h = a.getAttribute('href');
+          if (h === 'index.html' || h === '../index.html' || h === '../') { e.preventDefault(); location.href = 'index.html'; } });
+      } catch (e) {}
+      cadre.classList.add('pret');
+    });
+  }
+
   function demarrer() {
     const page = document.body.dataset.page, zone = document.getElementById('zone');
     habiller(page);
     if (page === 'accueil') accueil(zone);
     else if (CHAINES[page]) chaine(zone, page);
   }
-  return { demarrer, habiller, esc, img, charger, lien, CHAINES, CLUB_DIR };
+  return { demarrer, atelier, habiller, esc, img, charger, lien, CHAINES, CLUB_DIR };
 })();

@@ -776,3 +776,16 @@ p, li, figcaption { text-wrap: pretty; }
   .chaine:hover h2::after { opacity: 0; }
   .volet:hover .reflet { animation: none; }
 }
+
+
+/* ---------- Les ateliers du club, dans l'habillage du média ---------- */
+.cadre { display: block; width: 100%; min-height: 70vh; border: 0; background: transparent; opacity: 0; transition: opacity .3s ease-out; }
+.cadre.pret { opacity: 1; }
+.cadre.plein { height: calc(100dvh - 92px); min-height: 620px; margin-top: 10px; }
+@media (max-width: 759px) { .cadre.plein { height: calc(100dvh - 170px); } }
+/* ---------- Les garanties ---------- */
+.garanties .outils-m { grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
+.garantie { padding: 22px 22px 24px; }
+.garantie h3 { font-size: 22px; line-height: 1.12; margin-bottom: 10px; padding-top: 14px; border-top: 4px solid var(--or); }
+.garantie p { margin: 0; color: var(--encre-2); font-size: 15.5px; line-height: 1.5; }
+@supports (animation-timeline: view()) { html:not(.calme) .garantie { animation: surgir linear both; animation-timeline: view(); animation-range: entry 0% entry 55%; } }

@@ -198,7 +198,7 @@
       { t: 'Accueil', s: 'Page', h: 'index.html' }, { t: 'Émissions', s: 'Chaîne', h: 'emissions.html', c: 'emission' }, { t: 'Radio', s: 'Chaîne', h: 'radio.html', c: 'podcast' },
       { t: 'Gazette', s: 'Chaîne', h: 'gazette.html', c: 'gazette' }, { t: 'Se former : devenir reporter', s: 'Formation', h: 'formation.html', c: 'formation' },
       { t: 'Ma carte de presse et mon bilan', s: 'Formation', h: 'formation.html#bilan', c: 'formation' }, { t: 'Publier une production', s: 'Rédaction', h: 'publier.html' },
-      { t: 'Salle de rédaction', s: 'Rédaction', h: M.CLUB_DIR + 'redaction.html' }, { t: 'Banc de montage', s: 'Rédaction', h: M.CLUB_DIR + 'banc/' }];
+      { t: 'Salle de rédaction', s: 'Rédaction', h: 'redaction.html' }, { t: 'Banc de montage', s: 'Rédaction', h: 'montage.html' }, { t: 'Espace enseignant', s: 'Rédaction', h: 'enseignant.html' }];
     const noms = { emission: 'Émission', podcast: 'Podcast', gazette: 'Gazette' };
     const prods = (await Promise.all(['emission', 'podcast', 'gazette'].map(M.charger))).flatMap(l => l || [])
       .map(e => ({ t: e.titre, s: noms[e.type], h: M.lien(e), c: e.type, plus: [e.chapo, e.rubrique, (e.equipe || []).map(m => m.prenom).join(' ')].join(' ') }));
