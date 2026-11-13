@@ -15,15 +15,18 @@
 
   /* ---------- la lumière d'ambiance, le relief et la lueur suivent le pointeur ---------- */
   if (souris) {
-    let attente = false, dernier = null;
+    let attente = false, dernier = null, ecoutent = [], lusA = -1e4;
     const RELIEF = '.chaine, .mod, .outil, .carte-m', LUEUR = RELIEF + ', .bloc-m';
     const lacher = el => { if (el) { el.style.removeProperty('--rx'); el.style.removeProperty('--ry'); } };
     document.addEventListener('pointermove', e => {
       if (attente || calme()) return; attente = true;
       requestAnimationFrame(() => {
         attente = false;
-        racine.style.setProperty('--px', (e.clientX / innerWidth * 2 - 1).toFixed(3));
-        racine.style.setProperty('--py', (e.clientY / innerHeight * 2 - 1).toFixed(3));
+        // la position du pointeur n'est donnée qu'aux quelques blocs qui s'en servent : posée sur la racine,
+        // elle obligerait le navigateur à recalculer toute la page à chaque image
+        const px = (e.clientX / innerWidth * 2 - 1).toFixed(3), py = (e.clientY / innerHeight * 2 - 1).toFixed(3);
+        if (e.timeStamp - lusA > 800) { lusA = e.timeStamp; ecoutent = document.querySelectorAll('.ambiance, .lumieres, .triptyque, .mur, .verre-vif, .antenne-texte'); }
+        for (const el of ecoutent) { el.style.setProperty('--px', px); el.style.setProperty('--py', py); }
         const el = e.target.closest && e.target.closest(LUEUR);
         if (el !== dernier) { lacher(dernier); dernier = el; }
         if (!el) return;
@@ -211,10 +214,10 @@
     choix = Math.min(choix, Math.max(0, vus.length - 1));
     liste.innerHTML = vus.length ? vus.map((x, i) => `<li aria-selected="${i === choix}">${x.html}</li>`).join('') : '<li><a><b>Rien trouvé</b><span>Essaie un autre mot</span></a></li>';
   }
-  async function ouvrir() { if (!palette || palette.open) return; palette.showModal(); champ.value = ''; choix = 0; await preparer(); montrer(); champ.focus(); }
+  async function ouvrir(auClavier) { if (!palette || palette.open) return; palette.classList.toggle('instant', auClavier === true); palette.showModal(); champ.value = ''; choix = 0; await preparer(); montrer(); champ.focus(); }
   if (palette) {
-    document.getElementById('ouvrir-palette').onclick = ouvrir;
-    addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); ouvrir(); } });
+    document.getElementById('ouvrir-palette').onclick = () => ouvrir(false);
+    addEventListener('keydown', e => { if ((e.ctrlKey || e.metaKey) && e.key.toLowerCase() === 'k') { e.preventDefault(); ouvrir(true); } });
     champ.addEventListener('input', () => { choix = 0; if (index) montrer(); });
     champ.addEventListener('keydown', e => {
       const n = liste.querySelectorAll('li a[href]').length;

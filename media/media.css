@@ -92,7 +92,6 @@ body.manchette-vue .marque { opacity: 0; visibility: hidden; }
 
 /* ---------- La recherche ---------- */
 .palette { width: min(640px, calc(100vw - 24px)); margin-top: 12vh; padding: 14px; color: var(--encre); background: var(--verre-fort); backdrop-filter: var(--flou); -webkit-backdrop-filter: var(--flou); border: 1.5px solid var(--filet); border-radius: 2px; box-shadow: 8px 8px 0 var(--or), 0 40px 90px -30px rgba(0, 1, 119, .6); }
-.palette[open] { animation: ouvrir .28s var(--ressort); }
 @keyframes ouvrir { from { opacity: 0; scale: .95; translate: 0 -14px; } }
 .palette::backdrop { background: rgba(252, 236, 208, .55); backdrop-filter: blur(6px); }
 .palette input { width: 100%; font: 400 21px/1.2 var(--titre); color: var(--marine); background: var(--blanc); border: 1.5px solid var(--filet); border-radius: 2px; padding: 13px 14px; }
@@ -690,3 +689,90 @@ html.calme .chaines { margin-top: 0; }
 html.calme .chaine { background: var(--c); }
 
 .pastille-c { border-radius: 999px; padding: 7px 12px; }
+
+
+/* =====================================================================
+ * LA FINITION (13 novembre 2026), d'après les skills du plugin audit-suite :
+ * « web-animation-design » (courbes, durées, performance) et « make-interfaces-feel-better » (détails).
+ * ===================================================================== */
+:root {
+  --sortie: cubic-bezier(.23, 1, .32, 1);        /* ease-out-quint : ce qui entre, sort, ou répond à un geste */
+  --va-vient: cubic-bezier(.645, .045, .355, 1); /* ease-in-out-cubic : ce qui est déjà à l'écran et se déplace */
+  /* plus de rebond sur l'interface : le ressort ne dépasse plus sa cible (les tampons, eux, gardent leur coup) */
+  --ressort: var(--sortie);
+  /* un flou d'arrière-plan au-delà de 20 px coûte cher, surtout sur de vieux postes */
+  --flou: blur(18px) saturate(1.5);
+  --v-flou: blur(18px) saturate(1.9) brightness(1.04);
+}
+
+/* ---------- le texte ---------- */
+body { -webkit-font-smoothing: antialiased; -moz-osx-font-smoothing: grayscale; }
+h1, h2, h3 { text-wrap: balance; }
+p, li, figcaption { text-wrap: pretty; }
+#mur-compte, .conducteur time, .manchette-infos, .etat-m, .carte-m .infos, .combien { font-variant-numeric: tabular-nums; }
+
+/* ---------- les surfaces ---------- */
+/* rayons concentriques : le rayon intérieur = le rayon extérieur moins la marge */
+.carte-m .vignette { border-radius: 18px; }
+.palette input { border-radius: 16px; }
+.palette li a { border-radius: 16px; }
+.etape-m h2 i { border-radius: 9px; }
+.carte-m .numero, .mod .num { border-radius: 0 0 14px 0; }
+@media (max-width: 759px) { .chaines-nav a, .lentille { border-radius: 25px; } }
+/* un liseré discret donne la même profondeur à toutes les images */
+.carte-m .vignette > img, .mod .vignette img, .ecran-mur > img, .attente-m img { outline: 1px solid rgba(0, 1, 119, .12); outline-offset: -1px; }
+/* une cible d'au moins 40 px pour tout ce qui se touche */
+.chaines-nav a, .son-btn, .chercher, .filtres-m button { min-height: 40px; }
+.rayon-tete a, .retour-m, .pied-media a, .pied-media .lien-m { position: relative; }
+.rayon-tete a::after, .retour-m::after, .pied-media a::after, .pied-media .lien-m::after { content: ""; position: absolute; inset: -12px -8px; }
+
+/* ---------- le mouvement ---------- */
+/* (seulement sur grand écran : sur téléphone, un filtre sur la barre décrocherait le dock du bas de l'écran) */
+@media (min-width: 760px) { .barre-verre { backdrop-filter: blur(20px) saturate(1.9) brightness(1.05); -webkit-backdrop-filter: blur(20px) saturate(1.9) brightness(1.05); } }
+.verre-vif, .plateau .antenne-texte { backdrop-filter: blur(20px) saturate(1.8) brightness(1.05); -webkit-backdrop-filter: blur(20px) saturate(1.8) brightness(1.05); }
+/* une couche graphique réservée seulement à ce qui bouge sans arrêt */
+.chaine, .mod, .outil, .carte-m, .carte-m .vignette { will-change: auto; }
+/* réponses au geste : rapides, sans rebond */
+.btn-m { position: relative; transition: translate .16s var(--sortie), box-shadow .16s ease, scale .1s var(--sortie); }
+.carte-m, .mod, .outil, .chaine { transition: transform .2s var(--sortie), translate .2s var(--sortie), box-shadow .2s ease, scale .12s var(--sortie); }
+.carte-m:active, .mod:active, .outil:active { scale: .985; }
+.son-btn, .chercher, .filtres-m button, .mur-cmd button { transition: translate .15s var(--sortie), box-shadow .15s ease, background-color .15s ease, scale .1s var(--sortie); }
+.mur-cmd button:active:not(:disabled), .filtres-m button:active { scale: .95; }
+/* ce qui se déplace à l'écran accélère puis freine */
+.lentille { transition: transform .28s var(--va-vient), width .28s var(--va-vient), opacity .15s ease; }
+.ecran-mur { transition: transform .6s var(--va-vient), opacity .4s ease, box-shadow .4s ease; }
+/* rien ne surgit de nulle part : on part d'une forme déjà visible */
+.ecran-mur .jouer { scale: .9; opacity: 0; transition: scale .25s var(--sortie) .15s, opacity .25s ease .15s; }
+.ecran-mur.actif .jouer { scale: 1; opacity: 1; }
+.curseur { scale: .85; transition: scale .2s var(--sortie), opacity .15s ease; }
+/* la zone de survol reste en place quand la tuile se soulève (sinon le survol clignote au bord) */
+.carte-m::after, .mod::after, .outil::after, .chaine::after { content: ""; position: absolute; inset: 0 0 -12px; z-index: -1; }
+.btn-m::before { content: ""; position: absolute; inset: -2px 0 -8px; }
+/* les barres du son bougent par transformation, sans recalculer la mise en page */
+.son-btn.joue .eq i, .rideau .eq i { height: 14px; transform-origin: bottom; animation: eq-bis .8s ease-in-out infinite alternate; }
+@keyframes eq-bis { from { transform: scaleY(.22); } to { transform: scaleY(1); } }
+.son-btn .eq::after { content: ""; position: absolute; left: -3px; right: -3px; top: 50%; height: 2px; background: currentColor; rotate: -38deg; transform: scaleX(0); transition: transform .2s var(--sortie); }
+.son-btn:not(.joue) .eq::after { transform: scaleX(1); }
+/* l'édito : chaque ligne entre à son tour, au lieu d'un seul bloc */
+.edito > * { animation: edito-entre .6s var(--sortie) both; animation-delay: calc(1.45s + var(--n, 0) * 90ms); }
+.edito > :nth-child(2) { --n: 1; } .edito > :nth-child(3) { --n: 2; } .edito > :nth-child(4) { --n: 3; }
+/* la recherche : elle part du bouton, s'ouvre en 200 ms et se referme plus vite et plus doucement */
+.palette { transform-origin: 85% 0; opacity: 0; scale: .97; translate: 0 -6px; transition: opacity .15s ease-out, scale .15s var(--sortie), translate .15s var(--sortie), overlay .15s allow-discrete, display .15s allow-discrete; }
+.palette[open] { opacity: 1; scale: 1; translate: 0 0; transition-duration: .2s; }
+@starting-style { .palette[open] { opacity: 0; scale: .97; translate: 0 -10px; } }
+.palette::backdrop { opacity: 0; transition: opacity .15s ease-out, overlay .15s allow-discrete, display .15s allow-discrete; }
+.palette[open]::backdrop { opacity: 1; transition-duration: .2s; }
+@starting-style { .palette[open]::backdrop { opacity: 0; } }
+/* une action au clavier ne s'anime pas */
+.palette.instant, .palette.instant::backdrop { transition: none; }
+/* d'une page à l'autre : la sortie ne traîne pas */
+::view-transition-old(root) { animation: .16s ease-out both vt-sortie; }
+::view-transition-new(root) { animation: .32s var(--sortie) both vt-entree; }
+/* sur un écran tactile, pas d'effet de survol : il resterait collé après le toucher */
+@media (hover: none) {
+  .carte-m:hover, .mod:hover, .outil:hover, .chaine:hover, .btn-m:hover, .btn-m.creux:hover, .son-btn:hover, .chercher:hover, .voisins a:hover { translate: none; }
+  .carte-m:hover .vignette > img, .mod:hover .vignette img, .volet:hover .volet-in img { scale: none; }
+  .carte-m:hover h3 a, .mod:hover h3 a { background-size: 0 4px; }
+  .chaine:hover h2::after { opacity: 0; }
+  .volet:hover .reflet { animation: none; }
+}
