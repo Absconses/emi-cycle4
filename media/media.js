@@ -66,11 +66,33 @@ window.MEDIA = (function () {
   /* ---------- la barre et le pied, communs à toutes les pages ---------- */
   function habiller(page) {
     const nav = [['emission', 'emissions.html', 'Émissions'], ['podcast', 'radio.html', 'Radio'], ['gazette', 'gazette.html', 'Gazette'], ['formation', 'formation.html', 'Se former']];
+    // la porte : une fois par visite, sur l'accueil, on choisit d'entrer avec ou sans le son
+    let vu = true; try { vu = !!sessionStorage.getItem('media-porte'); sessionStorage.setItem('media-porte', '1'); } catch (e) {}
+    if (page === 'accueil' && !vu && !document.documentElement.classList.contains('calme')) {
+      document.documentElement.classList.add('porte-fermee');
+      document.body.insertAdjacentHTML('afterbegin', `<div class="porte" id="porte" role="dialog" aria-modal="true" aria-labelledby="porte-titre"><div class="porte-carte">
+        <img src="${CLUB_DIR}img/sigle-dupanloup.png" alt="" width="92" height="92">
+        <p class="surtitre"><span class="direct" aria-hidden="true"></span>Collège Dupanloup · Boulogne</p>
+        <h2 id="porte-titre">Dupanloup Média</h2>
+        <p>Ce site s’écoute aussi : les pages tournent, le tampon frappe, les touches claquent.</p>
+        <div class="actions-m"><button type="button" class="btn-m" data-son="oui">Entrer avec le son</button><button type="button" class="btn-m creux" data-son="non">Entrer sans le son</button></div>
+      </div></div>`);
+      const porte = document.getElementById('porte');
+      porte.querySelectorAll('button').forEach(b => b.onclick = () => {
+        try { localStorage.setItem('media-son', b.dataset.son); } catch (e) {}
+        document.documentElement.classList.remove('porte-fermee'); porte.classList.add('sort'); setTimeout(() => porte.remove(), 600);
+        document.dispatchEvent(new CustomEvent('media-entree', { detail: b.dataset.son === 'oui' }));
+      });
+      setTimeout(() => { const b = porte.querySelector('button'); if (b) b.focus(); }, 50);
+    }
+    document.body.insertAdjacentHTML('afterbegin', `<svg class="filtres" aria-hidden="true" width="0" height="0"><filter id="verre-liquide" x="-8%" y="-8%" width="116%" height="116%" color-interpolation-filters="sRGB">
+      <feTurbulence type="fractalNoise" baseFrequency="0.009 0.014" numOctaves="2" seed="11" result="n"/><feGaussianBlur in="n" stdDeviation="3" result="nb"/>
+      <feDisplacementMap in="SourceGraphic" in2="nb" scale="70" xChannelSelector="R" yChannelSelector="G" result="d"/><feGaussianBlur in="d" stdDeviation="4"/></filter></svg>`);
     document.body.insertAdjacentHTML('afterbegin', `<div class="ambiance" aria-hidden="true"><i></i><i></i><i></i></div><div class="mire" aria-hidden="true"><i></i><i></i><i></i><i></i></div>
     <header class="barre-media"><div class="barre-verre">
       <a class="marque" href="index.html"><img src="${CLUB_DIR}img/sigle-dupanloup.png" alt="" width="40" height="40"><span><b>Dupanloup Média</b><small>Le média des élèves, fabriqué au CDI</small></span></a>
       <nav class="chaines-nav" aria-label="Les chaînes">${nav.map(([c, h, t]) => `<a class="c-${c}" href="${h}"${page === c ? ' aria-current="page"' : ''}>${t}</a>`).join('')}</nav>
-      <button type="button" class="chercher" id="ouvrir-palette" aria-haspopup="dialog"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg><span>Chercher</span><kbd>Ctrl K</kbd></button>
+      <button type="button" class="chercher" id="ouvrir-palette" aria-haspopup="dialog"><svg viewBox="0 0 24 24" width="18" height="18" aria-hidden="true"><circle cx="10.5" cy="10.5" r="6.5" fill="none" stroke="currentColor" stroke-width="2.5"/><path d="M15.5 15.5 21 21" stroke="currentColor" stroke-width="2.5" stroke-linecap="round"/></svg><span>Chercher</span><kbd>Ctrl K</kbd></button><button type="button" class="son" id="son" aria-pressed="false" aria-label="Sons du site" title="Sons du site"><span class="barres" aria-hidden="true"><i></i><i></i><i></i><i></i></span></button>
     </div></header>
     <dialog class="palette" id="palette" aria-label="Chercher sur Dupanloup Média"><input type="search" id="palette-champ" placeholder="Une émission, un podcast, un module…" aria-label="Chercher" autocomplete="off"><ul id="palette-liste"></ul><p class="infos">Flèches haut et bas pour choisir, Entrée pour ouvrir, Échap pour fermer.</p></dialog>`);
     document.body.insertAdjacentHTML('beforeend', `<footer class="pied-media"><div class="int">
@@ -88,7 +110,9 @@ window.MEDIA = (function () {
     const date = new Date().toLocaleDateString('fr-FR', { weekday: 'long', day: 'numeric', month: 'long', year: 'numeric' });
     let k = 0;
     const lettres = 'Dupanloup Média'.split(' ').map(mot => `<span class="mot">${[...mot].map(c => `<span style="--k:${k++}">${c}</span>`).join('')}</span>`).join(' ');
-    return `<header class="manchette int" id="manchette">
+    const mots = ['À l’antenne', 'Émissions', 'Radio', 'Gazette', 'Devenir reporter'];
+    const bandeau = `<div class="bandeau" aria-hidden="true"><div class="bandeau-piste">${[...mots, ...mots].map(m => `<span>${m}</span><i>✦</i>`).join('')}</div></div>`;
+    return `<div class="scene-une"><div class="une-fond" aria-hidden="true">${VOLETS.map(([f]) => `<img src="${CLUB_DIR}img/${f}" alt="">`).join('')}</div><header class="manchette int" id="manchette">
       <p class="manchette-infos"><span>Collège Dupanloup · Boulogne</span><span>Édition du ${date}</span><span>${n ? `${n} production${n > 1 ? 's' : ''} à l’antenne` : 'Bientôt à l’antenne'}</span></p>
       <div class="tete-journal"><img class="sigle" src="${CLUB_DIR}img/sigle-dupanloup.png" alt="Sigle du collège Dupanloup, Boulogne" width="400" height="400">
         <h1 class="titre-journal" aria-label="Dupanloup Média, le média des élèves"><span class="le" aria-hidden="true">Le média des élèves</span><span class="nom" aria-hidden="true">${lettres}</span></h1></div>
@@ -106,7 +130,7 @@ window.MEDIA = (function () {
         <p class="chapo">Émissions, podcasts, gazette : tout est préparé, enregistré et monté au CDI par les reporters du collège.</p>
         <div class="actions-m"><a class="btn-m" href="#antenne">Voir les productions</a><a class="btn-m creux" href="formation.html">Devenir reporter</a></div>
       </div>
-    </section>`;
+    </section></div>${bandeau}`;
   }
 
   /* ---------- l'accueil ---------- */
@@ -115,13 +139,13 @@ window.MEDIA = (function () {
     const tout = { emission: em || [], podcast: po || [], gazette: ga || [] };
     const tous = [...tout.emission, ...tout.podcast, ...tout.gazette].sort((a, b) => String(b.date).localeCompare(String(a.date)));
     const mur = tous.slice(0, 6);
-    let h = mur.length ? `<section class="antenne int" id="antenne"><div class="rayon-tete"><h2>À l’antenne</h2><p class="infos">Les dernières productions</p></div><div class="antenne-texte" id="mur-texte"></div>
+    let h = mur.length ? `<section class="antenne int" id="antenne"><div class="rayon-tete"><h2><span class="direct" aria-hidden="true"></span>À l’antenne</h2><p class="infos">Les dernières productions</p></div><div class="antenne-texte" id="mur-texte"></div>
         <div class="mur" id="mur" tabindex="0" role="group" aria-roledescription="carrousel" aria-label="Les dernières productions. Flèches gauche et droite pour changer.">
           <div class="mur-scene">${mur.map((e, i) => `<a class="ecran-mur c-${e.type} f-${e.type}" data-i="${i}" href="${lien(e)}" aria-label="${esc(e.titre)}" draggable="false">${visuel(e)}${drapeau(e)}${e.type === 'gazette' ? '' : '<span class="jouer" aria-hidden="true">▶</span>'}</a>`).join('')}</div>
           <div class="mur-cmd"><button type="button" data-pas="-1" aria-label="Production précédente">←</button><span id="mur-compte"></span><button type="button" data-pas="1" aria-label="Production suivante">→</button></div>
         </div></section>`
       : `<section class="antenne int" id="antenne"><div class="vide-m"><b>Bientôt à l’antenne</b>Les émissions, les podcasts et la gazette des élèves arrivent ici.</div></section>`;
-    h = laUne(tous.length) + h;
+    h = laUne(tous.length) + '<div class="studio">' + h + '</div>';
     const compte = (n, un, des) => n ? `${n} ${n > 1 ? des : un}` : 'Bientôt';
     h += `<nav class="chaines int" aria-label="Choisir une chaîne">
       <a class="chaine c-emission" href="emissions.html"><span class="canal" aria-hidden="true">1</span><span class="combien">${compte(tout.emission.length, 'émission', 'émissions')}</span><h2>Émissions</h2><p>${CHAINES.emission.slogan}</p></a>
@@ -147,6 +171,7 @@ window.MEDIA = (function () {
     </section></div>`;
     zone.innerHTML = h;
     monterMur(mur);
+    document.dispatchEvent(new Event('media-pret'));
     // tant que la manchette est à l'écran, la barre n'a pas besoin de répéter le nom du site
     const manchette = document.getElementById('manchette');
     if (manchette && 'IntersectionObserver' in window) new IntersectionObserver(([x]) => document.body.classList.toggle('manchette-vue', x.isIntersecting), { rootMargin: '-70px 0px 0px 0px' }).observe(manchette.querySelector('.tete-journal'));
@@ -177,7 +202,7 @@ window.MEDIA = (function () {
     }
     function aller(i) {
       i = Math.max(0, Math.min(items.length - 1, i)); if (i === actif) return;
-      actif = i; placer();
+      actif = i; placer(); if (window.MEDIA_SON) MEDIA_SON.jouer('glisse');
       if (document.documentElement.classList.contains('calme')) return ecrire();
       texte.classList.add('change'); setTimeout(() => { ecrire(); texte.classList.remove('change'); }, 170);
     }

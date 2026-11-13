@@ -59,7 +59,8 @@ body::after { content: ""; position: fixed; inset: 0; z-index: -1; pointer-event
 /* ---------- La barre de verre ---------- */
 .mire { position: fixed; inset: 0 0 auto 0; z-index: 30; display: grid; grid-template-columns: repeat(4, 1fr); height: 4px; }
 .mire i:nth-child(1) { background: var(--rouge); } .mire i:nth-child(2) { background: var(--or); } .mire i:nth-child(3) { background: var(--marine); } .mire i:nth-child(4) { background: var(--vert); }
-.barre-media { position: sticky; top: 0; z-index: 20; padding-top: 4px; view-transition-name: barre; }
+/* pas de view-transition-name ici : il couperait le verre de ce qui passe derrière la barre */
+.barre-media { position: sticky; top: 0; z-index: 20; padding-top: 4px; }
 .barre-verre { display: flex; align-items: center; gap: 8px 16px; padding: 8px max(16px, calc(50vw - 562px)); background: var(--verre-fort); backdrop-filter: var(--flou); -webkit-backdrop-filter: var(--flou); border-bottom: 1px solid var(--filet); box-shadow: 0 3px 0 var(--or), 0 16px 30px -20px rgba(0, 1, 119, .5); }
 .marque { display: flex; align-items: center; gap: 10px; text-decoration: none; margin-right: auto; min-width: 0; transition: opacity .3s, visibility .3s; }
 .marque img { width: 40px; height: 40px; flex: none; transition: rotate .6s var(--ressort); }
@@ -160,10 +161,10 @@ a.btn-m:hover::after { translate: 4px 0; }
 .volet:hover .volet-in img { scale: 1.06; }
 .legende-volet { position: absolute; left: 7px; bottom: 9px; font: 700 10.5px/1 var(--mono); text-transform: uppercase; letter-spacing: .08em; color: var(--marine); background: rgba(255, 253, 247, .68); backdrop-filter: blur(10px) saturate(1.4); -webkit-backdrop-filter: blur(10px) saturate(1.4); border: 1px solid rgba(255, 255, 255, .85); padding: 6px 7px; animation: legende .6s var(--doux) both; animation-delay: calc(var(--i) * 190ms + 1.3s); }
 @keyframes legende { from { opacity: 0; translate: 0 10px; } }
-.tampon-une { position: absolute; right: -1%; top: -4%; z-index: 2; rotate: 7deg; font-size: 12px; padding: 5px 8px; border-width: 3px; animation: coup .45s cubic-bezier(.3, 1.6, .5, 1) both 1.75s; }
-.volet:nth-child(2) .legende-volet { bottom: 54px; }
+.tampon.tampon-une { position: absolute; right: -1%; top: -4%; z-index: 2; rotate: 7deg; font-size: 12px; padding: 5px 8px; border-width: 3px; animation: coup .45s cubic-bezier(.3, 1.6, .5, 1) both 1.75s; }
+.volet:nth-child(2) .legende-volet { bottom: 36px; }
 .une figcaption { order: 3; font: 12.5px/1.4 var(--texte); color: var(--gris); margin-top: 12px; }
-.edito { order: 2; position: relative; z-index: 3; margin: -40px 8px 0; padding: 20px 20px 22px; background: var(--verre); backdrop-filter: var(--flou); -webkit-backdrop-filter: var(--flou); border: 1px solid var(--bord); border-left: 6px solid var(--or); box-shadow: var(--reflet), var(--ombre); animation: edito-entre .9s var(--doux) both 1.05s; }
+.edito { order: 2; position: relative; z-index: 3; margin: -22px 8px 0; padding: 20px 20px 22px; background: var(--verre); backdrop-filter: var(--flou); -webkit-backdrop-filter: var(--flou); border: 1px solid var(--bord); border-left: 6px solid var(--or); box-shadow: var(--reflet), var(--ombre); animation: edito-entre .9s var(--doux) both 1.05s; }
 @keyframes edito-entre { from { opacity: 0; translate: 0 40px; } }
 .edito h2 { font-size: clamp(29px, 3.7vw, 45px); line-height: 1.04; margin-bottom: 12px; }
 .edito .chapo { font-size: 17.5px; margin: 0 0 18px; }
@@ -172,7 +173,7 @@ a.btn-m:hover::after { translate: 4px 0; }
   .triptyque { grid-column: 1 / 9; grid-row: 1; }
   .une figcaption { grid-column: 1 / 9; grid-row: 2; }
   .edito { grid-column: 7 / 13; grid-row: 1; margin: 0 0 7%; padding: 26px 28px 28px; }
-  .tampon-une { right: -10%; top: 15%; font-size: 20px; padding: 8px 16px; border-width: 4px; }
+  .tampon.tampon-une { right: -10%; top: 15%; font-size: 20px; padding: 8px 16px; border-width: 4px; }
   .volet:nth-child(2) .legende-volet { bottom: 9px; }
   .volet:nth-child(3) .legende-volet { bottom: auto; top: 12px; }
 }
@@ -437,7 +438,7 @@ html.avec-curseur .geste { display: none; }
 .chaine:hover::before, .mod:hover::before, .outil:hover::before, .bloc-m:hover::before, .carte-m:hover .vignette::after { opacity: 1; }
 
 /* ---------- Le curseur qui annonce le geste ---------- */
-.curseur { position: fixed; left: 0; top: 0; z-index: 90; pointer-events: none; width: 88px; height: 88px; margin: -44px 0 0 -44px; border-radius: 50%; display: grid; place-items: center; font: 700 11.5px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: #fff; background: var(--marine); box-shadow: 0 0 0 3px var(--or); scale: 0; opacity: 0; transition: scale .35s var(--ressort), opacity .2s; will-change: transform; }
+.curseur { position: fixed; left: 0; top: 0; z-index: 90; pointer-events: none; width: 88px; height: 88px; margin: -44px 0 0 -44px; border-radius: 50%; display: grid; place-items: center; font: 700 11.5px/1 var(--mono); text-transform: uppercase; letter-spacing: .06em; color: #fff; background: var(--marine); box-shadow: 0 0 0 3px var(--or); scale: 0; opacity: 0; transition: scale .35s var(--ressort), opacity .2s; will-change: translate, scale; }
 .curseur.geste-on { scale: 1; opacity: 1; }
 .curseur.presse { scale: .82; }
 html.calme .curseur { display: none; }
@@ -456,3 +457,134 @@ html.calme .curseur { display: none; }
   html:not(.calme) :is(.rayon .carte-m, .rayon .mod, .spe-m, .chaines .chaine, .bande-former, .outils-m .outil) { animation: surgir linear both; animation-timeline: view(); animation-range: entry 0% entry 55%; }
   @keyframes surgir { from { opacity: 0; translate: 0 50px; scale: .95; } }
 }
+
+/* =====================================================================
+ * LE GRAND JEU (13 novembre 2026)
+ * Le verre liquide (le fond se déforme derrière le verre), la porte d'entrée,
+ * la scène de la une en profondeur, le bandeau qui défile, le studio bleu nuit,
+ * la loupe, l'onde au clic, les boutons aimantés, et les sons (fx.js).
+ * Tout reste dans la charte : papier crème, bleu marine, or, abricot.
+ * ===================================================================== */
+:root {
+  --arete: inset 0 1px 0 rgba(255, 255, 255, .95), inset 0 0 0 1px rgba(255, 255, 255, .45), inset 0 -10px 18px -10px rgba(255, 255, 255, .7), inset 0 16px 24px -18px rgba(255, 255, 255, .75);
+}
+.filtres { position: absolute; width: 0; height: 0; }
+.direct { display: inline-block; width: 12px; height: 12px; border-radius: 50%; background: #ff5a45; box-shadow: 0 0 0 4px rgba(255, 90, 69, .25), 0 0 16px #ff5a45; animation: clignote-m 1.4s infinite; flex: none; }
+@keyframes clignote-m { 50% { opacity: .25; } }
+
+/* ---------- La barre flottante, en verre liquide ---------- */
+.barre-media { padding: 12px 12px 0; }
+.barre-verre { max-width: calc(var(--large) + 8px); margin: 0 auto; padding: 7px 9px 7px 14px; border: 1px solid rgba(255, 255, 255, .75); border-radius: 20px; background: linear-gradient(135deg, rgba(255, 253, 247, .82), rgba(255, 253, 247, .6)); box-shadow: var(--arete), 0 0 0 1px rgba(27, 36, 112, .18), 0 18px 40px -18px rgba(0, 1, 119, .55); }
+.chaines-nav a { border-bottom: 0; border-radius: 12px; }
+.chaines-nav a:hover { background: rgba(0, 1, 119, .08); color: var(--marine); }
+.chaines-nav a[aria-current="page"] { box-shadow: 3px 3px 0 var(--or); }
+.chercher, .son { border-radius: 12px; }
+.son { width: 42px; height: 42px; flex: none; display: grid; place-items: center; background: rgba(255, 253, 247, .7); border: 1.5px solid var(--filet); cursor: pointer; }
+.son:hover { background: var(--blanc); box-shadow: 3px 3px 0 var(--or); }
+.son .barres { display: flex; align-items: center; gap: 3px; height: 18px; }
+.son .barres i { width: 3px; height: 3px; background: var(--marine); border-radius: 2px; transition: height .3s; }
+.son[aria-pressed="true"] { background: var(--marine); border-color: var(--marine); }
+.son[aria-pressed="true"] .barres i { background: var(--or); height: 60%; animation: egaliseur .9s ease-in-out infinite alternate; }
+.son[aria-pressed="true"] .barres i:nth-child(2) { animation-delay: -.3s; animation-duration: .7s; } .son[aria-pressed="true"] .barres i:nth-child(3) { animation-delay: -.55s; animation-duration: 1.1s; } .son[aria-pressed="true"] .barres i:nth-child(4) { animation-delay: -.15s; animation-duration: .8s; }
+@keyframes egaliseur { from { height: 20%; } to { height: 100%; } }
+@media (min-width: 760px) {
+  html.liquide:not(.calme) .barre-verre { background: linear-gradient(135deg, rgba(255, 253, 247, .74), rgba(255, 253, 247, .5) 50%, rgba(255, 253, 247, .68)); backdrop-filter: url(#verre-liquide) blur(18px) saturate(1.7) brightness(1.03); }
+}
+@media (max-width: 759px) {
+  .barre-media { padding: 10px 10px 0; }
+  .barre-verre { background: rgba(255, 251, 242, .96); }
+  .chaines-nav { border-radius: 22px; border-color: rgba(255, 255, 255, .8); box-shadow: var(--arete), 0 0 0 1px rgba(27, 36, 112, .2), 0 18px 40px -12px rgba(0, 1, 119, .55); }
+  .chaines-nav a { border-radius: 18px; }
+  html.liquide:not(.calme) .chaines-nav { background: linear-gradient(135deg, rgba(255, 253, 247, .76), rgba(255, 253, 247, .56)); backdrop-filter: url(#verre-liquide) blur(18px) saturate(1.7) brightness(1.03); }
+}
+
+/* ---------- La porte d'entrée ---------- */
+html.porte-fermee { overflow: hidden; }
+html.porte-fermee :is(.manchette, .une) *, html.porte-fermee :is(.manchette, .une) *::after { animation-play-state: paused !important; }
+.porte { position: fixed; inset: 0; z-index: 100; display: grid; place-items: center; padding: 18px; background: rgba(252, 236, 208, .3); backdrop-filter: blur(10px) saturate(1.2); -webkit-backdrop-filter: blur(10px) saturate(1.2); transition: opacity .5s, visibility .5s; }
+.porte.sort { opacity: 0; visibility: hidden; }
+.porte.sort .porte-carte { scale: 1.08; filter: blur(6px); }
+.porte-carte { width: min(540px, 100%); text-align: center; padding: 34px 26px 32px; border-radius: 30px; background: linear-gradient(135deg, rgba(255, 253, 247, .78), rgba(255, 253, 247, .5)); backdrop-filter: var(--flou); -webkit-backdrop-filter: var(--flou); border: 1px solid rgba(255, 255, 255, .85); box-shadow: var(--arete), 0 0 0 1px rgba(27, 36, 112, .16), 0 50px 100px -30px rgba(0, 1, 119, .6); animation: porte-entre .9s var(--ressort) both; transition: scale .5s var(--doux), filter .5s; }
+@keyframes porte-entre { from { opacity: 0; scale: .9; translate: 0 30px; } }
+html.liquide .porte-carte { background: linear-gradient(135deg, rgba(255, 253, 247, .62), rgba(255, 253, 247, .34) 50%, rgba(255, 253, 247, .56)); backdrop-filter: url(#verre-liquide) saturate(1.7) brightness(1.04); }
+.porte-carte img { width: 92px; height: auto; margin: 0 auto 14px; animation: sceau .8s cubic-bezier(.3, 1.5, .5, 1) both .25s; }
+.porte-carte .surtitre { display: flex; justify-content: center; align-items: center; gap: 10px; margin-bottom: 12px; white-space: nowrap; font-size: 11.5px; letter-spacing: .1em; }
+.porte-carte h2 { font: 400 clamp(40px, 10vw, 68px)/1 var(--gothique); margin-bottom: 12px; }
+.porte-carte p { margin: 0 auto 22px; max-width: 34ch; }
+.porte-carte .actions-m { justify-content: center; }
+
+/* ---------- La scène de la une : un fond flou, les volets inclinés, un reflet qui passe ---------- */
+.scene-une { position: relative; }
+.une-fond { position: absolute; inset: 120px 0 10% 0; z-index: -1; display: grid; grid-template-columns: repeat(3, 1fr); filter: blur(54px) saturate(2) brightness(1.12); opacity: .42; pointer-events: none; -webkit-mask-image: linear-gradient(transparent, #000 30%, #000 60%, transparent); mask-image: linear-gradient(transparent, #000 30%, #000 60%, transparent); transform: scale(1.12) translate(calc(var(--px, 0) * -18px), calc(var(--py, 0) * -12px)); transition: transform 1.2s ease-out; }
+.une-fond img { width: 100%; height: 100%; object-fit: cover; animation: fond-respire 16s ease-in-out infinite alternate; }
+.une-fond img:nth-child(2) { animation-delay: -5s; } .une-fond img:nth-child(3) { animation-delay: -10s; }
+@keyframes fond-respire { from { transform: scale(1); } to { transform: scale(1.25) translateY(-4%); } }
+html.calme .une-fond { opacity: .35; }
+.triptyque { transform: perspective(1300px) rotateY(calc(var(--px, 0) * 7deg)) rotateX(calc(var(--py, 0) * -5deg)); transition: transform .6s ease-out; }
+.volet-in::after { content: ""; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(105deg, transparent 32%, rgba(255, 255, 255, .6) 50%, transparent 68%); translate: 130% 0; animation: reflet 1.5s var(--doux) both; animation-delay: calc(var(--i) * 190ms + 1.3s); }
+@keyframes reflet { from { translate: -130% 0; } }
+.volet:hover .volet-in::after { animation: reflet-2 1.1s var(--doux) both; }
+@keyframes reflet-2 { from { translate: -130% 0; } }
+.edito { border-radius: 22px; border: 1px solid rgba(255, 255, 255, .8); border-left: 6px solid var(--or); box-shadow: var(--arete), 0 0 0 1px rgba(27, 36, 112, .14), 0 30px 60px -26px rgba(0, 1, 119, .55); }
+html.liquide:not(.calme) .edito { background: linear-gradient(135deg, rgba(255, 253, 247, .72), rgba(255, 253, 247, .46) 50%, rgba(255, 253, 247, .66)); backdrop-filter: url(#verre-liquide) blur(5px) saturate(1.7) brightness(1.04); }
+
+/* ---------- Le bandeau qui défile ---------- */
+.bandeau { overflow: clip; padding-block: 30px 6px; }
+.bandeau-piste { display: flex; align-items: center; width: max-content; will-change: transform; font: 400 clamp(60px, 12vw, 160px)/1.05 var(--gothique); color: var(--marine); white-space: nowrap; }
+.bandeau-piste span { padding: 0 .22em; }
+.bandeau-piste span:nth-of-type(even) { color: transparent; -webkit-text-stroke: 1.5px var(--marine); }
+.bandeau-piste i { font-style: normal; font-size: .5em; color: var(--or); }
+html.calme .bandeau { display: none; }
+
+/* ---------- Le studio : la bande bleu nuit où tourne le mur ---------- */
+.studio { position: relative; isolation: isolate; overflow: hidden; margin-top: 8px; color: #e9e6f5; background: radial-gradient(90% 120% at 85% 0%, #1b1ea6, var(--marine) 45%, #00004a);
+  clip-path: polygon(0 1.4%, 6% .2%, 14% 1.2%, 23% .3%, 35% 1.5%, 48% .2%, 61% 1.3%, 72% 0, 84% 1.2%, 93% .3%, 100% 1.3%, 100% 98.8%, 92% 100%, 81% 98.7%, 69% 99.8%, 55% 98.8%, 43% 100%, 30% 98.6%, 18% 99.9%, 8% 98.9%, 0 100%); }
+.studio::before, .studio::after { content: ""; position: absolute; z-index: -1; width: 46vmax; height: 46vmax; border-radius: 50%; filter: blur(30px); animation: derive 22s ease-in-out infinite alternate; translate: calc(var(--px, 0) * 40px) calc(var(--py, 0) * 30px); transition: translate 1s ease-out; }
+.studio::before { left: -12vmax; top: -14vmax; background: radial-gradient(closest-side, rgba(233, 184, 90, .55), transparent); }
+.studio::after { right: -10vmax; bottom: -20vmax; background: radial-gradient(closest-side, rgba(242, 164, 119, .5), transparent); animation-duration: 29s; animation-direction: alternate-reverse; }
+.studio .antenne { padding-block: 60px 64px; }
+.studio .rayon-tete { border-color: var(--or); }
+.studio .rayon-tete h2 { color: #fff; gap: 16px; } .studio .rayon-tete h2::before { content: none; }
+.studio .rayon-tete .infos { color: var(--or); }
+.studio .antenne-texte { padding: 24px 22px 26px; border-radius: 24px; background: linear-gradient(135deg, rgba(255, 255, 255, .14), rgba(255, 255, 255, .05)); backdrop-filter: blur(20px) saturate(1.5); -webkit-backdrop-filter: blur(20px) saturate(1.5); border: 1px solid rgba(255, 255, 255, .26); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), inset 0 -12px 20px -14px rgba(255, 255, 255, .25), 0 30px 60px -30px #000030; }
+html.liquide:not(.calme) .studio .antenne-texte { backdrop-filter: url(#verre-liquide) blur(6px) saturate(1.6) brightness(1.12); }
+.studio .titre-prod { color: #fff; }
+.studio .antenne-texte .chapo { color: #e9e6f5; } .studio .antenne-texte .infos { color: #c3c7f5; }
+.studio .pastille-c { box-shadow: 0 0 0 1.5px rgba(255, 255, 255, .55); }
+.studio .btn-m { background: var(--or); color: var(--marine); box-shadow: 4px 4px 0 rgba(255, 255, 255, .3); }
+.studio .btn-m:hover { box-shadow: 6px 6px 0 rgba(255, 255, 255, .3); }
+.studio .btn-m.creux { background: rgba(255, 255, 255, .1); color: #fff; box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, .6); }
+.studio .btn-m.creux:hover { background: rgba(255, 255, 255, .2); box-shadow: inset 0 0 0 1.5px #fff, 3px 3px 0 var(--or); }
+.studio .mur-cmd button { background: rgba(255, 255, 255, .1); border-color: rgba(255, 255, 255, .55); color: #fff; backdrop-filter: blur(10px); -webkit-backdrop-filter: blur(10px); }
+.studio .mur-cmd button:hover:not(:disabled) { background: rgba(255, 255, 255, .22); }
+.studio .mur-cmd span { color: var(--or); }
+.studio .ecran-mur { box-shadow: 0 40px 70px -30px #000030; }
+.studio .ecran-mur.actif { box-shadow: 10px 10px 0 var(--or), 0 0 90px -10px rgba(233, 184, 90, .55), 0 50px 80px -34px #000030; }
+.studio .ecran-mur .jouer { background: var(--or); color: var(--marine); box-shadow: 3px 3px 0 var(--marine); }
+.studio :focus-visible { outline-color: var(--or); }
+.studio .vide-m { border-color: rgba(255, 255, 255, .5); background: rgba(255, 255, 255, .08); color: #e9e6f5; } .studio .vide-m b { color: #fff; }
+
+/* ---------- La loupe, l'onde, les aimants ---------- */
+.curseur { width: 96px; height: 96px; margin: -48px 0 0 -48px; background: rgba(0, 1, 119, .9); border: 1.5px solid rgba(255, 255, 255, .85); box-shadow: var(--arete), 0 0 0 2px var(--or), 0 14px 30px -10px rgba(0, 1, 119, .6); }
+.curseur.petit { scale: .34; opacity: 1; background: rgba(255, 255, 255, .25); }
+.curseur.petit.presse { scale: .26; }
+html.liquide:not(.calme) .curseur { background: rgba(0, 1, 119, .62); backdrop-filter: url(#verre-liquide) saturate(1.6); }
+html.liquide:not(.calme) .curseur.petit { background: rgba(255, 255, 255, .18); backdrop-filter: url(#verre-liquide) brightness(1.1) saturate(1.6); }
+.onde { position: fixed; z-index: 95; width: 14px; height: 14px; margin: -7px 0 0 -7px; border-radius: 50%; border: 2px solid var(--or); pointer-events: none; animation: onde .65s var(--doux) forwards; }
+@keyframes onde { to { scale: 9; opacity: 0; } }
+.btn-m, .mur-cmd button, .chercher, .son { transform: translate(var(--ax, 0px), var(--ay, 0px)); }
+.btn-m { transition: transform .3s var(--ressort), translate .15s, box-shadow .15s, background .2s; }
+.mur-cmd button, .chercher, .son { transition: transform .3s var(--ressort), translate .15s, box-shadow .15s, background .2s; }
+
+/* ---------- Les titres de rayon se tracent en entrant dans l'écran (navigateurs récents) ---------- */
+@supports (animation-timeline: view()) {
+  html:not(.calme) .rayon:not(.antenne) > .rayon-tete { animation: filet-trace linear both; animation-timeline: view(); animation-range: entry 10% entry 70%; }
+  @keyframes filet-trace { from { clip-path: inset(0 100% 0 0); } to { clip-path: inset(0 -1% 0 0); } }
+}
+
+/* ---------- Le régulateur (fx.js) : sur une machine qui peine, le site s'allège tout seul ---------- */
+html.allege .ambiance-gl { display: none; }
+html.leger { --flou: blur(8px); }
+html.leger .une-fond { display: none; }
+html.leger .studio::before, html.leger .studio::after { filter: none; animation: none; }
+html.leger .studio .antenne-texte, html.leger .porte { backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); }
