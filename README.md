@@ -7,3 +7,5 @@ Plateforme d'éducation aux médias et à l'information pour le collège : livre
 - Détails dans `LISEZMOI.txt`.
 
 Site statique servi par GitHub Pages. Lecteur : [h5p-standalone](https://github.com/tunapanda/h5p-standalone) 3.8.0.
+
+`lumi/` : version en cours de construction pour plusieurs collèges (comptes enseignants, classes, suivi en ligne, parcours partagés), pour l'instant en mode démo. Voir `lumi/LISEZMOI.txt`.

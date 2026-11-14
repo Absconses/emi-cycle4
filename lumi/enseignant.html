@@ -1,0 +1,39 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0f1a2e">
+<title>Espace enseignant · Lümi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="lumi.css">
+<script src="config.js"></script>
+<script src="donnees.js"></script>
+<script src="effets.js"></script>
+</head>
+<body class="l-ambiance">
+<div id="demo" class="l-demo" hidden><strong>MODE DÉMO</strong><span>Données fictives<span class="long"> : collège, classes et élèves inventés. Rien ne quitte ce navigateur.</span></span><button id="raz">Remettre la démo à zéro</button></div>
+<header class="barre" id="barre" hidden>
+  <a class="l-marque" href="index.html" title="Accueil de Lümi">L<i>ü</i>mi</a>
+  <nav class="l-nav" aria-label="Espace enseignant">
+    <a href="#classes" data-onglet="classes">Mes classes</a>
+    <a href="#parcours" data-onglet="parcours">Parcours</a>
+    <a href="#college" data-onglet="college">Mon collège</a>
+  </nav>
+  <div class="l-compte"><span id="qui"></span><button id="sortir">Déconnexion</button></div>
+</header>
+<main id="vue" class="l-page" tabindex="-1"></main>
+<p class="l-message" id="message" role="status"></p>
+<dialog class="l-dialogue" id="dialogue" aria-labelledby="d-titre">
+  <form method="dialog">
+    <h2 id="d-titre"></h2><p id="d-texte"></p>
+    <div class="actions"><button class="lien-btn" value="non">Annuler</button><button class="btn" id="d-oui" value="oui"></button></div>
+  </form>
+</dialog>
+<script src="enseignant.js"></script>
+</body>
+</html>

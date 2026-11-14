@@ -1,0 +1,150 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0f1a2e">
+<title>Module · Lümi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="lumi.css">
+<script src="../player/main.bundle.js"></script>
+<script src="config.js"></script>
+<script src="donnees.js"></script>
+</head>
+<body class="page-module l-ambiance">
+<p class="l-apercu" id="apercu" hidden>Aperçu enseignant : rien n’est enregistré.</p>
+<header class="barre">
+  <a class="retour" id="retour" href="index.html">← Mon parcours</a>
+  <div class="barre-titre"><span id="num" class="pastille"></span><h1 id="titre">Chargement…</h1></div>
+  <span id="statut" class="statut"></span>
+  <a id="suivant" class="retour suivant" hidden>Module suivant →</a>
+</header>
+<main class="lecteur">
+  <div id="h5p"></div>
+  <a id="suite" class="suite" hidden><span class="suite-lib">Module suivant</span><span class="suite-titre"><span id="suite-num" class="pastille"></span> <span id="suite-nom"></span></span><span class="suite-fleche" aria-hidden="true">→</span></a>
+  <p class="note" id="note">Ta progression est enregistrée avec ton code : tu peux t’arrêter et reprendre plus tard, sur n’importe quel appareil.</p>
+</main>
+<script>
+(async function () {
+  const q = new URLSearchParams(location.search), id = q.get('m'), apercu = q.get('apercu') === '1';
+  const mods = await LUMI.modules(), m = mods.find(x => x.id === id);
+  const titre = document.getElementById('titre');
+  if (!m) { titre.textContent = 'Module introuvable'; return; }
+
+  // l'élève doit être entré avec ses codes ; l'enseignant, lui, regarde sans rien enregistrer
+  let seance = null;
+  if (apercu) {
+    document.getElementById('apercu').hidden = false;
+    document.getElementById('note').hidden = true;
+    const r = document.getElementById('retour'); r.textContent = '← Fermer l’aperçu'; r.href = 'enseignant.html#parcours';
+    r.onclick = (e) => { if (history.length > 1) { e.preventDefault(); history.back(); } };
+  } else {
+    try { seance = await LUMI.eleveSeance(); } catch (e) {}
+    if (!seance) { location.replace('index.html'); return; }
+  }
+
+  document.title = m.titre + ' · Lümi';
+  document.body.style.setProperty('--niv', 'var(--c' + m.niveau[0] + ')');
+  titre.textContent = m.titre;
+  document.getElementById('num').textContent = m.num || 'Game Map';
+
+  // module suivant : dans l'ordre du parcours de la classe
+  if (seance) {
+    const ordre = seance.parcours ? seance.parcours.modules : mods.filter(x => x.niveau === seance.classe.niveau).map(x => x.id);
+    const apres = mods.find(x => x.id === ordre[ordre.indexOf(m.id) + 1]);
+    if (apres && ordre.includes(m.id)) {
+      const lien = 'module.html?m=' + encodeURIComponent(apres.id);
+      const haut = document.getElementById('suivant');
+      haut.href = lien; haut.title = (apres.num || 'Game Map') + ' · ' + apres.titre; haut.hidden = false;
+      const bas = document.getElementById('suite');
+      bas.href = lien; bas.hidden = false;
+      document.getElementById('suite-num').textContent = apres.num || 'Game Map';
+      document.getElementById('suite-nom').textContent = apres.titre;
+    }
+  }
+
+  const statut = document.getElementById('statut');
+  // quand le module passe à « Terminé », le statut le montre une fois et le module suivant s'offre
+  let dejaFini = null;
+  const montre = (p) => {
+    const sc = p.meilleur ? ' · score ' + Math.round(p.meilleur * 100) + ' %' : '';
+    statut.textContent = p.termine ? 'Terminé' + sc : (p.avance ? Math.round(p.avance * 100) + ' % du livre' : 'Commencé') + sc;
+    const vient = dejaFini === false && !!p.termine;
+    statut.className = 'statut ' + (p.termine ? 'ok' : 'encours') + (vient ? ' vient' : '');
+    if (vient) document.getElementById('suite').classList.add('appel');
+    dejaFini = !!p.termine;
+  };
+
+  // où l'élève en était (score, chapitres, état de reprise)
+  let p = { avance: 0, score: 0, meilleur: 0, termine: false }, etatGarde = null;
+  if (seance) {
+    try { const d = await LUMI.eleveModule(id); etatGarde = d.etat || null; delete d.etat; Object.assign(p, d); } catch (e) {}
+    montre(p);
+  } else { statut.hidden = true; }
+
+  // l'état de reprise n'est valable que pour la version du module qui l'a produit
+  const version = await fetch('../modules/' + id + '/content/content.json', { cache: 'no-cache' })
+    .then(r => r.text()).then(t => { let h = 5381; for (let k = 0; k < t.length; k++) h = (h * 33 + t.charCodeAt(k)) >>> 0; return h.toString(36) + '-' + t.length; })
+    .catch(() => '');
+  let precedent = null;
+  try { const e = JSON.parse(etatGarde || 'null'); if (e && e.version && e.version === version) precedent = e.etat; } catch (e) {}
+  const options = {
+    h5pJsonPath: '../modules/' + id, librariesPath: '../libraries',
+    frameJs: '../player/frame.bundle.js', frameCss: '../player/styles/h5p.css',
+    frame: false, fullScreen: true, id: id, saveFreq: 3600,
+  };
+  if (precedent) options.contentUserData = [{ state: precedent }];
+  await new H5PStandalone.H5P(document.getElementById('h5p'), options);
+  if (!seance) return;
+
+  const instance = () => {
+    const fr = document.querySelector('#h5p iframe');
+    const h = fr && fr.contentWindow && fr.contentWindow.H5P ? fr.contentWindow.H5P : window.H5P;
+    return (h.instances || [])[0];
+  };
+  // relevé : score, chapitres terminés, état de reprise ; envoyé seulement quand quelque chose a changé
+  let dernierEnvoi = '', enCours = false, aRefaire = false;
+  async function envoyer(etat) {
+    const colis = { avance: p.avance, score: p.score, termine: !!p.termine, etat };
+    const empreinte = JSON.stringify(colis);
+    if (empreinte === dernierEnvoi) return;
+    if (enCours) { aRefaire = true; return; }
+    enCours = true;
+    try { await LUMI.eleveEnregistrer(id, colis); dernierEnvoi = empreinte; document.getElementById('note').textContent = 'Ta progression est enregistrée avec ton code : tu peux t’arrêter et reprendre plus tard, sur n’importe quel appareil.'; }
+    catch (e) { document.getElementById('note').textContent = 'L’enregistrement n’a pas pu se faire. Vérifie ta connexion : un nouvel essai aura lieu dans quelques secondes.'; }
+    enCours = false;
+    if (aRefaire) { aRefaire = false; releve(false); }
+  }
+  function releve(fini) {
+    const i = instance(); if (!i) return;
+    let etat = null;
+    try { const st = i.getCurrentState && i.getCurrentState(); if (st && version) etat = JSON.stringify({ version, etat: JSON.stringify(st) }); } catch (e) {}
+    try {
+      const max = i.getMaxScore && i.getMaxScore();
+      if (max) { p.score = i.getScore() / max; p.meilleur = Math.max(p.meilleur || 0, p.score); }
+    } catch (e) {}
+    if (Array.isArray(i.chapters)) {
+      const ch = i.chapters.filter(c => !c.isSummary), lus = ch.filter(c => c.completed).length;
+      p.avance = Math.max(p.avance || 0, ch.length ? lus / ch.length : 0);
+      if (ch.length && lus === ch.length) p.termine = true;
+    }
+    if (fini) p.termine = true;
+    montre(p); envoyer(etat);
+  }
+  setTimeout(() => releve(false), 1500);
+  setInterval(() => releve(false), 8000);
+  addEventListener('pagehide', () => releve(false));
+  document.addEventListener('visibilitychange', () => { if (document.hidden) releve(false); });
+  H5P.externalDispatcher.on('xAPI', (ev) => {
+    const st = ev.data.statement, verbe = (st.verb && st.verb.id || '').split('/').pop();
+    const racine = st.object && !String(st.object.id).includes('subContentId');
+    setTimeout(() => releve(racine && verbe === 'completed'), 300);
+  });
+})();
+</script>
+</body>
+</html>
