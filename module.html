@@ -40,10 +40,11 @@
   document.title = m.titre + ' · EMI ' + m.niveau;
   document.body.style.setProperty('--niv', 'var(--c' + m.niveau[0] + ')');
   document.getElementById('titre').textContent = m.titre;
-  document.getElementById('num').textContent = m.num || 'Game Map';
+  document.getElementById('num').textContent = m.num || (m.type === 'scenario' ? 'Scénario' : 'Game Map');
   // module suivant du même niveau (après le 9e livre : la Game Map ; après la Game Map : rien)
   const niveau = mods.filter(x => x.niveau === m.niveau);
-  const apres = niveau[niveau.findIndex(x => x.id === m.id) + 1];
+  const rang = niveau.findIndex(x => x.id === m.id);
+  const apres = rang < 0 ? null : niveau[rang + 1];   // un compagnon ouvert seul n'a pas de « suivant »
   if (apres && !dans) {
     const lien = 'module.html?m=' + encodeURIComponent(apres.id);
     const haut = document.getElementById('suivant');

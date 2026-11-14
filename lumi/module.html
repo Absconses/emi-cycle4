@@ -25,20 +25,27 @@
 </header>
 <main class="lecteur">
   <div id="h5p"></div>
+  <section id="compagnon" class="compagnon" hidden>
+    <h2><span class="pastille">+</span> <span id="compagnon-titre"></span></h2>
+    <p id="compagnon-intro" class="compagnon-intro"></p>
+  </section>
   <a id="suite" class="suite" hidden><span class="suite-lib">Module suivant</span><span class="suite-titre"><span id="suite-num" class="pastille"></span> <span id="suite-nom"></span></span><span class="suite-fleche" aria-hidden="true">→</span></a>
   <p class="note" id="note">Ta progression est enregistrée avec ton code : tu peux t’arrêter et reprendre plus tard, sur n’importe quel appareil.</p>
 </main>
 <script>
 (async function () {
   const q = new URLSearchParams(location.search), id = q.get('m'), apercu = q.get('apercu') === '1';
-  const mods = await LUMI.modules(), m = mods.find(x => x.id === id);
+  // ?dans=1 : module compagnon (un scénario, par exemple), affiché dans un cadre sous le livre
+  const dans = q.get('dans') === '1' && window.parent !== window;
+  if (dans) document.documentElement.classList.add('integre');
+  const mods = await LUMI.modules(), m = mods.find(x => x.id === id) || mods.map(x => x.compagnon).find(c => c && c.id === id);
   const titre = document.getElementById('titre');
   if (!m) { titre.textContent = 'Module introuvable'; return; }
 
   // l'élève doit être entré avec ses codes ; l'enseignant, lui, regarde sans rien enregistrer
   let seance = null;
   if (apercu) {
-    document.getElementById('apercu').hidden = false;
+    document.getElementById('apercu').hidden = dans;
     document.getElementById('note').hidden = true;
     const r = document.getElementById('retour'); r.textContent = '← Fermer l’aperçu'; r.href = 'enseignant.html#parcours';
     r.onclick = (e) => { if (history.length > 1) { e.preventDefault(); history.back(); } };
@@ -50,10 +57,10 @@
   document.title = m.titre + ' · Lümi';
   document.body.style.setProperty('--niv', 'var(--c' + m.niveau[0] + ')');
   titre.textContent = m.titre;
-  document.getElementById('num').textContent = m.num || 'Game Map';
+  document.getElementById('num').textContent = m.num || (m.type === 'scenario' ? 'Scénario' : 'Game Map');
 
   // module suivant : dans l'ordre du parcours de la classe
-  if (seance) {
+  if (seance && !dans) {
     const ordre = seance.parcours ? seance.parcours.modules : mods.filter(x => x.niveau === seance.classe.niveau).map(x => x.id);
     const apres = mods.find(x => x.id === ordre[ordre.indexOf(m.id) + 1]);
     if (apres && ordre.includes(m.id)) {
@@ -67,6 +74,18 @@
     }
   }
 
+  // module compagnon : dans un cadre, sous le livre, à la hauteur de son contenu
+  if (m.compagnon && !dans) {
+    const c = m.compagnon, sec = document.getElementById('compagnon');
+    document.getElementById('compagnon-titre').textContent = c.titre;
+    document.getElementById('compagnon-intro').textContent = c.intro || '';
+    const fr = document.createElement('iframe');
+    fr.className = 'cadre-compagnon'; fr.title = c.titre; fr.src = 'module.html?m=' + encodeURIComponent(c.id) + '&dans=1' + (apercu ? '&apercu=1' : '');
+    sec.append(fr); sec.hidden = false;
+    const ajuste = () => { try { const d = fr.contentDocument; if (d && d.body) fr.style.height = d.documentElement.scrollHeight + 'px'; } catch (e) {} };
+    fr.addEventListener('load', () => { ajuste(); try { new ResizeObserver(ajuste).observe(fr.contentDocument.body); } catch (e) {} });
+    setInterval(ajuste, 1500);
+  }
   const statut = document.getElementById('statut');
   // quand le module passe à « Terminé », le statut le montre une fois et le module suivant s'offre
   let dejaFini = null;
