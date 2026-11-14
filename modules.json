@@ -221,7 +221,14 @@
   "num": "5.8",
   "titre": "Publier de façon éthique",
   "type": "livre",
-  "domaine": "Partager et produire"
+  "domaine": "Partager et produire",
+  "compagnon": {
+   "id": "5e-une-semaine-a-la-redaction",
+   "niveau": "5e",
+   "titre": "Une semaine à la rédaction",
+   "type": "scenario",
+   "intro": "Le scénario du chapitre 4 : quatre décisions de rédactrice en chef, chacune avec sa conséquence."
+  }
  },
  {
   "id": "5e-mes-traces-mes-reactions",

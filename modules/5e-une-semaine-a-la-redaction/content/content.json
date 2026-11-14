@@ -1,0 +1,323 @@
+{
+ "branchingScenario": {
+  "title": "Une semaine à la rédaction",
+  "content": [
+   {
+    "type": {
+     "library": "H5P.AdvancedText 1.1",
+     "params": {
+      "text": "<h2>Une semaine à la rédaction</h2><p>Cette semaine, Inès est <strong>rédactrice en chef</strong> du <em>Tilleul</em>&nbsp;: c’est elle qui décide de ce qui est publié.</p><p>Quatre décisions l’attendent&nbsp;: une photo de groupe, un message de lecteur, un sondage, une rumeur. À toi de choisir à sa place.</p><p><strong>Attention&nbsp;:</strong> comme dans une vraie rédaction, ce qui est publié est publié. Tu découvres la conséquence, puis la semaine continue.</p>"
+     },
+     "subContentId": "7294b304-a4ef-49d1-b999-d0a3d7a389ff",
+     "metadata": {
+      "contentType": "Text",
+      "license": "U",
+      "title": "Texte",
+      "authors": [],
+      "changes": [],
+      "extraTitle": "Texte"
+     }
+    },
+    "showContentTitle": false,
+    "proceedButtonText": "Première décision",
+    "forceContentFinished": "useBehavioural",
+    "feedback": {
+     "title": "",
+     "subtitle": ""
+    },
+    "contentBehaviour": "useBehavioural",
+    "nextContentId": 1
+   },
+   {
+    "type": {
+     "library": "H5P.BranchingQuestion 1.0",
+     "params": {
+      "branchingQuestion": {
+       "question": "<p><strong>Lundi : la photo de la sortie.</strong> Pour l’article sur la sortie au musée, Inès a une belle photo de toute la classe. Mais Léo, au premier rang, avait dit qu’il ne voulait pas être pris en photo. Que fait Inès&nbsp;?</p>",
+       "alternatives": [
+        {
+         "text": "Elle publie la photo : elle est réussie, et Léo sourit.",
+         "nextContentId": 2,
+         "feedback": {
+          "title": "Droit à l’image non respecté",
+          "subtitle": "Léo est reconnaissable et il avait refusé. Ses parents écrivent au collège, et la principale fait retirer la photo. Pour publier la photo d’une personne reconnaissable, il faut son accord, et celui de ses parents si elle est mineure.",
+          "endScreenScore": 0
+         }
+        },
+        {
+         "text": "Elle choisit une autre photo, où Léo n’apparaît pas.",
+         "nextContentId": 2,
+         "feedback": {
+          "title": "Bonne décision",
+          "subtitle": "Inès respecte le refus de Léo, et elle vérifie que les autres élèves ont bien une autorisation. L’article est illustré, et personne n’est exposé contre son gré.",
+          "endScreenScore": 1
+         }
+        },
+        {
+         "text": "Elle publie la photo, sans écrire le prénom de Léo.",
+         "nextContentId": 2,
+         "feedback": {
+          "title": "Léo reste reconnaissable",
+          "subtitle": "Enlever son prénom ne suffit pas : on voit son visage, toute la classe le reconnaît. Mardi matin, Léo ne veut plus venir à la rédaction. Ce qui compte, c’est d’être reconnaissable, pas d’être nommé.",
+          "endScreenScore": 0
+         }
+        }
+       ]
+      }
+     },
+     "subContentId": "223ed227-5257-49d2-83ba-d5e2d95fcc46",
+     "metadata": {
+      "contentType": "Branching Question",
+      "license": "U",
+      "title": "La photo de la sortie",
+      "authors": [],
+      "changes": [],
+      "extraTitle": "La photo de la sortie"
+     }
+    },
+    "showContentTitle": false,
+    "proceedButtonText": "Continuer",
+    "forceContentFinished": "useBehavioural",
+    "feedback": {
+     "title": "",
+     "subtitle": ""
+    },
+    "contentBehaviour": "useBehavioural"
+   },
+   {
+    "type": {
+     "library": "H5P.BranchingQuestion 1.0",
+     "params": {
+      "branchingQuestion": {
+       "question": "<p><strong>Mardi : le message anonyme.</strong> La boîte à idées du <em>Tilleul</em> reçoit un message non signé&nbsp;: «&nbsp;Le prof de techno est nul et il truque les notes. Publiez-le&nbsp;!&nbsp;» Que fait Inès&nbsp;?</p>",
+       "alternatives": [
+        {
+         "text": "Elle le publie : c’est l’avis d’un lecteur, après tout.",
+         "nextContentId": 3,
+         "feedback": {
+          "title": "Diffamation et injure",
+          "subtitle": "Accuser quelqu’un de tricher sans preuve, c’est de la diffamation ; le traiter de « nul », c’est une injure. Le professeur demande des explications à la principale, qui est responsable du journal devant la loi.",
+          "endScreenScore": 0
+         }
+        },
+        {
+         "text": "Elle enlève le mot « nul » et publie le reste.",
+         "nextContentId": 3,
+         "feedback": {
+          "title": "Toujours une accusation sans preuve",
+          "subtitle": "Sans « nul », il n’y a plus d’injure. Mais « il truque les notes » reste une accusation grave, sans preuve, contre une personne que tout le monde reconnaît : c’est encore de la diffamation.",
+          "endScreenScore": 0
+         }
+        },
+        {
+         "text": "Elle refuse, et propose une critique signée et argumentée.",
+         "nextContentId": 3,
+         "feedback": {
+          "title": "Bonne décision",
+          "subtitle": "Critiquer est permis, mais avec des arguments, sans insulte ni accusation sans preuve, et en signant. Un journal ne publie pas un message anonyme qui met quelqu’un en cause.",
+          "endScreenScore": 1
+         }
+        }
+       ]
+      }
+     },
+     "subContentId": "79fe1a2a-5c1a-459c-837b-40b73965ed39",
+     "metadata": {
+      "contentType": "Branching Question",
+      "license": "U",
+      "title": "Le message anonyme",
+      "authors": [],
+      "changes": [],
+      "extraTitle": "Le message anonyme"
+     }
+    },
+    "showContentTitle": false,
+    "proceedButtonText": "Continuer",
+    "forceContentFinished": "useBehavioural",
+    "feedback": {
+     "title": "",
+     "subtitle": ""
+    },
+    "contentBehaviour": "useBehavioural"
+   },
+   {
+    "type": {
+     "library": "H5P.BranchingQuestion 1.0",
+     "params": {
+      "branchingQuestion": {
+       "question": "<p><strong>Jeudi : le sondage.</strong> Pour un article sur les boissons énergisantes, l’équipe prépare un questionnaire en ligne. Il demande&nbsp;: nom, prénom, classe, adresse, numéro de téléphone, et «&nbsp;Bois-tu des boissons énergisantes&nbsp;?&nbsp;». Que fait Inès&nbsp;?</p>",
+       "alternatives": [
+        {
+         "text": "Elle ne garde que la classe et la réponse, sans nom.",
+         "nextContentId": 4,
+         "feedback": {
+          "title": "Bonne décision",
+          "subtitle": "C’est la minimisation des données : on demande seulement ce qui sert à l’article. Anonyme, le sondage protège les élèves, et ils répondent plus franchement.",
+          "endScreenScore": 1
+         }
+        },
+        {
+         "text": "Elle garde toutes les questions : on ne sait jamais.",
+         "nextContentId": 4,
+         "feedback": {
+          "title": "Trop de données personnelles",
+          "subtitle": "Le RGPD impose de ne collecter que les données nécessaires. Pour compter les buveurs de boissons énergisantes, l’adresse et le téléphone ne servent à rien, et les garder fait courir un risque à chacun.",
+          "endScreenScore": 0
+         }
+        },
+        {
+         "text": "Elle garde tout, pour publier la liste des buveurs.",
+         "nextContentId": 4,
+         "feedback": {
+          "title": "La pire option",
+          "subtitle": "Publier des noms avec les habitudes de chacun, c’est exposer leur vie privée sans leur accord. Un élève est moqué dès la récréation. C’est interdit par le RGPD, et la CNIL peut être saisie.",
+          "endScreenScore": 0
+         }
+        }
+       ]
+      }
+     },
+     "subContentId": "5a35a212-84f5-473e-895e-466c8c41f784",
+     "metadata": {
+      "contentType": "Branching Question",
+      "license": "U",
+      "title": "Le sondage",
+      "authors": [],
+      "changes": [],
+      "extraTitle": "Le sondage"
+     }
+    },
+    "showContentTitle": false,
+    "proceedButtonText": "Continuer",
+    "forceContentFinished": "useBehavioural",
+    "feedback": {
+     "title": "",
+     "subtitle": ""
+    },
+    "contentBehaviour": "useBehavioural"
+   },
+   {
+    "type": {
+     "library": "H5P.BranchingQuestion 1.0",
+     "params": {
+      "branchingQuestion": {
+       "question": "<p><strong>Vendredi : la rumeur.</strong> Dans la cour, tout le monde dit que «&nbsp;Sami a été renvoyé trois jours&nbsp;». Un rédacteur propose d’en faire une brève. Que fait Inès&nbsp;?</p>",
+       "alternatives": [
+        {
+         "text": "Elle publie la brève, avec « selon nos informations ».",
+         "nextContentId": 5,
+         "feedback": {
+          "title": "Rumeur et vie privée",
+          "subtitle": "« Selon nos informations » ne transforme pas une rumeur en information vérifiée. Et même si c’était vrai, une sanction est une affaire privée : la publier expose Sami aux moqueries, voire au harcèlement.",
+          "endScreenScore": 0
+         }
+        },
+        {
+         "text": "Elle ne publie rien, et en parle à un adulte du collège.",
+         "nextContentId": 5,
+         "feedback": {
+          "title": "Bonne décision",
+          "subtitle": "Un journal ne publie ni rumeur ni information sur la vie privée d’un élève. Si quelqu’un semble en difficulté, on en parle à un adulte de confiance : la CPE, un professeur, le professeur documentaliste.",
+          "endScreenScore": 1
+         }
+        },
+        {
+         "text": "Elle ne publie rien, mais la partage dans le groupe de classe.",
+         "nextContentId": 5,
+         "feedback": {
+          "title": "C’est toujours la diffuser",
+          "subtitle": "Un groupe de discussion, c’est aussi une publication : le message est copié et circule partout. Faire circuler une rumeur sur quelqu’un peut devenir du cyberharcèlement. Le 3018 aide les victimes, gratuitement.",
+          "endScreenScore": 0
+         }
+        }
+       ]
+      }
+     },
+     "subContentId": "5f3ad7ec-c6e1-4c89-aa56-724805912265",
+     "metadata": {
+      "contentType": "Branching Question",
+      "license": "U",
+      "title": "La rumeur",
+      "authors": [],
+      "changes": [],
+      "extraTitle": "La rumeur"
+     }
+    },
+    "showContentTitle": false,
+    "proceedButtonText": "Continuer",
+    "forceContentFinished": "useBehavioural",
+    "feedback": {
+     "title": "",
+     "subtitle": ""
+    },
+    "contentBehaviour": "useBehavioural"
+   },
+   {
+    "type": {
+     "library": "H5P.AdvancedText 1.1",
+     "params": {
+      "text": "<h2>La semaine est bouclée</h2><p>Retiens les quatre règles de la rédaction&nbsp;:</p><ul><li><strong>Photo&nbsp;:</strong> pas de personne reconnaissable sans son accord (droit à l’image).</li><li><strong>Propos&nbsp;:</strong> critiquer avec des arguments, jamais d’injure ni d’accusation sans preuve (diffamation).</li><li><strong>Données&nbsp;:</strong> ne demander que le nécessaire, ne jamais publier les données des autres (RGPD).</li><li><strong>Rumeurs&nbsp;:</strong> ne publier ni faire circuler ce qui n’est pas vérifié ou touche à la vie privée.</li></ul><p><em>Personnages et situations inventés.</em></p>"
+     },
+     "subContentId": "af243c0d-ef97-4986-8ae6-148e958049ad",
+     "metadata": {
+      "contentType": "Text",
+      "license": "U",
+      "title": "Texte",
+      "authors": [],
+      "changes": [],
+      "extraTitle": "Texte"
+     }
+    },
+    "showContentTitle": false,
+    "proceedButtonText": "Voir mon bilan",
+    "forceContentFinished": "useBehavioural",
+    "feedback": {
+     "title": "",
+     "subtitle": ""
+    },
+    "contentBehaviour": "useBehavioural",
+    "nextContentId": -1
+   }
+  ],
+  "endScreens": [
+   {
+    "endScreenTitle": "Bilan de la semaine",
+    "endScreenSubtitle": "Chaque bonne décision vaut un point. Tu peux rejouer pour découvrir les autres conséquences.",
+    "contentId": -1,
+    "endScreenScore": 0,
+    "endScreenImage": {
+     "path": "images/tilleul-boucle.png",
+     "mime": "image/png",
+     "width": 700,
+     "height": 466,
+     "copyright": {
+      "license": "U"
+     },
+     "alt": "La une du journal Le Tilleul"
+    }
+   }
+  ],
+  "scoringOptionGroup": {
+   "scoringOption": "dynamic-score",
+   "includeInteractionsScores": false
+  },
+  "startScreen": {
+   "startScreenTitle": "Une semaine à la rédaction",
+   "startScreenSubtitle": "Quatre décisions, et pour chacune une conséquence."
+  },
+  "behaviour": {
+   "enableBackwardsNavigation": false,
+   "forceContentFinished": false,
+   "randomizeBranchingQuestions": false
+  },
+  "l10n": {
+   "startScreenButtonText": "Commencer",
+   "endScreenButtonText": "Rejouer",
+   "backButtonText": "Revenir en arrière",
+   "disableProceedButtonText": "Termine d’abord cette étape",
+   "replayButtonText": "Rejouer la vidéo",
+   "scoreText": "Ton score :",
+   "fullscreenAria": "Plein écran"
+  }
+ }
+}
