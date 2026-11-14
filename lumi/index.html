@@ -1,0 +1,133 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Lümi · le parcours EMI du cycle 4</title>
+<meta name="description" content="Lümi : les modules d’éducation aux médias et à l’information du cycle 4, avec le suivi par classe et des parcours partagés entre professeurs documentalistes.">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#0f1a2e">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Bricolage+Grotesque:opsz,wght@12..96,600;12..96,800&family=IBM+Plex+Mono:wght@500;600&display=swap">
+<link rel="stylesheet" href="../style.css">
+<link rel="stylesheet" href="lumi.css">
+<script src="config.js"></script>
+<script src="donnees.js"></script>
+</head>
+<body>
+<div id="demo" class="l-demo" hidden><strong>MODE DÉMO</strong><span>Données fictives<span class="long"> : collège, classes et élèves inventés. Rien ne quitte ce navigateur.</span></span></div>
+<div id="page"></div>
+<script>
+(async function () {
+  const page = document.getElementById('page');
+  document.getElementById('demo').hidden = !LUMI.demo;
+  const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+  const pct = x => Math.round(x * 100) + ' %';
+  const mods = await LUMI.modules();
+  const ICONE = {
+    livre: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 5.5C5.5 4 8.5 4 12 6c3.5-2 6.5-2 9-.5V19c-2.5-1.5-5.5-1.5-9 .5-3.5-2-6.5-2-9-.5z"/><path d="M12 6v13.5"/></svg>',
+    carte: '<svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 4 3 6.5v13L9 17l6 2.5 6-2.5v-13L15 6.5z"/><path d="M9 4v13M15 6.5v13"/></svg>',
+  };
+  const ROUTE = `<svg class="route" viewBox="0 0 300 200" preserveAspectRatio="xMaxYMid meet" aria-hidden="true"><path d="M40 160 C 90 160, 80 100, 130 100 S 170 40, 215 55 S 250 130, 270 150"/><circle cx="40" cy="160" r="7"/><circle cx="130" cy="100" r="7"/><circle cx="215" cy="55" r="7"/><circle class="arrivee" cx="270" cy="150" r="10"/></svg>`;
+
+  /* ---------- porte d'entrée ---------- */
+  function accueil(message) {
+    const livres = mods.filter(m => m.type === 'livre').length;
+    document.title = 'Lümi · le parcours EMI du cycle 4';
+    page.innerHTML = `
+    <header class="entete l-tete"><div class="int l-accueil entree">
+      <div>
+        <p class="surtitre" style="--i:0"><span class="direct">Lümi</span><span>Éducation aux médias et à l’information · cycle 4</span></p>
+        <h1 style="--i:1">Le parcours EMI, <span class="surligne">classe</span> par classe.</h1>
+        <p class="chapo" style="--i:2">${livres} livres interactifs et ${mods.length - livres} Game Maps, de la 5e à la 3e. L’élève entre avec un code, sans compte ni nom. L’enseignant suit sa classe et partage ses parcours avec d’autres collèges.</p>
+      </div>
+      <form class="l-porte" id="porte" style="--i:3" novalidate>
+        <h2>Je suis élève</h2>
+        <p>Ton professeur t’a donné deux codes.</p>
+        <p class="l-alerte" id="alerte" role="alert">${esc(message || '')}</p>
+        <label class="champ">Code de la classe
+          <input class="code" id="c-classe" name="classe" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="12" placeholder="K7M2QX" required></label>
+        <label class="champ">Ton code personnel
+          <input class="code" id="c-code" name="code" autocomplete="off" autocapitalize="none" spellcheck="false" maxlength="30" placeholder="renard-lune-47" required></label>
+        <button class="btn" id="entrer">Ouvrir mon parcours</button>
+        ${LUMI.demo ? '<button type="button" class="lien-btn l-essai" id="essai">Essayer avec un élève fictif</button>' : ''}
+      </form>
+    </div></header>
+    <main class="contenu">
+      <section class="l-section">
+        <h2>Je suis enseignant</h2>
+        <p>Vous créez vos classes, vous distribuez les codes, et vous voyez où en est chaque élève. Les noms restent sur votre poste : la base ne connaît que des numéros.</p>
+        <ol class="methode">
+          <li><strong>Créez une classe</strong> Lümi fabrique un code de classe et un code par élève, à imprimer et à découper.</li>
+          <li><strong>Choisissez un parcours</strong> Tous les modules du niveau, votre propre sélection, ou le parcours partagé par un collègue.</li>
+          <li><strong>Suivez la progression</strong> Modules terminés, scores, notions qui résistent, élèves à relancer.</li>
+        </ol>
+        <div class="actions"><a class="btn" href="enseignant.html">Ouvrir l’espace enseignant</a>
+        <a class="lien-btn" href="../index.html">Voir les modules sans compte</a></div>
+      </section>
+      <p class="pied">Lümi · plateforme EMI cycle 4 · les élèves n’y ont ni compte ni nom</p>
+    </main>`;
+    const f = document.getElementById('porte'), alerte = document.getElementById('alerte'), bouton = document.getElementById('entrer');
+    async function entrer(classe, code) {
+      if (!classe.trim() || !code.trim()) { alerte.textContent = 'Écris le code de ta classe et ton code personnel.'; return; }
+      bouton.disabled = true; alerte.textContent = '';
+      try { parcours(await LUMI.eleveEntrer(classe, code)); }
+      catch (e) { alerte.textContent = e.code === 'trop_de_tentatives' ? 'Trop d’essais ratés dans cette classe. Préviens ton professeur et réessaie dans une heure.' : e.message; bouton.disabled = false; }
+    }
+    f.onsubmit = (e) => { e.preventDefault(); entrer(f.classe.value, f.code.value); };
+    const essai = document.getElementById('essai');
+    if (essai) essai.onclick = () => { f.classe.value = 'SRC5EA'; f.code.value = 'renard-lune-47'; entrer(f.classe.value, f.code.value); };
+  }
+
+  /* ---------- parcours de l'élève ---------- */
+  function statut(p) {
+    if (!p) return '<span class="statut">À faire</span>';
+    if (p.termine) return '<span class="statut ok">Terminé' + (p.meilleur ? ' · ' + pct(p.meilleur) : '') + '</span>';
+    return '<span class="statut encours">' + (p.avance ? pct(p.avance) + ' lu' : 'Commencé') + '</span>';
+  }
+  function carte(m, p, i) {
+    const gm = m.type === 'gamemap', av = p ? (p.termine ? 1 : p.avance || 0) : 0;
+    return `<a class="carte${gm ? ' gm' : ''}" style="--i:${i};--niv:var(--c${m.niveau[0]})" href="module.html?m=${encodeURIComponent(m.id)}">
+      ${gm ? ROUTE : ''}
+      <div class="haut">${gm ? '<span class="pastille">Bilan de l’année</span>' : `<span class="num">${m.num}</span>`}${statut(p)}</div>
+      <div class="t">${esc(m.titre)}</div>
+      <div class="type">${gm ? ICONE.carte + 'Game Map · environ 25 min' : ICONE.livre + 'Livre interactif · 45 à 50 min'}</div>
+      <span class="fleche" aria-hidden="true">→</span>
+      ${av ? `<span class="jauge" aria-hidden="true"><span style="width:${Math.round(av * 100)}%"></span></span>` : ''}</a>`;
+  }
+  function parcours(s) {
+    const codes = LUMI.eleveCodes(), niv = s.classe.niveau;
+    const liste = (s.parcours ? s.parcours.modules.map(id => mods.find(m => m.id === id)).filter(Boolean) : mods.filter(m => m.niveau === niv));
+    const faits = liste.filter(m => s.progression[m.id] && s.progression[m.id].termine).length;
+    const R = 40, C = 2 * Math.PI * R, part = liste.length ? faits / liste.length : 0;
+    document.title = 'Mon parcours · ' + s.classe.nom + ' · Lümi';
+    page.innerHTML = `
+    <header class="barre" style="--niv:var(--c${niv[0]})">
+      <span class="l-marque">L<i>ü</i>mi</span>
+      <div class="barre-titre l-seance"><span class="pastille">${esc(s.classe.nom)}</span><span class="l-code" title="Ton code personnel">${esc(codes.code)}</span></div>
+      <button class="retour" id="quitter">Quitter</button>
+    </header>
+    <main class="contenu">
+      <section class="niveau" style="--niv:var(--c${niv[0]})">
+        <div class="tete-niveau"><span class="grand-niv" aria-hidden="true">${niv}</span>
+          <div><h1 style="font-size:1.55rem;margin:0 0 4px">${esc(s.parcours ? s.parcours.titre : 'Mon parcours de ' + niv)}</h1>
+          <p class="accroche">${esc(s.parcours && s.parcours.description ? s.parcours.description : 'Fais les modules dans l’ordre. Tu peux t’arrêter au milieu d’un livre : il rouvrira là où tu en étais.')}</p></div>
+          <div class="anneau" role="img" aria-label="${faits} module${faits > 1 ? 's' : ''} terminé${faits > 1 ? 's' : ''} sur ${liste.length}">
+            <svg viewBox="0 0 96 96"><circle class="fond" cx="48" cy="48" r="${R}"/><circle class="val" cx="48" cy="48" r="${R}" stroke-dasharray="${C}" stroke-dashoffset="${C * (1 - part)}"/></svg>
+            <span class="txt">${faits}/${liste.length}<small>terminés</small></span></div>
+        </div>
+        <div class="grille" style="margin-top:24px">${liste.map((m, i) => carte(m, s.progression[m.id], i)).join('')}</div>
+      </section>
+      <p class="note" style="margin-top:28px">Ta progression est enregistrée avec ton code : tu la retrouves sur n’importe quel appareil. Clique sur « Quitter » avant de laisser l’ordinateur.</p>
+    </main>`;
+    document.getElementById('quitter').onclick = () => { LUMI.eleveQuitter(); accueil(); };
+  }
+
+  let s = null;
+  try { s = await LUMI.eleveSeance(); } catch (e) {}
+  s ? parcours(s) : accueil();
+})();
+</script>
+</body>
+</html>

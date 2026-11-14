@@ -1,0 +1,60 @@
+LÜMI · la plateforme EMI cycle 4 ouverte à plusieurs collèges (étape 1, 14 novembre 2026)
+
+Ce dossier ajoute à la plateforme EMI cycle 4 ce qui lui manquait pour servir à d'autres
+professeurs documentalistes : des comptes enseignants, des classes, un suivi en ligne et
+des parcours partagés. Il réutilise tels quels les 30 modules, le lecteur H5P et la charte
+du dossier parent (../modules, ../libraries, ../player, ../modules.json, ../style.css).
+Le site d'origine (../index.html) n'est pas modifié.
+
+ÉTAT ACTUEL : MODE DÉMO
+Rien n'est branché à une base de données. Tout ce qu'on voit (collège fictif, deux classes,
+bibliothèque) est fabriqué dans le navigateur de celui qui regarde et n'en sort pas.
+Les pages portent « noindex » : les moteurs de recherche ne les référencent pas.
+
+PAGES
+- index.html      : accueil. L'élève entre avec le code de sa classe et son code personnel,
+                    puis voit son parcours. En démo : bouton « Essayer avec un élève fictif ».
+- module.html     : le lecteur d'un module, avec enregistrement de la progression.
+                    module.html?m=<module>&apercu=1 : aperçu enseignant, rien n'est enregistré.
+- enseignant.html : l'espace enseignant (enseignant.js).
+    #classes            mes classes
+    #nouvelle-classe    créer une classe et ses codes (liste de noms facultative)
+    #classe/<id>        tableau de classe, « ce qui résiste », « à relancer », export CSV
+    #classe/<id>/codes  fiche des codes à imprimer et découper
+    #parcours           mes parcours + bibliothèque partagée
+    #parcours/<id>      composer un parcours (modules choisis, ordonnés, partage)
+    #college            mon collège, code d'invitation pour un collègue
+
+RÈGLES DE CONFIDENTIALITÉ (appliquées en démo comme dans la base)
+- Un élève n'a ni compte, ni nom, ni adresse : un numéro d'ordre et un code du type
+  « renard-lune-47 ». Il lui faut aussi le code de sa classe (6 caractères).
+- Les noms tapés dans un tableau de classe restent dans le navigateur de l'enseignant
+  (clé « lumi-noms »). La fiche de codes imprimée fait le lien entre un nom et un code.
+  Attention : si le navigateur est vidé, les noms sont perdus ; la fiche papier reste.
+- Un enseignant ne voit que ses classes. Les collègues du même collège ne voient pas
+  les classes les uns des autres.
+- Un parcours partagé montre son titre, ses modules, le nom de son auteur et de son
+  collège. Rien d'autre ne sort d'un établissement.
+- Supprimer une classe efface ses codes et toute sa progression.
+
+FICHIERS
+- config.js     : adresse et clé publique de la base. Vides = mode démo.
+- donnees.js    : la couche de données (window.LUMI). Toutes les pages passent par elle.
+                  Aujourd'hui un seul moteur, « démo ». Le moteur « base » viendra s'y
+                  ajouter avec la même interface, sans toucher aux pages.
+- lumi.css      : ce qui s'ajoute à ../style.css.
+- base/schema.sql : le schéma PostgreSQL prévu pour Supabase (tables, sécurité par ligne,
+                  fonctions pour les élèves sans compte, frein aux essais de codes).
+- base/essais.sql : les essais du schéma sur un PostgreSQL local. Ils vérifient
+                  notamment qu'un enseignant d'un autre collège ne lit ni ne modifie rien.
+                  Usage (depuis base/) : psql -v ON_ERROR_STOP=1 -d <base vide> -f essais.sql
+
+CE QUI N'EST PAS ENCORE FAIT
+- Le branchement à Supabase (connexion par courriel et mot de passe, moteur « base »).
+  Il sera écrit et essayé contre le vrai projet, une fois celui-ci créé en région Europe.
+- Les modules compagnons (aucun module n'en a aujourd'hui).
+- Le dépôt de nouveaux modules H5P par les enseignants, la modération de la bibliothèque,
+  la suppression de son compte par l'enseignant, l'export de sauvegarde des noms.
+- Le cadre écrit avec chaque établissement (données d'élèves) : à poser avant toute
+  ouverture à un autre collège.
+- Le nom : « Lumi » est aussi celui d'un éditeur H5P connu. À trancher avant d'ouvrir.
