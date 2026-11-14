@@ -83,7 +83,7 @@
   try { const e = JSON.parse(EMI.etat(id) || 'null'); if (e && e.version && e.version === version) precedent = e.etat; } catch (e) {}
   const options = {
     h5pJsonPath: './modules/' + id, librariesPath: './libraries',
-    frameJs: './player/frame.bundle.js', frameCss: './player/styles/h5p.css',
+    frameJs: './player/frame.bundle.js', frameCss: './player/styles/h5p.css', customCss: './h5p-emi.css',
     frame: false, fullScreen: true, id: id,
     saveFreq: 3600,
   };

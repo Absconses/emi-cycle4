@@ -1,0 +1,4 @@
+/* Retouches de la plateforme appliquées dans le cadre H5P (option customCss du lecteur). */
+
+/* Question Set placé dans un livre : mêmes marges que les autres activités du chapitre. */
+.h5p-interactive-book .h5p-column-content > .questionset { padding: 0 1em; }
