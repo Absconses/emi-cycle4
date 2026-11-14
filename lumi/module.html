@@ -15,7 +15,7 @@
 <script src="config.js"></script>
 <script src="donnees.js"></script>
 </head>
-<body class="page-module">
+<body class="page-module l-ambiance">
 <p class="l-apercu" id="apercu" hidden>Aperçu enseignant : rien n’est enregistré.</p>
 <header class="barre">
   <a class="retour" id="retour" href="index.html">← Mon parcours</a>
@@ -68,10 +68,15 @@
   }
 
   const statut = document.getElementById('statut');
+  // quand le module passe à « Terminé », le statut le montre une fois et le module suivant s'offre
+  let dejaFini = null;
   const montre = (p) => {
     const sc = p.meilleur ? ' · score ' + Math.round(p.meilleur * 100) + ' %' : '';
     statut.textContent = p.termine ? 'Terminé' + sc : (p.avance ? Math.round(p.avance * 100) + ' % du livre' : 'Commencé') + sc;
-    statut.className = 'statut ' + (p.termine ? 'ok' : 'encours');
+    const vient = dejaFini === false && !!p.termine;
+    statut.className = 'statut ' + (p.termine ? 'ok' : 'encours') + (vient ? ' vient' : '');
+    if (vient) document.getElementById('suite').classList.add('appel');
+    dejaFini = !!p.termine;
   };
 
   // où l'élève en était (score, chapitres, état de reprise)

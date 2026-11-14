@@ -34,10 +34,29 @@
     const j = Math.floor((Date.now() - new Date(iso).getTime()) / 864e5);
     return j <= 0 ? 'aujourd’hui' : j === 1 ? 'hier' : 'il y a ' + j + ' j';
   };
-  async function copier(texte) {
-    try { await navigator.clipboard.writeText(texte); dire('Copié : ' + texte); }
-    catch (e) { dire('Copie impossible ici : ' + texte); }
+  // pour les lecteurs d'écran seulement : le retour visible se fait sur le bouton lui-même
+  const annoncer = (texte) => { message.classList.remove('vu'); message.textContent = texte; };
+  async function copier(texte, b) {
+    try {
+      await navigator.clipboard.writeText(texte); annoncer('Copié : ' + texte);
+      b.classList.add('fait'); clearTimeout(b._retour); b._retour = setTimeout(() => b.classList.remove('fait'), 1600);
+    } catch (e) { dire('Copie impossible ici. Le code : ' + texte); }
   }
+  const BOUTON_COPIER = '<button type="button" class="lien-btn discret copie" id="copier"><span class="a">Copier</span><span class="b" aria-hidden="true">Copié ✓</span></button>';
+  // pendant un enregistrement, le bouton le dit et ne peut pas être cliqué deux fois
+  async function occuper(b, texte, f) {
+    const avant = b.textContent; b.disabled = true; b.setAttribute('aria-busy', 'true'); b.textContent = texte;
+    try { return await f(); } finally { if (b.isConnected) { b.disabled = false; b.removeAttribute('aria-busy'); b.textContent = avant; } }
+  }
+  // une action faite au clavier doit être immédiate : on retient d'où vient le dernier geste
+  let auClavier = false;
+  addEventListener('keydown', () => { auClavier = true; }, true);
+  addEventListener('pointerdown', () => { auClavier = false; }, true);
+  vue.addEventListener('keydown', (e) => { if ((e.ctrlKey || e.metaKey) && e.key === 'Enter' && e.target.matches('textarea') && e.target.form) e.target.form.requestSubmit(); });
+  LUMI_FX.reflets(vue, 'a.l-carte');
+  const placerPastille = LUMI_FX.pastille($('.l-nav'));
+  // un simple rafraîchissement (après un ajout, un nom collé…) ne rejoue pas l'entrée de la vue
+  const redessiner = (f) => { vue.classList.remove('entre'); return f(); };
   const telecharger = (nom, contenu, type) => {
     const a = document.createElement('a');
     a.href = URL.createObjectURL(new Blob([contenu], { type })); a.download = nom;
@@ -48,27 +67,36 @@
   const alerter = (e) => { const a = $('.l-alerte', vue); if (a) { a.textContent = e.message; a.scrollIntoView({ block: 'nearest' }); } else dire(e.message); };
 
   /* ---------- aiguillage ---------- */
+  let vuePrecedente = null, finEntree;
   async function route() {
     try { session = await LUMI.session(); } catch (e) { session = null; }
-    barre.hidden = !session;
-    if (!session) return vueConnexion();
-    $('#qui').textContent = session.enseignant.nom;
-    const [a, b, c] = location.hash.replace(/^#/, '').split('/');
-    const onglet = a === 'parcours' ? 'parcours' : a === 'college' ? 'college' : 'classes';
-    barre.querySelectorAll('[data-onglet]').forEach(l => l.dataset.onglet === onglet ? l.setAttribute('aria-current', 'page') : l.removeAttribute('aria-current'));
-    vue.className = 'l-page';
-    try {
-      if (a === 'classe' && b && c === 'codes') await vueCodes(b);
-      else if (a === 'classe' && b) await vueClasse(b);
-      else if (a === 'nouvelle-classe') await vueNouvelleClasse();
-      else if (a === 'parcours' && b) await vueEditeur(b);
-      else if (a === 'parcours') await vueParcours();
-      else if (a === 'college') await vueCollege();
-      else await vueClasses();
-    } catch (e) {
-      vue.innerHTML = `<div class="l-vide"><strong>${esc(e.message)}</strong><a class="btn" href="#classes">Revenir à mes classes</a></div>`;
-    }
-    scrollTo(0, 0);
+    const cle = session ? location.hash.replace(/^#/, '') || 'classes' : 'connexion';
+    const change = cle !== vuePrecedente, premiere = vuePrecedente === null; vuePrecedente = cle;
+    const rendre = async () => {
+      barre.hidden = !session;
+      if (!session) { vueConnexion(); return; }
+      $('#qui').textContent = session.enseignant.nom;
+      const [a, b, c] = cle.split('/');
+      const onglet = a === 'parcours' ? 'parcours' : a === 'college' ? 'college' : 'classes';
+      barre.querySelectorAll('[data-onglet]').forEach(l => l.dataset.onglet === onglet ? l.setAttribute('aria-current', 'page') : l.removeAttribute('aria-current'));
+      vue.className = 'l-page';
+      try {
+        if (a === 'classe' && b && c === 'codes') await vueCodes(b);
+        else if (a === 'classe' && b) await vueClasse(b);
+        else if (a === 'nouvelle-classe') await vueNouvelleClasse();
+        else if (a === 'parcours' && b) await vueEditeur(b);
+        else if (a === 'parcours') await vueParcours();
+        else if (a === 'college') await vueCollege();
+        else await vueClasses();
+      } catch (e) {
+        vue.innerHTML = `<div class="l-vide"><strong>${esc(e.message)}</strong><a class="btn" href="#classes">Revenir à mes classes</a></div>`;
+      }
+      if (change) { vue.classList.add('entre'); scrollTo(0, 0); }
+      placerPastille();
+    };
+    await LUMI_FX.transition(rendre, change && !premiere);
+    placerPastille();
+    clearTimeout(finEntree); finEntree = setTimeout(() => vue.classList.remove('entre'), 1000);
   }
   addEventListener('hashchange', route);
 
@@ -94,13 +122,13 @@
         <label class="champ" id="par-invitation" hidden>Code d’invitation<input class="code" name="invitation" autocomplete="off" autocapitalize="characters" spellcheck="false" maxlength="12"></label>
         <button class="btn">Créer mon compte d’essai</button>
       </form>`;
-    $('#visiter').onclick = async () => { await LUMI.connecter(); location.hash = '#classes'; route(); };
+    $('#visiter').onclick = (e) => occuper(e.currentTarget, 'Ouverture…', async () => { await LUMI.connecter(); location.hash = '#classes'; await route(); });
     const f = $('#inscription');
     f.rejoindre.onchange = () => { $('#nouveau-college').hidden = f.rejoindre.checked; $('#par-invitation').hidden = !f.rejoindre.checked; };
     f.onsubmit = async (e) => {
       e.preventDefault();
       try {
-        await LUMI.inscrire({ nom: f.nom.value, etablissement: f.etablissement.value, ville: f.ville.value, invitation: f.rejoindre.checked ? f.invitation.value || '?' : '' });
+        await occuper(f.querySelector('.btn'), 'Création…', () => LUMI.inscrire({ nom: f.nom.value, etablissement: f.etablissement.value, ville: f.ville.value, invitation: f.rejoindre.checked ? f.invitation.value || '?' : '' }));
         location.hash = '#classes'; route();
       } catch (err) { alerter(err); }
     };
@@ -117,7 +145,7 @@
         <p>${pl(c.effectif, 'élève')} · ${esc(c.parcours_titre || 'Tous les modules de ' + c.niveau)}</p>
         <div class="l-barre-av" role="img" aria-label="${total ? pct(c.termines / total) : '0 %'} des modules terminés"><span style="width:${total ? Math.round(c.termines / total * 100) : 0}%"></span></div>
         <p class="l-meta">${c.termines} module${c.termines > 1 ? 's' : ''} terminé${c.termines > 1 ? 's' : ''} sur ${total}</p>
-        <div class="bas"><span class="l-code" title="Code de la classe">${esc(c.code)}</span></div></a>`;
+        <div class="bas"><span class="l-code" title="Code de la classe">${esc(c.code)}</span><span class="ouvrir" aria-hidden="true">Ouvrir</span></div></a>`;
     };
     vue.innerHTML = `
       <div class="l-titre"><div><h1>Mes classes</h1><p>${esc(session.etablissement.nom)}</p></div>
@@ -156,7 +184,7 @@
     f.onsubmit = async (e) => {
       e.preventDefault();
       try {
-        const id = await LUMI.creerClasse({ nom: f.nom.value, niveau: f.niveau.value, parcours_id: f.parcours.value || null, effectif: f.effectif.value });
+        const id = await occuper(f.querySelector('.btn'), 'Création des codes…', () => LUMI.creerClasse({ nom: f.nom.value, niveau: f.niveau.value, parcours_id: f.parcours.value || null, effectif: f.effectif.value }));
         const d = await LUMI.classe(id), L = lignes();
         d.eleves.forEach((el, k) => { if (L[k]) LUMI.nommer(d.classe.code, el.code, L[k].slice(0, 60)); });
         location.hash = '#classe/' + id;
@@ -218,7 +246,7 @@
       <a class="l-fil" href="#classes">← Mes classes</a>
       <div class="l-titre" style="${niv(c.niveau)}">
         <div><h1>${esc(c.nom)} <span class="pastille" style="vertical-align:middle">${c.niveau}</span></h1>
-          <p>Code de la classe : <span class="l-code">${esc(c.code)}</span> <button class="lien-btn discret" id="copier">Copier</button></p></div>
+          <p>Code de la classe : <span class="l-code">${esc(c.code)}</span> ${BOUTON_COPIER}</p></div>
         <div class="actions"><a class="btn" href="#classe/${esc(c.id)}/codes">Fiche des codes</a><button class="lien-btn" id="csv">Exporter en CSV</button></div>
       </div>
       <ul class="l-chiffres">
@@ -248,20 +276,20 @@
       </div>
       <p style="margin-top:22px"><button class="lien-btn danger" id="supprimer">Supprimer la classe et toutes ses données</button></p>`;
 
-    $('#copier').onclick = () => copier(c.code);
-    $('#parcours').onchange = async (e) => { try { await LUMI.modifierClasse(c.id, { parcours_id: e.target.value || null }); dire('Parcours de la classe mis à jour.'); vueClasse(id); } catch (err) { dire(err.message); } };
+    $('#copier').onclick = (e) => copier(c.code, e.currentTarget);
+    $('#parcours').onchange = async (e) => { try { await LUMI.modifierClasse(c.id, { parcours_id: e.target.value || null }); dire('Parcours de la classe mis à jour.'); redessiner(() => vueClasse(id)); } catch (err) { dire(err.message); } };
     vue.querySelectorAll('input.nom').forEach(i => { i.onchange = () => { LUMI.nommer(c.code, i.dataset.code, i.value.trim()); dire('Nom gardé sur ce poste.'); }; });
     vue.querySelectorAll('button.retirer').forEach(b => { b.onclick = async () => {
       if (!(await confirmer({ titre: 'Retirer ' + b.dataset.qui + ' ?', texte: 'Son code ne fonctionnera plus et sa progression sera effacée. Cette suppression est définitive.', oui: 'Retirer l’élève', danger: true }))) return;
-      await LUMI.retirerEleve(b.dataset.eleve); dire('Élève retiré.'); vueClasse(id);
+      await LUMI.retirerEleve(b.dataset.eleve); dire('Élève retiré.'); redessiner(() => vueClasse(id));
     }; });
-    $('#ajout').onsubmit = async (e) => { e.preventDefault(); const n = await LUMI.ajouterEleves(c.id, e.target.n.value); dire(n ? pl(n, 'élève ajouté', 'élèves ajoutés') + '.' : 'La classe est complète (60 élèves).'); vueClasse(id); };
+    $('#ajout').onsubmit = async (e) => { e.preventDefault(); const n = await LUMI.ajouterEleves(c.id, e.target.n.value); dire(n ? pl(n, 'élève ajouté', 'élèves ajoutés') + '.' : 'La classe est complète (60 élèves).'); redessiner(() => vueClasse(id)); };
     $('#coller').onsubmit = (e) => {
       e.preventDefault();
       const L = e.target.liste.value.split('\n').map(x => x.trim()).filter(Boolean);
       if (!L.length) return dire('Collez d’abord une liste, un nom par ligne.');
       d.eleves.forEach((el, k) => { if (L[k]) LUMI.nommer(c.code, el.code, L[k].slice(0, 60)); });
-      dire(pl(Math.min(L.length, d.eleves.length), 'nom placé', 'noms placés') + (L.length > d.eleves.length ? ' ; ' + pl(L.length - d.eleves.length, 'nom', 'noms') + ' en trop.' : '.')); vueClasse(id);
+      dire(pl(Math.min(L.length, d.eleves.length), 'nom placé', 'noms placés') + (L.length > d.eleves.length ? ' ; ' + pl(L.length - d.eleves.length, 'nom', 'noms') + ' en trop.' : '.')); redessiner(() => vueClasse(id));
     };
     $('#supprimer').onclick = async () => {
       if (!(await confirmer({ titre: 'Supprimer ' + c.nom + ' ?', texte: 'Les ' + A.eleves.length + ' codes cesseront de fonctionner, la progression et les noms gardés sur ce poste seront effacés. Cette suppression est définitive.', oui: 'Supprimer la classe', danger: true }))) return;
@@ -315,13 +343,13 @@
       <div class="l-titre" style="margin:44px 0 14px"><div><h2 class="l-h2" style="margin:0">Bibliothèque partagée</h2><p>Les parcours publiés par des enseignants d’autres collèges. Vous en faites une copie, que vous adaptez librement.</p></div>
         <label class="champ" style="margin:0;min-width:150px">Niveau<select id="filtre"><option value="">Tous</option>${LUMI.NIVEAUX.map(n => `<option${n === filtre ? ' selected' : ''}>${n}</option>`).join('')}</select></label></div>
       ${vus.length ? `<div class="l-grille">${vus.map(partage).join('')}</div>` : `<div class="l-vide"><strong>Rien de partagé ${filtre ? 'pour la ' + filtre : ''} pour l’instant</strong>Soyez le premier : cochez « Partager » en enregistrant l’un de vos parcours.</div>`}`;
-    $('#filtre').onchange = (e) => { filtre = e.target.value; vueParcours(); };
+    $('#filtre').onchange = (e) => { filtre = e.target.value; redessiner(() => vueParcours()); };
     vue.querySelectorAll('[data-reprendre]').forEach(b => { b.onclick = async () => { try { const n = await LUMI.dupliquerParcours(b.dataset.reprendre); dire('Copie ajoutée à vos parcours. Vous pouvez la modifier.'); location.hash = '#parcours/' + n; } catch (e) { dire(e.message); } }; });
-    vue.querySelectorAll('[data-dupliquer]').forEach(b => { b.onclick = async () => { await LUMI.dupliquerParcours(b.dataset.dupliquer); dire('Parcours dupliqué.'); vueParcours(); }; });
+    vue.querySelectorAll('[data-dupliquer]').forEach(b => { b.onclick = async () => { await LUMI.dupliquerParcours(b.dataset.dupliquer); dire('Parcours dupliqué.'); redessiner(() => vueParcours()); }; });
     vue.querySelectorAll('[data-supprimer]').forEach(b => { b.onclick = async () => {
       const n = +b.dataset.classes;
       if (!(await confirmer({ titre: 'Supprimer « ' + b.dataset.titre + ' » ?', texte: (n ? pl(n, 'classe') + ' le ' + (n > 1 ? 'suivent' : 'suit') + ' : ' + (n > 1 ? 'elles reviendront' : 'elle reviendra') + ' à tous les modules de son niveau. ' : '') + 'La progression des élèves est conservée.', oui: 'Supprimer le parcours', danger: true }))) return;
-      await LUMI.supprimerParcours(b.dataset.supprimer); dire('Parcours supprimé.'); vueParcours();
+      await LUMI.supprimerParcours(b.dataset.supprimer); dire('Parcours supprimé.'); redessiner(() => vueParcours());
     }; });
   }
 
@@ -357,7 +385,7 @@
       <summary>Modules de ${n}<span class="l-meta" data-compte="${n}"></span></summary>
       ${mods.filter(m => m.niveau === n).map(m => `<label><input type="checkbox" value="${esc(m.id)}"><span class="n">${m.num || 'GM'}</span><span>${esc(m.titre)}</span><a href="module.html?m=${encodeURIComponent(m.id)}&apercu=1" target="_blank" rel="noopener">Aperçu</a></label>`).join('')}</details>`).join('');
     function peindre(focus) {
-      ordre.innerHTML = choisis.map((i, k) => `<li><span class="t">${esc(nomMod(i))}</span>
+      ordre.innerHTML = choisis.map((i, k) => `<li data-id="${esc(i)}"><span class="t">${esc(nomMod(i))}</span>
         <button type="button" data-k="${k}" data-d="-1" aria-label="Monter ${esc(parId.get(i).titre)}"${k ? '' : ' disabled'}>↑</button>
         <button type="button" data-k="${k}" data-d="1" aria-label="Descendre ${esc(parId.get(i).titre)}"${k < choisis.length - 1 ? '' : ' disabled'}>↓</button>
         <button type="button" data-k="${k}" data-d="0" aria-label="Enlever ${esc(parId.get(i).titre)}">✕</button></li>`).join('');
@@ -369,16 +397,17 @@
     ordre.onclick = (e) => {
       const b = e.target.closest('button'); if (!b) return;
       const k = +b.dataset.k, d = +b.dataset.d;
-      if (!d) { choisis.splice(k, 1); peindre({ k: Math.min(k, choisis.length - 1), d: 0 }); return; }
-      [choisis[k], choisis[k + d]] = [choisis[k + d], choisis[k]]; peindre({ k: k + d, d });
+      const anime = !auClavier && e.detail > 0;
+      if (!d) { choisis.splice(k, 1); LUMI_FX.deplacer(ordre, 'id', () => peindre({ k: Math.min(k, choisis.length - 1), d: 0 }), anime); return; }
+      [choisis[k], choisis[k + d]] = [choisis[k + d], choisis[k]]; LUMI_FX.deplacer(ordre, 'id', () => peindre({ k: k + d, d }), anime);
     };
-    choix.onchange = (e) => { const c = e.target; if (c.type !== 'checkbox') return; if (c.checked) { if (choisis.length < 40) choisis.push(c.value); } else choisis = choisis.filter(i => i !== c.value); peindre(); };
+    choix.onchange = (e) => { const c = e.target; if (c.type !== 'checkbox') return; if (c.checked) { if (choisis.length < 40) choisis.push(c.value); } else choisis = choisis.filter(i => i !== c.value); LUMI_FX.deplacer(ordre, 'id', () => peindre(), !auClavier); };
     f.niveau.onchange = () => { const d = choix.querySelector(`[data-niveau="${f.niveau.value}"]`); if (d) d.open = true; };
     peindre();
     f.onsubmit = async (e) => {
       e.preventDefault();
       try {
-        await LUMI.enregistrerParcours({ id: nouveau ? null : p.id, titre: f.titre.value, description: f.description.value, niveau: f.niveau.value, modules: choisis, public: f.public.checked });
+        await occuper(f.querySelector('.btn'), 'Enregistrement…', () => LUMI.enregistrerParcours({ id: nouveau ? null : p.id, titre: f.titre.value, description: f.description.value, niveau: f.niveau.value, modules: choisis, public: f.public.checked }));
         location.hash = '#parcours'; dire(nouveau ? 'Parcours créé.' : 'Parcours enregistré.');
       } catch (err) { alerter(err); }
     };
@@ -398,7 +427,7 @@
         <button class="btn">Enregistrer</button></form>
       <div class="l-bloc"><h2>Inviter un collègue du collège</h2>
         <p style="margin:0 0 12px;color:var(--encre-2)">Donnez-lui ce code : à l’inscription, il rejoindra ${esc(t.nom)}. Chacun garde ses classes, que l’autre ne voit pas.</p>
-        <p style="margin:0"><span class="l-code">${esc(t.invitation)}</span> <button class="lien-btn discret" id="copier">Copier</button></p>
+        <p style="margin:0"><span class="l-code">${esc(t.invitation)}</span> ${BOUTON_COPIER}</p>
         ${session.collegues.length ? `<p class="petit" style="margin:14px 0 0">Déjà inscrits : ${esc(session.collegues.join(', '))}.</p>` : ''}</div>
       <div class="l-bloc"><h2>Ce que Lümi enregistre</h2>
         <ul style="margin:0;padding-left:1.2em;color:var(--encre-2)">
@@ -407,7 +436,7 @@
           <li>Les noms que vous tapez dans un tableau de classe restent sur ce poste.</li>
           <li>Supprimer une classe efface ses codes et toute sa progression.</li>
         </ul></div>`;
-    $('#copier').onclick = () => copier(t.invitation);
+    $('#copier').onclick = (e) => copier(t.invitation, e.currentTarget);
     $('#f').onsubmit = async (e) => { e.preventDefault(); const f = e.target; session = await LUMI.modifierCompte({ nom: f.nom.value, etablissement: f.etablissement.value, ville: f.ville.value }); $('#qui').textContent = session.enseignant.nom; dire('Enregistré.'); };
   }
 

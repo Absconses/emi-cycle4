@@ -206,3 +206,160 @@ table.classe th.mod b { font-family: var(--f-mono); color: var(--niv, var(--encr
   table.classe input.nom { width: 104px; }
   table.classe th:nth-child(2), table.classe td.code { display: none; }
 }
+
+/* =====================================================================================
+   LA LUMIÈRE ET LE VERRE
+   Une seule idée : Lümi éclaire. Sur l'accueil, une lampe révèle les titres dans l'ombre
+   et passe derrière une porte de verre. Ailleurs, le verre et le mouvement restent au
+   service du geste : on voit ce qui est cliquable, ce qui vient de changer, où l'on est.
+   Règles (plugin audit-suite) : transform et opacity seulement, flou ≤ 20 px, sorties en
+   ease-out, déplacements en ease-in-out, réponses sous 250 ms, rien au défilement,
+   survol réservé aux appareils qui en ont un, tout s'éteint en « moins de mouvement ».
+   ===================================================================================== */
+:root {
+  --va-vient: cubic-bezier(.645, .045, .355, 1);
+  --l-verre: color-mix(in srgb, var(--carte) 80%, transparent);
+  --l-reflet: rgba(255, 255, 255, .75);
+  --l-filet: color-mix(in srgb, var(--encre) 9%, transparent);
+  --z-barre: 5; --z-message: 30;
+}
+@media (prefers-color-scheme: dark) { :root:not([data-theme="light"]) { --l-reflet: rgba(255, 255, 255, .07); --l-filet: rgba(255, 255, 255, .09); } }
+:root[data-theme="dark"] { --l-reflet: rgba(255, 255, 255, .07); --l-filet: rgba(255, 255, 255, .09); }
+
+/* anneau de focus : sombre sur clair, blanc sur sombre (jamais une couleur de la charte) */
+:focus-visible { outline: 2px solid var(--encre); outline-offset: 2px; border-radius: 8px; }
+.barre :focus-visible, .entete :focus-visible, .l-demo :focus-visible { outline-color: #fff; }
+.l-demo :focus-visible { outline-color: var(--sur-surligneur); }
+a.carte:focus-visible { outline: 2px solid var(--encre); outline-offset: 3px; }
+
+/* ---------- l'ambiance : deux lueurs fixes derrière les pages de travail ---------- */
+body.l-ambiance { isolation: isolate; }
+body.l-ambiance::before { content: ""; position: fixed; inset: 0; z-index: -1; pointer-events: none; background:
+  radial-gradient(70vw 60vh at 100% 0%, color-mix(in srgb, var(--surligneur) 20%, transparent), transparent 70%),
+  radial-gradient(60vw 60vh at 0% 100%, color-mix(in srgb, var(--niv, var(--c5)) 14%, transparent), transparent 70%); }
+
+/* ---------- la barre : du verre sombre, le contenu défile dessous ---------- */
+.barre { z-index: var(--z-barre); background: color-mix(in srgb, var(--nuit) 80%, transparent); -webkit-backdrop-filter: blur(16px) saturate(1.6); backdrop-filter: blur(16px) saturate(1.6); box-shadow: inset 0 -1px 0 rgba(255, 255, 255, .06), 0 10px 30px -18px rgba(8, 16, 29, .7); }
+.l-nav { position: relative; }
+.l-nav a { position: relative; z-index: 1; }
+.l-nav a[aria-current="page"] { background: none; }
+.l-pilule { position: absolute; inset: 0; background: var(--surligneur); clip-path: inset(0 100% 0 0 round 8px); transition: clip-path .24s var(--va-vient), opacity .15s ease; pointer-events: none; }
+
+/* ---------- surfaces : filet d'ombre plutôt que bordure, reflet en haut ---------- */
+.l-carte, .l-bloc, .l-chiffres li, .tableau-zone, .choix-niveau, .ordre li { background: var(--l-verre); border-color: transparent; box-shadow: 0 0 0 1px var(--l-filet), inset 0 1px 0 var(--l-reflet), var(--ombre); }
+.tableau-zone { background: var(--carte); }
+a.l-carte { overflow: hidden; --mx: 50%; --my: 0%; }
+a.l-carte::after { content: ""; position: absolute; inset: 0; border-radius: inherit; pointer-events: none; opacity: 0; transition: opacity .2s ease; background: radial-gradient(260px circle at var(--mx) var(--my), color-mix(in srgb, var(--niv) 16%, transparent), transparent 65%); }
+a.l-carte .ouvrir { margin-left: auto; font: 700 .9rem/1 var(--f-texte); color: var(--niv); opacity: .55; transform: translateX(-4px); transition: opacity .18s ease, transform .18s var(--sortie); }
+@media (hover: hover) and (pointer: fine) {
+  a.l-carte:hover { box-shadow: 0 0 0 1px color-mix(in srgb, var(--niv) 45%, transparent), inset 0 1px 0 var(--l-reflet), var(--ombre-haute); }
+  a.l-carte:hover::after { opacity: 1; }
+  a.l-carte:hover .ouvrir { opacity: 1; transform: none; }
+}
+.l-vide { background: color-mix(in srgb, var(--carte) 45%, transparent); }
+
+/* ---------- entrée d'une vue : les blocs arrivent l'un après l'autre, une seule fois ---------- */
+@keyframes l-monter { from { opacity: 0; transform: translateY(10px); } }
+@keyframes l-sortir { to { opacity: 0; transform: translateY(-6px); } }
+.entre .l-grille > *, .entre .l-chiffres > li, .entre .l-deux > *, .entre > .l-bloc, .entre .tableau-zone { animation: l-monter .34s var(--sortie) both; animation-delay: calc(var(--k, 0) * 45ms); }
+.entre :is(.l-grille, .l-chiffres, .l-deux) > :nth-child(2) { --k: 1; }
+.entre :is(.l-grille, .l-chiffres, .l-deux) > :nth-child(3) { --k: 2; }
+.entre :is(.l-grille, .l-chiffres, .l-deux) > :nth-child(4) { --k: 3; }
+.entre :is(.l-grille, .l-chiffres, .l-deux) > :nth-child(5) { --k: 4; }
+.entre :is(.l-grille, .l-chiffres, .l-deux) > :nth-child(n+6) { --k: 5; }
+.entre .tableau-zone { --k: 4; }
+.l-barre-av span { transform-origin: left; }
+.entre .l-barre-av span { animation: remplir .7s .2s var(--sortie) both; }
+#vue { view-transition-name: vue; }
+::view-transition-old(vue) { animation: l-sortir .12s ease-out both; }
+::view-transition-new(vue) { animation: l-monter .22s var(--sortie) both; }
+::view-transition-old(root), ::view-transition-new(root) { animation: none; }
+
+/* ---------- le bouton qui répond : « Copier » devient « Copié » sur place ---------- */
+.copie { display: inline-grid; place-items: center; }
+.copie > span { grid-area: 1 / 1; transition: opacity .16s ease, transform .16s var(--sortie), filter .16s ease; }
+.copie > .b { opacity: 0; transform: scale(.9); filter: blur(3px); color: var(--ok); }
+.copie.fait > .a { opacity: 0; transform: scale(.9); filter: blur(3px); }
+.copie.fait > .b { opacity: 1; transform: none; filter: none; }
+.btn[aria-busy="true"], .lien-btn[aria-busy="true"] { opacity: .7; cursor: progress; }
+
+/* ---------- liste ordonnée : les modules glissent à leur nouvelle place ---------- */
+.ordre li { transition: transform .22s var(--va-vient); }
+.ordre li.arrive { animation: l-arriver .18s var(--sortie) both; }
+@keyframes l-arriver { from { opacity: 0; transform: scale(.97); } }
+
+/* ---------- fenêtre de confirmation et message : verre, entrée et sortie ---------- */
+dialog.l-dialogue { background: color-mix(in srgb, var(--carte) 88%, transparent); -webkit-backdrop-filter: blur(18px) saturate(1.4); backdrop-filter: blur(18px) saturate(1.4); box-shadow: 0 0 0 1px var(--l-filet), inset 0 1px 0 var(--l-reflet), var(--ombre-haute); opacity: 0; transform: scale(.97) translateY(4px); transition: opacity .15s ease-out, transform .15s ease-out, overlay .15s allow-discrete, display .15s allow-discrete; }
+dialog.l-dialogue[open] { animation: none; opacity: 1; transform: none; transition-duration: .2s; transition-timing-function: var(--sortie); }
+@starting-style { dialog.l-dialogue[open] { opacity: 0; transform: scale(.97) translateY(6px); } }
+dialog.l-dialogue::backdrop { background: rgba(8, 16, 29, 0); -webkit-backdrop-filter: blur(0); backdrop-filter: blur(0); transition: background-color .2s ease, backdrop-filter .2s ease, -webkit-backdrop-filter .2s ease, overlay .2s allow-discrete, display .2s allow-discrete; }
+dialog.l-dialogue[open]::backdrop { background: rgba(8, 16, 29, .5); -webkit-backdrop-filter: blur(5px); backdrop-filter: blur(5px); }
+@starting-style { dialog.l-dialogue[open]::backdrop { background: rgba(8, 16, 29, 0); -webkit-backdrop-filter: blur(0); backdrop-filter: blur(0); } }
+.l-message { z-index: var(--z-message); background: color-mix(in srgb, var(--nuit) 84%, transparent); -webkit-backdrop-filter: blur(14px) saturate(1.5); backdrop-filter: blur(14px) saturate(1.5); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .12), var(--ombre-haute); }
+
+/* ---------- l'accueil : la lampe ---------- */
+.entete.l-tete { background: radial-gradient(120% 140% at 80% -10%, #1a2a47, var(--nuit) 62%); }
+.lampe { position: absolute; inset: 0; z-index: -1; overflow: hidden; pointer-events: none; user-select: none; }
+.l-voile { position: absolute; inset: 0; background: radial-gradient(ellipse 43% 44% at 27% 50%, color-mix(in srgb, var(--nuit) 96%, transparent) 0%, color-mix(in srgb, var(--nuit) 90%, transparent) 62%, transparent 100%); }
+@media (max-width: 860px) { .l-voile { background: linear-gradient(180deg, color-mix(in srgb, var(--nuit) 92%, transparent) 0, color-mix(in srgb, var(--nuit) 92%, transparent) 40%, transparent 52%); } }
+@media (min-width: 861px) { .entete.l-tete { padding-top: 104px; padding-bottom: 104px; } }
+.l-mots { position: absolute; inset: 0; display: flex; flex-direction: column; justify-content: space-between; padding: 22px 0; }
+.l-rang { display: flex; gap: 12px; width: max-content; white-space: nowrap; animation: l-derive 150s linear infinite; }
+.l-rang:nth-child(even) { animation-direction: reverse; }
+.l-rang:nth-child(3n) { animation-duration: 190s; }
+@keyframes l-derive { to { transform: translateX(-50%); } }
+.l-rang span { font: 400 .95rem/1 var(--f-texte); padding: 9px 14px; border-radius: 999px; }
+.l-ombre span { color: rgba(169, 182, 204, .22); box-shadow: inset 0 0 0 1px rgba(169, 182, 204, .1); }
+.l-clair span { color: #fff; background: rgba(255, 255, 255, .1); box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .4); }
+.l-clair span.v { background: var(--surligneur); color: var(--sur-surligneur); font-weight: 700; box-shadow: none; }
+.l-clair span.q { box-shadow: inset 0 0 0 1.5px #f4ad66; color: #ffd0a1; }
+.l-halo { position: absolute; left: 0; top: 0; width: 1100px; height: 1100px; margin: -550px 0 0 -550px; background: radial-gradient(closest-side, rgba(255, 228, 130, .55), rgba(255, 216, 74, .32) 14%, rgba(255, 216, 74, .15) 36%, rgba(255, 216, 74, .05) 58%, transparent 78%); will-change: transform; }
+.l-faisceau { position: absolute; left: 0; top: 0; border-radius: 50%; overflow: hidden; will-change: transform; -webkit-mask-image: radial-gradient(closest-side, #000 52%, transparent 100%); mask-image: radial-gradient(closest-side, #000 52%, transparent 100%); }
+.l-faisceau .l-clair { inset: auto; left: 0; top: 0; will-change: transform; }
+.lampe.allumage .l-halo, .lampe.allumage .l-faisceau { animation: l-allumer 1.1s .25s var(--sortie) both; }
+@keyframes l-allumer { from { opacity: 0; } }
+
+/* ---------- la porte de verre ---------- */
+.l-porte { position: relative; color: #fff; border-radius: 24px; background: linear-gradient(160deg, rgba(255, 255, 255, .16), rgba(255, 255, 255, .06)); -webkit-backdrop-filter: blur(18px) saturate(1.7); backdrop-filter: blur(18px) saturate(1.7); box-shadow: inset 0 1px 0 rgba(255, 255, 255, .3), inset 0 0 0 1px rgba(255, 255, 255, .1), 0 34px 70px -34px rgba(0, 0, 0, .75); }
+.l-porte::before { content: ""; position: absolute; inset: 0; border-radius: inherit; padding: 1.5px; pointer-events: none; background: radial-gradient(280px circle at var(--gx, 80%) var(--gy, 0%), rgba(255, 216, 74, .95), rgba(255, 216, 74, 0) 70%); -webkit-mask: linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0); -webkit-mask-composite: xor; mask: linear-gradient(#000 0 0) content-box exclude, linear-gradient(#000 0 0); }
+.l-porte h2 { color: #fff; }
+.l-porte > p { color: rgba(255, 255, 255, .72); }
+.l-porte .champ { color: #fff; }
+.l-porte .champ input { background: rgba(255, 255, 255, .09); border-color: transparent; color: #fff; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22); padding-right: 44px; }
+.l-porte .champ input::placeholder { color: rgba(255, 255, 255, .42); }
+.l-porte .champ input:focus { border-color: transparent; background: rgba(255, 255, 255, .13); box-shadow: inset 0 0 0 2px #fff; }
+.l-porte .btn { background: var(--surligneur); color: var(--sur-surligneur); border-color: transparent; box-shadow: inset 0 1px 0 rgba(255, 255, 255, .5), 0 10px 24px -12px rgba(255, 216, 74, .7); }
+.l-porte .btn::after { background: linear-gradient(100deg, transparent 30%, rgba(255, 255, 255, .55) 50%, transparent 70%); }
+.l-porte .lien-btn { color: #fff; border-color: transparent; box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .22); }
+.l-porte .l-alerte { background: rgba(255, 122, 107, .18); color: #ffc2b8; animation: l-monter .2s var(--sortie) both; }
+@media (hover: hover) and (pointer: fine) { .l-porte .lien-btn:hover { background: rgba(255, 255, 255, .1); border-color: transparent; } }
+/* le champ dit quand le code a la bonne forme */
+.champ-zone { position: relative; display: block; }
+.champ-zone .bon { position: absolute; right: 12px; top: 50%; width: 24px; height: 24px; margin-top: -12px; border-radius: 50%; display: grid; place-content: center; background: var(--surligneur); color: var(--sur-surligneur); font: 800 .85rem/1 var(--f-texte); opacity: 0; transform: scale(.8); filter: blur(3px); transition: opacity .16s ease, transform .16s var(--sortie), filter .16s ease; pointer-events: none; }
+.champ-zone.ok .bon { opacity: 1; transform: none; filter: none; }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+  .l-porte { background: #1d2c49; } .barre { background: var(--nuit); } dialog.l-dialogue { background: var(--carte); } .l-message { background: var(--nuit); }
+}
+@media (prefers-reduced-transparency: reduce) {
+  .l-porte { background: #1d2c49; -webkit-backdrop-filter: none; backdrop-filter: none; } .barre, .l-message { background: var(--nuit); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  dialog.l-dialogue { background: var(--carte); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  .l-carte, .l-bloc, .l-chiffres li, .choix-niveau, .ordre li { background: var(--carte); }
+}
+.l-pas { list-style: none; margin: 22px 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr)); gap: 14px; counter-reset: pas; }
+.l-pas li { counter-increment: pas; position: relative; padding: 18px 18px 18px 62px; border-radius: 16px; background: var(--l-verre); box-shadow: 0 0 0 1px var(--l-filet), inset 0 1px 0 var(--l-reflet), var(--ombre); color: var(--encre-2); font-size: .95rem; }
+.l-pas li::before { content: counter(pas); position: absolute; left: 16px; top: 16px; width: 32px; height: 32px; display: grid; place-content: center; border-radius: 50%; background: var(--nuit); color: var(--surligneur); font: 800 1rem/1 var(--f-titre); }
+.l-pas strong { display: block; color: var(--encre); margin-bottom: 2px; }
+
+/* ---------- l'élève : on voit par où continuer ---------- */
+.carte.suivante { box-shadow: 0 0 0 2px var(--niv), var(--ombre-haute); border-color: transparent; }
+.carte .aller { position: absolute; right: 14px; bottom: 14px; font: 700 .86rem/1 var(--f-texte); background: var(--niv); color: var(--sur-niv); border-radius: 999px; padding: 9px 14px; transition: transform .18s var(--sortie); }
+.carte.suivante .fleche { display: none; }
+.carte.suivante .type { padding-right: 112px; }
+.carte.gm.suivante .type { padding-right: 22px; }
+@media (hover: hover) and (pointer: fine) { a.carte.suivante:hover .aller { transform: translateX(3px); } }
+a.carte:active { --lift: 0px; scale: .985; }
+.statut.vient { animation: l-venir .28s var(--sortie) both; }
+@keyframes l-venir { from { opacity: .4; transform: scale(.9); } }
+.suite.appel { box-shadow: 0 0 0 2px var(--surligneur), var(--ombre-haute); }
+
+#page { view-transition-name: vue; }
