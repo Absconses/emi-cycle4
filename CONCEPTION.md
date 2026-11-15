@@ -169,7 +169,8 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 | 4.6 Information ou désinformation | fait (vidéo et enquête rééquilibrées : 9 QCM) | faite | provisoire : article de vérification du *Tilleul* après l'enquête guidée, production écrite validée par cinq critères ; dossier réel à proposer. Le cas de la rumeur (téléphone interdit « même éteint dans le sac ») est à revoir depuis « Portable en pause » : voir le dossier du 5.7 |
 | 4.7 Créer un contenu original | fait (vidéo, QCM et séries rééquilibrés : 10 QCM ; chapitre 4 : la consigne ne donne plus l'ordre du plan) | faite | provisoire : l'éditorial du *Tilleul* écrit avec le dossier d'Inès, production écrite validée par cinq critères ; dossier réel à proposer |
 | 4.8 Publier dans les règles | fait (vidéo, QCM et séries rééquilibrés : 8 QCM ; chapitres 2 et 4 : l'avis ou les cas d'abord, les règles ensuite ; chapitre 3 : la remise en ordre devient un QCM à cocher) | faite | provisoire : les quatre décisions de publication de Yanis, production écrite validée par six critères ; dossier réel à proposer |
-| 4.9, Game Map 4e, 3e (9 livres + Game Map) | à faire | à faire | à faire |
+| 4.9 Face aux rumeurs | fait (vidéo et diaporama rééquilibrés : 7 QCM ; chapitre 1 : la remise en ordre devient un QCM à cocher ; chapitres 3 et 4 : l'avis d'abord, la leçon ensuite) | faite | provisoire : la fiche « Face à une rumeur », production écrite validée par cinq critères ; dossier réel à proposer |
+| Game Map 4e, 3e (9 livres + Game Map) | à faire | à faire | à faire |
 
 Les neuf livres de 5e ont leur tâche finale (15 novembre 2026). Les six dossiers construits ce
 jour-là ont été validés par M. Pempie avant construction ; leurs documents, citations et liens
