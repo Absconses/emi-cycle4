@@ -127,6 +127,13 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 - Crédit d'une photo Pixabay : « Sujet — auteur, Pixabay (licence Pixabay) », avec le lien vers
   la page de la photo.
 - Éviter les élèves reconnaissables dans un produit vendu.
+- **Esquisses.** Un récit gagne à être dessiné, même à gros traits (demande de M. Pempie,
+  15 novembre 2026, pour la frise « L'histoire d'une photo » du 5.9). Dessins faits maison avec
+  `outils/esquisses/` (trait à main levée, 800 × 500, PNG 48 couleurs, 25 à 35 ko pièce).
+  Dans une frise (Timeline), le dessin va dans `asset.media` de chaque date, sous la forme
+  `data:image/png;base64,…` : ce champ n'accepte qu'une adresse, pas un fichier du module.
+  `h5p-emi.css` place alors le dessin au-dessus du texte ; régler `height` à 720.
+  Personnages inventés, traits simples, peu de mots dans l'image : le texte reste dans la frise.
 
 ## 8. État d'avancement (15 novembre 2026)
 
@@ -177,6 +184,7 @@ textes de loi ; 5.7 écrire une brève à partir d'un dossier réel, puis choisi
 | `verifier-livre.py` | Ouvre un livre dans Chromium, parcourt chaque chapitre, relève les erreurs |
 | `extraire.py` | Sort le contenu d'un module en texte lisible : `python3 outils/extraire.py <id>` |
 | `pol2.py` | Sert les polices en local pendant les tests sans réseau |
+| `esquisses/` | Dessins à main levée (rough.js) : une page HTML par série, `rendre.py` en fait des PNG |
 | `exemples/` | Deux transformations déjà appliquées, à prendre comme modèles |
 
 Pour tester : `python3 -m http.server 8766` à la racine, puis

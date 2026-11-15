@@ -2,3 +2,13 @@
 
 /* Question Set placé dans un livre : mêmes marges que les autres activités du chapitre. */
 .h5p-interactive-book .h5p-column-content > .questionset { padding: 0 1em; }
+
+/* Frise (Timeline) : quand une étape porte un dessin, il passe au-dessus du texte, en grand.
+   Sans dessin, l'étape garde la présentation d'origine. Les sélecteurs sont longs pour passer
+   devant ceux de la bibliothèque H5P.Timeline, écrits avec #h5p-timeline et !important. */
+#h5p-timeline .vco-timeline.vco-storyjs .vco-slider .slider-item .content .content-container.layout-text-media { display: flex !important; flex-direction: column; }
+#h5p-timeline .vco-timeline.vco-storyjs .vco-slider .slider-item .content .content-container.layout-text-media .media { order: -1; float: none !important; display: block !important; max-width: 100% !important; width: 100%; margin: 0 0 .7em; text-align: center; }
+#h5p-timeline .vco-timeline.vco-storyjs .vco-slider .slider-item .content .content-container.layout-text-media .media .media-wrapper,
+#h5p-timeline .vco-timeline.vco-storyjs .vco-slider .slider-item .content .content-container.layout-text-media .media .media-container { display: block; max-width: 100% !important; margin: 0 auto; }
+#h5p-timeline .vco-timeline.vco-storyjs .vco-slider .slider-item .content .content-container.layout-text-media .media img.media-image { max-width: 100% !important; max-height: 270px !important; border-radius: 6px; }
+#h5p-timeline .vco-timeline.vco-storyjs .vco-slider .slider-item .content .content-container.layout-text-media .text { display: block !important; width: auto !important; }
