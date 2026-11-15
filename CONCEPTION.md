@@ -154,7 +154,8 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 | 5.8 Publier de façon éthique | fait | faite | refaite : l'article de Yanis relu avec un dossier réel (CNIL, service-public, CLEMI), crible, mot du rédacteur en chef ; le scénario reste au chapitre 4 |
 | 5.9 Mes traces, mes réactions | fait ; frise illustrée | faite | refaite : dossier réel « le courrier du Tilleul » (une photo circule sans accord), crible, réponse à Noa |
 | Game Map 5e | fait | sans objet | sans objet ; le défi final est un choix rapide (les mots croisés sont retirés) |
-| 4e (9 livres + Game Map), 3e (9 livres + Game Map) | à faire | à faire | à faire |
+| 4.1 Prendre du recul sur mes usages | fait (vidéo rééquilibrée ; chapitre 3 : la question avant l'écran de Swipo) | faite | provisoire : lettre à soi-même, production écrite validée par critères ; dossier réel à proposer |
+| 4.2 à 4.9, Game Map 4e, 3e (9 livres + Game Map) | à faire | à faire | à faire |
 
 Les neuf livres de 5e ont leur tâche finale (15 novembre 2026). Les six dossiers construits ce
 jour-là ont été validés par M. Pempie avant construction ; leurs documents, citations et liens
