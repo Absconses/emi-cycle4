@@ -12,3 +12,6 @@
 #h5p-timeline .vco-timeline.vco-storyjs .vco-slider .slider-item .content .content-container.layout-text-media .media .media-container { display: block; max-width: 100% !important; margin: 0 auto; }
 #h5p-timeline .vco-timeline.vco-storyjs .vco-slider .slider-item .content .content-container.layout-text-media .media img.media-image { max-width: 100% !important; max-height: 270px !important; border-radius: 6px; }
 #h5p-timeline .vco-timeline.vco-storyjs .vco-slider .slider-item .content .content-container.layout-text-media .text { display: block !important; width: auto !important; }
+
+/* Vidéo d'Arte embarquée dans un livre (H5P.IFrameEmbed) : toute la largeur, en 16/9. */
+.h5p-interactive-book iframe.h5p-iframe-content[src*="arte.tv/embeds"] { width: 100% !important; height: auto !important; aspect-ratio: 16 / 9; }
