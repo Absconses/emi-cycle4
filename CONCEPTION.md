@@ -144,23 +144,26 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 
 | Livre | QCM, aides, variété | Trace écrite | Tâche finale |
 |---|---|---|---|
-| 5.1 Comment et pourquoi je m'informe | fait | faite | **à refaire** (clic sur l'affiche + 3 questions) |
-| 5.2 Les médias et ceux qui font l'information | fait | faite | **à refaire** (série de 4 questions) |
+| 5.1 Comment et pourquoi je m'informe | fait | faite | refaite : dossier réel « les jouets ont-ils un genre ? », qui parle, crible, deux lignes pour la rubrique |
+| 5.2 Les médias et ceux qui font l'information | fait | faite | refaite : dossier réel « qui a raconté l'éclipse du 12 août 2026 ? », quel média pour quoi faire, crible, conseil du *Tilleul* |
 | 5.3 Langages, faits et opinions | fait | faite | gardée : chronique enregistrée |
-| 5.4 Choisir le bon outil | fait | faite | **à refaire** (série de 5 questions) |
-| 5.5 Chercher avec méthode | fait | faite | **à refaire** (série de 5 questions) |
-| 5.6 Évaluer une source | fait | faite | refaite : dossier de vrais documents, à valider |
+| 5.4 Choisir le bon outil | fait | faite | refaite : dossier réel « pourquoi les abeilles disparaissent-elles ? », quelle page pour quel besoin, crible, fiche de la page à citer |
+| 5.5 Chercher avec méthode | fait | faite | refaite : dossier réel « écrans et sommeil des ados » (quatre documents), crible, ligne du document de collecte |
+| 5.6 Évaluer une source | fait | faite | refaite : dossier de vrais documents (le modèle) |
 | 5.7 Mettre en valeur une information | fait | faite | refaite : dossier de vrais documents « portable en pause », crible, brève, choix du format |
-| 5.8 Publier de façon éthique | fait | faite | **à refaire** (tampons) ; le scénario reste au chapitre 4 |
-| 5.9 Mes traces, mes réactions | fait ; frise illustrée | faite | provisoire : réponse à Sami, production écrite validée par critères ; dossier réel proposé le 15 novembre |
+| 5.8 Publier de façon éthique | fait | faite | refaite : l'article de Yanis relu avec un dossier réel (CNIL, service-public, CLEMI), crible, mot du rédacteur en chef ; le scénario reste au chapitre 4 |
+| 5.9 Mes traces, mes réactions | fait ; frise illustrée | faite | refaite : dossier réel « le courrier du Tilleul » (une photo circule sans accord), crible, réponse à Noa |
 | Game Map 5e | fait | sans objet | sans objet ; le défi final est un choix rapide (les mots croisés sont retirés) |
 | 4e (9 livres + Game Map), 3e (9 livres + Game Map) | à faire | à faire | à faire |
 
-Pistes proposées pour les tâches finales à refaire, avant l'abandon des tampons (à repenser
-sur le modèle du dossier réel) : 5.1 décrypter une campagne jamais vue ; 5.2 composer le plan
-de couverture d'un événement ; 5.4 mener une recherche sur un nouveau sujet ; 5.5 sa propre
-fiche de recherche en deux pages ; 5.8 relire un article avant publication, avec de vrais
-textes de loi ; 5.7 écrire une brève à partir d'un dossier réel, puis choisir son format.
+Les neuf livres de 5e ont leur tâche finale (15 novembre 2026). Les six dossiers construits ce
+jour-là ont été validés par M. Pempie avant construction ; leurs documents, citations et liens
+sont dans `outils/dossier.py` côté forme et dans chaque `content.json` côté fond. Chaque dossier
+suit le même déroulé : lire, situer les documents (glisser-déposer `associer()`), crible de huit
+affirmations (quatre vraies, quatre fausses), production courte validée par critères, relecture.
+À vérifier de temps en temps : les liens (pages vivantes ; le document D du 5.4 est une page
+d'accueil). Le 5.5 n'a que quatre documents : un cinquième (un vendeur de lunettes « anti-lumière
+bleue ») reste à trouver.
 
 ## 9. Chantiers ouverts
 
@@ -187,6 +190,7 @@ textes de loi ; 5.7 écrire une brève à partir d'un dossier réel, puis choisi
 |---|---|
 | `livre.py` | Fabrication : trace écrite (`ajoute_trace`), QCM, coups de pouce, séries de questions |
 | `documents.py` | Document dessiné en HTML puis rendu en image, glisser-déposer sur image, production écrite validée par critères |
+| `dossier.py` | Tâche finale sur dossier réel : fiche d'un document, accordéon du dossier, glisser-déposer de mots (`associer`), textes fixes, encadré de relecture |
 | `verifier-livre.py` | Ouvre un livre dans Chromium, parcourt chaque chapitre, relève les erreurs |
 | `extraire.py` | Sort le contenu d'un module en texte lisible : `python3 outils/extraire.py <id>` |
 | `pol2.py` | Sert les polices en local pendant les tests sans réseau |
