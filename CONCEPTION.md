@@ -36,8 +36,8 @@ sur le `content.json` d'un module. Seule exception : une série qui réutilise l
 courtes d'une question à l'autre (les quatre familles de genres, par exemple).
 
 **Pas de mots croisés** (M. Pempie, 29 octobre 2026). Dans une Game Map, le défi final devient un
-choix rapide (Single Choice Set) : une définition, trois mots. Il en reste dans les Game Maps de 4e
-et de 3e, à remplacer pendant leur refonte.
+choix rapide (Single Choice Set) : une définition, trois mots. Il en reste dans la Game Map de 3e,
+à remplacer pendant sa refonte.
 
 ## 3. Le plan d'un livre
 
@@ -170,7 +170,8 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 | 4.7 Créer un contenu original | fait (vidéo, QCM et séries rééquilibrés : 10 QCM ; chapitre 4 : la consigne ne donne plus l'ordre du plan) | faite | provisoire : l'éditorial du *Tilleul* écrit avec le dossier d'Inès, production écrite validée par cinq critères ; dossier réel à proposer |
 | 4.8 Publier dans les règles | fait (vidéo, QCM et séries rééquilibrés : 8 QCM ; chapitres 2 et 4 : l'avis ou les cas d'abord, les règles ensuite ; chapitre 3 : la remise en ordre devient un QCM à cocher) | faite | provisoire : les quatre décisions de publication de Yanis, production écrite validée par six critères ; dossier réel à proposer |
 | 4.9 Face aux rumeurs | fait (vidéo et diaporama rééquilibrés : 7 QCM ; chapitre 1 : la remise en ordre devient un QCM à cocher ; chapitres 3 et 4 : l'avis d'abord, la leçon ensuite) | faite | provisoire : la fiche « Face à une rumeur », production écrite validée par cinq critères ; dossier réel à proposer |
-| Game Map 4e, 3e (9 livres + Game Map) | à faire | à faire | à faire |
+| Game Map 4e | fait (3 QCM rééquilibrés) | sans objet | sans objet ; le défi final est un choix rapide, un mot par livre (les mots croisés sont retirés) |
+| 3e (9 livres + Game Map) | à faire | à faire | à faire |
 
 Les neuf livres de 5e ont leur tâche finale (15 novembre 2026). Les six dossiers construits ce
 jour-là ont été validés par M. Pempie avant construction ; leurs documents, citations et liens

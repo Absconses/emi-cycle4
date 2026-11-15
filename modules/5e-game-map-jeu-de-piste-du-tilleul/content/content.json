@@ -2807,18 +2807,18 @@
          "overallFeedback": [
           {
            "from": 0,
-           "to": 70,
-           "feedback": "Rappel : information stricte = les faits, vite ; explication et récit = creuser, raconter ; opinion = l’avis de l’auteur ; visuel et interactif = l’image et le lecteur. Recommence !"
+           "to": 59,
+           "feedback": "Le numéro du livre t’aide : rouvre celui du mot qui te manquait, puis recommence."
           },
           {
-           "from": 71,
+           "from": 60,
            "to": 99,
-           "feedback": "Presque ! Seule la famille de l’opinion donne l’avis de l’auteur."
+           "feedback": "Presque ! Le numéro du livre t’aide à retrouver le mot manquant."
           },
           {
            "from": 100,
            "to": 100,
-           "feedback": "Sans faute : tu connais les quatre familles de genres journalistiques."
+           "feedback": "Sans faute : tu connais les mots de ton année d’EMI !"
           }
          ],
          "behaviour": {
@@ -2831,7 +2831,7 @@
           "passPercentage": 60
          },
          "l10n": {
-          "nextButtonLabel": "Genre suivant",
+          "nextButtonLabel": "Mot suivant",
           "showSolutionButtonLabel": "Voir les réponses",
           "retryButtonLabel": "Recommencer",
           "solutionViewTitle": "Les bonnes réponses",
@@ -2841,9 +2841,9 @@
           "shouldNotSelect": "Il ne fallait pas choisir cette réponse",
           "muteButtonLabel": "Couper le son",
           "closeButtonLabel": "Fermer",
-          "slideOfTotal": "Genre :num sur :total",
+          "slideOfTotal": "Mot :num sur :total",
           "scoreBarLabel": "Tu as :num point(s) sur :total",
-          "solutionListQuestionNumber": "Genre :num",
+          "solutionListQuestionNumber": "Mot :num",
           "a11yShowSolution": "Afficher les bonnes réponses.",
           "a11yRetry": "Recommencer l’activité depuis le début."
          }

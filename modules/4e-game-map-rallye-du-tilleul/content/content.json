@@ -99,7 +99,7 @@
       {
        "contentType": {
         "params": {
-         "text": "<p style=\"background-color:#264653;color:#fff;padding:6px 12px;border-radius:6px;margin:0 0 .6em\"><strong>4e · LE RALLYE DU TILLEUL</strong></p>\n<p>Inès et Yanis ont préparé ce rallye pour les nouveaux de la rédaction du <em>Tilleul</em>. Il reprend tes neuf livres d’EMI de l’année, un par étape.</p>\n<ul style=\"line-height:1.7\"><li>Suis la route, de l’entrée du collège jusqu’à la rédaction.</li>\n<li>À chaque étape, un exercice court de rappel. Termine-le pour ouvrir l’étape suivante.</li>\n<li>Une erreur ? Lis l’explication : c’est là que tu révises. Tu peux recommencer une étape autant de fois que tu veux.</li>\n<li>Avant l’arrivée, un défi&nbsp;: les mots croisés de l’année.</li></ul>\n<p>Ferme cette fenêtre, puis clique sur l’étape <strong>4.1</strong>. Bonne route&nbsp;!</p>"
+         "text": "<p style=\"background-color:#264653;color:#fff;padding:6px 12px;border-radius:6px;margin:0 0 .6em\"><strong>4e · LE RALLYE DU TILLEUL</strong></p>\n<p>Inès et Yanis ont préparé ce rallye pour les nouveaux de la rédaction du <em>Tilleul</em>. Il reprend tes neuf livres d’EMI de l’année, un par étape.</p>\n<ul style=\"line-height:1.7\"><li>Suis la route, de l’entrée du collège jusqu’à la rédaction.</li>\n<li>À chaque étape, un exercice court de rappel. Termine-le pour ouvrir l’étape suivante.</li>\n<li>Une erreur ? Lis l’explication : c’est là que tu révises. Tu peux recommencer une étape autant de fois que tu veux.</li>\n<li>Avant l’arrivée, un défi&nbsp;: les mots de l’année, un par livre.</li></ul>\n<p>Ferme cette fenêtre, puis clique sur l’étape <strong>4.1</strong>. Bonne route&nbsp;!</p>"
         },
         "library": "H5P.AdvancedText 1.1",
         "subContentId": "915f2c38-6b59-4689-97c3-2ea9a78076d7",
@@ -677,7 +677,7 @@
               }
              },
              {
-              "text": "<div>La date du jour</div>",
+              "text": "<div>La date, sous le titre du journal</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -758,16 +758,16 @@
             "question": "<p>Le même jour, le <em>Courrier du Val</em> et <em>Planète Ados</em> n’ont pas la même une. Pourquoi&nbsp;?</p>",
             "answers": [
              {
-              "text": "<div>Chacun choisit ses sujets et ses angles selon son public : c’est sa ligne éditoriale</div>",
+              "text": "<div>Chacun suit sa propre ligne éditoriale</div>",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
-               "chosenFeedback": "<div>Oui : deux hiérarchies différentes ne veulent pas dire que l’un des deux ment.</div>",
+               "chosenFeedback": "<div>Oui&nbsp;: chacun choisit ses sujets et ses angles selon son public. Deux hiérarchies différentes ne veulent pas dire que l’un des deux ment.</div>",
                "notChosenFeedback": ""
               }
              },
              {
-              "text": "<div>L’un des deux journaux ment</div>",
+              "text": "<div>L’un des deux journaux ment à ses lecteurs</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -776,7 +776,7 @@
               }
              },
              {
-              "text": "<div>C’est le hasard</div>",
+              "text": "<div>C’est le hasard de la mise en page</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -1245,7 +1245,7 @@
             "question": "<p>Inès doit faire un exposé sur le gaspillage à la cantine. Que fait-elle <strong>en premier</strong>&nbsp;?</p>",
             "answers": [
              {
-              "text": "<div>Elle regarde le temps dont elle dispose et ce qu’on attend d’elle</div>",
+              "text": "<div>Elle regarde son temps et ce qu’on attend d’elle</div>",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -1254,7 +1254,7 @@
               }
              },
              {
-              "text": "<div>Elle tape le sujet dans un moteur et garde le premier résultat</div>",
+              "text": "<div>Elle tape le sujet et garde le premier résultat</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -1263,7 +1263,7 @@
               }
              },
              {
-              "text": "<div>Elle demande à une IA d’écrire l’exposé</div>",
+              "text": "<div>Elle demande à une IA d’écrire tout l’exposé</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -2463,131 +2463,137 @@
       {
        "contentType": {
         "params": {
-         "words": [
+         "choices": [
           {
-           "clue": "Des médias aux points de vue différents, nécessaires au débat (4.2)",
-           "answer": "PLURALISME",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "0e5c8d8b-1b9a-4f56-8fdd-c9218957f17f",
+           "question": "<p>Ce que les applis gratuites revendent aux annonceurs (livre 4.1).</p>",
+           "answers": [
+            "<p>Ton attention</p>",
+            "<p>Ton adresse</p>",
+            "<p>Ton forfait</p>"
+           ]
           },
           {
-           "clue": "Le gros titre en haut de la une (4.3)",
-           "answer": "MANCHETTE",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "ac75fe41-280e-4829-b59c-a007282cfe19",
+           "question": "<p>Des médias aux points de vue différents, nécessaires au débat (livre 4.2).</p>",
+           "answers": [
+            "<p>Le pluralisme</p>",
+            "<p>Le monopole</p>",
+            "<p>Le parrainage</p>"
+           ]
           },
           {
-           "clue": "On les met autour d’une expression exacte, ou d’une citation (4.4, 4.7)",
-           "answer": "GUILLEMETS",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "c981ef33-05b7-49c9-b785-f40593306a65",
+           "question": "<p>Le gros titre, en haut de la une (livre 4.3).</p>",
+           "answers": [
+            "<p>La manchette</p>",
+            "<p>Le sommaire</p>",
+            "<p>L’éditorial</p>"
+           ]
           },
           {
-           "clue": "Ce que les applis gratuites revendent aux annonceurs (4.1)",
-           "answer": "ATTENTION",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "34ca3ead-5fad-425d-804e-71f5bc6f5665",
+           "question": "<p>On les met autour d’une expression pour la chercher mot pour mot (livre 4.4).</p>",
+           "answers": [
+            "<p>Les guillemets</p>",
+            "<p>Les parenthèses</p>",
+            "<p>Les mots-dièse</p>"
+           ]
           },
           {
-           "clue": "Une information fausse, mais partagée de bonne foi (4.6)",
-           "answer": "MESINFORMATION",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "4d51d7e0-fbf6-49b6-bd59-54183ac27072",
+           "question": "<p>Avant de chercher, j’y note ce que je sais, mes questions et mes mots-clés (livre 4.5).</p>",
+           "answers": [
+            "<p>Mon plan de recherche</p>",
+            "<p>Mon historique</p>",
+            "<p>Mon moteur de recherche</p>"
+           ]
           },
           {
-           "clue": "Copier le travail d’un autre en cachant son auteur (4.7)",
-           "answer": "PLAGIAT",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "12d61e1b-6740-44fe-a0e4-de76c33f8d4c",
+           "question": "<p>Une information fausse, mais partagée de bonne foi (livre 4.6).</p>",
+           "answers": [
+            "<p>La mésinformation</p>",
+            "<p>La désinformation</p>",
+            "<p>La malinformation</p>"
+           ]
           },
           {
-           "clue": "Creative Commons en propose six pour partager une œuvre (4.8)",
-           "answer": "LICENCE",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "569b8543-f9c7-473c-a369-d18bdc48a05f",
+           "question": "<p>Copier le travail d’un autre en cachant son auteur (livre 4.7).</p>",
+           "answers": [
+            "<p>Le plagiat</p>",
+            "<p>La citation</p>",
+            "<p>La reformulation</p>"
+           ]
           },
           {
-           "clue": "Elle part souvent d’un détail vrai, puis elle grossit (4.9)",
-           "answer": "RUMEUR",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "e8e3f8fa-5a5c-4de0-9dd9-f3f4be77a048",
+           "question": "<p>Elle dit ce qu’on a le droit de faire d’une œuvre (livre 4.8).</p>",
+           "answers": [
+            "<p>Sa licence</p>",
+            "<p>Sa légende</p>",
+            "<p>Sa signature</p>"
+           ]
+          },
+          {
+           "subContentId": "c35dad0e-74fa-4c4b-a9b8-0cd47850aae6",
+           "question": "<p>Elle part souvent d’un détail vrai, puis elle grossit (livre 4.9).</p>",
+           "answers": [
+            "<p>La rumeur</p>",
+            "<p>La brève</p>",
+            "<p>L’enquête</p>"
+           ]
           }
          ],
          "overallFeedback": [
           {
            "from": 0,
            "to": 59,
-           "feedback": "Tu as @score sur @total. Clique sur « Voir la solution », puis rouvre le livre du mot qui te manquait."
+           "feedback": "Le numéro du livre t’aide : rouvre celui du mot qui te manquait, puis recommence."
           },
           {
            "from": 60,
            "to": 99,
-           "feedback": "Tu as @score sur @total. Presque ! Le numéro du livre t’aide à retrouver le mot manquant."
+           "feedback": "Presque ! Le numéro du livre t’aide à retrouver le mot manquant."
           },
           {
            "from": 100,
            "to": 100,
-           "feedback": "Grille complète : tu connais les mots de ton année d’EMI !"
+           "feedback": "Sans faute : tu connais les mots de ton année d’EMI !"
           }
          ],
-         "theme": {
-          "backgroundColor": "#264653",
-          "gridColor": "#000000",
-          "cellBackgroundColor": "#ffffff",
-          "cellColor": "#000000",
-          "clueIdColor": "#606060",
-          "cellBackgroundColorHighlight": "#2a9d8f",
-          "cellColorHighlight": "#ffffff",
-          "clueIdColorHighlight": "#e0e0e0"
-         },
          "behaviour": {
-          "enableInstantFeedback": false,
-          "scoreWords": true,
-          "applyPenalties": false,
+          "autoContinue": true,
+          "timeoutCorrect": 1500,
+          "timeoutWrong": 3000,
+          "soundEffectsEnabled": false,
           "enableRetry": true,
           "enableSolutionsButton": true,
-          "keepCorrectAnswers": false
+          "passPercentage": 60
          },
          "l10n": {
-          "across": "Horizontal",
-          "down": "Vertical",
-          "checkAnswer": "Vérifier",
-          "submitAnswer": "Envoyer",
-          "tryAgain": "Recommencer",
-          "showSolution": "Voir la solution",
-          "couldNotGenerateCrossword": "Impossible de créer la grille.",
-          "couldNotGenerateCrosswordTooFewWords": "Impossible de créer la grille : il faut au moins deux mots.",
-          "probematicWords": "Certains mots n’ont pas pu être placés : @words",
-          "extraClue": "Indice",
-          "closeWindow": "Fermer"
-         },
-         "a11y": {
-          "crosswordGrid": "Grille de mots croisés. Utilise les flèches pour te déplacer et le clavier pour écrire. Tu peux aussi utiliser Tab pour remplir les mots dans des champs.",
-          "column": "Colonne",
-          "row": "Ligne",
-          "across": "Horizontal",
-          "down": "Vertical",
-          "empty": "Vide",
-          "resultFor": "Résultat pour : @clue",
-          "correct": "Juste",
-          "wrong": "Faux",
-          "point": "point",
-          "solutionFor": "Pour « @clue », la solution est : @solution",
-          "extraClueFor": "Ouvrir l’indice pour « @clue »",
-          "letterSevenOfNine": "Lettre @position sur @length",
-          "lettersWord": "Mot de @length lettres",
-          "check": "Vérifier les lettres.",
-          "showSolution": "Afficher la solution.",
-          "retry": "Recommencer depuis le début.",
-          "yourResult": "Tu as @score point(s) sur @total"
-         },
-         "taskDescription": "<p><strong>Les mots de l’année.</strong> Complète la grille : écris les mots en majuscules, sans accent. Le numéro du livre est entre parenthèses.</p>",
-         "solutionWord": ""
+          "nextButtonLabel": "Mot suivant",
+          "showSolutionButtonLabel": "Voir les réponses",
+          "retryButtonLabel": "Recommencer",
+          "solutionViewTitle": "Les bonnes réponses",
+          "correctText": "Juste !",
+          "incorrectText": "Pas tout à fait…",
+          "shouldSelect": "Il fallait choisir cette réponse",
+          "shouldNotSelect": "Il ne fallait pas choisir cette réponse",
+          "muteButtonLabel": "Couper le son",
+          "closeButtonLabel": "Fermer",
+          "slideOfTotal": "Mot :num sur :total",
+          "scoreBarLabel": "Tu as :num point(s) sur :total",
+          "solutionListQuestionNumber": "Mot :num",
+          "a11yShowSolution": "Afficher les bonnes réponses.",
+          "a11yRetry": "Recommencer l’activité depuis le début."
+         }
         },
-        "library": "H5P.Crossword 0.5",
-        "subContentId": "87dbd0b9-bee4-4733-88ff-3a0e787096d8",
+        "library": "H5P.SingleChoiceSet 1.11",
+        "subContentId": "fb81cba9-d58f-4b99-bb0f-ecbf2832a23e",
         "metadata": {
-         "contentType": "Crossword",
+         "contentType": "Single Choice Set",
          "license": "U",
          "title": "Défi · Les mots de l’année",
          "authors": [],
