@@ -99,7 +99,7 @@
       {
        "contentType": {
         "params": {
-         "text": "<p style=\"background-color:#264653;color:#fff;padding:6px 12px;border-radius:6px;margin:0 0 .6em\"><strong>5e · LE JEU DE PISTE DU TILLEUL</strong></p>\n<p>Inès et Sami ont rejoint la rédaction du <em>Tilleul</em> cette année. Pour réviser, ils ont préparé ce jeu de piste&nbsp;: il reprend tes neuf livres d’EMI de 5e, un par étape.</p>\n<ul style=\"line-height:1.7\"><li>Suis la route, de l’entrée du collège jusqu’à la rédaction.</li>\n<li>À chaque étape, un exercice court de rappel. Termine-le pour ouvrir l’étape suivante.</li>\n<li>Une erreur&nbsp;? Lis l’explication&nbsp;: c’est là que tu révises. Tu peux recommencer une étape autant de fois que tu veux.</li>\n<li>Avant l’arrivée, un défi&nbsp;: les mots croisés de l’année.</li></ul>\n<p>Ferme cette fenêtre, puis clique sur l’étape <strong>5.1</strong>. Bonne route&nbsp;!</p>"
+         "text": "<p style=\"background-color:#264653;color:#fff;padding:6px 12px;border-radius:6px;margin:0 0 .6em\"><strong>5e · LE JEU DE PISTE DU TILLEUL</strong></p>\n<p>Inès et Sami ont rejoint la rédaction du <em>Tilleul</em> cette année. Pour réviser, ils ont préparé ce jeu de piste&nbsp;: il reprend tes neuf livres d’EMI de 5e, un par étape.</p>\n<ul style=\"line-height:1.7\"><li>Suis la route, de l’entrée du collège jusqu’à la rédaction.</li>\n<li>À chaque étape, un exercice court de rappel. Termine-le pour ouvrir l’étape suivante.</li>\n<li>Une erreur&nbsp;? Lis l’explication&nbsp;: c’est là que tu révises. Tu peux recommencer une étape autant de fois que tu veux.</li>\n<li>Avant l’arrivée, un défi&nbsp;: retrouve vite les mots de l’année.</li></ul>\n<p>Ferme cette fenêtre, puis clique sur l’étape <strong>5.1</strong>. Bonne route&nbsp;!</p>"
         },
         "library": "H5P.AdvancedText 1.1",
         "subContentId": "3d5b8494-d084-41c7-8a18-cd9ec5fb6634",
@@ -861,7 +861,7 @@
             "question": "<p>Sur un site inconnu, où trouver <strong>qui publie</strong> le site&nbsp;?</p>",
             "answers": [
              {
-              "text": "<div>Dans les mentions légales, souvent en petit en bas de la page</div>",
+              "text": "<div>Dans les mentions légales, en bas de page</div>\n",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -870,7 +870,7 @@
               }
              },
              {
-              "text": "<div>Dans les publicités affichées</div>",
+              "text": "<div>Dans les publicités affichées sur la page</div>\n",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -879,7 +879,7 @@
               }
              },
              {
-              "text": "<div>Dans le nombre de visites</div>",
+              "text": "<div>Dans le nombre de visites qu’il affiche</div>\n",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -960,7 +960,7 @@
             "question": "<p>Quand tu lances une recherche, que fait le moteur&nbsp;?</p>",
             "answers": [
              {
-              "text": "<div>Il cherche dans son index, une liste de pages copiées par ses robots, puis il les classe</div>",
+              "text": "<div>Il cherche dans son index, préparé par ses robots, puis il classe</div>\n",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -969,7 +969,7 @@
               }
              },
              {
-              "text": "<div>Il parcourt tout le web en direct</div>",
+              "text": "<div>Il parcourt tout le web en direct, au moment où tu cherches</div>\n",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -1059,7 +1059,7 @@
             "question": "<p>Pour son exposé, Sami cite un article d’encyclopédie collaborative comme seule source. Que lui conseille Inès&nbsp;?</p>",
             "answers": [
              {
-              "text": "<div>Lire l’article pour comprendre, puis aller voir les références en bas de page et citer ces sources</div>",
+              "text": "<div>Lire l’article, puis aller voir ses références et les citer</div>\n",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -1068,7 +1068,7 @@
               }
              },
              {
-              "text": "<div>Rien : une encyclopédie ne se trompe jamais</div>",
+              "text": "<div>Ne rien changer : une encyclopédie ne se trompe jamais</div>\n",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -1077,7 +1077,7 @@
               }
              },
              {
-              "text": "<div>Ne jamais l’utiliser</div>",
+              "text": "<div>Ne jamais l’utiliser : tout le monde peut y écrire n’importe quoi</div>\n",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -1555,7 +1555,7 @@
               }
              },
              {
-              "text": "<div>Me divertir</div>",
+              "text": "<div>Me divertir avec une histoire</div>\n",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -1645,7 +1645,7 @@
               }
              },
              {
-              "text": "<div>De la vidéo du youtubeur</div>",
+              "text": "<div>De la vidéo du youtubeur, vue en premier</div>\n",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -1654,7 +1654,7 @@
               }
              },
              {
-              "text": "<div>De l’article de la journaliste</div>",
+              "text": "<div>De l’article de la journaliste, qui l’explique</div>\n",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -2422,7 +2422,7 @@
               }
              },
              {
-              "text": "<div>Trouver qu’un film est ennuyeux</div>",
+              "text": "<div>Dire à la classe qu’on a trouvé un film très ennuyeux</div>\n",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -2431,7 +2431,7 @@
               }
              },
              {
-              "text": "<div>Préférer le foot au basket</div>",
+              "text": "<div>Ne jamais choisir le basket, parce qu’on préfère de loin le foot</div>\n",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -2512,7 +2512,7 @@
             "question": "<p>Sur un réseau social, tu vois un message de haine contre un camarade. Que fais-tu&nbsp;?</p>",
             "answers": [
              {
-              "text": "<div>Je ne partage pas, je soutiens mon camarade, je signale et j’en parle à un adulte</div>",
+              "text": "<div>Je soutiens mon camarade, je signale, j’en parle à un adulte</div>\n",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -2521,7 +2521,7 @@
               }
              },
              {
-              "text": "<div>Je ne fais rien, ce n’est pas mon problème</div>",
+              "text": "<div>Je ne fais rien : ce n’est pas mon problème, et je ne risque rien</div>\n",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -2530,7 +2530,7 @@
               }
              },
              {
-              "text": "<div>Je le partage pour montrer que c’est choquant</div>",
+              "text": "<div>Je le partage à mes contacts pour montrer que c’est choquant</div>\n",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -2730,131 +2730,128 @@
       {
        "contentType": {
         "params": {
-         "words": [
+         "choices": [
           {
-           "clue": "Il choisit ce qui apparaît en premier sur ton fil (5.1, 5.9)",
-           "answer": "ALGORITHME",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "cfe5eee9-decd-48de-9e86-7c4d28f23d1d",
+           "question": "<p>Il choisit ce qui apparaît en premier sur ton fil (livres 5.1 et 5.9).</p>",
+           "answers": [
+            "<p>Un algorithme</p>",
+            "<p>Un abonnement</p>",
+            "<p>Un annonceur</p>"
+           ]
           },
           {
-           "clue": "Il part sur le terrain pour raconter ce qu’il voit (5.2)",
-           "answer": "REPORTER",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "156d3546-f0f9-4988-9264-3aefecda453c",
+           "question": "<p>Il part sur le terrain pour raconter ce qu’il voit (livre 5.2).</p>",
+           "answers": [
+            "<p>Le reporter</p>",
+            "<p>Le présentateur</p>",
+            "<p>Le documentaliste</p>"
+           ]
           },
           {
-           "clue": "Il choisit ce que montre une image, et ce qu’il laisse dehors (5.3)",
-           "answer": "CADRAGE",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "8c736092-cae1-4fc1-9bd6-72bf92f1884e",
+           "question": "<p>Il décide de ce que montre une image, et de ce qu’elle laisse dehors (livre 5.3).</p>",
+           "answers": [
+            "<p>Le cadrage</p>",
+            "<p>La légende</p>",
+            "<p>Le montage</p>"
+           ]
           },
           {
-           "clue": "La liste de pages dans laquelle cherche le moteur (5.4)",
-           "answer": "INDEX",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "c1e5a526-b730-4896-a275-fa0c65ff5949",
+           "question": "<p>La liste de pages dans laquelle cherche le moteur (livre 5.4).</p>",
+           "answers": [
+            "<p>Son index</p>",
+            "<p>Son robot</p>",
+            "<p>Son portail</p>"
+           ]
           },
           {
-           "clue": "Pas assez de résultats ? Essaie un… (5.5)",
-           "answer": "SYNONYME",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "b4f46505-51f7-4483-bf8e-7b7189793a0c",
+           "question": "<p>Pas assez de résultats ? Essaie un… (livre 5.5).</p>",
+           "answers": [
+            "<p>Synonyme</p>",
+            "<p>Guillemet</p>",
+            "<p>Mot-dièse</p>"
+           ]
           },
           {
-           "clue": "L’avis de l’Anses est la … d’origine de l’information (5.6)",
-           "answer": "SOURCE",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "2bec2b6e-8a81-411f-9d22-7bbedbb5ec78",
+           "question": "<p>L’avis de l’Anses est la … d’origine de l’information (livre 5.6).</p>",
+           "answers": [
+            "<p>Source</p>",
+            "<p>Rumeur</p>",
+            "<p>Copie</p>"
+           ]
           },
           {
-           "clue": "Trois lignes, sans titre, l’essentiel d’abord (5.7)",
-           "answer": "BREVE",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "d48bb890-846b-43ba-b3a3-2dad61b4e33a",
+           "question": "<p>Trois lignes, sans titre, l’essentiel d’abord (livre 5.7).</p>",
+           "answers": [
+            "<p>Une brève</p>",
+            "<p>Un filet</p>",
+            "<p>Un éditorial</p>"
+           ]
           },
           {
-           "clue": "Accuser quelqu’un d’un fait précis, sans preuve (5.8)",
-           "answer": "DIFFAMATION",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "ccccac5e-ea43-4212-ae2d-8a51beaea520",
+           "question": "<p>Accuser quelqu’un d’un fait précis, sans preuve (livre 5.8).</p>",
+           "answers": [
+            "<p>Une diffamation</p>",
+            "<p>Une discrimination</p>",
+            "<p>Une injure</p>"
+           ]
           }
          ],
          "overallFeedback": [
           {
            "from": 0,
-           "to": 59,
-           "feedback": "Tu as @score sur @total. Clique sur « Voir la solution », puis rouvre le livre du mot qui te manquait."
+           "to": 70,
+           "feedback": "Rappel : information stricte = les faits, vite ; explication et récit = creuser, raconter ; opinion = l’avis de l’auteur ; visuel et interactif = l’image et le lecteur. Recommence !"
           },
           {
-           "from": 60,
+           "from": 71,
            "to": 99,
-           "feedback": "Tu as @score sur @total. Presque ! Le numéro du livre t’aide à retrouver le mot manquant."
+           "feedback": "Presque ! Seule la famille de l’opinion donne l’avis de l’auteur."
           },
           {
            "from": 100,
            "to": 100,
-           "feedback": "Grille complète : tu connais les mots de ton année d’EMI !"
+           "feedback": "Sans faute : tu connais les quatre familles de genres journalistiques."
           }
          ],
-         "theme": {
-          "backgroundColor": "#264653",
-          "gridColor": "#000000",
-          "cellBackgroundColor": "#ffffff",
-          "cellColor": "#000000",
-          "clueIdColor": "#606060",
-          "cellBackgroundColorHighlight": "#2a9d8f",
-          "cellColorHighlight": "#ffffff",
-          "clueIdColorHighlight": "#e0e0e0"
-         },
          "behaviour": {
-          "enableInstantFeedback": false,
-          "scoreWords": true,
-          "applyPenalties": false,
+          "autoContinue": true,
+          "timeoutCorrect": 1500,
+          "timeoutWrong": 3000,
+          "soundEffectsEnabled": false,
           "enableRetry": true,
           "enableSolutionsButton": true,
-          "keepCorrectAnswers": false
+          "passPercentage": 60
          },
          "l10n": {
-          "across": "Horizontal",
-          "down": "Vertical",
-          "checkAnswer": "Vérifier",
-          "submitAnswer": "Envoyer",
-          "tryAgain": "Recommencer",
-          "showSolution": "Voir la solution",
-          "couldNotGenerateCrossword": "Impossible de créer la grille.",
-          "couldNotGenerateCrosswordTooFewWords": "Impossible de créer la grille : il faut au moins deux mots.",
-          "probematicWords": "Certains mots n’ont pas pu être placés : @words",
-          "extraClue": "Indice",
-          "closeWindow": "Fermer"
-         },
-         "a11y": {
-          "crosswordGrid": "Grille de mots croisés. Utilise les flèches pour te déplacer et le clavier pour écrire. Tu peux aussi utiliser Tab pour remplir les mots dans des champs.",
-          "column": "Colonne",
-          "row": "Ligne",
-          "across": "Horizontal",
-          "down": "Vertical",
-          "empty": "Vide",
-          "resultFor": "Résultat pour : @clue",
-          "correct": "Juste",
-          "wrong": "Faux",
-          "point": "point",
-          "solutionFor": "Pour « @clue », la solution est : @solution",
-          "extraClueFor": "Ouvrir l’indice pour « @clue »",
-          "letterSevenOfNine": "Lettre @position sur @length",
-          "lettersWord": "Mot de @length lettres",
-          "check": "Vérifier les lettres.",
-          "showSolution": "Afficher la solution.",
-          "retry": "Recommencer depuis le début.",
-          "yourResult": "Tu as @score point(s) sur @total"
-         },
-         "taskDescription": "<p><strong>Les mots de l’année.</strong> Complète la grille : écris les mots en majuscules, sans accent. Le numéro du livre est entre parenthèses.</p>",
-         "solutionWord": ""
+          "nextButtonLabel": "Genre suivant",
+          "showSolutionButtonLabel": "Voir les réponses",
+          "retryButtonLabel": "Recommencer",
+          "solutionViewTitle": "Les bonnes réponses",
+          "correctText": "Juste !",
+          "incorrectText": "Pas tout à fait…",
+          "shouldSelect": "Il fallait choisir cette réponse",
+          "shouldNotSelect": "Il ne fallait pas choisir cette réponse",
+          "muteButtonLabel": "Couper le son",
+          "closeButtonLabel": "Fermer",
+          "slideOfTotal": "Genre :num sur :total",
+          "scoreBarLabel": "Tu as :num point(s) sur :total",
+          "solutionListQuestionNumber": "Genre :num",
+          "a11yShowSolution": "Afficher les bonnes réponses.",
+          "a11yRetry": "Recommencer l’activité depuis le début."
+         }
         },
-        "library": "H5P.Crossword 0.5",
-        "subContentId": "62b7f615-47db-4fff-b2cd-329e86647298",
+        "library": "H5P.SingleChoiceSet 1.11",
+        "subContentId": "803602a0-9e98-4cb1-9cd5-2886d0b9808b",
         "metadata": {
-         "contentType": "Crossword",
+         "contentType": "Single Choice Set",
          "license": "U",
          "title": "Défi · Les mots de l’année",
          "authors": [],
