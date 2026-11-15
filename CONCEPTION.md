@@ -80,9 +80,22 @@ et la forme retenue pour chaque livre est proposée à M. Pempie avant d'être c
 4. Une production écrite (l'encadré du *Tilleul*), validée par critères, puis comparée à une
    réponse possible.
 
-Modèle **validé par M. Pempie le 15 novembre 2026** : il s'applique à toutes les tâches finales.
-Marche à suivre, pour chaque livre : proposer d'abord le sujet et les documents réels (liens ouverts,
-citations exactes), attendre son accord, puis construire.
+Modèle validé par M. Pempie le 15 novembre 2026 au matin, puis **limité le soir même** : « Tu m'as
+mis des dossiers documentaires partout. […] On va faire un par un. » Un dossier ne se construit
+plus que si M. Pempie l'a choisi pour ce livre. Marche à suivre dans ce cas : proposer d'abord le
+sujet et les documents réels (liens ouverts, citations exactes), attendre son accord, puis construire.
+
+**La tâche finale reprend le but du livre** (M. Pempie, 15 novembre 2026, à propos du 5.1) : « Il
+faut vraiment que ça reprenne le but. Identifier comment et pourquoi je m'informe. […] C'est pas
+les genres. Les genres, c'était juste pour l'aparté. » On part du titre du livre et de ses
+objectifs, jamais d'un aparté ni d'un seul chapitre.
+
+**Autre forme : le portrait** (livre 5.1, « Mon portrait d'information », choisi par M. Pempie)
+
+1. Un cas neuf : le carnet d'une journée (le samedi de Sami), dessiné et raconté.
+2. Le cas passé au crible avec les notions du livre : information cherchée ou reçue, besoin, qui
+   parle et ce qu'il veut.
+3. Le même travail sur soi : l'élève écrit son propre portrait, validé par critères, puis relu.
 
 **Contraintes à connaître**
 
@@ -175,7 +188,7 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 
 | Livre | QCM, aides, variété | Trace écrite | Tâche finale |
 |---|---|---|---|
-| 5.1 Comment et pourquoi je m'informe | fait | faite | refaite : dossier réel « les jouets ont-ils un genre ? », qui parle, crible, deux lignes pour la rubrique |
+| 5.1 Comment et pourquoi je m'informe | fait | faite | **refaite une seconde fois, forme choisie par M. Pempie** : « Mon portrait d'information ». Le carnet du samedi de Sami (dessiné), cherchée ou reçue, quel besoin, qui veut le faire agir, puis le portrait de l'élève, validé par six critères. Le dossier sur les jouets est retiré |
 | 5.2 Les médias et ceux qui font l'information | fait | faite | refaite : dossier réel « qui a raconté l'éclipse du 12 août 2026 ? », quel média pour quoi faire, crible, conseil du *Tilleul* |
 | 5.3 Langages, faits et opinions | fait | faite | gardée : chronique enregistrée |
 | 5.4 Choisir le bon outil | fait | faite | refaite : dossier réel « pourquoi les abeilles disparaissent-elles ? », quelle page pour quel besoin, crible, fiche de la page à citer |
@@ -219,6 +232,11 @@ affirmations (quatre vraies, quatre fausses), production courte validée par cri
 À vérifier de temps en temps : les liens (pages vivantes ; le document D du 5.4 est une page
 d'accueil). Le 5.5 n'a que quatre documents : un cinquième (un vendeur de lunettes « anti-lumière
 bleue ») reste à trouver.
+
+**Révision en cours (15 novembre 2026, soir).** M. Pempie trouve qu'il y a trop de dossiers en 5e :
+on reprend les tâches finales **une par une**, dans l'ordre, en lui proposant chaque fois une forme
+qui reprend le but du livre. Fait : 5.1 (portrait d'information). À proposer ensuite : 5.2, puis
+les autres livres dont la tâche finale est un dossier (5.4, 5.5, 5.6, 5.7, 5.8, 5.9).
 
 ## 9. Chantiers ouverts
 

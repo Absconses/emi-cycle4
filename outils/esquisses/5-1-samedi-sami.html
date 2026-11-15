@@ -1,0 +1,131 @@
+<!doctype html>
+<!-- L'esquisse « Le samedi de Sami » (livre 5.1, tâche finale « Mon portrait d'information »).
+     Avant : npm i roughjs @fontsource/patrick-hand   (dans ce dossier)
+     Puis :  python3 rendre.py 5-1-samedi-sami.html   -> e1.png, q1.png (48 couleurs) ; q1.png devient images/samedi-sami.png du module
+     Pour une autre frise : copier ce fichier, garder les fonctions du haut, réécrire les scene(). -->
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:"Main";src:url("node_modules/@fontsource/patrick-hand/files/patrick-hand-latin-400-normal.woff2") format("woff2"),url("node_modules/@fontsource/patrick-hand/files/patrick-hand-latin-ext-400-normal.woff2") format("woff2")}
+body{margin:0;background:#888}
+svg{display:block;margin:0 0 12px}
+text{font-family:"Main","Patrick Hand",cursive}
+</style>
+<script src="node_modules/roughjs/bundled/rough.js"></script>
+</head><body>
+<script>
+const NS='http://www.w3.org/2000/svg';
+const INK='#1d3557',RED='#e63946',YEL='#f6c453',TEAL='#2a9d8f',SKIN='#f6ddc8',PAPER='#fffdf6',GREY='#9aa5b1',BROWN='#7a4b2a',PINK='#f4a6a0',ORANGE='#f08a4b',BLUE='#a8c7e6',GREEN='#7fb77e',DARK='#16263f',PALE='#e9eef5';
+let rc,seedBase=1,seedN=0;
+function o(extra){seedN++;return Object.assign({roughness:1.15,bowing:1.1,stroke:INK,strokeWidth:2.3,seed:seedBase*1000+seedN,fillWeight:1.6,hachureGap:6},extra||{})}
+function el(name,attrs,parent){const e=document.createElementNS(NS,name);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
+function grp(p,tx,ty,s,rot){return el('g',{transform:`translate(${tx},${ty}) rotate(${rot||0}) scale(${s||1})`},p)}
+function rr(x,y,w,h,r){return `M${x+r},${y} L${x+w-r},${y} Q${x+w},${y} ${x+w},${y+r} L${x+w},${y+h-r} Q${x+w},${y+h} ${x+w-r},${y+h} L${x+r},${y+h} Q${x},${y+h} ${x},${y+h-r} L${x},${y+r} Q${x},${y} ${x+r},${y} Z`}
+function R(p,x,y,w,h,r,op){p.appendChild(rc.path(rr(x,y,w,h,r||1),o(op)))}
+function C(p,cx,cy,d,op){p.appendChild(rc.circle(cx,cy,d,o(op)))}
+function E(p,cx,cy,w,h,op){p.appendChild(rc.ellipse(cx,cy,w,h,o(op)))}
+function L(p,x1,y1,x2,y2,op){p.appendChild(rc.line(x1,y1,x2,y2,o(op)))}
+function P(p,d,op){p.appendChild(rc.path(d,o(op)))}
+function T(p,x,y,s,size,op){op=op||{};const t=el('text',{x,y,'font-size':size||26,fill:op.fill||INK,'text-anchor':op.anchor||'middle',transform:`rotate(${op.rot||0} ${x} ${y})`,opacity:op.opacity||1},p);t.textContent=s;return t}
+function dot(p,cx,cy,r,fill){el('circle',{cx,cy,r,fill:fill||INK},p)}
+function arrow(p,x1,y1,cx,cy,x2,y2,op){op=op||{};P(p,`M${x1},${y1} Q${cx},${cy} ${x2},${y2}`,Object.assign({fill:'none'},op));
+  const a=Math.atan2(y2-cy,x2-cx),h=op.head||14;
+  L(p,x2,y2,x2-h*Math.cos(a-0.45),y2-h*Math.sin(a-0.45),op);L(p,x2,y2,x2-h*Math.cos(a+0.45),y2-h*Math.sin(a+0.45),op)}
+
+// ---- personnages -------------------------------------------------
+// tête : cx,cy centre, r rayon. hair : 'long' | 'short' | 'bun' | 'adult'. mood : 'smile' | 'sad' | 'neutral' | 'full' | 'laugh'
+function head(p,cx,cy,r,opt){opt=opt||{};const hc=opt.hairColor||BROWN,ink=opt.ink||INK;
+  if(opt.hair=='long'){P(p,`M${cx-r*1.05},${cy+r*1.5} Q${cx-r*1.45},${cy-r*0.2} ${cx-r*0.6},${cy-r*1.02} Q${cx},${cy-r*1.4} ${cx+r*0.6},${cy-r*1.02} Q${cx+r*1.45},${cy-r*0.2} ${cx+r*1.05},${cy+r*1.5} Z`,{fill:hc,fillStyle:'solid',stroke:ink})}
+  if(opt.hair=='bun'){C(p,cx,cy-r*1.15,r*0.8,{fill:hc,fillStyle:'solid',stroke:ink})}
+  C(p,cx,cy,r*2,{fill:opt.skin||SKIN,fillStyle:'solid',stroke:ink});
+  if(opt.hair=='long'){P(p,`M${cx-r*0.98},${cy-r*0.1} Q${cx-r*0.6},${cy-r*1.05} ${cx+r*0.1},${cy-r*0.72} Q${cx+r*0.7},${cy-r*0.9} ${cx+r*0.98},${cy-r*0.1} Q${cx+r*0.9},${cy-r*1.25} ${cx},${cy-r*1.18} Q${cx-r*0.9},${cy-r*1.25} ${cx-r*0.98},${cy-r*0.1} Z`,{fill:hc,fillStyle:'solid',stroke:ink,strokeWidth:1.6})}
+  if(opt.hair=='short'){P(p,`M${cx-r*1.0},${cy-r*0.15} Q${cx-r*1.15},${cy-r*1.25} ${cx},${cy-r*1.22} Q${cx+r*1.15},${cy-r*1.25} ${cx+r*1.0},${cy-r*0.15} Q${cx+r*0.5},${cy-r*0.75} ${cx-r*0.2},${cy-r*0.6} Q${cx-r*0.7},${cy-r*0.6} ${cx-r*1.0},${cy-r*0.15} Z`,{fill:hc,fillStyle:'solid',stroke:ink,strokeWidth:1.6})}
+  if(opt.hair=='bun'){P(p,`M${cx-r*1.0},${cy-r*0.1} Q${cx-r*1.1},${cy-r*1.2} ${cx},${cy-r*1.15} Q${cx+r*1.1},${cy-r*1.2} ${cx+r*1.0},${cy-r*0.1} Q${cx},${cy-r*0.95} ${cx-r*1.0},${cy-r*0.1} Z`,{fill:hc,fillStyle:'solid',stroke:ink,strokeWidth:1.6})}
+  if(opt.hair=='adult'){P(p,`M${cx-r*1.0},${cy} Q${cx-r*1.2},${cy-r*1.3} ${cx},${cy-r*1.2} Q${cx+r*1.2},${cy-r*1.3} ${cx+r*1.0},${cy} Q${cx+r*0.6},${cy-r*0.7} ${cx+r*0.2},${cy-r*0.75} Q${cx-r*0.5},${cy-r*0.8} ${cx-r*1.0},${cy} Z`,{fill:hc,fillStyle:'solid',stroke:ink,strokeWidth:1.6})}
+  const ex=r*0.36,ey=cy-r*0.02,er=Math.max(1.6,r*0.075);
+  const m=opt.mood||'neutral';
+  if(m=='full'||m=='laugh'){P(p,`M${cx-ex-r*0.14},${ey} Q${cx-ex},${ey-r*0.16} ${cx-ex+r*0.14},${ey}`,{fill:'none',strokeWidth:1.8,roughness:0.5,stroke:ink});P(p,`M${cx+ex-r*0.14},${ey} Q${cx+ex},${ey-r*0.16} ${cx+ex+r*0.14},${ey}`,{fill:'none',strokeWidth:1.8,roughness:0.5,stroke:ink})}
+  else if(opt.look=='down'){P(p,`M${cx-ex-r*0.14},${ey} Q${cx-ex},${ey+r*0.14} ${cx-ex+r*0.14},${ey}`,{fill:'none',strokeWidth:1.8,roughness:0.5,stroke:ink});P(p,`M${cx+ex-r*0.14},${ey} Q${cx+ex},${ey+r*0.14} ${cx+ex+r*0.14},${ey}`,{fill:'none',strokeWidth:1.8,roughness:0.5,stroke:ink})}
+  else{dot(p,cx-ex+(opt.gaze||0)*r,ey,er,ink);dot(p,cx+ex+(opt.gaze||0)*r,ey,er,ink)}
+  if(opt.glasses){C(p,cx-ex,ey,r*0.5,{fill:'none',strokeWidth:1.6,roughness:0.6,stroke:ink});C(p,cx+ex,ey,r*0.5,{fill:'none',strokeWidth:1.6,roughness:0.6,stroke:ink});L(p,cx-ex+r*0.25,ey,cx+ex-r*0.25,ey,{strokeWidth:1.6,roughness:0.5,stroke:ink})}
+  const my=cy+r*0.48;
+  if(m=='smile')P(p,`M${cx-r*0.3},${my-r*0.08} Q${cx},${my+r*0.22} ${cx+r*0.3},${my-r*0.08}`,{fill:'none',strokeWidth:1.9,roughness:0.6,stroke:ink});
+  if(m=='sad')P(p,`M${cx-r*0.26},${my+r*0.1} Q${cx},${my-r*0.14} ${cx+r*0.26},${my+r*0.1}`,{fill:'none',strokeWidth:1.9,roughness:0.6,stroke:ink});
+  if(m=='neutral')L(p,cx-r*0.2,my,cx+r*0.2,my,{strokeWidth:1.9,roughness:0.6,stroke:ink});
+  if(m=='laugh')P(p,`M${cx-r*0.34},${my-r*0.12} Q${cx},${my+r*0.5} ${cx+r*0.34},${my-r*0.12} Z`,{fill:'#fff',fillStyle:'solid',strokeWidth:1.7,roughness:0.6,stroke:ink});
+  if(m=='full'){C(p,cx-r*0.62,cy+r*0.36,r*0.62,{fill:PINK,fillStyle:'solid',strokeWidth:1.6,roughness:0.7,stroke:ink});C(p,cx+r*0.62,cy+r*0.36,r*0.62,{fill:PINK,fillStyle:'solid',strokeWidth:1.6,roughness:0.7,stroke:ink});E(p,cx,my,r*0.22,r*0.14,{fill:ink,fillStyle:'solid',strokeWidth:1,roughness:0.4,stroke:ink})}
+}
+function body(p,cx,top,w,h,color,op){P(p,`M${cx-w/2},${top+h} Q${cx-w/2-4},${top+h*0.12} ${cx-w*0.2},${top} L${cx+w*0.2},${top} Q${cx+w/2+4},${top+h*0.12} ${cx+w/2},${top+h} Z`,Object.assign({fill:color,fillStyle:'solid'},op||{}))}
+// la photo de Jade, carrée, de côté 100
+function photo(p,x,y,s,rot,op){op=op||{};const g=grp(p,x,y,s,rot);
+  R(g,0,0,100,100,3,{fill:'#fff',fillStyle:'solid',strokeWidth:2/s+1,stroke:op.stroke||INK,strokeLineDash:op.dash});
+  if(op.ghost){T(g,50,66,'?',54,{fill:GREY});return g}
+  R(g,7,7,86,86,2,{fill:'#fdf0c9',fillStyle:'solid',stroke:'none'});
+  body(g,50,70,62,26,TEAL,{strokeWidth:1.6});
+  head(g,50,45,21,{hair:'long',mood:'full'});
+  // fourchette
+  L(g,86,92,72,62,{strokeWidth:2.2,stroke:'#5b6b7d',roughness:0.6});L(g,72,62,69,52,{strokeWidth:1.6,stroke:'#5b6b7d',roughness:0.4});L(g,72,62,74,51,{strokeWidth:1.6,stroke:'#5b6b7d',roughness:0.4});L(g,72,62,78,53,{strokeWidth:1.6,stroke:'#5b6b7d',roughness:0.4});
+  return g}
+// téléphone : renvoie le groupe ; écran utile de (10,26) à (w-10,h-22)
+function phone(p,x,y,w,h,rot,op){op=op||{};const g=grp(p,x,y,1,rot);
+  R(g,0,0,w,h,Math.min(18,w*0.14),{fill:op.body||'#33415c',fillStyle:'solid',stroke:op.stroke||INK,strokeLineDash:op.dash});
+  R(g,8,18,w-16,h-34,4,{fill:op.screen||'#fff',fillStyle:'solid',strokeWidth:1.5,stroke:op.stroke||INK});
+  L(g,w/2-10,9,w/2+10,9,{strokeWidth:2.4,stroke:'#cfd8e3',roughness:0.4});
+  return g}
+function laugh(p,cx,cy,r){C(p,cx,cy,r*2,{fill:YEL,fillStyle:'solid',strokeWidth:1.8});
+  P(p,`M${cx-r*0.6},${cy-r*0.15} Q${cx-r*0.38},${cy-r*0.5} ${cx-r*0.16},${cy-r*0.15}`,{fill:'none',strokeWidth:1.8,roughness:0.5});
+  P(p,`M${cx+r*0.16},${cy-r*0.15} Q${cx+r*0.38},${cy-r*0.5} ${cx+r*0.6},${cy-r*0.15}`,{fill:'none',strokeWidth:1.8,roughness:0.5});
+  P(p,`M${cx-r*0.55},${cy+r*0.15} Q${cx},${cy+r*0.95} ${cx+r*0.55},${cy+r*0.15} Z`,{fill:'#fff',fillStyle:'solid',strokeWidth:1.6,roughness:0.5});
+  P(p,`M${cx-r*0.95},${cy+r*0.05} q${-r*0.3},${r*0.45} 0,${r*0.55} q${r*0.3},${-r*0.1} 0,${-r*0.55} Z`,{fill:BLUE,fillStyle:'solid',strokeWidth:1.2,roughness:0.4});
+  P(p,`M${cx+r*0.95},${cy+r*0.05} q${r*0.3},${r*0.45} 0,${r*0.55} q${-r*0.3},${-r*0.1} 0,${-r*0.55} Z`,{fill:BLUE,fillStyle:'solid',strokeWidth:1.2,roughness:0.4})}
+function bubble(p,x,y,w,h,tailx,taily,op){op=op||{};P(p,rr(x,y,w,h,Math.min(18,h/2.4)),Object.assign({fill:'#fff',fillStyle:'solid',strokeWidth:2},op));
+  if(tailx!=null){const bx=Math.max(x+20,Math.min(x+w-34,tailx-7)),by=taily>y?y+h:y;P(p,`M${bx},${by} L${tailx},${taily} L${bx+22},${by}`,Object.assign({fill:'#fff',fillStyle:'solid',strokeWidth:2},op));el('line',{x1:bx+2,y1:by,x2:bx+20,y2:by,stroke:'#fff','stroke-width':4},p)}}
+
+function scene(n,draw,bg){seedBase=n;seedN=0;const svg=el('svg',{id:'s'+n,viewBox:'0 0 800 500',width:800,height:500,xmlns:NS},document.body);
+  el('rect',{x:0,y:0,width:800,height:500,fill:bg||PAPER},svg);rc=rough.svg(svg);draw(svg);
+  seedN=900;R(svg,6,6,788,488,10,{fill:'none',strokeWidth:2.2,stroke:bg?'#52698c':INK,roughness:1.4})}
+
+// Le samedi de Sami : lui et son carnet au centre, quatre moments autour (sans flèches : à l'élève de dire ce qui est cherché ou reçu)
+scene(1,s=>{
+  T(s,400,58,'le samedi de Sami',40,{});
+  L(s,268,72,532,72,{stroke:RED,strokeWidth:2.4});
+  // Sami
+  body(s,400,262,170,170,ORANGE);
+  head(s,400,200,56,{hair:'short',mood:'smile',skin:'#e3b98f',hairColor:DARK});
+  // carnet tenu devant lui
+  R(s,322,330,156,112,5,{fill:'#fff',fillStyle:'solid'});
+  L(s,322,352,478,352,{stroke:RED,strokeWidth:1.6,roughness:0.6});
+  [372,390,408,426].forEach(y=>L(s,336,y,464,y,{stroke:GREY,strokeWidth:1.4,roughness:0.7}));
+  [330,348,366,384,402,420,438,456,470].forEach(x=>C(s,x,330,7,{fill:PAPER,fillStyle:'solid',strokeWidth:1.3,roughness:0.5}));
+  C(s,318,392,26,{fill:'#e3b98f',fillStyle:'solid',strokeWidth:1.8});C(s,482,392,26,{fill:'#e3b98f',fillStyle:'solid',strokeWidth:1.8});
+  // crayon
+  L(s,488,384,536,322,{stroke:YEL,strokeWidth:7,roughness:0.5});L(s,488,384,536,322,{strokeWidth:1.4,roughness:0.5});
+  // 8 h 30 : l'appli météo
+  const g=phone(s,62,96,118,196,-6,{});
+  C(g,50,74,40,{fill:YEL,fillStyle:'solid',strokeWidth:1.8});
+  [[50,44,50,34],[76,58,84,50],[24,58,16,50],[20,76,10,76]].forEach(a=>L(g,a[0],a[1],a[2],a[3],{stroke:ORANGE,strokeWidth:2.2,roughness:0.5}));
+  P(g,'M38,112 Q30,96 48,94 Q54,78 72,88 Q92,84 92,102 Q102,112 88,120 L44,120 Q32,120 38,112 Z',{fill:PALE,fillStyle:'solid',strokeWidth:1.8});
+  [52,66,80].forEach(x=>L(g,x,128,x-5,142,{stroke:'#5b8fc7',strokeWidth:2.2,roughness:0.5}));
+  T(s,128,324,'8 h 30',30,{});
+  // 9 h 15 : le prospectus
+  const pr=grp(s,584,92,1,7);
+  R(pr,0,0,150,186,4,{fill:YEL,fillStyle:'solid'});
+  T(pr,75,48,'SPORT',30,{});
+  T(pr,75,112,'−30 %',52,{fill:RED});
+  T(pr,75,150,'ce week-end',22,{});T(pr,75,172,'seulement !',22,{});
+  T(s,676,324,'9 h 15',30,{});
+  // 18 h : le panneau lumineux de la mairie
+  L(s,150,446,150,478,{strokeWidth:6});
+  R(s,48,356,204,92,6,{fill:DARK,fillStyle:'solid'});
+  T(s,150,390,'MAIRIE',22,{fill:'#9fd3c7'});
+  T(s,150,416,'Nettoyons les berges',21,{fill:YEL});T(s,150,438,'Venez nombreux !',21,{fill:YEL});
+  T(s,286,470,'18 h',30,{});
+  // 20 h 30 : le journal local
+  const j=grp(s,560,356,1,-5);
+  R(j,0,0,196,118,3,{fill:'#fff',fillStyle:'solid'});
+  T(j,98,28,'LE JOURNAL',26,{});
+  L(j,10,38,186,38,{strokeWidth:1.8,roughness:0.6});
+  R(j,12,48,62,58,2,{fill:BLUE,fillStyle:'hachure',strokeWidth:1.4});
+  [54,66,78,90,102].forEach(y=>L(j,84,y,184,y,{stroke:GREY,strokeWidth:1.5,roughness:0.7}));
+  T(s,500,478,'20 h 30',30,{});
+});
+</script></body></html>
