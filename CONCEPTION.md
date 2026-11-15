@@ -127,7 +127,9 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
   régulière qui attrape le mot après l', d', j', qu'… ; `outils/elision.py` l'applique aux livres
   déjà construits (sans effet si on le relance). Une expression régulière écrite à la main doit elle
   aussi attraper le mot **entier** (`r[ée]cent[a-z]*`, pas `r[ée]cent`). Les productions écrites
-  des livres de 3e, écrites avec des expressions régulières, restent à relire sur ce point.
+  des livres de 3e sont écrites avec des expressions régulières de la forme `/(?:a|b|c)[a-zà-ÿœ]*/` :
+  `outils/elision.py` leur ajoute l'élision facultative en tête (fait pour les neuf livres le
+  15 novembre 2026).
 - **Bibliothèques ajoutées** : H5P.BranchingScenario 1.8, H5P.BranchingQuestion 1.0.
 - **Page embarquée par iframe** (H5P.IFrameEmbed 1.0, accepté dans un livre) : pour ce que H5P ne
   sait pas faire dans un livre, comme le test de personnalité du 4.1. La page est un fichier HTML
@@ -140,6 +142,11 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
   garde sa hauteur et la page défile à l'intérieur. Pour l'essayer en local dans les mêmes
   conditions qu'en ligne, rediriger l'adresse du site vers le serveur local (Playwright, `route`).
   Si le dépôt change de nom ou d'adresse, corriger le champ `source`.
+- **Vidéo d'Arte dans un livre** : la vidéo interactive H5P ne lit que YouTube et les fichiers. Une
+  vidéo d'Arte s'affiche donc par H5P.IFrameEmbed, `source` = `https://www.arte.tv/embeds/fr/<id>?autoplay=false`,
+  `width` 100 %, `height` 360 px, `resizeSupported` à faux ; `h5p-emi.css` lui donne le format 16/9.
+  Les questions se posent sous la vidéo. La fiche d'un programme (durée, fin des droits, intégration
+  autorisée) se lit sur `https://api.arte.tv/api/player/v2/config/fr/<id>`.
 
 ## 7. Images
 
@@ -178,7 +185,7 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 | 5.8 Publier de façon éthique | fait | faite | refaite : l'article de Yanis relu avec un dossier réel (CNIL, service-public, CLEMI), crible, mot du rédacteur en chef ; le scénario reste au chapitre 4 |
 | 5.9 Mes traces, mes réactions | fait ; frise illustrée | faite | refaite : dossier réel « le courrier du Tilleul » (une photo circule sans accord), crible, réponse à Noa |
 | Game Map 5e | fait | sans objet | sans objet ; le défi final est un choix rapide (les mots croisés sont retirés) |
-| 4.1 Prendre du recul sur mes usages | fait (vidéo rééquilibrée ; chapitre 3 : la question avant l'écran de Swipo ; chapitre 1 : le questionnaire est remplacé par un **test de personnalité embarqué par iframe**, « Quel usager des écrans es-tu ? », demande de M. Pempie du 15/11/2026) | faite | fait : dossier réel « TikTok, 60 minutes : est-ce que cela me protège ? » (TikTok, Sénat, Brut/Anses, Metricool, Apple), validé par M. Pempie le 15/11/2026 ; lettre à soi-même appuyée sur le dossier, cinq critères |
+| 4.1 Prendre du recul sur mes usages | fait (vidéo rééquilibrée ; chapitre 3 : la question avant l'écran de Swipo ; chapitre 1 : le questionnaire est remplacé par un **test de personnalité embarqué par iframe**, « Quel usager des écrans es-tu ? », demande de M. Pempie du 15/11/2026) | faite | fait : **analyse d'un épisode** (« Dopamine », épisode « Tiktok », Arte 2023, 7 min 23, lecteur d'Arte embarqué par iframe, droits jusqu'au 29/05/2027), crible de huit affirmations, question de recul sur l'épisode, puis essai « Qu'est-ce qui empêche TikTok d'être un espace informationnel satisfaisant ? » (sujet et forme donnés par M. Pempie le 15/11/2026), six critères. Remplace le dossier « TikTok, 60 minutes » et la lettre à soi-même. La lecture de la vidéo n'a pas pu être essayée (Arte bloque hors de France) |
 | 4.2 Qui paie l'information | fait (vidéo rééquilibrée ; chapitre 4 : les questions avant les volets de l'ARCOM, le glisser-déposer d'ordre remplacé par deux QCM) | faite | provisoire : proposition à la rédaction pour financer le *Tilleul* papier, production écrite validée par critères ; forme définitive à proposer (varier, pas forcément un dossier) |
 | 4.3 La ligne éditoriale | fait (vidéo rééquilibrée ; anatomie de la une : des retours qui expliquent ; la conférence de rédaction devient un choix de manchette ; « informer ou donner son avis » : un clic par article, le rappel de 5e en coup de pouce) | faite | provisoire : réponse à Yanis et Inès sur les deux unes, production écrite validée par critères ; forme définitive à proposer (varier, pas forcément un dossier) |
 | 4.4 Chercher avec les bons outils | fait (vidéo et séries rééquilibrées ; chapitre 4 : « qu'est-ce qui ne va pas ? » avant l'explication, les ingrédients du prompt en coup de pouce, le glisser-déposer d'ordre remplacé par un QCM) | faite | provisoire : dossier de recherche de Yanis, production écrite validée par cinq critères ; forme définitive à proposer (varier, pas forcément un dossier) |
