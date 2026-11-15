@@ -21,6 +21,6 @@ def associer(gab, titre, consigne, lignes):
     import copy
     d=copy.deepcopy(gab); d['subContentId']=u(); d['metadata']=meta(titre,'Drag Text'); p=d['params']
     p['taskDescription']=consigne; p['textField']='\n'.join(lignes); p.pop('distractors',None)
-    p['overallFeedback']=[{'from':0,'to':99,'feedback':'Tu as @score sur @total. Retourne lire les documents mal placés, puis recommence.'},{'from':100,'to':100,'feedback':'Tu as @score sur @total&nbsp;: tu sais qui parle dans chaque document.'}]
+    p['overallFeedback']=[{'from':0,'to':99,'feedback':'Tu as @score sur @total. Retourne lire les documents mal placés, puis recommence.'},{'from':100,'to':100,'feedback':'Tu as @score sur @total&nbsp;: chaque document est à sa place.'}]
     p['behaviour'].update({'enableRetry':True,'enableSolutionsButton':False,'enableCheckButton':True,'instantFeedback':False})
     return d
