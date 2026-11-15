@@ -138,7 +138,7 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 | 5.4 Choisir le bon outil | fait | faite | **à refaire** (série de 5 questions) |
 | 5.5 Chercher avec méthode | fait | faite | **à refaire** (série de 5 questions) |
 | 5.6 Évaluer une source | fait | faite | refaite : dossier de vrais documents, à valider |
-| 5.7 Mettre en valeur une information | fait | faite | **à refaire** (plan de brève en Documentation Tool) : dossier « portable en pause » proposé, en attente d'accord |
+| 5.7 Mettre en valeur une information | fait | faite | refaite : dossier de vrais documents « portable en pause », crible, brève, choix du format |
 | 5.8 Publier de façon éthique | fait | faite | **à refaire** (tampons) ; le scénario reste au chapitre 4 |
 | 5.9 Mes traces, mes réactions | fait | faite | provisoire : réponse à Sami, production écrite validée par critères ; dossier réel à proposer |
 | Game Map 5e, 4e (9 livres + Game Map), 3e (9 livres + Game Map) | à faire | à faire | à faire |
