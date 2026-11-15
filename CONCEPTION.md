@@ -199,7 +199,7 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 | 3.2 Distinguer les acteurs de l'information et leur rôle | fait (vidéo rééquilibrée : 4 QCM ; chapitre 4 : les deux définitions passent après le tri « Critiquer ou dénigrer ? ») | faite | provisoire : « Le portrait d'Irène Frachon », production écrite validée par huit critères, sur le dossier réel de six documents déjà en place, avec un fait vérifié par l'élève ; forme définitive à proposer |
 | 3.3 Comparer comment les médias traitent un fait | fait (vidéo rééquilibrée : 3 QCM) | faite | provisoire : « L'analyse comparée » (huit critères) puis « Ma capsule sourcée » (six critères), deux productions écrites sur les trois versions du chapitre 2 ; forme définitive à proposer |
 | 3.4 Comprendre et comparer moteur et IA générative | fait (vidéo rééquilibrée : 4 QCM) | faite | provisoire : « Deux moteurs comparés » (six critères, devant deux vrais moteurs) puis « Mon plan de recherche et de veille » (neuf critères) ; forme définitive à proposer |
-| 3.5 Mener une recherche pour produire | fait (vidéo rééquilibrée : 6 QCM) | faite | provisoire : « Le dossier de stage de Yanis » (huit critères) puis « La candidature et les sources » (sept critères) ; forme définitive à proposer (piste : le courriel de candidature) |
+| 3.5 Mener une recherche et en faire une synthèse | fait (vidéo rééquilibrée : 6 QCM) | faite | provisoire : « Le dossier de stage de Yanis » (huit critères) puis « La candidature et les sources » (sept critères) ; forme définitive à proposer (piste : le courriel de candidature) |
 | 3.6 à 3.9, Game Map 3e | à faire | à faire | à faire |
 
 Les neuf livres de 5e ont leur tâche finale (15 novembre 2026). Les six dossiers construits ce
