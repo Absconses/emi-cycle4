@@ -173,7 +173,14 @@
   "num": "5.2",
   "titre": "Identifier les médias et ceux qui font l’information",
   "type": "livre",
-  "domaine": "Se situer dans les médias"
+  "domaine": "Se situer dans les médias",
+  "compagnon": {
+   "id": "5e-redacteur-en-chef-d-un-jour",
+   "niveau": "5e",
+   "titre": "Rédacteur en chef d’un jour",
+   "type": "scenario",
+   "intro": "Le scénario de la tâche finale (chapitre 5) : cinq décisions pour couvrir un événement au collège, chacune avec sa conséquence."
+  }
  },
  {
   "id": "5e-decrypter-les-langages-des-medias-et-distinguer-un-fait-d-une-opinion",
