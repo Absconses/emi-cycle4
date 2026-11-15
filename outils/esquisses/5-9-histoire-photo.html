@@ -1,0 +1,251 @@
+<!doctype html>
+<!-- Les sept esquisses de la frise « L'histoire d'une photo » (livre 5.9).
+     Avant : npm i roughjs @fontsource/patrick-hand   (dans ce dossier)
+     Puis :  python3 rendre.py   -> e1.png … e7.png, q1.png … q7.png (48 couleurs) et planche.png
+     Pour une autre frise : copier ce fichier, garder les fonctions du haut, réécrire les scene(). -->
+<html><head><meta charset="utf-8">
+<style>
+@font-face{font-family:"Main";src:url("node_modules/@fontsource/patrick-hand/files/patrick-hand-latin-400-normal.woff2") format("woff2"),url("node_modules/@fontsource/patrick-hand/files/patrick-hand-latin-ext-400-normal.woff2") format("woff2")}
+body{margin:0;background:#888}
+svg{display:block;margin:0 0 12px}
+text{font-family:"Main","Patrick Hand",cursive}
+</style>
+<script src="node_modules/roughjs/bundled/rough.js"></script>
+</head><body>
+<script>
+const NS='http://www.w3.org/2000/svg';
+const INK='#1d3557',RED='#e63946',YEL='#f6c453',TEAL='#2a9d8f',SKIN='#f6ddc8',PAPER='#fffdf6',GREY='#9aa5b1',BROWN='#7a4b2a',PINK='#f4a6a0',ORANGE='#f08a4b',BLUE='#a8c7e6',GREEN='#7fb77e',DARK='#16263f',PALE='#e9eef5';
+let rc,seedBase=1,seedN=0;
+function o(extra){seedN++;return Object.assign({roughness:1.15,bowing:1.1,stroke:INK,strokeWidth:2.3,seed:seedBase*1000+seedN,fillWeight:1.6,hachureGap:6},extra||{})}
+function el(name,attrs,parent){const e=document.createElementNS(NS,name);for(const k in attrs)e.setAttribute(k,attrs[k]);if(parent)parent.appendChild(e);return e}
+function grp(p,tx,ty,s,rot){return el('g',{transform:`translate(${tx},${ty}) rotate(${rot||0}) scale(${s||1})`},p)}
+function rr(x,y,w,h,r){return `M${x+r},${y} L${x+w-r},${y} Q${x+w},${y} ${x+w},${y+r} L${x+w},${y+h-r} Q${x+w},${y+h} ${x+w-r},${y+h} L${x+r},${y+h} Q${x},${y+h} ${x},${y+h-r} L${x},${y+r} Q${x},${y} ${x+r},${y} Z`}
+function R(p,x,y,w,h,r,op){p.appendChild(rc.path(rr(x,y,w,h,r||1),o(op)))}
+function C(p,cx,cy,d,op){p.appendChild(rc.circle(cx,cy,d,o(op)))}
+function E(p,cx,cy,w,h,op){p.appendChild(rc.ellipse(cx,cy,w,h,o(op)))}
+function L(p,x1,y1,x2,y2,op){p.appendChild(rc.line(x1,y1,x2,y2,o(op)))}
+function P(p,d,op){p.appendChild(rc.path(d,o(op)))}
+function T(p,x,y,s,size,op){op=op||{};const t=el('text',{x,y,'font-size':size||26,fill:op.fill||INK,'text-anchor':op.anchor||'middle',transform:`rotate(${op.rot||0} ${x} ${y})`,opacity:op.opacity||1},p);t.textContent=s;return t}
+function dot(p,cx,cy,r,fill){el('circle',{cx,cy,r,fill:fill||INK},p)}
+function arrow(p,x1,y1,cx,cy,x2,y2,op){op=op||{};P(p,`M${x1},${y1} Q${cx},${cy} ${x2},${y2}`,Object.assign({fill:'none'},op));
+  const a=Math.atan2(y2-cy,x2-cx),h=op.head||14;
+  L(p,x2,y2,x2-h*Math.cos(a-0.45),y2-h*Math.sin(a-0.45),op);L(p,x2,y2,x2-h*Math.cos(a+0.45),y2-h*Math.sin(a+0.45),op)}
+
+// ---- personnages -------------------------------------------------
+// tête : cx,cy centre, r rayon. hair : 'long' | 'short' | 'bun' | 'adult'. mood : 'smile' | 'sad' | 'neutral' | 'full' | 'laugh'
+function head(p,cx,cy,r,opt){opt=opt||{};const hc=opt.hairColor||BROWN,ink=opt.ink||INK;
+  if(opt.hair=='long'){P(p,`M${cx-r*1.05},${cy+r*1.5} Q${cx-r*1.45},${cy-r*0.2} ${cx-r*0.6},${cy-r*1.02} Q${cx},${cy-r*1.4} ${cx+r*0.6},${cy-r*1.02} Q${cx+r*1.45},${cy-r*0.2} ${cx+r*1.05},${cy+r*1.5} Z`,{fill:hc,fillStyle:'solid',stroke:ink})}
+  if(opt.hair=='bun'){C(p,cx,cy-r*1.15,r*0.8,{fill:hc,fillStyle:'solid',stroke:ink})}
+  C(p,cx,cy,r*2,{fill:opt.skin||SKIN,fillStyle:'solid',stroke:ink});
+  if(opt.hair=='long'){P(p,`M${cx-r*0.98},${cy-r*0.1} Q${cx-r*0.6},${cy-r*1.05} ${cx+r*0.1},${cy-r*0.72} Q${cx+r*0.7},${cy-r*0.9} ${cx+r*0.98},${cy-r*0.1} Q${cx+r*0.9},${cy-r*1.25} ${cx},${cy-r*1.18} Q${cx-r*0.9},${cy-r*1.25} ${cx-r*0.98},${cy-r*0.1} Z`,{fill:hc,fillStyle:'solid',stroke:ink,strokeWidth:1.6})}
+  if(opt.hair=='short'){P(p,`M${cx-r*1.0},${cy-r*0.15} Q${cx-r*1.15},${cy-r*1.25} ${cx},${cy-r*1.22} Q${cx+r*1.15},${cy-r*1.25} ${cx+r*1.0},${cy-r*0.15} Q${cx+r*0.5},${cy-r*0.75} ${cx-r*0.2},${cy-r*0.6} Q${cx-r*0.7},${cy-r*0.6} ${cx-r*1.0},${cy-r*0.15} Z`,{fill:hc,fillStyle:'solid',stroke:ink,strokeWidth:1.6})}
+  if(opt.hair=='bun'){P(p,`M${cx-r*1.0},${cy-r*0.1} Q${cx-r*1.1},${cy-r*1.2} ${cx},${cy-r*1.15} Q${cx+r*1.1},${cy-r*1.2} ${cx+r*1.0},${cy-r*0.1} Q${cx},${cy-r*0.95} ${cx-r*1.0},${cy-r*0.1} Z`,{fill:hc,fillStyle:'solid',stroke:ink,strokeWidth:1.6})}
+  if(opt.hair=='adult'){P(p,`M${cx-r*1.0},${cy} Q${cx-r*1.2},${cy-r*1.3} ${cx},${cy-r*1.2} Q${cx+r*1.2},${cy-r*1.3} ${cx+r*1.0},${cy} Q${cx+r*0.6},${cy-r*0.7} ${cx+r*0.2},${cy-r*0.75} Q${cx-r*0.5},${cy-r*0.8} ${cx-r*1.0},${cy} Z`,{fill:hc,fillStyle:'solid',stroke:ink,strokeWidth:1.6})}
+  const ex=r*0.36,ey=cy-r*0.02,er=Math.max(1.6,r*0.075);
+  const m=opt.mood||'neutral';
+  if(m=='full'||m=='laugh'){P(p,`M${cx-ex-r*0.14},${ey} Q${cx-ex},${ey-r*0.16} ${cx-ex+r*0.14},${ey}`,{fill:'none',strokeWidth:1.8,roughness:0.5,stroke:ink});P(p,`M${cx+ex-r*0.14},${ey} Q${cx+ex},${ey-r*0.16} ${cx+ex+r*0.14},${ey}`,{fill:'none',strokeWidth:1.8,roughness:0.5,stroke:ink})}
+  else if(opt.look=='down'){P(p,`M${cx-ex-r*0.14},${ey} Q${cx-ex},${ey+r*0.14} ${cx-ex+r*0.14},${ey}`,{fill:'none',strokeWidth:1.8,roughness:0.5,stroke:ink});P(p,`M${cx+ex-r*0.14},${ey} Q${cx+ex},${ey+r*0.14} ${cx+ex+r*0.14},${ey}`,{fill:'none',strokeWidth:1.8,roughness:0.5,stroke:ink})}
+  else{dot(p,cx-ex+(opt.gaze||0)*r,ey,er,ink);dot(p,cx+ex+(opt.gaze||0)*r,ey,er,ink)}
+  if(opt.glasses){C(p,cx-ex,ey,r*0.5,{fill:'none',strokeWidth:1.6,roughness:0.6,stroke:ink});C(p,cx+ex,ey,r*0.5,{fill:'none',strokeWidth:1.6,roughness:0.6,stroke:ink});L(p,cx-ex+r*0.25,ey,cx+ex-r*0.25,ey,{strokeWidth:1.6,roughness:0.5,stroke:ink})}
+  const my=cy+r*0.48;
+  if(m=='smile')P(p,`M${cx-r*0.3},${my-r*0.08} Q${cx},${my+r*0.22} ${cx+r*0.3},${my-r*0.08}`,{fill:'none',strokeWidth:1.9,roughness:0.6,stroke:ink});
+  if(m=='sad')P(p,`M${cx-r*0.26},${my+r*0.1} Q${cx},${my-r*0.14} ${cx+r*0.26},${my+r*0.1}`,{fill:'none',strokeWidth:1.9,roughness:0.6,stroke:ink});
+  if(m=='neutral')L(p,cx-r*0.2,my,cx+r*0.2,my,{strokeWidth:1.9,roughness:0.6,stroke:ink});
+  if(m=='laugh')P(p,`M${cx-r*0.34},${my-r*0.12} Q${cx},${my+r*0.5} ${cx+r*0.34},${my-r*0.12} Z`,{fill:'#fff',fillStyle:'solid',strokeWidth:1.7,roughness:0.6,stroke:ink});
+  if(m=='full'){C(p,cx-r*0.62,cy+r*0.36,r*0.62,{fill:PINK,fillStyle:'solid',strokeWidth:1.6,roughness:0.7,stroke:ink});C(p,cx+r*0.62,cy+r*0.36,r*0.62,{fill:PINK,fillStyle:'solid',strokeWidth:1.6,roughness:0.7,stroke:ink});E(p,cx,my,r*0.22,r*0.14,{fill:ink,fillStyle:'solid',strokeWidth:1,roughness:0.4,stroke:ink})}
+}
+function body(p,cx,top,w,h,color,op){P(p,`M${cx-w/2},${top+h} Q${cx-w/2-4},${top+h*0.12} ${cx-w*0.2},${top} L${cx+w*0.2},${top} Q${cx+w/2+4},${top+h*0.12} ${cx+w/2},${top+h} Z`,Object.assign({fill:color,fillStyle:'solid'},op||{}))}
+// la photo de Jade, carrée, de côté 100
+function photo(p,x,y,s,rot,op){op=op||{};const g=grp(p,x,y,s,rot);
+  R(g,0,0,100,100,3,{fill:'#fff',fillStyle:'solid',strokeWidth:2/s+1,stroke:op.stroke||INK,strokeLineDash:op.dash});
+  if(op.ghost){T(g,50,66,'?',54,{fill:GREY});return g}
+  R(g,7,7,86,86,2,{fill:'#fdf0c9',fillStyle:'solid',stroke:'none'});
+  body(g,50,70,62,26,TEAL,{strokeWidth:1.6});
+  head(g,50,45,21,{hair:'long',mood:'full'});
+  // fourchette
+  L(g,86,92,72,62,{strokeWidth:2.2,stroke:'#5b6b7d',roughness:0.6});L(g,72,62,69,52,{strokeWidth:1.6,stroke:'#5b6b7d',roughness:0.4});L(g,72,62,74,51,{strokeWidth:1.6,stroke:'#5b6b7d',roughness:0.4});L(g,72,62,78,53,{strokeWidth:1.6,stroke:'#5b6b7d',roughness:0.4});
+  return g}
+// téléphone : renvoie le groupe ; écran utile de (10,26) à (w-10,h-22)
+function phone(p,x,y,w,h,rot,op){op=op||{};const g=grp(p,x,y,1,rot);
+  R(g,0,0,w,h,Math.min(18,w*0.14),{fill:op.body||'#33415c',fillStyle:'solid',stroke:op.stroke||INK,strokeLineDash:op.dash});
+  R(g,8,18,w-16,h-34,4,{fill:op.screen||'#fff',fillStyle:'solid',strokeWidth:1.5,stroke:op.stroke||INK});
+  L(g,w/2-10,9,w/2+10,9,{strokeWidth:2.4,stroke:'#cfd8e3',roughness:0.4});
+  return g}
+function laugh(p,cx,cy,r){C(p,cx,cy,r*2,{fill:YEL,fillStyle:'solid',strokeWidth:1.8});
+  P(p,`M${cx-r*0.6},${cy-r*0.15} Q${cx-r*0.38},${cy-r*0.5} ${cx-r*0.16},${cy-r*0.15}`,{fill:'none',strokeWidth:1.8,roughness:0.5});
+  P(p,`M${cx+r*0.16},${cy-r*0.15} Q${cx+r*0.38},${cy-r*0.5} ${cx+r*0.6},${cy-r*0.15}`,{fill:'none',strokeWidth:1.8,roughness:0.5});
+  P(p,`M${cx-r*0.55},${cy+r*0.15} Q${cx},${cy+r*0.95} ${cx+r*0.55},${cy+r*0.15} Z`,{fill:'#fff',fillStyle:'solid',strokeWidth:1.6,roughness:0.5});
+  P(p,`M${cx-r*0.95},${cy+r*0.05} q${-r*0.3},${r*0.45} 0,${r*0.55} q${r*0.3},${-r*0.1} 0,${-r*0.55} Z`,{fill:BLUE,fillStyle:'solid',strokeWidth:1.2,roughness:0.4});
+  P(p,`M${cx+r*0.95},${cy+r*0.05} q${r*0.3},${r*0.45} 0,${r*0.55} q${-r*0.3},${-r*0.1} 0,${-r*0.55} Z`,{fill:BLUE,fillStyle:'solid',strokeWidth:1.2,roughness:0.4})}
+function bubble(p,x,y,w,h,tailx,taily,op){op=op||{};P(p,rr(x,y,w,h,Math.min(18,h/2.4)),Object.assign({fill:'#fff',fillStyle:'solid',strokeWidth:2},op));
+  if(tailx!=null){const bx=Math.max(x+20,Math.min(x+w-34,tailx-7)),by=taily>y?y+h:y;P(p,`M${bx},${by} L${tailx},${taily} L${bx+22},${by}`,Object.assign({fill:'#fff',fillStyle:'solid',strokeWidth:2},op));el('line',{x1:bx+2,y1:by,x2:bx+20,y2:by,stroke:'#fff','stroke-width':4},p)}}
+
+function scene(n,draw,bg){seedBase=n;seedN=0;const svg=el('svg',{id:'s'+n,viewBox:'0 0 800 500',width:800,height:500,xmlns:NS},document.body);
+  el('rect',{x:0,y:0,width:800,height:500,fill:bg||PAPER},svg);rc=rough.svg(svg);draw(svg);
+  seedN=900;R(svg,6,6,788,488,10,{fill:'none',strokeWidth:2.2,stroke:bg?'#52698c':INK,roughness:1.4})}
+
+// 1 · Lundi 12 h 30 : la photo « pour rire »
+scene(1,s=>{
+  // fenêtres et mur
+  L(s,20,118,780,118,{stroke:GREY,strokeWidth:1.6});
+  R(s,60,34,120,66,3,{fill:BLUE,fillStyle:'hachure',stroke:GREY,strokeWidth:1.6});R(s,215,34,120,66,3,{fill:BLUE,fillStyle:'hachure',stroke:GREY,strokeWidth:1.6});
+  // Jade à table
+  body(s,235,238,150,130,TEAL);
+  head(s,235,188,50,{hair:'long',mood:'full'});
+  // bras et fourchette
+  P(s,'M300,300 Q340,290 318,236',{fill:'none',strokeWidth:9,stroke:TEAL,roughness:0.8});P(s,'M300,300 Q340,290 318,236',{fill:'none',strokeWidth:2,roughness:0.8,stroke:'none'});
+  C(s,317,232,22,{fill:SKIN,fillStyle:'solid',strokeWidth:1.8});
+  L(s,322,236,292,212,{strokeWidth:2.6,stroke:'#5b6b7d'});
+  // table et plateau
+  P(s,'M40,352 L470,352 L500,392 L20,392 Z',{fill:'#f1e3c6',fillStyle:'solid'});
+  L(s,60,392,60,470,{});L(s,455,392,455,470,{});
+  R(s,140,330,190,34,6,{fill:YEL,fillStyle:'hachure',hachureGap:5});
+  E(s,215,340,84,20,{fill:'#fff',fillStyle:'solid',strokeWidth:1.8});
+  R(s,345,312,26,44,3,{fill:BLUE,fillStyle:'solid',strokeWidth:1.8});
+  // téléphone tenu au premier plan
+  const g=phone(s,548,150,178,300,-7,{});
+  photo(g,24,58,1.3,0);
+  C(g,89,236,34,{fill:'#fff',fillStyle:'solid',strokeWidth:2.2});C(g,89,236,22,{fill:RED,fillStyle:'solid',strokeWidth:1.4});
+  // main
+  P(s,'M600,486 Q560,440 566,396 Q570,372 592,380 Q604,388 600,420 Q640,452 700,486 Z',{fill:'#f0c9a8',fillStyle:'solid'});
+  [318,356,394].forEach(y=>R(s,716,y,44,26,12,{fill:'#f0c9a8',fillStyle:'solid',strokeWidth:1.9}));
+  // éclair de la prise de vue
+  [[520,150,488,128],[540,128,524,96],[575,116,572,84],[505,180,470,176]].forEach(a=>L(s,a[0],a[1],a[2],a[3],{stroke:RED,strokeWidth:2.6}));
+  T(s,470,82,'clic !',44,{fill:RED,rot:-9});
+  // la visée, en pointillé
+  P(s,'M545,250 Q430,200 300,196',{fill:'none',stroke:RED,strokeWidth:1.8,strokeLineDash:[7,8],roughness:0.6});
+});
+
+// 2 · Lundi 12 h 34 : trois partages
+scene(2,s=>{
+  const g=phone(s,70,84,190,330,-3,{});
+  photo(g,30,34,1.3,0);
+  R(g,22,176,146,44,10,{fill:PALE,fillStyle:'solid',strokeWidth:1.4});T(g,95,198,'la reine',19,{});T(g,95,215,'des hamsters',19,{});
+  R(g,40,238,110,36,16,{fill:RED,fillStyle:'solid',strokeWidth:1.6});T(g,95,263,'transférer',21,{fill:'#fff'});
+  const ys=[42,186,330];
+  ys.forEach((y,i)=>{arrow(s,278,[190,250,310][i],380,[110,250,400][i],470,y+62,{stroke:RED,strokeWidth:3,head:17});
+    const q=phone(s,486,y,96,128,[5,-3,4][i],{});photo(q,18,28,0.6,0);
+    laugh(s,632,y+52,27);
+    P(s,`M674,${y+56} L748,${y+[36,56,76][i]}`,{fill:'none',stroke:GREY,strokeWidth:2.2,strokeLineDash:[6,7],roughness:0.6});
+    const ax=748,ay=y+[36,56,76][i];L(s,ax,ay,ax-12,ay-8,{stroke:GREY,strokeWidth:2.2});L(s,ax,ay,ax-12,ay+8,{stroke:GREY,strokeWidth:2.2});
+  });
+  T(s,372,60,'×3',46,{fill:RED,rot:-8});
+});
+
+// 3 · Lundi 16 h : la capture d'écran
+scene(3,s=>{
+  const g=phone(s,56,96,190,330,-4,{});
+  photo(g,30,54,1.3,0);
+  // repères de capture
+  [[18,42,1,1],[172,42,-1,1],[18,198,1,-1],[172,198,-1,-1]].forEach(c=>{L(g,c[0],c[1],c[0]+26*c[2],c[1],{stroke:RED,strokeWidth:3.4,roughness:0.6});L(g,c[0],c[1],c[0],c[1]+26*c[3],{stroke:RED,strokeWidth:3.4,roughness:0.6})});
+  T(g,95,246,'capture',24,{fill:RED});T(g,95,270,'d’écran',24,{fill:RED});
+  arrow(s,268,236,318,196,372,222,{stroke:RED,strokeWidth:3.2,head:18});
+  // la page publique
+  R(s,392,52,350,400,12,{fill:'#fff',fillStyle:'solid'});
+  L(s,392,110,742,110,{strokeWidth:1.8});
+  C(s,432,81,38,{fill:BLUE,fillStyle:'solid',strokeWidth:2});E(s,432,81,17,38,{fill:'none',strokeWidth:1.4,roughness:0.6});L(s,414,81,450,81,{strokeWidth:1.4,roughness:0.6});
+  T(s,468,92,'compte PUBLIC',30,{anchor:'start',fill:RED});
+  photo(s,414,128,1.75,0);
+  // l'œil et le compteur
+  P(s,'M610,160 Q650,128 690,160 Q650,192 610,160 Z',{fill:'#fff',fillStyle:'solid',strokeWidth:2});C(s,650,160,20,{fill:INK,fillStyle:'solid',strokeWidth:1});
+  T(s,652,226,'200 vues',34,{});
+  laugh(s,624,276,22);laugh(s,676,280,22);
+  bubble(s,414,322,150,44,null,null);T(s,489,352,'ha ha ha !',25,{});
+  bubble(s,580,340,140,44,null,null);T(s,650,370,'trop drôle',25,{});
+  bubble(s,440,388,180,44,null,null);T(s,530,418,'envoie-la-moi',25,{});
+});
+
+// 4 · Lundi 21 h : Jade découvre la photo
+scene(4,s=>{
+  const ink='#dfe8f5';
+  // fenêtre et lune
+  R(s,560,56,170,170,4,{fill:'#2c4a78',fillStyle:'solid',stroke:ink});L(s,645,56,645,226,{stroke:ink});L(s,560,141,730,141,{stroke:ink});
+  C(s,690,100,44,{fill:'#f8e9a6',fillStyle:'solid',stroke:ink,strokeWidth:1.6});
+  [[590,90],[612,190],[700,186],[600,128]].forEach(a=>dot(s,a[0],a[1],2.2,'#f8e9a6'));
+  // la lueur du téléphone
+  el('circle',{cx:356,cy:300,r:150,fill:'#f8e9a6',opacity:0.13},s);el('circle',{cx:356,cy:300,r:96,fill:'#f8e9a6',opacity:0.16},s);
+  // lit
+  R(s,70,360,520,84,10,{fill:'#3f5f8f',fillStyle:'hachure',stroke:ink,hachureGap:7});
+  R(s,78,300,130,70,18,{fill:'#dfe8f5',fillStyle:'solid',stroke:ink});
+  L(s,70,444,70,470,{stroke:ink});L(s,590,444,590,470,{stroke:ink});
+  // Jade assise, genoux repliés
+  body(s,270,258,128,118,TEAL,{stroke:ink});
+  P(s,'M296,372 Q330,268 398,300 Q430,330 420,376 Z',{fill:'#4a6fa5',fillStyle:'solid',stroke:ink});
+  head(s,276,214,46,{hair:'long',mood:'sad',look:'down',ink:INK});
+  // larme
+  P(s,'M300,226 q-7,13 0,17 q7,-4 0,-17 Z',{fill:BLUE,fillStyle:'solid',strokeWidth:1.2,stroke:INK,roughness:0.4});
+  // bras et téléphone
+  P(s,'M318,312 Q352,318 366,292',{fill:'none',strokeWidth:10,stroke:TEAL,roughness:0.8});
+  const g=phone(s,340,236,58,86,14,{stroke:INK,screen:'#fffbe6'});photo(g,13,24,0.32,0);
+  // réveil
+  R(s,628,356,112,114,4,{fill:'#2c4a78',fillStyle:'solid',stroke:ink});L(s,628,400,740,400,{stroke:ink,strokeWidth:1.6});dot(s,684,380,4,ink);
+  R(s,636,310,96,44,8,{fill:DARK,fillStyle:'solid',stroke:ink});T(s,684,342,'21:00',27,{fill:'#f8e9a6'});
+},DARK);
+
+// 5 · Mardi 8 h : Mathis efface son message
+scene(5,s=>{
+  const g=phone(s,56,84,200,336,-3,{});
+  // message supprimé
+  P(g,rr(22,60,156,62,14),o({fill:PALE,fillStyle:'hachure',stroke:GREY,strokeLineDash:[7,6],strokeWidth:1.8,hachureGap:8}));
+  T(g,100,88,'message',22,{fill:'#6b7a8c'});T(g,100,110,'supprimé',22,{fill:'#6b7a8c'});
+  // corbeille
+  P(g,'M70,170 L130,170 L124,244 L76,244 Z',{fill:'#fff',fillStyle:'solid'});L(g,62,170,138,170,{strokeWidth:2.8});R(g,88,156,24,12,3,{fill:'none'});
+  L(g,88,184,90,232,{strokeWidth:1.6});L(g,100,184,100,232,{strokeWidth:1.6});L(g,112,184,110,232,{strokeWidth:1.6});
+  // coche
+  P(s,'M214,300 l14,16 l30,-38',{fill:'none',stroke:TEAL,strokeWidth:5,roughness:0.7});
+  // mais les copies circulent
+  T(s,336,250,'mais…',44,{fill:RED,rot:-6});
+  const cs=[[430,60,0.95,-10],[590,44,0.8,8],[684,150,0.75,-6],[470,200,0.7,7],[585,256,1.0,-5],[450,348,0.8,9],[690,330,0.85,6]];
+  cs.forEach((c,i)=>{photo(s,c[0],c[1],c[2],c[3])});
+  [[404,150,372,120,360,84],[690,60,720,40,756,36],[772,232,780,250,772,300],[430,300,400,320,392,366],[580,380,600,420,650,440],[540,150,548,170,560,196]].forEach(a=>arrow(s,a[0],a[1],a[2],a[3],a[4],a[5],{stroke:RED,strokeWidth:2.4,head:13}));
+});
+
+// 6 · Mardi 14 h : des adultes alertés
+scene(6,s=>{
+  // porte de la vie scolaire
+  R(s,40,96,200,364,3,{fill:'#f1e3c6',fillStyle:'hachure',hachureGap:11,stroke:GREY,strokeWidth:1.8});
+  R(s,58,36,164,44,5,{fill:'#fff',fillStyle:'solid',strokeWidth:1.8});T(s,140,67,'VIE SCOLAIRE',23,{});
+  L(s,20,460,780,460,{stroke:GREY,strokeWidth:1.8});
+  // Inès (de face, parle)
+  body(s,168,318,116,142,YEL);
+  head(s,168,270,42,{hair:'bun',hairColor:'#2f2a2a',skin:'#e2b48c',mood:'neutral',gaze:0.12});
+  // CPE
+  body(s,412,246,150,214,'#8fa3bf');
+  head(s,412,188,50,{hair:'adult',hairColor:'#5c5148',mood:'neutral',glasses:true,gaze:-0.1});
+  // bulle d'Inès : elle montre ce qu'elle a vu
+  bubble(s,204,124,146,84,206,236);
+  const q=phone(s,228,134,40,64,-6,{});photo(q,8,20,0.24,0);
+  T(s,306,180,'!',52,{fill:RED});
+  // le téléphone : 3018 et signaler
+  const g=phone(s,548,70,200,360,3,{});
+  C(g,100,96,80,{fill:TEAL,fillStyle:'solid',strokeWidth:2});
+  P(g,'M82,84 q-6,14 8,28 q14,14 28,8 l-6,-12 l-10,4 q-8,-6 -12,-12 l4,-10 Z',{fill:'#fff',fillStyle:'solid',strokeWidth:1.4,roughness:0.5,stroke:'#fff'});
+  T(g,100,186,'3018',58,{fill:TEAL});
+  R(g,26,222,148,52,14,{fill:'#fff',fillStyle:'solid',stroke:RED,strokeWidth:2.4});
+  L(g,48,236,48,264,{stroke:RED,strokeWidth:2.6});P(g,'M48,236 L70,242 L48,250 Z',{fill:RED,fillStyle:'solid',stroke:RED,strokeWidth:1.4});
+  T(g,116,257,'signaler',25,{fill:RED});
+  arrow(s,486,140,512,120,540,136,{stroke:TEAL,strokeWidth:3.2,head:15});
+});
+
+// 7 · Vendredi : ce qu'il reste
+scene(7,s=>{
+  // le collège au fond
+  R(s,300,92,360,170,3,{fill:'#f1e3c6',fillStyle:'hachure',hachureGap:12,stroke:GREY,strokeWidth:1.6});
+  [330,410,490,570].forEach(x=>R(s,x,120,52,46,2,{fill:BLUE,fillStyle:'solid',stroke:GREY,strokeWidth:1.4}));
+  R(s,452,196,56,66,2,{fill:'#fff',fillStyle:'solid',stroke:GREY,strokeWidth:1.4});
+  L(s,20,404,780,404,{stroke:GREY,strokeWidth:1.8});
+  // le tilleul
+  P(s,'M112,404 Q122,320 108,250 L146,250 Q136,320 150,404 Z',{fill:'#a9825a',fillStyle:'solid'});
+  P(s,'M40,220 Q10,130 80,96 Q110,34 180,70 Q250,60 244,140 Q280,210 200,246 Q150,280 96,256 Q44,262 40,220 Z',{fill:GREEN,fillStyle:'hachure',hachureGap:7,fillWeight:2});
+  // deux élèves qui parlent, au loin
+  body(s,238,330,54,74,ORANGE,{strokeWidth:1.8});head(s,238,306,20,{hair:'short',hairColor:'#3a3030',mood:'smile',gaze:0.1});
+  body(s,300,336,54,68,'#b9a3d6',{strokeWidth:1.8});head(s,300,312,20,{hair:'bun',hairColor:'#b5651d',mood:'smile',gaze:-0.1});
+  bubble(s,196,196,160,54,262,280,{stroke:GREY,strokeLineDash:[7,6]});T(s,276,232,'« hamster »…',27,{fill:'#6b7a8c'});
+  // Jade, seule
+  body(s,548,316,80,96,TEAL);head(s,548,284,30,{hair:'long',mood:'sad',look:'down'});
+  // la copie que quelqu'un a gardée
+  const g=phone(s,668,270,96,150,6,{dash:[8,7],body:'#fff',stroke:GREY});photo(g,18,36,0.6,0,{ghost:true,stroke:GREY,dash:[6,6]});
+  T(s,692,246,'qui l’a gardée ?',25,{fill:'#6b7a8c',rot:3});
+});
+</script>
+</body></html>
