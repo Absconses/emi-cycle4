@@ -57,7 +57,7 @@ l'élève est capable**. C'est le lieu de l'inventivité pédagogique : on ne l�
 - **Des tampons à poser sur un document inventé** (essayé sur les 5.6 et 5.8) : jugé trop
   artificiel et trop simple.
 
-**Le modèle à l'essai : le dossier de vrais documents** (livre 5.6, « Le dossier du Tilleul »)
+**Le modèle retenu : le dossier de vrais documents** (livre 5.6, « Le dossier du Tilleul »)
 
 1. Une question d'actualité réelle, posée au *Tilleul*.
 2. Un dossier de cinq documents **réels**, de fiabilité inégale. Pour chacun : une courte
@@ -67,7 +67,9 @@ l'élève est capable**. C'est le lieu de l'inventivité pédagogique : on ne l�
 4. Une production écrite (l'encadré du *Tilleul*), validée par critères, puis comparée à une
    réponse possible.
 
-Ce modèle attend encore l'avis de M. Pempie. Ne pas le généraliser avant.
+Modèle **validé par M. Pempie le 15 novembre 2026** : il s'applique à toutes les tâches finales.
+Marche à suivre, pour chaque livre : proposer d'abord le sujet et les documents réels (liens ouverts,
+citations exactes), attendre son accord, puis construire.
 
 **Contraintes à connaître**
 
@@ -113,6 +115,12 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
   d'East Joplin, l'activité de club du Tamil Nadu, et quelques images en 4e et en 3e.
   Les lister : `python scripts/registre-images.py modules` (skill `h5p-lumi`, demande de fusion n° 35).
 - Le skill s'ouvre à d'autres banques que Wikimedia (même demande de fusion).
+- Accès vérifié le 15 novembre 2026 depuis une session en ligne : Wikimedia Commons, **Pixabay**
+  (par son API, clé dans la variable `PIXABAY` ; appeler avec `curl`, la bibliothèque Python est
+  refusée) et la recherche Flickr répondent. Unsplash et Pexels demandent une clé. Openverse,
+  Library of Congress, Europeana, Gallica et Légifrance refusent l'accès.
+- Crédit d'une photo Pixabay : « Sujet — auteur, Pixabay (licence Pixabay) », avec le lien vers
+  la page de la photo.
 - Éviter les élèves reconnaissables dans un produit vendu.
 
 ## 8. État d'avancement (15 novembre 2026)
@@ -125,7 +133,7 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 | 5.4 Choisir le bon outil | fait | faite | **à refaire** (série de 5 questions) |
 | 5.5 Chercher avec méthode | fait | faite | **à refaire** (série de 5 questions) |
 | 5.6 Évaluer une source | fait | faite | refaite : dossier de vrais documents, à valider |
-| 5.7 Mettre en valeur une information | à faire | à faire | à faire |
+| 5.7 Mettre en valeur une information | fait | faite | **à refaire** (plan de brève en Documentation Tool) : dossier réel à proposer |
 | 5.8 Publier de façon éthique | fait | faite | **à refaire** (tampons) ; le scénario reste au chapitre 4 |
 | 5.9 Mes traces, mes réactions | à faire | à faire | à faire |
 | Game Map 5e, 4e (9 livres + Game Map), 3e (9 livres + Game Map) | à faire | à faire | à faire |
@@ -134,7 +142,7 @@ Pistes proposées pour les tâches finales à refaire, avant l'abandon des tampo
 sur le modèle du dossier réel) : 5.1 décrypter une campagne jamais vue ; 5.2 composer le plan
 de couverture d'un événement ; 5.4 mener une recherche sur un nouveau sujet ; 5.5 sa propre
 fiche de recherche en deux pages ; 5.8 relire un article avant publication, avec de vrais
-textes de loi.
+textes de loi ; 5.7 écrire une brève à partir d'un dossier réel, puis choisir son format.
 
 ## 9. Chantiers ouverts
 
@@ -168,3 +176,8 @@ textes de loi.
 
 Pour tester : `python3 -m http.server 8766` à la racine, puis
 `python3 outils/verifier-livre.py <id du module>`. Il faut Python, Playwright et Chromium.
+
+Dans une session en ligne : `pip install playwright==<version du Playwright déjà installé>` (la
+même que celle de Node, pour retrouver son Chromium), puis installer les polices avec la commande
+`npm` indiquée en tête de `pol2.py` et donner leur dossier dans la variable `POLICES`. Sans les
+polices, la page ne finit pas de charger.
