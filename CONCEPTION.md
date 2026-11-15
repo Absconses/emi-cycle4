@@ -32,7 +32,12 @@ Fixées par M. Pempie. Elles s'appliquent à toute activité.
 6. **Une tâche finale faisable.**
 
 Contrôle : `scripts/audit-reponses.py` du skill `h5p-lumi` doit sortir **0 ligne « LONGUE »**
-sur le `content.json` d'un module.
+sur le `content.json` d'un module. Seule exception : une série qui réutilise les mêmes étiquettes
+courtes d'une question à l'autre (les quatre familles de genres, par exemple).
+
+**Pas de mots croisés** (M. Pempie, 29 octobre 2026). Dans une Game Map, le défi final devient un
+choix rapide (Single Choice Set) : une définition, trois mots. Il en reste dans les Game Maps de 4e
+et de 3e, à remplacer pendant leur refonte.
 
 ## 3. Le plan d'un livre
 
@@ -147,8 +152,9 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 | 5.6 Évaluer une source | fait | faite | refaite : dossier de vrais documents, à valider |
 | 5.7 Mettre en valeur une information | fait | faite | refaite : dossier de vrais documents « portable en pause », crible, brève, choix du format |
 | 5.8 Publier de façon éthique | fait | faite | **à refaire** (tampons) ; le scénario reste au chapitre 4 |
-| 5.9 Mes traces, mes réactions | fait | faite | provisoire : réponse à Sami, production écrite validée par critères ; dossier réel à proposer |
-| Game Map 5e, 4e (9 livres + Game Map), 3e (9 livres + Game Map) | à faire | à faire | à faire |
+| 5.9 Mes traces, mes réactions | fait ; frise illustrée | faite | provisoire : réponse à Sami, production écrite validée par critères ; dossier réel proposé le 15 novembre |
+| Game Map 5e | fait | sans objet | sans objet ; le défi final est un choix rapide (les mots croisés sont retirés) |
+| 4e (9 livres + Game Map), 3e (9 livres + Game Map) | à faire | à faire | à faire |
 
 Pistes proposées pour les tâches finales à refaire, avant l'abandon des tampons (à repenser
 sur le modèle du dossier réel) : 5.1 décrypter une campagne jamais vue ; 5.2 composer le plan
