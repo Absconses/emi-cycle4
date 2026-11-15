@@ -36,7 +36,7 @@ def ajoute_trace(c, titre_page, phrases, accroche, preparation):
       'i10n':{'previousLabel':'Étape précédente','nextLabel':'Étape suivante','closeLabel':'Fermer'}},
      'library':'H5P.DocumentationTool 1.8','subContentId':u(),'metadata':meta('Ma trace écrite','Documentation Tool')}
     # bandeau : repris de « Tout relier » pour garder le style du livre
-    b=tr[0]['content']['params']['text']; m=re.match(r'(<p style="[^"]*">.*?&nbsp;·&nbsp; )TOUT RELIER</p>',b,re.S); assert m, b[:200]
+    b=tr[0]['content']['params']['text']; m=re.match(r'(<p style="[^"]*">.*?&nbsp;·&nbsp; )[^<]*</p>',b,re.S); assert m, b[:200]
     h2=re.search(r'<h2 style="[^"]*">',b).group(0)
     entete={'content':{'params':{'text':m.group(1)+'MA TRACE ÉCRITE</p>\n'+h2+'Ma trace écrite</h2>\n<p>'+preparation+' Écris-le <strong>avec tes mots</strong>. C’est cette page que tu garderas.</p>'},'library':'H5P.AdvancedText 1.1','subContentId':u(),'metadata':meta('Titre Ma trace écrite','Text')},'useSeparator':'auto'}
     T='%d · Ma trace écrite'%n
