@@ -52,7 +52,9 @@ l'élève est capable**. C'est le lieu de l'inventivité pédagogique : on ne l�
 **Ce qui a été écarté**
 
 - **Le Documentation Tool comme tâche finale** : une fiche de 6 à 13 champs, non corrigée,
-  dont l'export ne sert à rien.
+  dont l'export ne sert à rien. Rappel de M. Pempie (15 novembre 2026) : **aucun Documentation
+  Tool en dehors de la trace écrite**, même en attendant mieux. Quand on refond un livre, on le
+  retire dans la même demande de fusion.
 - **Une simple série de questions** : ce n'est pas une tâche complexe.
 - **Des tampons à poser sur un document inventé** (essayé sur les 5.6 et 5.8) : jugé trop
   artificiel et trop simple.
@@ -73,6 +75,9 @@ citations exactes), attendre son accord, puis construire.
 
 **Contraintes à connaître**
 
+- Mots-clés d'une production écrite : la tolérance aux fautes rapproche les mots courts
+  (« peur » est reconnu dans « peux »). Préférer des expressions (« a peur », « la loi ») et
+  essayer une bonne réponse d'élève et une mauvaise avant de livrer.
 - La machine ne valide que ce que l'élève assemble. Une production libre se valide par
   critères (mots-clés larges, avec jokers) et par une réponse possible. Les mots-clés peuvent
   manquer une bonne réponse formulée autrement.
@@ -135,7 +140,7 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 | 5.6 Évaluer une source | fait | faite | refaite : dossier de vrais documents, à valider |
 | 5.7 Mettre en valeur une information | fait | faite | **à refaire** (plan de brève en Documentation Tool) : dossier « portable en pause » proposé, en attente d'accord |
 | 5.8 Publier de façon éthique | fait | faite | **à refaire** (tampons) ; le scénario reste au chapitre 4 |
-| 5.9 Mes traces, mes réactions | fait | faite | **à refaire** (conseil à Sami en Documentation Tool) : dossier réel à proposer |
+| 5.9 Mes traces, mes réactions | fait | faite | provisoire : réponse à Sami, production écrite validée par critères ; dossier réel à proposer |
 | Game Map 5e, 4e (9 livres + Game Map), 3e (9 livres + Game Map) | à faire | à faire | à faire |
 
 Pistes proposées pour les tâches finales à refaire, avant l'abandon des tampons (à repenser
