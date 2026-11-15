@@ -1,6 +1,6 @@
 # Documents dessinés (HTML -> image), glisser-déposer sur image, production écrite validée par critères.
 # La tâche « tampons sur un document » a été essayée puis abandonnée (jugée artificielle) ; rendre() et redaction() restent utiles.
-import json, copy
+import json, copy, re
 import os, sys
 ICI=os.path.dirname(os.path.abspath(__file__)); sys.path.insert(0, ICI)
 RACINE=os.path.dirname(ICI)   # racine du dépôt
@@ -43,11 +43,18 @@ def glisser(gab, titre, image, boites, tampons, zones, consigne_ok, consigne_ko,
     p['behaviour'].update({'enableRetry':True,'singlePoint':False,'applyPenalties':False,'dropZoneHighlighting':surlignage,'enableFullScreen':True,'showTitle':False})
     return d
 
+APOSTROPHES='’‘ʼ'
+def elision(variantes):
+    """Sur tablette, l'apostrophe tapée est courbe (’). Le type Essay ne la compte pas comme une séparation de mots :
+    « l’angle » n'est alors pas reconnu pour le mot-clé « angle ». On ajoute donc une expression régulière qui attrape
+    le mot précédé de l', d', j', qu'… Renvoie une liste (vide s'il n'y a rien à ajouter)."""
+    v=[re.sub(r'([\\.^$+?()\[\]{}|/])',r'\\\1',x).replace('*','[a-zà-ÿ]*') for x in variantes if x!='*' and not (x.startswith('/') and x.endswith('/'))]   # le joker * de l'Essay reste un joker
+    return ['/[a-zà-ÿ]{1,2}['+APOSTROPHES+'](?:'+'|'.join(v)+')/'] if v else []
 def redaction(gab, titre, consigne, criteres, modele, minimum=60):
     """Production écrite validée par critères. gab : un Essay existant. criteres : [(mot-clé principal, [variantes], retour si présent, retour si absent)]."""
     e=copy.deepcopy(gab); e['subContentId']=u(); e['metadata']=meta(titre,'Essay'); p=e['params']
     p['taskDescription']=consigne; p['solution']={'introduction':'<p>Une réponse possible (il y en a d’autres) :</p>','sample':modele}
-    p['keywords']=[{'keyword':k,'alternatives':alt,'options':{'points':1,'occurrences':1,'caseSensitive':False,'forgiveMistakes':True,'feedbackIncluded':ok,'feedbackMissed':ko}} for k,alt,ok,ko in criteres]
+    p['keywords']=[{'keyword':k,'alternatives':alt+elision([k]+alt),'options':{'points':1,'occurrences':1,'caseSensitive':False,'forgiveMistakes':True,'feedbackIncluded':ok,'feedbackMissed':ko}} for k,alt,ok,ko in criteres]
     p['overallFeedback']=[{'from':0,'to':74,'feedback':'Regarde ce qu’il manque ci-dessous, complète ton texte, puis compare avec la réponse possible.'},{'from':75,'to':100,'feedback':'Ton texte contient l’essentiel. Compare-le avec la réponse possible.'}]
     p['behaviour'].update({'minimumLength':minimum,'inputFieldSize':'10','enableRetry':True,'ignoreScoring':False,'linebreakReplacement':' '})
     p['behaviour'].pop('pointsHost',None)
