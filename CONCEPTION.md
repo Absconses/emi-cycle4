@@ -197,7 +197,8 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 | Game Map 4e | fait (3 QCM rééquilibrés) | sans objet | sans objet ; le défi final est un choix rapide, un mot par livre (les mots croisés sont retirés) |
 | 3.1 Repérer ce qui filtre son information | fait (vidéo rééquilibrée : 4 QCM ; chapitre 3 : la remise en ordre accepte tous les ordres plausibles) | faite | provisoire : « L'analyse de mes influences », production écrite validée par huit critères, avec un contre-fil de deux sources ; forme définitive à proposer |
 | 3.2 Distinguer les acteurs de l'information et leur rôle | fait (vidéo rééquilibrée : 4 QCM ; chapitre 4 : les deux définitions passent après le tri « Critiquer ou dénigrer ? ») | faite | provisoire : « Le portrait d'Irène Frachon », production écrite validée par huit critères, sur le dossier réel de six documents déjà en place, avec un fait vérifié par l'élève ; forme définitive à proposer |
-| 3.3 à 3.9, Game Map 3e | à faire | à faire | à faire |
+| 3.3 Comparer comment les médias traitent un fait | fait (vidéo rééquilibrée : 3 QCM) | faite | provisoire : « L'analyse comparée » (huit critères) puis « Ma capsule sourcée » (six critères), deux productions écrites sur les trois versions du chapitre 2 ; forme définitive à proposer |
+| 3.4 à 3.9, Game Map 3e | à faire | à faire | à faire |
 
 Les neuf livres de 5e ont leur tâche finale (15 novembre 2026). Les six dossiers construits ce
 jour-là ont été validés par M. Pempie avant construction ; leurs documents, citations et liens
