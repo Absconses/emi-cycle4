@@ -167,7 +167,8 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 | 4.4 Chercher avec les bons outils | fait (vidéo et séries rééquilibrées ; chapitre 4 : « qu'est-ce qui ne va pas ? » avant l'explication, les ingrédients du prompt en coup de pouce, le glisser-déposer d'ordre remplacé par un QCM) | faite | provisoire : dossier de recherche de Yanis, production écrite validée par cinq critères ; dossier réel à proposer |
 | 4.5 Organiser sa recherche | fait (vidéo et série rééquilibrées ; chapitre 2 : l'ordre des étapes, déjà demandé par la carte de « Tout relier », remplacé par un choix de mots-clés) | faite | provisoire : plan de recherche sur un **nouveau** sujet (« Nos cartables sont-ils trop lourds ? »), production écrite validée par six critères ; dossier réel à proposer |
 | 4.6 Information ou désinformation | fait (vidéo et enquête rééquilibrées : 9 QCM) | faite | provisoire : article de vérification du *Tilleul* après l'enquête guidée, production écrite validée par cinq critères ; dossier réel à proposer. Le cas de la rumeur (téléphone interdit « même éteint dans le sac ») est à revoir depuis « Portable en pause » : voir le dossier du 5.7 |
-| 4.7 à 4.9, Game Map 4e, 3e (9 livres + Game Map) | à faire | à faire | à faire |
+| 4.7 Créer un contenu original | fait (vidéo, QCM et séries rééquilibrés : 10 QCM ; chapitre 4 : la consigne ne donne plus l'ordre du plan) | faite | provisoire : l'éditorial du *Tilleul* écrit avec le dossier d'Inès, production écrite validée par cinq critères ; dossier réel à proposer |
+| 4.8 à 4.9, Game Map 4e, 3e (9 livres + Game Map) | à faire | à faire | à faire |
 
 Les neuf livres de 5e ont leur tâche finale (15 novembre 2026). Les six dossiers construits ce
 jour-là ont été validés par M. Pempie avant construction ; leurs documents, citations et liens
