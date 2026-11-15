@@ -165,7 +165,8 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 | 4.2 Qui paie l'information | fait (vidéo rééquilibrée ; chapitre 4 : les questions avant les volets de l'ARCOM, le glisser-déposer d'ordre remplacé par deux QCM) | faite | provisoire : proposition à la rédaction pour financer le *Tilleul* papier, production écrite validée par critères ; dossier réel à proposer |
 | 4.3 La ligne éditoriale | fait (vidéo rééquilibrée ; anatomie de la une : des retours qui expliquent ; la conférence de rédaction devient un choix de manchette ; « informer ou donner son avis » : un clic par article, le rappel de 5e en coup de pouce) | faite | provisoire : réponse à Yanis et Inès sur les deux unes, production écrite validée par critères ; dossier réel à proposer |
 | 4.4 Chercher avec les bons outils | fait (vidéo et séries rééquilibrées ; chapitre 4 : « qu'est-ce qui ne va pas ? » avant l'explication, les ingrédients du prompt en coup de pouce, le glisser-déposer d'ordre remplacé par un QCM) | faite | provisoire : dossier de recherche de Yanis, production écrite validée par cinq critères ; dossier réel à proposer |
-| 4.5 à 4.9, Game Map 4e, 3e (9 livres + Game Map) | à faire | à faire | à faire |
+| 4.5 Organiser sa recherche | fait (vidéo et série rééquilibrées ; chapitre 2 : l'ordre des étapes, déjà demandé par la carte de « Tout relier », remplacé par un choix de mots-clés) | faite | provisoire : plan de recherche sur un **nouveau** sujet (« Nos cartables sont-ils trop lourds ? »), production écrite validée par six critères ; dossier réel à proposer |
+| 4.6 à 4.9, Game Map 4e, 3e (9 livres + Game Map) | à faire | à faire | à faire |
 
 Les neuf livres de 5e ont leur tâche finale (15 novembre 2026). Les six dossiers construits ce
 jour-là ont été validés par M. Pempie avant construction ; leurs documents, citations et liens
