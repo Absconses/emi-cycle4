@@ -201,7 +201,8 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 | 3.4 Comprendre et comparer moteur et IA générative | fait (vidéo rééquilibrée : 4 QCM) | faite | provisoire : « Deux moteurs comparés » (six critères, devant deux vrais moteurs) puis « Mon plan de recherche et de veille » (neuf critères) ; forme définitive à proposer |
 | 3.5 Mener une recherche et en faire une synthèse | fait (vidéo rééquilibrée : 6 QCM) | faite | provisoire : « Le dossier de stage de Yanis » (huit critères) puis « La candidature et les sources » (sept critères) ; forme définitive à proposer (piste : le courriel de candidature) |
 | 3.6 Vérifier une image avant d'y croire | fait (vidéo rééquilibrée : 5 QCM ; série « solide ou fallacieux ? » : 3 questions) | faite | provisoire : « L'enquête sur la photo de la cour » (huit critères) puis « Mon rectificatif » (cinq critères, cinq lignes) ; forme définitive à proposer |
-| 3.7 à 3.9, Game Map 3e | à faire | à faire | à faire |
+| 3.7 Débattre avec des sources | fait (vidéo rééquilibrée : 5 QCM ; QCM du dessin de Daumier et de la campagne) | faite | provisoire : « Ma carte et mon avis » (neuf critères, avec une source trouvée par l'élève) puis « Mon dessin et ma publication » (six critères) ; forme définitive à proposer |
+| 3.8, 3.9, Game Map 3e | à faire | à faire | à faire |
 
 Les neuf livres de 5e ont leur tâche finale (15 novembre 2026). Les six dossiers construits ce
 jour-là ont été validés par M. Pempie avant construction ; leurs documents, citations et liens
