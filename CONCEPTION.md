@@ -156,7 +156,8 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 | Game Map 5e | fait | sans objet | sans objet ; le défi final est un choix rapide (les mots croisés sont retirés) |
 | 4.1 Prendre du recul sur mes usages | fait (vidéo rééquilibrée ; chapitre 3 : la question avant l'écran de Swipo) | faite | provisoire : lettre à soi-même, production écrite validée par critères ; dossier réel à proposer |
 | 4.2 Qui paie l'information | fait (vidéo rééquilibrée ; chapitre 4 : les questions avant les volets de l'ARCOM, le glisser-déposer d'ordre remplacé par deux QCM) | faite | provisoire : proposition à la rédaction pour financer le *Tilleul* papier, production écrite validée par critères ; dossier réel à proposer |
-| 4.3 à 4.9, Game Map 4e, 3e (9 livres + Game Map) | à faire | à faire | à faire |
+| 4.3 La ligne éditoriale | fait (vidéo rééquilibrée ; anatomie de la une : des retours qui expliquent ; la conférence de rédaction devient un choix de manchette ; « informer ou donner son avis » : un clic par article, le rappel de 5e en coup de pouce) | faite | provisoire : réponse à Yanis et Inès sur les deux unes, production écrite validée par critères ; dossier réel à proposer |
+| 4.4 à 4.9, Game Map 4e, 3e (9 livres + Game Map) | à faire | à faire | à faire |
 
 Les neuf livres de 5e ont leur tâche finale (15 novembre 2026). Les six dossiers construits ce
 jour-là ont été validés par M. Pempie avant construction ; leurs documents, citations et liens
