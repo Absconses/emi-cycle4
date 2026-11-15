@@ -127,7 +127,9 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
   régulière qui attrape le mot après l', d', j', qu'… ; `outils/elision.py` l'applique aux livres
   déjà construits (sans effet si on le relance). Une expression régulière écrite à la main doit elle
   aussi attraper le mot **entier** (`r[ée]cent[a-z]*`, pas `r[ée]cent`). Les productions écrites
-  des livres de 3e, écrites avec des expressions régulières, restent à relire sur ce point.
+  des livres de 3e sont écrites avec des expressions régulières de la forme `/(?:a|b|c)[a-zà-ÿœ]*/` :
+  `outils/elision.py` leur ajoute l'élision facultative en tête (fait pour les neuf livres le
+  15 novembre 2026).
 - **Bibliothèques ajoutées** : H5P.BranchingScenario 1.8, H5P.BranchingQuestion 1.0.
 - **Page embarquée par iframe** (H5P.IFrameEmbed 1.0, accepté dans un livre) : pour ce que H5P ne
   sait pas faire dans un livre, comme le test de personnalité du 4.1. La page est un fichier HTML
