@@ -203,7 +203,8 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 | 3.6 Vérifier une image avant d'y croire | fait (vidéo rééquilibrée : 5 QCM ; série « solide ou fallacieux ? » : 3 questions) | faite | provisoire : « L'enquête sur la photo de la cour » (huit critères) puis « Mon rectificatif » (cinq critères, cinq lignes) ; forme définitive à proposer |
 | 3.7 Débattre avec des sources | fait (vidéo rééquilibrée : 5 QCM ; QCM du dessin de Daumier et de la campagne) | faite | provisoire : « Ma carte et mon avis » (neuf critères, avec une source trouvée par l'élève) puis « Mon dessin et ma publication » (six critères) ; forme définitive à proposer |
 | 3.8 Produire avec l'IA, en responsable | fait (vidéo rééquilibrée : 5 QCM) | faite | provisoire : « La charte IA du Tilleul », production écrite validée par huit critères ; forme définitive à proposer |
-| 3.9, Game Map 3e | à faire | à faire | à faire |
+| 3.9 Construire et protéger son identité numérique | fait (vidéo rééquilibrée : 5 QCM) | faite | provisoire : « La campagne du Tilleul » (six critères) puis « Je défends ma campagne » (sept critères), après le rapport pour la CPE déjà en place ; forme définitive à proposer |
+| Game Map 3e | à faire | sans objet | sans objet |
 
 Les neuf livres de 5e ont leur tâche finale (15 novembre 2026). Les six dossiers construits ce
 jour-là ont été validés par M. Pempie avant construction ; leurs documents, citations et liens
