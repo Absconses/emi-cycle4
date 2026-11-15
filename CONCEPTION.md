@@ -115,6 +115,13 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
   hauteur, fournir un fichier plus petit plutôt qu'une règle CSS.
 - **Texte à trous** : `acceptSpellingErrors` à vrai, et variantes séparées par `/`.
 - **Réponses de QCM** : écrire de vrais espaces insécables, pas `&nbsp;` (l'audit compte les caractères).
+- **Production écrite (Essay)** : un mot-clé ne compte que s'il est **isolé**, entre des espaces ou
+  les signes `. ? ! , ; ' "`. L'apostrophe courbe des tablettes (’) n'en fait pas partie : « l’angle »
+  n'était pas reconnu pour « angle ». `redaction()` ajoute donc à chaque critère une expression
+  régulière qui attrape le mot après l', d', j', qu'… ; `outils/elision.py` l'applique aux livres
+  déjà construits (sans effet si on le relance). Une expression régulière écrite à la main doit elle
+  aussi attraper le mot **entier** (`r[ée]cent[a-z]*`, pas `r[ée]cent`). Les productions écrites
+  des livres de 3e, écrites avec des expressions régulières, restent à relire sur ce point.
 - **Bibliothèques ajoutées** : H5P.BranchingScenario 1.8, H5P.BranchingQuestion 1.0.
 
 ## 7. Images
@@ -157,7 +164,8 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 | 4.1 Prendre du recul sur mes usages | fait (vidéo rééquilibrée ; chapitre 3 : la question avant l'écran de Swipo) | faite | provisoire : lettre à soi-même, production écrite validée par critères ; dossier réel à proposer |
 | 4.2 Qui paie l'information | fait (vidéo rééquilibrée ; chapitre 4 : les questions avant les volets de l'ARCOM, le glisser-déposer d'ordre remplacé par deux QCM) | faite | provisoire : proposition à la rédaction pour financer le *Tilleul* papier, production écrite validée par critères ; dossier réel à proposer |
 | 4.3 La ligne éditoriale | fait (vidéo rééquilibrée ; anatomie de la une : des retours qui expliquent ; la conférence de rédaction devient un choix de manchette ; « informer ou donner son avis » : un clic par article, le rappel de 5e en coup de pouce) | faite | provisoire : réponse à Yanis et Inès sur les deux unes, production écrite validée par critères ; dossier réel à proposer |
-| 4.4 à 4.9, Game Map 4e, 3e (9 livres + Game Map) | à faire | à faire | à faire |
+| 4.4 Chercher avec les bons outils | fait (vidéo et séries rééquilibrées ; chapitre 4 : « qu'est-ce qui ne va pas ? » avant l'explication, les ingrédients du prompt en coup de pouce, le glisser-déposer d'ordre remplacé par un QCM) | faite | provisoire : dossier de recherche de Yanis, production écrite validée par cinq critères ; dossier réel à proposer |
+| 4.5 à 4.9, Game Map 4e, 3e (9 livres + Game Map) | à faire | à faire | à faire |
 
 Les neuf livres de 5e ont leur tâche finale (15 novembre 2026). Les six dossiers construits ce
 jour-là ont été validés par M. Pempie avant construction ; leurs documents, citations et liens
@@ -193,6 +201,7 @@ bleue ») reste à trouver.
 |---|---|
 | `livre.py` | Fabrication : trace écrite (`ajoute_trace`), QCM, coups de pouce, séries de questions |
 | `documents.py` | Document dessiné en HTML puis rendu en image, glisser-déposer sur image, production écrite validée par critères |
+| `elision.py` | Ajoute aux productions écrites la variante « apostrophe courbe » de chaque mot-clé : `python3 outils/elision.py` |
 | `dossier.py` | Tâche finale sur dossier réel : fiche d'un document, accordéon du dossier, glisser-déposer de mots (`associer`), textes fixes, encadré de relecture |
 | `verifier-livre.py` | Ouvre un livre dans Chromium, parcourt chaque chapitre, relève les erreurs |
 | `extraire.py` | Sort le contenu d'un module en texte lisible : `python3 outils/extraire.py <id>` |
