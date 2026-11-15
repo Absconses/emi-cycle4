@@ -195,7 +195,8 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 | 4.8 Publier dans les règles | fait (vidéo, QCM et séries rééquilibrés : 8 QCM ; chapitres 2 et 4 : l'avis ou les cas d'abord, les règles ensuite ; chapitre 3 : la remise en ordre devient un QCM à cocher) | faite | provisoire : les quatre décisions de publication de Yanis, production écrite validée par six critères ; forme définitive à proposer (varier, pas forcément un dossier) |
 | 4.9 Face aux rumeurs | fait (vidéo et diaporama rééquilibrés : 7 QCM ; chapitre 1 : la remise en ordre devient un QCM à cocher ; chapitres 3 et 4 : l'avis d'abord, la leçon ensuite) | faite | provisoire : la fiche « Face à une rumeur », production écrite validée par cinq critères ; forme définitive à proposer (varier, pas forcément un dossier) |
 | Game Map 4e | fait (3 QCM rééquilibrés) | sans objet | sans objet ; le défi final est un choix rapide, un mot par livre (les mots croisés sont retirés) |
-| 3e (9 livres + Game Map) | à faire | à faire | à faire |
+| 3.1 Repérer ce qui filtre son information | fait (vidéo rééquilibrée : 4 QCM ; chapitre 3 : la remise en ordre accepte tous les ordres plausibles) | faite | provisoire : « L'analyse de mes influences », production écrite validée par huit critères, avec un contre-fil de deux sources ; forme définitive à proposer |
+| 3.2 à 3.9, Game Map 3e | à faire | à faire | à faire |
 
 Les neuf livres de 5e ont leur tâche finale (15 novembre 2026). Les six dossiers construits ce
 jour-là ont été validés par M. Pempie avant construction ; leurs documents, citations et liens
