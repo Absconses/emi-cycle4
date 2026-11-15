@@ -1,0 +1,439 @@
+<!doctype html>
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Quel usager des écrans es-tu ?</title>
+<!--
+  Test de personnalité du livre 4.1 « Prendre du recul sur mes usages », chapitre 1.
+  Page autonome, affichée dans le livre par H5P.IFrameEmbed (adresse complète du site, voir CONCEPTION.md).
+  Aucune ressource extérieure, aucun envoi : les réponses restent dans l'onglet (sessionStorage).
+  Pour modifier le test : les questions sont dans QUESTIONS, les profils dans PROFILS, plus bas.
+-->
+<style>
+  :root {
+    --encre: #1d2b33; --encre-2: #4d5c64; --fond: #faf6f2; --carte: #ffffff; --trait: #d9d2c9;
+    --sarcelle: #264653; --sur-sarcelle: #ffffff;
+    --radar: #c8553d; --recre: #b7791f; --loupe: #1f7a6d; --tribu: #3d5a80;
+    --rayon: 12px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    font-family: "Open Sans", "Segoe UI", system-ui, -apple-system, Roboto, Arial, sans-serif;
+    font-size: 16px; line-height: 1.5; color: var(--encre); background: transparent;
+    -webkit-text-size-adjust: 100%;
+  }
+  /* Secours : si la page ne peut pas ajuster la hauteur de son cadre, elle défile à l'intérieur. */
+  html.cadre-fixe main { height: 100vh; overflow-y: auto; }
+  main { padding: 2px; }
+  .carte {
+    background: var(--fond); border: 1px solid var(--trait); border-radius: var(--rayon);
+    padding: 20px 18px 18px; max-width: 760px; margin: 0 auto;
+  }
+  .etiquette {
+    display: inline-block; background: var(--sarcelle); color: var(--sur-sarcelle);
+    font-size: .78rem; font-weight: 700; letter-spacing: .07em; text-transform: uppercase;
+    padding: .3em .8em; border-radius: 4px; margin: 0 0 .7em;
+  }
+  h1, h2 { margin: 0 0 .5em; line-height: 1.25; text-wrap: balance; color: var(--encre); }
+  h1 { font-size: 1.5rem; }
+  h2 { font-size: 1.2rem; }
+  h2:focus { outline: none; }
+  p { margin: 0 0 .8em; }
+  .discret { color: var(--encre-2); font-size: .92rem; }
+
+  button { font: inherit; color: inherit; cursor: pointer; touch-action: manipulation; }
+  button:focus-visible { outline: 3px solid var(--sarcelle); outline-offset: 2px; }
+  .principal {
+    background: var(--sarcelle); color: var(--sur-sarcelle); border: 0; border-radius: 999px;
+    padding: .7em 1.5em; font-weight: 700; min-height: 46px;
+  }
+  .principal:hover { background: #1b343f; }
+  .lien {
+    background: none; border: 0; padding: .6em .2em; color: var(--sarcelle); font-weight: 600;
+    text-decoration: underline; text-underline-offset: 3px; min-height: 44px;
+  }
+  .lien[hidden] { display: none; }
+
+  /* Avancement */
+  .avancement { display: flex; align-items: center; gap: 12px; margin: 0 0 14px; }
+  .barre { flex: 1; height: 8px; background: #e7dfd5; border-radius: 99px; overflow: hidden; }
+  .barre > span { display: block; height: 100%; width: 0; background: var(--sarcelle); border-radius: 99px; transition: width .25s ease-out; }
+  .compte { font-size: .85rem; font-weight: 700; color: var(--encre-2); font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+  /* Réponses */
+  .choix { list-style: none; margin: 14px 0 6px; padding: 0; display: grid; gap: 10px; }
+  .choix button {
+    width: 100%; text-align: left; background: var(--carte); border: 2px solid var(--trait);
+    border-radius: 10px; padding: 12px 14px; min-height: 52px; display: flex; align-items: center; gap: 12px;
+    transition: border-color .12s ease-out, background-color .12s ease-out, transform .12s ease-out;
+  }
+  .choix button:hover { border-color: var(--sarcelle); }
+  .choix button:active { transform: scale(.985); }
+  .choix button[aria-pressed="true"] { border-color: var(--sarcelle); background: #e4eef0; }
+  .puce {
+    flex: none; width: 28px; height: 28px; border-radius: 50%; border: 2px solid var(--sarcelle);
+    display: grid; place-items: center; font-size: .82rem; font-weight: 700; color: var(--sarcelle); background: #fff;
+  }
+  .choix button[aria-pressed="true"] .puce { background: var(--sarcelle); color: #fff; }
+  .pied { display: flex; justify-content: space-between; align-items: center; min-height: 44px; }
+
+  /* Résultat */
+  .profil { display: flex; gap: 14px; align-items: center; margin: 4px 0 12px; }
+  .pastille { flex: none; width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; color: #fff; }
+  .pastille svg { width: 38px; height: 38px; }
+  .profil h2 { margin: 0; font-size: 1.45rem; }
+  .profil .devise { margin: 0; color: var(--encre-2); }
+  .bloc { background: var(--carte); border: 1px solid var(--trait); border-radius: 10px; padding: 12px 14px; margin: 0 0 12px; }
+  .bloc h3 { margin: 0 0 .35em; font-size: .8rem; letter-spacing: .07em; text-transform: uppercase; color: var(--encre-2); }
+  .bloc p:last-child { margin-bottom: 0; }
+  .barres { display: grid; gap: 8px; margin: 0; padding: 0; list-style: none; }
+  .barres li { display: grid; grid-template-columns: 5.2em 1fr 2.6em; align-items: center; gap: 10px; font-size: .92rem; }
+  .barres .nom { font-weight: 700; }
+  .barres .piste { height: 14px; background: #ece5db; border-radius: 99px; overflow: hidden; }
+  .barres .piste span { display: block; height: 100%; border-radius: 99px; min-width: 4px; }
+  .barres .val { text-align: right; font-variant-numeric: tabular-nums; color: var(--encre-2); }
+  .jauge { position: relative; height: 14px; border-radius: 99px; margin: 10px 0 6px;
+    background: linear-gradient(90deg, #1f7a6d 0 33.3%, #b7791f 33.3% 66.6%, #c8553d 66.6% 100%); }
+  .jauge i { position: absolute; top: -6px; width: 6px; height: 26px; margin-left: -3px; background: var(--encre); border: 2px solid #fff; border-radius: 4px; box-sizing: content-box; }
+  .bornes { display: flex; justify-content: space-between; font-size: .82rem; color: var(--encre-2); margin: 0 0 8px; }
+  .anoter { border-left: 5px solid var(--sarcelle); }
+  .anoter strong.resume { display: block; font-size: 1.05rem; margin: .2em 0 .4em; }
+
+  .apparait { animation: apparait .22s ease-out both; }
+  @keyframes apparait { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+  @media (prefers-reduced-motion: reduce) {
+    .apparait { animation: none; }
+    .barre > span, .choix button { transition: none; }
+  }
+  @media (max-width: 420px) {
+    .carte { padding: 16px 12px 14px; }
+    h1 { font-size: 1.3rem; }
+    .barres li { grid-template-columns: 4.6em 1fr 2.2em; }
+  }
+</style>
+</head>
+<body>
+<main>
+  <div class="carte" id="carte" aria-live="polite"></div>
+</main>
+
+<script>
+(function () {
+  'use strict';
+
+  // ---------------------------------------------------------------- contenu
+  // Six situations « besoin » (b) : chaque réponse va à un profil.
+  // Quatre situations « commandes » (c) : 0 = c'est moi qui décide, 1 = partagé, 2 = c'est l'appli.
+  var QUESTIONS = [
+    { t: 'b', q: 'Tu as dix minutes devant toi et un écran en main. Tu ouvres d’abord…', r: [
+      ['radar', 'les nouvelles du jour ou les tendances du moment'],
+      ['recre', 'des vidéos courtes, pour rire un bon coup'],
+      ['loupe', 'un tuto ou une chaîne sur ce qui te passionne'],
+      ['tribu', 'la conversation de groupe avec tes amis']] },
+    { t: 'b', q: 'Pendant tes devoirs, quatre notifications arrivent. Laquelle as-tu le plus de mal à ignorer ?', r: [
+      ['radar', '« Alerte info : dernière minute »'],
+      ['recre', '« Cette vidéo va te faire rire »'],
+      ['loupe', '« Ta chaîne préférée vient de publier »'],
+      ['tribu', '« 12 nouveaux messages dans le groupe »']] },
+    { t: 'c', q: 'Tu ouvres une appli « juste pour vérifier un truc ». Dix minutes plus tard…', r: [
+      [0, 'C’est vérifié, et l’écran est éteint.'],
+      [1, 'C’est vérifié, et j’ai jeté un œil au reste.'],
+      [2, 'Je ne sais plus ce que je voulais vérifier.']] },
+    { t: 'b', q: 'Lundi matin, dans la cour. De quoi parles-tu en premier ?', r: [
+      ['radar', 'de ce qui s’est passé dans l’actualité ce week-end'],
+      ['recre', 'd’une vidéo drôle qu’il faut absolument voir'],
+      ['loupe', 'de ce que j’ai découvert sur mon sujet du moment'],
+      ['tribu', 'de ce qu’on s’est raconté dans le groupe']] },
+    { t: 'c', q: 'Une vidéo se termine. La suivante démarre toute seule.', r: [
+      [0, 'J’arrête là : j’ai vu ce que je voulais voir.'],
+      [1, 'J’en regarde encore une ou deux, puis j’arrête.'],
+      [2, 'Je me laisse porter, sans compter les vidéos.']] },
+    { t: 'b', q: 'Ton appli préférée ferme demain. Qu’est-ce qui te manquera le plus ?', r: [
+      ['radar', 'savoir tout de suite ce qui se passe'],
+      ['recre', 'mon moment de détente de la journée'],
+      ['loupe', 'les contenus sur ce qui me passionne'],
+      ['tribu', 'mes amis, toujours à portée de main']] },
+    { t: 'b', q: 'Long trajet en car, avec du réseau. Tu en profites pour…', r: [
+      ['radar', 'faire le tour des infos et des nouveautés'],
+      ['recre', 'jouer, ou enchaîner les vidéos amusantes'],
+      ['loupe', 'avancer sur un sujet qui me passionne'],
+      ['tribu', 'discuter avec ceux qui ne sont pas du voyage']] },
+    { t: 'c', q: 'Hier soir, tu as éteint ton dernier écran…', r: [
+      [0, 'à l’heure que j’avais prévue'],
+      [1, 'un peu plus tard que prévu'],
+      [2, 'bien plus tard : « encore une » a duré longtemps']] },
+    { t: 'b', q: 'On te propose une nouvelle appli. Qu’est-ce qui te donnerait envie de l’installer ?', r: [
+      ['radar', 'Elle prévient avant tout le monde de ce qui se passe.'],
+      ['recre', 'Elle est pleine de jeux et de vidéos amusantes.'],
+      ['loupe', 'Elle m’apprend des choses sur ce que j’aime.'],
+      ['tribu', 'Tous mes amis y sont déjà inscrits.']] },
+    { t: 'c', q: 'Les notifications de ton téléphone ou de ta tablette…', r: [
+      [0, 'J’ai choisi moi-même celles que j’autorise.'],
+      [1, 'Elles sont toutes activées, mais je ne regarde pas toujours.'],
+      [2, 'Dès que ça sonne ou que ça vibre, je regarde.']] }
+  ];
+
+  var ORDRE = ['radar', 'recre', 'loupe', 'tribu'];
+  var PROFILS = {
+    radar: { nom: 'Radar', couleur: 'var(--radar)', devise: 'Tu veux savoir ce qui se passe.',
+      besoin: 'te tenir au courant',
+      atout: 'Tu t’intéresses au monde, et tu sais souvent avant les autres ce qui se passe.',
+      vigilance: 'Recevoir des alertes toute la journée donne l’impression d’être bien informé. Ce n’est pas toujours vrai : au chapitre 2, tu apprendras à trier.',
+      svg: '<circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><path d="M12 12 18.4 5.6"/><circle cx="12" cy="12" r="1.2" fill="currentColor"/>' },
+    recre: { nom: 'Récré', couleur: 'var(--recre)', devise: 'Tu viens pour souffler.',
+      besoin: 'te divertir',
+      atout: 'Tu sais te détendre, et tes trouvailles font rire tes amis.',
+      vigilance: 'Le divertissement n’a pas de fin : la vidéo suivante est déjà prête. Au chapitre 3, tu verras qui a intérêt à ce que la récré dure.',
+      svg: '<circle cx="12" cy="12" r="9"/><path d="M8 14c1 1.6 2.3 2.4 4 2.4s3-.8 4-2.4"/><path d="M8.6 9.6h.01M15.4 9.6h.01" stroke-width="2.6"/>' },
+    loupe: { nom: 'Loupe', couleur: 'var(--loupe)', devise: 'Tu creuses ce qui te passionne.',
+      besoin: 'approfondir un sujet',
+      atout: 'Tu apprends par toi-même, et tu connais très bien tes sujets.',
+      vigilance: 'À force de regarder un seul sujet de très près, on voit moins le reste. Et plus tu regardes un sujet, plus l’appli t’en propose.',
+      svg: '<circle cx="10.5" cy="10.5" r="6.5"/><path d="m15.5 15.5 5 5"/>' },
+    tribu: { nom: 'Tribu', couleur: 'var(--tribu)', devise: 'Tu restes en lien.',
+      besoin: 'garder le lien avec tes proches',
+      atout: 'Tu prends des nouvelles des autres, et on peut compter sur toi.',
+      vigilance: 'La peur de rater un message pousse à vérifier son écran sans arrêt, même quand rien n’est arrivé.',
+      svg: '<circle cx="8" cy="9" r="3"/><circle cx="16.5" cy="9.5" r="2.5"/><path d="M2.5 19c.6-3.2 2.7-5 5.5-5s4.9 1.8 5.5 5"/><path d="M15 14.3c.5-.2 1-.3 1.5-.3 2.3 0 4.2 1.5 4.8 4.2"/>' }
+  };
+  var COMMANDES = [
+    { nom: 'c’est plutôt toi qui tiens les commandes', court: 'je tiens les commandes',
+      texte: 'Le plus souvent, tu ouvres une appli pour une raison précise, puis tu la refermes. Garde cette habitude : au chapitre 3, tu verras tout ce que les applis font pour te la faire perdre.' },
+    { nom: 'les commandes sont partagées', court: 'commandes partagées',
+      texte: 'Parfois c’est toi qui choisis, parfois c’est l’appli qui choisit pour toi. C’est le cas de la plupart des gens, adultes compris. Au chapitre 3, tu verras comment elle s’y prend.' },
+    { nom: 'l’appli prend souvent les commandes', court: 'l’appli prend souvent les commandes',
+      texte: 'Souvent, tu restes plus longtemps que prévu. Ce n’est pas seulement une question de volonté : ces applis sont conçues pour retenir. Au chapitre 3, tu verras comment, et ce que tu peux régler.' }
+  ];
+
+  // ---------------------------------------------------------------- état
+  var CLE = 'emi-4-1-test-usager';
+  var carte = document.getElementById('carte');
+  var reponses = [];       // indice de la réponse choisie, par question
+  var etape = -1;          // -1 accueil, 0..n-1 questions, n résultat
+  var attente = null;
+  var hautQ = 0;         // plus grande hauteur de question déjà affichée : évite que la page saute
+
+  function lire() {
+    try {
+      var v = JSON.parse(sessionStorage.getItem(CLE) || 'null');
+      if (Array.isArray(v) && v.length <= QUESTIONS.length) { return v; }
+    } catch (e) { /* stockage indisponible : le test marche sans */ }
+    return [];
+  }
+  function ecrire() {
+    try { sessionStorage.setItem(CLE, JSON.stringify(reponses)); } catch (e) { /* idem */ }
+  }
+
+  // ---------------------------------------------------------------- hauteur du cadre
+  function prevenir() {
+    try {
+      var h5p = window.parent.H5P;
+      if (h5p && h5p.instances && h5p.instances.length) {
+        h5p.instances.forEach(function (i) { if (i && i.trigger) { i.trigger('resize'); } });
+      } else {
+        window.parent.dispatchEvent(new Event('resize'));
+      }
+    } catch (e) { /* sans gravité : le cadre garde sa hauteur */ }
+  }
+  function ajuster() {
+    var cadre = null;
+    try { cadre = window.frameElement; } catch (e) { cadre = null; }
+    if (!cadre) {
+      if (window.parent !== window) { document.documentElement.classList.add('cadre-fixe'); }
+      return;
+    }
+    if (!cadre.title) { cadre.title = document.title; }   // nom du cadre pour les lecteurs d'écran
+    var h = Math.ceil(carte.getBoundingClientRect().height) + 8;
+    if (Math.abs(parseInt(cadre.style.height, 10) - h) > 1) {
+      cadre.style.width = '100%';
+      cadre.style.height = h + 'px';
+      // prévient le livre H5P que la hauteur du chapitre a changé ; le livre ajuste sa propre
+      // hauteur en deux temps, d'où les rappels
+      prevenir(); setTimeout(prevenir, 250); setTimeout(prevenir, 700);
+    }
+  }
+  var largeur = window.innerWidth;
+  window.addEventListener('resize', function () {
+    if (window.innerWidth !== largeur) {   // la largeur a changé : les hauteurs mesurées ne valent plus
+      largeur = window.innerWidth; hautQ = 0;
+      if (etape >= 0 && etape < QUESTIONS.length) { carte.style.minHeight = ''; }
+    }
+    ajuster();
+  });
+  window.addEventListener('load', function () { ajuster(); });
+
+  // ---------------------------------------------------------------- affichage
+  function el(nom, attrs, html) {
+    var e = document.createElement(nom);
+    for (var k in (attrs || {})) { e.setAttribute(k, attrs[k]); }
+    if (html !== undefined) { e.innerHTML = html; }
+    return e;
+  }
+  function echappe(s) { return String(s).replace(/&/g, '&amp;').replace(/</g, '&lt;'); }
+
+  function montrer(noeuds, foyer) {
+    carte.innerHTML = '';
+    var boite = el('div', { 'class': 'apparait' });
+    noeuds.forEach(function (n) { boite.appendChild(n); });
+    carte.appendChild(boite);
+    ajuster();
+    if (foyer) { try { foyer.focus({ preventScroll: true }); } catch (e) { foyer.focus(); } }
+    setTimeout(ajuster, 60);
+  }
+
+  function accueil() {
+    etape = -1; carte.style.minHeight = '';
+    var b = el('button', { 'class': 'principal', type: 'button' }, 'Commencer le test');
+    b.addEventListener('click', function () { question(0); });
+    montrer([
+      el('p', { 'class': 'etiquette' }, 'Test · 10 situations'),
+      el('h1', {}, 'Quel usager des écrans es-tu ?'),
+      el('p', {}, 'Dix situations de tous les jours. À chaque fois, choisis la réponse qui te ressemble <strong>le plus</strong>. Il n’y a ni bonne ni mauvaise réponse, et pas de note.'),
+      el('p', { 'class': 'discret' }, 'Tes réponses restent sur cet appareil : personne d’autre ne les voit, et rien n’est envoyé.'),
+      b
+    ]);
+  }
+
+  function question(i) {
+    etape = i;
+    var Q = QUESTIONS[i], n = QUESTIONS.length;
+    var av = el('div', { 'class': 'avancement' });
+    var barre = el('div', { 'class': 'barre', role: 'progressbar', 'aria-valuemin': '0', 'aria-valuemax': String(n), 'aria-valuenow': String(i), 'aria-label': 'Avancement du test' }, '<span style="width:' + (100 * i / n) + '%"></span>');
+    av.appendChild(barre);
+    av.appendChild(el('span', { 'class': 'compte' }, 'Situation ' + (i + 1) + ' sur ' + n));
+    var titre = el('h2', { tabindex: '-1' }, echappe(Q.q));
+    var liste = el('ul', { 'class': 'choix' });
+    Q.r.forEach(function (rep, k) {
+      var li = el('li');
+      var b = el('button', { type: 'button', 'aria-pressed': reponses[i] === k ? 'true' : 'false' },
+        '<span class="puce" aria-hidden="true">' + 'ABCD'.charAt(k) + '</span><span>' + echappe(rep[1]) + '</span>');
+      b.addEventListener('click', function () { choisir(i, k, liste); });
+      li.appendChild(b); liste.appendChild(li);
+    });
+    var pied = el('div', { 'class': 'pied' });
+    var retour = el('button', { 'class': 'lien', type: 'button' }, 'Situation précédente');
+    if (i === 0) { retour.hidden = true; }
+    retour.addEventListener('click', function () { clearTimeout(attente); question(i - 1); });
+    pied.appendChild(retour);
+    if (reponses[i] !== undefined && reponses[i] !== null) {
+      var suite = el('button', { 'class': 'lien', type: 'button' }, i + 1 < n ? 'Situation suivante' : 'Voir mon résultat');
+      suite.addEventListener('click', function () { clearTimeout(attente); avancer(i); });
+      pied.appendChild(suite);
+    }
+    carte.style.minHeight = hautQ ? hautQ + 'px' : '';
+    montrer([av, titre, liste, pied], i > 0 || reponses.length ? titre : null);
+    hautQ = Math.max(hautQ, Math.ceil(carte.getBoundingClientRect().height));
+  }
+
+  function choisir(i, k, liste) {
+    reponses[i] = k; ecrire();
+    Array.prototype.forEach.call(liste.querySelectorAll('button'), function (b, j) {
+      b.setAttribute('aria-pressed', j === k ? 'true' : 'false');
+    });
+    clearTimeout(attente);
+    attente = setTimeout(function () { avancer(i); }, 320);
+  }
+  function avancer(i) {
+    if (i + 1 < QUESTIONS.length) { question(i + 1); } else { resultat(true); }
+  }
+
+  function calcul() {
+    var pts = { radar: 0, recre: 0, loupe: 0, tribu: 0 }, cmd = 0, maxCmd = 0;
+    QUESTIONS.forEach(function (Q, i) {
+      var v = Q.r[reponses[i]][0];
+      if (Q.t === 'b') { pts[v] += 1; } else { cmd += v; maxCmd += 2; }
+    });
+    var haut = Math.max.apply(null, ORDRE.map(function (p) { return pts[p]; }));
+    var tete = ORDRE.filter(function (p) { return pts[p] === haut; });
+    var niveau = cmd <= maxCmd / 4 ? 0 : (cmd < maxCmd * 3 / 4 ? 1 : 2);
+    return { pts: pts, tete: tete, cmd: cmd, maxCmd: maxCmd, niveau: niveau };
+  }
+
+  function icone(p) {
+    return '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">' + PROFILS[p].svg + '</svg>';
+  }
+  function liste(mots) {
+    return mots.length < 2 ? mots.join('') : mots.slice(0, -1).join(', ') + ' et ' + mots[mots.length - 1];
+  }
+
+  function resultat(focus) {
+    etape = QUESTIONS.length; carte.style.minHeight = '';
+    var R = calcul(), nBesoin = QUESTIONS.filter(function (Q) { return Q.t === 'b'; }).length;
+    var noms = R.tete.map(function (p) { return PROFILS[p].nom; });
+    var noeuds = [el('p', { 'class': 'etiquette' }, 'Ton résultat')];
+
+    var titre;
+    if (R.tete.length === 1) {
+      var P = PROFILS[R.tete[0]];
+      var tetiere = el('div', { 'class': 'profil' });
+      tetiere.appendChild(el('div', { 'class': 'pastille', style: 'background:' + P.couleur }, icone(R.tete[0])));
+      var txt = el('div');
+      titre = el('h2', { tabindex: '-1' }, 'Profil ' + P.nom);
+      txt.appendChild(titre);
+      txt.appendChild(el('p', { 'class': 'devise' }, P.devise));
+      tetiere.appendChild(txt);
+      noeuds.push(tetiere);
+    } else {
+      titre = el('h2', { tabindex: '-1' }, 'Profil mélangé : ' + liste(noms));
+      noeuds.push(titre);
+      noeuds.push(el('p', {}, 'Tu n’as pas un seul profil, et c’est normal : on n’utilise pas les écrans pour une seule raison.'));
+    }
+
+    R.tete.forEach(function (p) {
+      var P = PROFILS[p];
+      var b = el('div', { 'class': 'bloc' });
+      b.appendChild(el('h3', {}, (R.tete.length > 1 ? P.nom + ' · ' : '') + 'Ce que tu viens chercher'));
+      b.appendChild(el('p', {}, 'Derrière ce profil, il y a un <strong>besoin</strong> : ' + P.besoin + '.'));
+      b.appendChild(el('p', {}, '<strong>Ton atout.</strong> ' + P.atout));
+      b.appendChild(el('p', {}, '<strong>À surveiller.</strong> ' + P.vigilance));
+      noeuds.push(b);
+    });
+
+    var portrait = el('div', { 'class': 'bloc' });
+    portrait.appendChild(el('h3', {}, 'Ton autoportrait en quatre besoins'));
+    var ul = el('ul', { 'class': 'barres' });
+    ORDRE.forEach(function (p) {
+      var P = PROFILS[p];
+      ul.appendChild(el('li', {},
+        '<span class="nom">' + P.nom + '</span>' +
+        '<span class="piste"><span style="width:' + (100 * R.pts[p] / nBesoin) + '%;background:' + P.couleur + '"></span></span>' +
+        '<span class="val">' + R.pts[p] + ' / ' + nBesoin + '</span>'));
+    });
+    portrait.appendChild(ul);
+    noeuds.push(portrait);
+
+    var C = COMMANDES[R.niveau];
+    var cmd = el('div', { 'class': 'bloc' });
+    cmd.appendChild(el('h3', {}, 'Qui tient les commandes ?'));
+    cmd.appendChild(el('p', {}, 'D’après tes réponses, <strong>' + C.nom + '</strong>.'));
+    cmd.appendChild(el('div', { 'class': 'jauge', role: 'img', 'aria-label': 'Curseur placé à ' + R.cmd + ' sur ' + R.maxCmd + ', entre « c’est moi qui décide » et « c’est l’appli qui décide »' },
+      '<i style="left:' + (4 + 92 * R.cmd / R.maxCmd) + '%"></i>'));
+    cmd.appendChild(el('div', { 'class': 'bornes', 'aria-hidden': 'true' }, '<span>C’est moi qui décide</span><span>C’est l’appli qui décide</span>'));
+    cmd.appendChild(el('p', {}, C.texte));
+    noeuds.push(cmd);
+
+    var note = el('div', { 'class': 'bloc anoter' });
+    note.appendChild(el('h3', {}, 'À noter dans ton cahier'));
+    note.appendChild(el('p', {}, '<strong class="resume">' + (R.tete.length === 1 ? 'Profil ' + noms[0] : 'Profil mélangé (' + liste(noms) + ')') + ' · ' + C.court + '</strong>Tu t’en serviras au chapitre 5, pour écrire ta lettre à toi-même.'));
+    note.appendChild(el('p', { 'class': 'discret' }, 'D’accord, pas d’accord ? Ce test n’a rien de scientifique : c’est un miroir, qui te renvoie tes propres réponses. Tu te connais mieux que lui, alors corrige ce portrait s’il te semble faux.'));
+    noeuds.push(note);
+
+    var refaire = el('button', { 'class': 'lien', type: 'button' }, 'Refaire le test');
+    refaire.addEventListener('click', function () { reponses = []; ecrire(); accueil(); });
+    noeuds.push(refaire);
+
+    montrer(noeuds, focus ? titre : null);
+  }
+
+  // ---------------------------------------------------------------- départ
+  reponses = lire();
+  var complet = reponses.length === QUESTIONS.length && reponses.every(function (v, i) {
+    return typeof v === 'number' && QUESTIONS[i].r[v];
+  });
+  if (complet) { resultat(false); } else { reponses = []; accueil(); }
+}());
+</script>
+</body>
+</html>
