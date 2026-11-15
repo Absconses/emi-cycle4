@@ -97,6 +97,15 @@ objectifs, jamais d'un aparté ni d'un seul chapitre.
    parle et ce qu'il veut.
 3. Le même travail sur soi : l'élève écrit son propre portrait, validé par critères, puis relu.
 
+**Autre forme : le scénario à choix** (livre 5.2, « Rédacteur en chef d'un jour », choisi par M. Pempie)
+
+1. Un événement neuf au collège (l'orage, le hall inondé), dessiné, et un rôle : diriger la
+   rédaction du *Tilleul* pendant une journée.
+2. Cinq décisions, chacune avec sa conséquence : quel média pour aller vite, qui part sur le
+   terrain, que faire d'un chiffre qui circule, quel média pour la voix, quel média pour expliquer.
+   Le scénario est un module compagnon (`5e-redacteur-en-chef-d-un-jour`), affiché sous le livre.
+3. Dans le livre, le bilan de la journée : une production écrite validée par critères, puis relue.
+
 **Contraintes à connaître**
 
 - Mots-clés d'une production écrite : la tolérance aux fautes rapproche les mots courts
@@ -189,7 +198,7 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 | Livre | QCM, aides, variété | Trace écrite | Tâche finale |
 |---|---|---|---|
 | 5.1 Comment et pourquoi je m'informe | fait | faite | **refaite une seconde fois, forme choisie par M. Pempie** : « Mon portrait d'information ». Le carnet du samedi de Sami (dessiné), cherchée ou reçue, quel besoin, qui veut le faire agir, puis le portrait de l'élève, validé par six critères. Le dossier sur les jouets est retiré |
-| 5.2 Les médias et ceux qui font l'information | fait | faite | refaite : dossier réel « qui a raconté l'éclipse du 12 août 2026 ? », quel média pour quoi faire, crible, conseil du *Tilleul* |
+| 5.2 Les médias et ceux qui font l'information | fait | faite | refaite (15 novembre, soir) : scénario « Rédacteur en chef d'un jour » (module compagnon, cinq décisions pour couvrir l'inondation du hall), puis bilan écrit validé par critères ; le dossier de l'éclipse est retiré |
 | 5.3 Langages, faits et opinions | fait | faite | gardée : chronique enregistrée |
 | 5.4 Choisir le bon outil | fait | faite | refaite : dossier réel « pourquoi les abeilles disparaissent-elles ? », quelle page pour quel besoin, crible, fiche de la page à citer |
 | 5.5 Chercher avec méthode | fait | faite | refaite : dossier réel « écrans et sommeil des ados » (quatre documents), crible, ligne du document de collecte |
@@ -235,8 +244,9 @@ bleue ») reste à trouver.
 
 **Révision en cours (15 novembre 2026, soir).** M. Pempie trouve qu'il y a trop de dossiers en 5e :
 on reprend les tâches finales **une par une**, dans l'ordre, en lui proposant chaque fois une forme
-qui reprend le but du livre. Fait : 5.1 (portrait d'information). À proposer ensuite : 5.2, puis
-les autres livres dont la tâche finale est un dossier (5.4, 5.5, 5.6, 5.7, 5.8, 5.9).
+qui reprend le but du livre. Fait : 5.1 (portrait d'information), 5.2 (scénario « Rédacteur en
+chef d'un jour »). Le 5.3 garde sa chronique enregistrée, qui n'est pas un dossier. À proposer
+ensuite, un par un : 5.4, 5.5, 5.6, 5.7, 5.8, 5.9.
 
 ## 9. Chantiers ouverts
 
