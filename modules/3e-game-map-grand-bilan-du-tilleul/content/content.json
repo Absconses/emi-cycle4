@@ -99,7 +99,7 @@
       {
        "contentType": {
         "params": {
-         "text": "<p style=\"background-color:#264653;color:#fff;padding:6px 12px;border-radius:6px;margin:0 0 .6em\"><strong>3e · LE GRAND BILAN DU TILLEUL</strong></p>\n<p>Inès et Yanis quittent le collège. Avant de passer le relais à la rédaction du <em>Tilleul</em>, ils ont préparé ce grand bilan&nbsp;: tes neuf livres d’EMI de 3e, un par étape, puis le bilan de tes trois années, de la 5e à la 3e.</p>\n<ul style=\"line-height:1.7\"><li>Suis la route, du collège jusqu’au lycée.</li>\n<li>À chaque étape, un exercice court de rappel. Termine-le pour ouvrir l’étape suivante.</li>\n<li>Une erreur&nbsp;? Lis l’explication&nbsp;: c’est là que tu révises. Tu peux recommencer une étape autant de fois que tu veux.</li>\n<li>Pour finir, le bilan du cycle et les mots croisés de tes trois années.</li></ul>\n<p>Ferme cette fenêtre, puis clique sur l’étape <strong>3.1</strong>. Bonne route&nbsp;!</p>"
+         "text": "<p style=\"background-color:#264653;color:#fff;padding:6px 12px;border-radius:6px;margin:0 0 .6em\"><strong>3e · LE GRAND BILAN DU TILLEUL</strong></p>\n<p>Inès et Yanis quittent le collège. Avant de passer le relais à la rédaction du <em>Tilleul</em>, ils ont préparé ce grand bilan&nbsp;: tes neuf livres d’EMI de 3e, un par étape, puis le bilan de tes trois années, de la 5e à la 3e.</p>\n<ul style=\"line-height:1.7\"><li>Suis la route, du collège jusqu’au lycée.</li>\n<li>À chaque étape, un exercice court de rappel. Termine-le pour ouvrir l’étape suivante.</li>\n<li>Une erreur&nbsp;? Lis l’explication&nbsp;: c’est là que tu révises. Tu peux recommencer une étape autant de fois que tu veux.</li>\n<li>Pour finir, le bilan du cycle, puis un défi&nbsp;: les mots de tes trois années.</li></ul>\n<p>Ferme cette fenêtre, puis clique sur l’étape <strong>3.1</strong>. Bonne route&nbsp;!</p>"
         },
         "library": "H5P.AdvancedText 1.1",
         "subContentId": "34dd093b-65ae-44dd-b9f3-ff0ec995ff29",
@@ -449,7 +449,7 @@
             "question": "<p>Une capsule de 30 secondes sur un incendie montre des flammes sur une musique angoissante, sans dire où ni quand. L’article du journal local, lui, cite les pompiers&nbsp;: «&nbsp;un entrepôt vide, aucun blessé&nbsp;». Que montre cet écart&nbsp;?</p>",
             "answers": [
              {
-              "text": "<div>Que le langage de la capsule (image, musique, montage) peut changer le sens d’un fait sans mentir sur les flammes</div>",
+              "text": "<div>Que le montage de la capsule change le sens du fait</div>",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -458,7 +458,7 @@
               }
              },
              {
-              "text": "<div>Que l’article ment, puisque la vidéo montre un grand incendie</div>",
+              "text": "<div>Que l’article ment, puisque la vidéo montre les flammes</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -467,7 +467,7 @@
               }
              },
              {
-              "text": "<div>Rien : les deux disent la même chose</div>",
+              "text": "<div>Rien du tout : les deux disent exactement la même chose</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -548,7 +548,7 @@
             "question": "<p>Pendant une semaine, toutes les chaînes ne parlent que d’un fait divers, sous le même angle. Comment Yanis peut-il s’en faire une idée juste&nbsp;?</p>",
             "answers": [
              {
-              "text": "<div>Chercher des médias d’autres lignes éditoriales, et ce dont on ne parle plus à cause de ce sujet</div>",
+              "text": "<div>Chercher des médias d’une autre ligne éditoriale</div>",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -566,7 +566,7 @@
               }
              },
              {
-              "text": "<div>Croire l’angle le plus repris : s’il est partout, il est juste</div>",
+              "text": "<div>Croire l’angle le plus repris : il est partout</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -647,7 +647,7 @@
             "question": "<p>Inès trouve «&nbsp;enfin un article sérieux&nbsp;»… celui qui confirme exactement ce qu’elle pensait déjà. Que lui conseilles-tu&nbsp;?</p>",
             "answers": [
              {
-              "text": "<div>De se méfier de son biais de confirmation : chercher aussi une source qui dit autre chose, et juger les preuves</div>",
+              "text": "<div>De chercher aussi une source qui dit autre chose</div>",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -665,7 +665,7 @@
               }
              },
              {
-              "text": "<div>De ne plus lire aucun article</div>",
+              "text": "<div>De ne plus lire aucun article sur ce sujet-là</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -879,7 +879,7 @@
             "question": "<p>Malo écrit à une IA&nbsp;: «&nbsp;Fais-moi un truc sur le climat.&nbsp;» Quelles lettres du réflexe <strong>ACTIF</strong> (Action, Contexte, Ton, Identité, Format) lui manquent&nbsp;?</p>",
             "answers": [
              {
-              "text": "<div>Presque toutes : seule l’Action est là, et elle est floue. Ni contexte, ni ton, ni identité, ni format</div>",
+              "text": "<div>Presque toutes : seule l’Action est là, et floue</div>",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -888,7 +888,7 @@
               }
              },
              {
-              "text": "<div>Aucune : l’IA comprendra</div>",
+              "text": "<div>Aucune : l’IA comprendra toute seule sa demande</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -897,7 +897,7 @@
               }
              },
              {
-              "text": "<div>Seulement le Format</div>",
+              "text": "<div>Seulement le Format : tout le reste y est déjà</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -978,7 +978,7 @@
             "question": "<p>Dans ce prompt, quel est le <strong>C</strong> d’ACTIF&nbsp;? «&nbsp;Tu es bibliothécaire. Je suis en 3e et je prépare un exposé sur le stage d’observation. Propose-moi cinq mots-clés, avec un ton simple, sous forme de liste.&nbsp;»</p>",
             "answers": [
              {
-              "text": "<div>« Je suis en 3e et je prépare un exposé sur le stage d’observation »</div>",
+              "text": "<div>« Je suis en 3e et je prépare un exposé »</div>",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -996,11 +996,11 @@
               }
              },
              {
-              "text": "<div>« sous forme de liste »</div>",
+              "text": "<div>« Propose-moi cinq mots-clés, avec un ton simple »</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
-               "chosenFeedback": "<div>Non : c’est le Format. Le Contexte, c’est ta situation : 3e, exposé sur le stage.</div>",
+               "chosenFeedback": "<div>Non&nbsp;: c’est l’Action, avec le Ton. Le Contexte, c’est ta situation&nbsp;: 3e, exposé sur le stage.</div>",
                "notChosenFeedback": ""
               }
              }
@@ -1077,7 +1077,7 @@
             "question": "<p>Yanis veut l’<strong>adresse et les horaires exacts</strong> de la librairie La Page tournée. Quel outil choisir&nbsp;?</p>",
             "answers": [
              {
-              "text": "<div>Un moteur de recherche, pour trouver le site de la librairie : une IA peut inventer des horaires</div>",
+              "text": "<div>Un moteur de recherche, pour trouver son site</div>",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -1095,7 +1095,7 @@
               }
              },
              {
-              "text": "<div>N’importe lequel, ils donnent la même chose</div>",
+              "text": "<div>N’importe lequel : ils donnent la même chose</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -1447,7 +1447,7 @@
             "question": "<p>Un tract affirme que les éoliennes font «&nbsp;60 décibels chez les riverains&nbsp;». Le rapport public mesure 35 à 45 dB à 500 m, et la première maison est à 800 m. Que peut-on affirmer&nbsp;?</p>",
             "answers": [
              {
-              "text": "<div>Que le chiffre du tract n’est pas confirmé par la source la plus solide, et qu’il faut dire d’où vient chaque chiffre</div>",
+              "text": "<div>Que le rapport public ne confirme pas le tract</div>",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -1456,7 +1456,7 @@
               }
              },
              {
-              "text": "<div>Que les éoliennes ne font aucun bruit</div>",
+              "text": "<div>Que les éoliennes ne font vraiment aucun bruit</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -1465,7 +1465,7 @@
               }
              },
              {
-              "text": "<div>Que le tract a raison, il est plus précis</div>",
+              "text": "<div>Que le tract a raison : il est plus précis</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -1546,7 +1546,7 @@
             "question": "<p>Une photo «&nbsp;prise ce matin&nbsp;» circule. La recherche inversée la retrouve en 2019, dans un autre pays. Que fais-tu&nbsp;?</p>",
             "answers": [
              {
-              "text": "<div>Je ne la partage pas, et je peux publier un rectificatif qui donne sa vraie date et son vrai lieu</div>",
+              "text": "<div>Je ne la partage pas : son contexte est faux</div>",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -1555,7 +1555,7 @@
               }
              },
              {
-              "text": "<div>Je la partage : la photo est vraie</div>",
+              "text": "<div>Je la partage : après tout, la photo est vraie</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -1564,7 +1564,7 @@
               }
              },
              {
-              "text": "<div>Je la retouche pour l’améliorer</div>",
+              "text": "<div>Je la retouche pour la rendre plus nette</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -1645,7 +1645,7 @@
             "question": "<p>Pour un exposé sur une affiche de propagande de 1940, quelle source privilégier&nbsp;?</p>",
             "answers": [
              {
-              "text": "<div>Le site d’un musée ou d’archives, qui donne l’auteur, la date et le contexte de l’affiche</div>",
+              "text": "<div>Le site d’un musée, qui donne auteur, date et contexte</div>",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -2253,7 +2253,7 @@
             "question": "<p><strong>Se situer dans les médias · de la 5e à la 3e</strong></p><p>Une vidéo choc arrive dans ton fil «&nbsp;Pour toi&nbsp;». Quel est le bon premier réflexe&nbsp;?</p>",
             "answers": [
              {
-              "text": "<div>Me demander qui l’a publiée, et pourquoi l’algorithme me la montre à moi</div>",
+              "text": "<div>Me demander qui l’a publiée, et pourquoi je la vois</div>",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -2262,7 +2262,7 @@
               }
              },
              {
-              "text": "<div>La partager tout de suite, pour prévenir</div>",
+              "text": "<div>La partager tout de suite, pour prévenir mes amis</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -2352,7 +2352,7 @@
             "question": "<p><strong>S’informer · de la 5e à la 3e</strong></p><p>Pour un exposé, quelle démarche résume ce que tu as appris&nbsp;?</p>",
             "answers": [
              {
-              "text": "<div>Définir mon besoin, choisir l’outil, croiser les sources, noter les références</div>",
+              "text": "<div>Définir mon besoin, puis croiser plusieurs sources</div>",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -2361,7 +2361,7 @@
               }
              },
              {
-              "text": "<div>Demander à une IA d’écrire l’exposé</div>",
+              "text": "<div>Demander à une IA d’écrire l’exposé à ma place</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -2370,7 +2370,7 @@
               }
              },
              {
-              "text": "<div>Garder le premier résultat du moteur</div>",
+              "text": "<div>Garder le premier résultat que donne le moteur</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -2451,7 +2451,7 @@
             "question": "<p><strong>Évaluer l’information · de la 5e à la 3e</strong></p><p>Ta tante partage une fausse information, persuadée de bien faire. C’est…</p>",
             "answers": [
              {
-              "text": "<div>de la mésinformation : c’est faux, mais de bonne foi</div>",
+              "text": "<div>de la mésinformation : faux, mais de bonne foi</div>",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -2460,7 +2460,7 @@
               }
              },
              {
-              "text": "<div>de la désinformation</div>",
+              "text": "<div>de la désinformation : faux, et fait exprès</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -2469,7 +2469,7 @@
               }
              },
              {
-              "text": "<div>une information vérifiée</div>",
+              "text": "<div>une information vérifiée, puisqu’elle y croit</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -2550,7 +2550,7 @@
             "question": "<p><strong>Partager · de la 5e à la 3e</strong></p><p>Pour illustrer un article du <em>Tilleul</em>, quelle image publier&nbsp;?</p>",
             "answers": [
              {
-              "text": "<div>Une image sous licence libre, créditée, et sans personne reconnaissable qui n’a pas donné son accord</div>",
+              "text": "<div>Une image sous licence libre, avec son crédit</div>",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -2559,7 +2559,7 @@
               }
              },
              {
-              "text": "<div>N’importe quelle image trouvée en ligne</div>",
+              "text": "<div>N’importe quelle image trouvée sur Internet</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -2649,7 +2649,7 @@
             "question": "<p><strong>Produire · de la 5e à la 3e</strong></p><p>Ton article est écrit avec l’aide d’une IA. Que dois-tu faire avant de le publier&nbsp;?</p>",
             "answers": [
              {
-              "text": "<div>Vérifier chaque fait dans une source, le réécrire avec mes mots, et signaler l’aide de l’IA</div>",
+              "text": "<div>Vérifier chaque fait, et signaler l’aide de l’IA</div>",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -2658,7 +2658,7 @@
               }
              },
              {
-              "text": "<div>Rien : l’IA ne se trompe pas</div>",
+              "text": "<div>Rien du tout : une IA ne se trompe jamais</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -2667,7 +2667,7 @@
               }
              },
              {
-              "text": "<div>Le signer du nom de l’IA seulement</div>",
+              "text": "<div>Le signer seulement du nom de l’IA utilisée</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -2748,7 +2748,7 @@
             "question": "<p><strong>Pour soi et pour les autres · de la 5e à la 3e</strong></p><p>Un camarade reçoit des commentaires haineux. Que fais-tu&nbsp;?</p>",
             "answers": [
              {
-              "text": "<div>Je ne relaie pas, je signale, je le soutiens et j’en parle à un adulte (ou au 3018)</div>",
+              "text": "<div>Je signale, je le soutiens et j’en parle à un adulte</div>",
               "correct": true,
               "tipsAndFeedback": {
                "tip": "",
@@ -2757,7 +2757,7 @@
               }
              },
              {
-              "text": "<div>Je réponds aux insultes par des insultes</div>",
+              "text": "<div>Je réponds aux insultes par d’autres insultes</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -2766,7 +2766,7 @@
               }
              },
              {
-              "text": "<div>Je like pour montrer que j’ai vu</div>",
+              "text": "<div>Je mets un « j’aime » pour montrer que j’ai vu</div>",
               "correct": false,
               "tipsAndFeedback": {
                "tip": "",
@@ -2966,143 +2966,146 @@
       {
        "contentType": {
         "params": {
-         "words": [
+         "choices": [
           {
-           "clue": "Un article de trois lignes, sans titre (5.7)",
-           "answer": "BREVE",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "fa5fc0e6-73a2-4705-aef8-d0a137e442f3",
+           "question": "<p>Un article de trois lignes, sans titre (livre 5.7).</p>",
+           "answers": [
+            "<p>La brève</p>",
+            "<p>Le reportage</p>",
+            "<p>L’éditorial</p>"
+           ]
           },
           {
-           "clue": "Le site du CDI qui rassemble des ressources vérifiées (5.5)",
-           "answer": "PORTAIL",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "ed457c15-3177-45ec-bfe4-00fcdb3859fa",
+           "question": "<p>Le site du CDI qui rassemble des ressources vérifiées (livre 5.5).</p>",
+           "answers": [
+            "<p>Le portail</p>",
+            "<p>Le moteur</p>",
+            "<p>Le forum</p>"
+           ]
           },
           {
-           "clue": "Le droit à l’… permet de faire effacer des contenus en ligne (5.9)",
-           "answer": "OUBLI",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "5617fca8-9994-4583-b75a-5f1d51cbc241",
+           "question": "<p>Il permet de faire effacer des contenus en ligne (livre 5.9).</p>",
+           "answers": [
+            "<p>Le droit à l’oubli</p>",
+            "<p>Le droit d’auteur</p>",
+            "<p>Le droit de réponse</p>"
+           ]
           },
           {
-           "clue": "Une information fausse, mais partagée de bonne foi (4.6)",
-           "answer": "MESINFORMATION",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "6609a239-2809-4831-94a6-b81f1df6cc6b",
+           "question": "<p>Une information fausse, mais partagée de bonne foi (livre 4.6).</p>",
+           "answers": [
+            "<p>La mésinformation</p>",
+            "<p>La désinformation</p>",
+            "<p>La malinformation</p>"
+           ]
           },
           {
-           "clue": "Elle dit ce qu’on a le droit de faire d’une œuvre, comme CC BY (4.8)",
-           "answer": "LICENCE",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "082bf1ef-40c5-4732-9cb8-62c1a135fcc1",
+           "question": "<p>Elle dit ce qu’on a le droit de faire d’une œuvre, comme CC BY (livre 4.8).</p>",
+           "answers": [
+            "<p>La licence</p>",
+            "<p>La légende</p>",
+            "<p>La signature</p>"
+           ]
           },
           {
-           "clue": "Le calcul qui choisit ce que montre ton fil (3.1)",
-           "answer": "ALGORITHME",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "64daeeee-0816-4e1d-ab44-5b9546320d2d",
+           "question": "<p>Le calcul qui choisit ce que montre ton fil (livre 3.1).</p>",
+           "answers": [
+            "<p>L’algorithme</p>",
+            "<p>L’abonnement</p>",
+            "<p>L’annonceur</p>"
+           ]
           },
           {
-           "clue": "La demande rédigée qu’on écrit à une IA générative (3.4)",
-           "answer": "PROMPT",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "06aeaed4-538c-4f78-9863-4834eb27397f",
+           "question": "<p>La demande rédigée qu’on écrit à une IA générative (livre 3.4).</p>",
+           "answers": [
+            "<p>Le prompt</p>",
+            "<p>La requête</p>",
+            "<p>Le mot-clé</p>"
+           ]
           },
           {
-           "clue": "Des images qui imposent des idées, comme dans les régimes totalitaires (3.6)",
-           "answer": "PROPAGANDE",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "b21dbf45-e43a-44a6-88f7-0187a7290fe8",
+           "question": "<p>Des images qui imposent des idées, comme dans les régimes totalitaires (livre 3.6).</p>",
+           "answers": [
+            "<p>La propagande</p>",
+            "<p>La publicité</p>",
+            "<p>La caricature</p>"
+           ]
           },
           {
-           "clue": "Un débat où s’opposent plusieurs camps, qu’on peut cartographier (3.7)",
-           "answer": "CONTROVERSE",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "8ef6e4c3-eba8-46f4-af6b-132359f299cc",
+           "question": "<p>Un débat où s’opposent plusieurs camps, qu’on peut cartographier (livre 3.7).</p>",
+           "answers": [
+            "<p>La controverse</p>",
+            "<p>La désinformation</p>",
+            "<p>La rumeur</p>"
+           ]
           },
           {
-           "clue": "Une fausse vidéo qui fait dire à quelqu’un ce qu’il n’a jamais dit (3.8)",
-           "answer": "HYPERTRUCAGE",
-           "fixWord": false,
-           "orientation": "across"
+           "subContentId": "cb8ce77b-441f-4905-a3d9-c41c590b6a7f",
+           "question": "<p>Une fausse vidéo, fabriquée par une IA, qui fait dire à quelqu’un ce qu’il n’a jamais dit (livre 3.8).</p>",
+           "answers": [
+            "<p>L’hypertrucage</p>",
+            "<p>L’hameçonnage</p>",
+            "<p>Le mot-dièse</p>"
+           ]
           }
          ],
          "overallFeedback": [
           {
            "from": 0,
            "to": 59,
-           "feedback": "Tu as @score sur @total. Clique sur « Voir la solution », puis rouvre le livre du mot qui te manquait (son numéro est entre parenthèses)."
+           "feedback": "Le numéro du livre t’aide : rouvre celui du mot qui te manquait, puis recommence."
           },
           {
            "from": 60,
            "to": 99,
-           "feedback": "Tu as @score sur @total. Presque ! Le numéro du livre t’aide à retrouver le mot manquant."
+           "feedback": "Presque ! Le numéro du livre t’aide à retrouver le mot manquant."
           },
           {
            "from": 100,
            "to": 100,
-           "feedback": "Grille complète : tu connais les mots de tes trois années d’EMI !"
+           "feedback": "Sans faute : tu connais les mots de tes trois années d’EMI !"
           }
          ],
-         "theme": {
-          "backgroundColor": "#264653",
-          "gridColor": "#000000",
-          "cellBackgroundColor": "#ffffff",
-          "cellColor": "#000000",
-          "clueIdColor": "#606060",
-          "cellBackgroundColorHighlight": "#2a9d8f",
-          "cellColorHighlight": "#ffffff",
-          "clueIdColorHighlight": "#e0e0e0"
-         },
          "behaviour": {
-          "enableInstantFeedback": false,
-          "scoreWords": true,
-          "applyPenalties": false,
+          "autoContinue": true,
+          "timeoutCorrect": 1500,
+          "timeoutWrong": 3000,
+          "soundEffectsEnabled": false,
           "enableRetry": true,
           "enableSolutionsButton": true,
-          "keepCorrectAnswers": false
+          "passPercentage": 60
          },
          "l10n": {
-          "across": "Horizontal",
-          "down": "Vertical",
-          "checkAnswer": "Vérifier",
-          "submitAnswer": "Envoyer",
-          "tryAgain": "Recommencer",
-          "showSolution": "Voir la solution",
-          "couldNotGenerateCrossword": "Impossible de créer la grille.",
-          "couldNotGenerateCrosswordTooFewWords": "Impossible de créer la grille : il faut au moins deux mots.",
-          "probematicWords": "Certains mots n’ont pas pu être placés : @words",
-          "extraClue": "Indice",
-          "closeWindow": "Fermer"
-         },
-         "a11y": {
-          "crosswordGrid": "Grille de mots croisés. Utilise les flèches pour te déplacer et le clavier pour écrire. Tu peux aussi utiliser Tab pour remplir les mots dans des champs.",
-          "column": "Colonne",
-          "row": "Ligne",
-          "across": "Horizontal",
-          "down": "Vertical",
-          "empty": "Vide",
-          "resultFor": "Résultat pour : @clue",
-          "correct": "Juste",
-          "wrong": "Faux",
-          "point": "point",
-          "solutionFor": "Pour « @clue », la solution est : @solution",
-          "extraClueFor": "Ouvrir l’indice pour « @clue »",
-          "letterSevenOfNine": "Lettre @position sur @length",
-          "lettersWord": "Mot de @length lettres",
-          "check": "Vérifier les lettres.",
-          "showSolution": "Afficher la solution.",
-          "retry": "Recommencer depuis le début.",
-          "yourResult": "Tu as @score point(s) sur @total"
-         },
-         "taskDescription": "<p><strong>Les mots du cycle.</strong> De la 5e à la 3e, complète la grille : écris les mots en majuscules, sans accent. Le numéro du livre est entre parenthèses.</p>",
-         "solutionWord": ""
+          "nextButtonLabel": "Mot suivant",
+          "showSolutionButtonLabel": "Voir les réponses",
+          "retryButtonLabel": "Recommencer",
+          "solutionViewTitle": "Les bonnes réponses",
+          "correctText": "Juste !",
+          "incorrectText": "Pas tout à fait…",
+          "shouldSelect": "Il fallait choisir cette réponse",
+          "shouldNotSelect": "Il ne fallait pas choisir cette réponse",
+          "muteButtonLabel": "Couper le son",
+          "closeButtonLabel": "Fermer",
+          "slideOfTotal": "Mot :num sur :total",
+          "scoreBarLabel": "Tu as :num point(s) sur :total",
+          "solutionListQuestionNumber": "Mot :num",
+          "a11yShowSolution": "Afficher les bonnes réponses.",
+          "a11yRetry": "Recommencer l’activité depuis le début."
+         }
         },
-        "library": "H5P.Crossword 0.5",
-        "subContentId": "a2abaa9e-0a8c-42c8-b79c-a047047bc9fc",
+        "library": "H5P.SingleChoiceSet 1.11",
+        "subContentId": "e49c21ae-15b4-4c3d-a3da-b7697dd6a05d",
         "metadata": {
-         "contentType": "Crossword",
+         "contentType": "Single Choice Set",
          "license": "U",
          "title": "Défi · Les mots du cycle",
          "authors": [],

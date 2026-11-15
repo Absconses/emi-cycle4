@@ -36,8 +36,8 @@ sur le `content.json` d'un module. Seule exception : une série qui réutilise l
 courtes d'une question à l'autre (les quatre familles de genres, par exemple).
 
 **Pas de mots croisés** (M. Pempie, 29 octobre 2026). Dans une Game Map, le défi final devient un
-choix rapide (Single Choice Set) : une définition, trois mots. Il en reste dans la Game Map de 3e,
-à remplacer pendant sa refonte.
+choix rapide (Single Choice Set) : une définition, trois mots. Il n'en reste plus
+dans aucun module (15 novembre 2026).
 
 ## 3. Le plan d'un livre
 
@@ -204,7 +204,12 @@ Décision : le **Documentation Tool sert de trace écrite**, préparée par tout
 | 3.7 Débattre avec des sources | fait (vidéo rééquilibrée : 5 QCM ; QCM du dessin de Daumier et de la campagne) | faite | provisoire : « Ma carte et mon avis » (neuf critères, avec une source trouvée par l'élève) puis « Mon dessin et ma publication » (six critères) ; forme définitive à proposer |
 | 3.8 Produire avec l'IA, en responsable | fait (vidéo rééquilibrée : 5 QCM) | faite | provisoire : « La charte IA du Tilleul », production écrite validée par huit critères ; forme définitive à proposer |
 | 3.9 Construire et protéger son identité numérique | fait (vidéo rééquilibrée : 5 QCM) | faite | provisoire : « La campagne du Tilleul » (six critères) puis « Je défends ma campagne » (sept critères), après le rapport pour la CPE déjà en place ; forme définitive à proposer |
-| Game Map 3e | à faire | sans objet | sans objet |
+| Game Map 3e | fait (15 QCM rééquilibrés ; les deux séries à étiquettes fixes, 3.1 et 3.9, relèvent de l'exception) | sans objet | sans objet ; le défi final est un choix rapide, dix mots du cycle (les mots croisés sont retirés) |
+
+Les neuf livres de 3e ont leur trace écrite, et plus aucun Documentation Tool hors de cette trace
+(15 novembre 2026). Leur tâche finale reste **provisoire** : une ou deux productions écrites validées
+par critères, reprises de l'ancien document à remplir. La forme définitive est à proposer à M. Pempie,
+livre par livre, en variant les formes comme pour la 4e.
 
 Les neuf livres de 5e ont leur tâche finale (15 novembre 2026). Les six dossiers construits ce
 jour-là ont été validés par M. Pempie avant construction ; leurs documents, citations et liens
